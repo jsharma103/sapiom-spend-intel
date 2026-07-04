@@ -1,0 +1,99 @@
+{
+  "fetched_at": "2026-07-04T18:14:55.209Z",
+  "model": "openai/gpt-4o-mini",
+  "max_tokens": 128000,
+  "n_iterations_planned": 3,
+  "n_iterations_completed": 3,
+  "aborted": false,
+  "abort_reason": null,
+  "total_spend_usd_this_run": 0.23040899999999986,
+  "rows": [
+    {
+      "iteration": 1,
+      "agentName": "failure-capture-n3-1",
+      "httpStatus": 502,
+      "callOk": false,
+      "rejectionMessage": "\"OpenRouter API error\"",
+      "transactionId": "c2c2ef60-2a28-4abf-8e61-1bfcae805bd7",
+      "transactionOutcome": "error",
+      "transactionStatus": "completed",
+      "activeCost": 0.076803,
+      "activeCostIsEstimate": false,
+      "activeCostIsActive": true,
+      "activeCostSupersededAt": null,
+      "allCostRowCount": 1,
+      "balanceBefore": {
+        "available": 4.432691,
+        "total": 4.721228
+      },
+      "balanceAfter": {
+        "available": 4.355888,
+        "total": 4.721228
+      },
+      "delta": 0.07680299999999995,
+      "verdict": "CAPTURED"
+    },
+    {
+      "iteration": 2,
+      "agentName": "failure-capture-n3-2",
+      "httpStatus": 502,
+      "callOk": false,
+      "rejectionMessage": "\"OpenRouter API error\"",
+      "transactionId": "0d248074-87fd-4f23-845f-c1c92e83fdf4",
+      "transactionOutcome": "error",
+      "transactionStatus": "completed",
+      "activeCost": 0.076803,
+      "activeCostIsEstimate": false,
+      "activeCostIsActive": true,
+      "activeCostSupersededAt": null,
+      "allCostRowCount": 1,
+      "balanceBefore": {
+        "available": 4.355888,
+        "total": 4.721228
+      },
+      "balanceAfter": {
+        "available": 4.279085,
+        "total": 4.721228
+      },
+      "delta": 0.07680299999999995,
+      "verdict": "CAPTURED"
+    },
+    {
+      "iteration": 3,
+      "agentName": "failure-capture-n3-3",
+      "httpStatus": 502,
+      "callOk": false,
+      "rejectionMessage": "\"OpenRouter API error\"",
+      "transactionId": "2f8bec77-71f1-4f06-8f3e-9dcd562a1ba9",
+      "transactionOutcome": "error",
+      "transactionStatus": "completed",
+      "activeCost": 0.076803,
+      "activeCostIsEstimate": false,
+      "activeCostIsActive": true,
+      "activeCostSupersededAt": null,
+      "allCostRowCount": 1,
+      "balanceBefore": {
+        "available": 4.279085,
+        "total": 4.721228
+      },
+      "balanceAfter": {
+        "available": 4.202282,
+        "total": 4.721228
+      },
+      "delta": 0.07680299999999995,
+      "verdict": "CAPTURED"
+    }
+  ],
+  "tally": {
+    "errored": 3,
+    "capturedOnError": 3,
+    "floorOnError": 0,
+    "releasedOnError": 0,
+    "meanCapturedUsd": 0.076803
+  },
+  "prior_evidence": {
+    "n": 1,
+    "transactionId": "d59fb015-f55f-4501-a3cb-247b6e091366",
+    "capturedUsd": 0.076803
+  }
+}
