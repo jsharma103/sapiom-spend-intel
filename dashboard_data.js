@@ -1,11 +1,11 @@
 window.DASHBOARD_DATA = {
-  "generated_at": "2026-07-04T10:58:59.754838+00:00",
+  "generated_at": "2026-07-04T11:08:04.005357+00:00",
   "header": {
-    "n_txns": 75,
-    "n_agents": 15,
-    "live_spend_usd": 0.253272,
+    "n_txns": 81,
+    "n_agents": 16,
+    "live_spend_usd": 0.277472,
     "period_start": "2026-07-04 04:51:39.614000",
-    "period_end": "2026-07-04 10:48:25.001000"
+    "period_end": "2026-07-04 11:06:35.634000"
   },
   "tile_float_meter": {
     "available": true,
@@ -19,16 +19,16 @@ window.DASHBOARD_DATA = {
     "verdict": "FLOAT REAL \u2014 balance dipped by holds mid-flight then recovered"
   },
   "tile_capital_efficiency": {
-    "n_chains": 26,
-    "sum_held_usd": 0.02727,
-    "sum_settled_usd": 0.004898,
-    "efficiency_ratio": 0.1796112944627796
+    "n_chains": 27,
+    "sum_held_usd": 0.027838,
+    "sum_settled_usd": 0.004998,
+    "efficiency_ratio": 0.17953875996838853
   },
   "tile_reconciliation": {
     "double_count_guard_passed": true,
-    "naive_sum_usd": 0.280542,
-    "live_sum_usd": 0.253272,
-    "overstatement_pct": 10.767080451056572,
+    "naive_sum_usd": 0.30531,
+    "live_sum_usd": 0.277472,
+    "overstatement_pct": 10.032724022604082,
     "balance_reconciliation_passed": true,
     "reconciliation_diff_usd": 0.0,
     "green": true
@@ -43,7 +43,7 @@ window.DASHBOARD_DATA = {
         "n": 25,
         "median_gap_s": 7.983499999999999,
         "peak_calls_per_min": 9,
-        "peer_median_gap_s": 8.8155,
+        "peer_median_gap_s": 8.38525,
         "runaway": false
       },
       {
@@ -51,7 +51,7 @@ window.DASHBOARD_DATA = {
         "n": 12,
         "median_gap_s": 18.789,
         "peak_calls_per_min": 4,
-        "peer_median_gap_s": 7.983499999999999,
+        "peer_median_gap_s": 7.96925,
         "runaway": false
       },
       {
@@ -59,7 +59,7 @@ window.DASHBOARD_DATA = {
         "n": 10,
         "median_gap_s": 0.076,
         "peak_calls_per_min": 10,
-        "peer_median_gap_s": 8.8155,
+        "peer_median_gap_s": 8.3995,
         "runaway": true
       },
       {
@@ -67,7 +67,15 @@ window.DASHBOARD_DATA = {
         "n": 10,
         "median_gap_s": 23.046,
         "peak_calls_per_min": 3,
-        "peer_median_gap_s": 7.983499999999999,
+        "peer_median_gap_s": 7.96925,
+        "runaway": false
+      },
+      {
+        "agent_name": "chain-task",
+        "n": 6,
+        "median_gap_s": 7.955,
+        "peak_calls_per_min": 3,
+        "peer_median_gap_s": 8.3995,
         "runaway": false
       },
       {
@@ -75,7 +83,7 @@ window.DASHBOARD_DATA = {
         "n": 3,
         "median_gap_s": 8.8155,
         "peak_calls_per_min": 3,
-        "peer_median_gap_s": 7.983499999999999,
+        "peer_median_gap_s": 7.96925,
         "runaway": false
       },
       {
@@ -83,7 +91,7 @@ window.DASHBOARD_DATA = {
         "n": 3,
         "median_gap_s": 6.9755,
         "peak_calls_per_min": 3,
-        "peer_median_gap_s": 8.8155,
+        "peer_median_gap_s": 8.3995,
         "runaway": false
       },
       {
@@ -147,18 +155,18 @@ window.DASHBOARD_DATA = {
       "sapiom_price_usd": 0.006,
       "public_price_usd": 0.005,
       "markup_pct": 20.0,
-      "n_calls": 39,
+      "n_calls": 43,
       "note": "flat per-call price both sides (Linkup standard depth, sourcedAnswer output) \u2014 apples to apples."
     },
     "openrouter": {
-      "sapiom_settled_avg_usd": 0.00019248275862068965,
+      "sapiom_settled_avg_usd": 0.00018651612903225806,
       "sapiom_settled_min_usd": 0.0001,
       "sapiom_settled_max_usd": 0.0005,
-      "sapiom_held_avg_usd": 0.001048846153846154,
+      "sapiom_held_avg_usd": 0.0010310370370370371,
       "public_input_per_1k_usd": 0.00015,
       "public_output_per_1k_usd": 0.0006,
-      "n_settled": 29,
-      "n_held": 26,
+      "n_settled": 31,
+      "n_held": 27,
       "note": "No token-usage counts are recorded in the ledger, so an exact per-token markup can't be computed (a real data-completeness gap, not just an omission here). What IS clear: Sapiom's pre-auth HOLD rate ($0.0006/1k max_tokens, established in cap_experiment/extrapolation) equals OpenRouter's public OUTPUT rate ($0.60/1M = $0.0006/1k) almost exactly \u2014 the hold prices every token as if it will be a full-price output token. Actual settled cost ($0.0001-$0.0005/call, avg ~$0.00019) is far below that, which is the float story (tile 1), not a take-rate story."
     }
   }

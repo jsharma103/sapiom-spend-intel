@@ -2,10 +2,10 @@
 
 ## Overview
 
-- Total transactions: **75**
-- Distinct agents: **15**
-- Total live spend: **$0.253272**
-- Period: **2026-07-04 04:51:39.614000 → 2026-07-04 10:48:25.001000**
+- Total transactions: **81**
+- Distinct agents: **16**
+- Total live spend: **$0.277472**
+- Period: **2026-07-04 04:51:39.614000 → 2026-07-04 11:06:35.634000**
 
 ### Spend by agent
 
@@ -13,17 +13,18 @@
 |---|---|---|
 | spend-runaway | 25 | $0.150000 |
 | spend-researcher | 12 | $0.072000 |
+| chain-task | 6 | $0.024200 |
 | sweep-scraping | 1 | $0.009000 |
 | dryrun-researcher | 1 | $0.006000 |
 | sweep-search | 1 | $0.006000 |
 | sweep-images | 2 | $0.003000 |
 | spend-writer | 10 | $0.002910 |
-| sweep-audio | 1 | $0.001000 |
 | fleet-test | 10 | $0.001000 |
+| sweep-audio | 1 | $0.001000 |
 | estimate-test | 2 | $0.000972 |
 | sweep-compute | 2 | $0.000690 |
-| cap-test | 3 | $0.000300 |
 | scale-test | 3 | $0.000300 |
+| cap-test | 3 | $0.000300 |
 | sweep-llm | 1 | $0.000100 |
 | sweep-data | 1 | $0.000000 |
 
@@ -31,9 +32,9 @@
 
 ✅ Naive sum (all cost rows, including superseded) vs live sum (superseded_at IS NULL only).
 
-- Naive (all rows): **$0.280542**
-- Live (active only): **$0.253272**
-- Overstatement if naively summed: **+10.77%**
+- Naive (all rows): **$0.305310**
+- Live (active only): **$0.277472**
+- Overstatement if naively summed: **+10.03%**
 
 Sapiom restates costs via supersession chains (initial estimate → captured final). Summing every cost row double-counts every restated transaction; only the live row reflects money actually moved.
 
@@ -42,9 +43,9 @@ Sapiom restates costs via supersession chains (initial estimate → captured fin
 ✅ Latest balance snapshot vs (initial_balance − live spend).
 
 - Initial balance (parameterized): **$5.000000**
-- Live spend to date: **$0.253272**
-- Expected balance: **$4.746728**
-- Actual latest balance (2026-07-04 10:51:46.946728): **$4.746728**
+- Live spend to date: **$0.277472**
+- Expected balance: **$4.722528**
+- Actual latest balance (2026-07-04 11:07:55.761016): **$4.722528**
 - Diff: **$0.000000**
 
 ## Check 3 — Revision analysis
@@ -53,7 +54,7 @@ Sapiom restates costs; here's how much, by service.
 
 | Service | Revised Txns | Avg Revision % |
 |---|---|---|
-| sapiom_openrouter | 26 | -64.04% |
+| sapiom_openrouter | 27 | -64.72% |
 
 ## Check 4 — Chain integrity
 

@@ -11,8 +11,8 @@ Time from `authorizedAt` to the live cost row's `createdAt`, per service. For fl
 | sapiom_blaxel | 1 | -832ms | -832ms |
 | sapiom_elevenlabs | 1 | -142ms | -142ms |
 | sapiom_fal | 1 | -520ms | -520ms |
-| sapiom_linkup | 39 | -140ms | -95ms |
-| sapiom_openrouter | 29 | 5.75s | 12.24s |
+| sapiom_linkup | 43 | -141ms | -95ms |
+| sapiom_openrouter | 31 | 5.29s | 11.96s |
 | unknown | 1 | -128ms | -128ms |
 
 Negative values on flat single-row services are real, not a bug: for those services the (only) cost row is created a few hundred ms *before* the transaction's `authorizedAt` timestamp is stamped — the cost record is written as part of the authorization step itself, not after it. Only `sapiom_openrouter` (the chained/restated service) shows genuine positive latency: real wall-clock time waiting for the LLM call to finish and the hold to be superseded by the final settled cost.
@@ -26,14 +26,19 @@ Negative values on flat single-row services are real, not a bug: for those servi
 | sapiom_blaxel | 1 | 1.35s | 1.35s | 37.7% |
 | sapiom_elevenlabs | 1 | 2.75s | 2.75s | 86.5% |
 | sapiom_fal | 2 | 1.18s | 2.69s | 69.3% |
-| sapiom_linkup | 39 | 6.25s | 9.17s | 81.3% |
+| sapiom_linkup | 43 | 6.25s | 9.17s | 80.9% |
 | sapiom_neon | 1 | 1.30s | 1.30s | 95.0% |
-| sapiom_openrouter | 29 | 6.05s | 12.33s | 77.5% |
+| sapiom_openrouter | 31 | 5.91s | 11.97s | 76.6% |
 | unknown | 2 | 1.06s | 1.49s | 70.3% |
 
 ## 3. Cost-per-task
 
-**EMPTY** — 0/75 transactions have a non-null `trace_external_id`. Cost-per-task attribution requires BUILD 3 (chaining experiment) to set a shared `traceExternalId` across a multi-step agent task. Re-run this script after BUILD 3 fires to populate this section.
+6/81 transactions carry a `trace_external_id`.
+
+| Trace External ID | Steps | Cost | Wall time |
+|---|---|---|---|
+| chain-1783163079023-ddff4761 | 3 | $0.012100 | 16.21s |
+| chain-1783163183588-07885448 | 3 | $0.012100 | 15.23s |
 
 ## 4. Estimate-accuracy scorecard
 
@@ -41,7 +46,7 @@ For services that actually restate costs (hold -> final settlement chains), the 
 
 | Service | Chains | Avg settled/held ratio |
 |---|---|---|
-| sapiom_openrouter | 26 | 0.360 |
+| sapiom_openrouter | 27 | 0.353 |
 
 Flat single-row pricing (no hold-vs-final to score): sapiom_blaxel, sapiom_elevenlabs, sapiom_fal, sapiom_linkup, unknown.
 
@@ -51,14 +56,15 @@ Methodology: per agent, median inter-call gap (seconds) + peak calls in any roll
 
 | Agent | Calls | Median gap | Peak calls/60s | vs peer median | Flag |
 |---|---|---|---|---|---|
-| cap-test | 3 | 8.82s | 3 | 7.98s |  |
+| cap-test | 3 | 8.82s | 3 | 7.97s |  |
+| chain-task | 6 | 7.96s | 3 | 8.40s |  |
 | dryrun-researcher | 1 | n/a (< 3 calls) | n/a | n/a | — |
 | estimate-test | 2 | n/a (< 3 calls) | n/a | n/a | — |
-| fleet-test | 10 | 0.08s | 10 | 8.82s | RUNAWAY |
-| scale-test | 3 | 6.98s | 3 | 8.82s |  |
-| spend-researcher | 12 | 18.79s | 4 | 7.98s |  |
-| spend-runaway | 25 | 7.98s | 9 | 8.82s |  |
-| spend-writer | 10 | 23.05s | 3 | 7.98s |  |
+| fleet-test | 10 | 0.08s | 10 | 8.40s | RUNAWAY |
+| scale-test | 3 | 6.98s | 3 | 8.40s |  |
+| spend-researcher | 12 | 18.79s | 4 | 7.97s |  |
+| spend-runaway | 25 | 7.98s | 9 | 8.39s |  |
+| spend-writer | 10 | 23.05s | 3 | 7.97s |  |
 | sweep-audio | 1 | n/a (< 3 calls) | n/a | n/a | — |
 | sweep-compute | 2 | n/a (< 3 calls) | n/a | n/a | — |
 | sweep-data | 1 | n/a (< 3 calls) | n/a | n/a | — |

@@ -1,0 +1,1123 @@
+{
+  "ranAt": "2026-07-04T11:06:56.428Z",
+  "mode": "run",
+  "traceExternalId": "chain-1783163183588-07885448",
+  "costGuard": {
+    "minBalanceRequiredUsd": 0.5,
+    "hardBudgetUsd": 0.05,
+    "plannedTotalUsd": 0.025,
+    "runningCostEstimateUsd": 0.025
+  },
+  "balance": {
+    "beforeUsd": 4.734628,
+    "afterUsd": 4.722528
+  },
+  "stepLog": [
+    {
+      "step": 1,
+      "service": "search (Linkup)",
+      "url": "https://linkup.services.sapiom.ai/v1/search",
+      "requestBody": {
+        "q": "What is the x402 payment protocol used for AI agent payments?",
+        "depth": "standard",
+        "outputType": "sourcedAnswer"
+      },
+      "startedAt": "2026-07-04T11:06:23.590Z",
+      "httpStatus": 200,
+      "responseSample": "{\"answer\":\"The x402 payment protocol is an open, internet-native payment standard built around the HTTP 402 \\\"Payment Required\\\" status code, designed specifically for AI agents and programmatic clients to pay for APIs, data, and digital services autonomously using stablecoins like USDC. When a client (such as an AI agent) requests a paid resource, the server responds with HTTP 402 including payment details (price, accepted token, destination). The client then signs a payment authorization with ",
+      "responseJson": {
+        "answer": "The x402 payment protocol is an open, internet-native payment standard built around the HTTP 402 \"Payment Required\" status code, designed specifically for AI agents and programmatic clients to pay for APIs, data, and digital services autonomously using stablecoins like USDC. When a client (such as an AI agent) requests a paid resource, the server responds with HTTP 402 including payment details (price, accepted token, destination). The client then signs a payment authorization with its crypto wallet and resubmits the request with this payment proof. The server verifies and settles the payment on-chain, then delivers the requested content—all within a seamless, programmatic HTTP flow without requiring accounts, API keys, subscriptions, or human intervention.\n\nKey features include:\n- Native integration with HTTP, activating the long-unused 402 status code for payments.\n- Use of existing stablecoins (no native token), supporting multiple blockchains like Aptos, Solana, Base, XRPL.\n- Enables autonomous AI agents to pay per use in real time, supporting micropayments and pay-per-use models.\n- Stateless, permissionless, and developer-friendly with minimal integration effort.\n- Supported by major platforms (Coinbase, Cloudflare, Google, Stripe, Vercel).\n- Designed for fast, low-cost, on-chain settlement matching AI agents' millisecond decision speeds.\n\nIn essence, x402 turns the web's original vision of native digital payments into reality, enabling AI agents to act as independent economic actors that can discover, negotiate, and pay for services instantly and autonomously over standard HTTP.",
+        "sources": [
+          {
+            "name": "What is x402? The Payment Protocol for AI Agents on Aptos",
+            "url": "https://aptosnetwork.com/currents/what-is-x402-the-payment-protocol-for-ai-agents-on-aptos",
+            "favicon": "https://favicons.linkup.so?domain=aptosnetwork.com",
+            "snippet": "# What is x402? The Payment Protocol for AI Agents on Aptos  \nx402 is an open, internet-native payment protocol built on top of the HTTP 402 status code. Developed by the Coinbase Developer Platform team and co-championed by the x402 Foundation, x402 enables any API or web service to require payment before serving content.  \nThe concept is elegantly simple. When a client requests a paid resource, the server responds with HTTP 402 \"Payment Required,\" including the price, accepted currency, and destination. The client signs a payment, sends it back, and the server verifies settlement and returns the resource. The entire flow happens programmatically, in milliseconds, with no accounts, API keys, or subscriptions required.  \n[x402](https://www.x402.org/) fixes a foundational omission in the web stack. The HTTP 402 status code was reserved in the original HTTP specification in the early 1990s, intended for \"future use\" in digital commerce. For nearly three decades, it sat dormant and the internet lacked fast, low-cost, programmable payment rails to make it work. Stablecoins and high-performance blockchains changed that. Now, x402 is turning the web's original vision of native payments into reality.\n## [A Growing Ecosystem](#a-growing-ecosystem)  \nAptos Labs has already merged its Aptos payment schemes into the official Coinbase x402 repository, with an active implementation available on GitHub. Developers building on Aptos can integrate x402 payments with a [custom Aptos scheme](https://github.com/coinbase/x402/blob/main/specs/schemes/exact/scheme_exact_aptos.md) , SDK, and [prebuilt facilitators](https://github.com/aptos-labs/x402/tree/main/e2e/facilitators) — bringing the same one-line-of-code simplicity that has driven x402 adoption on other networks.  \nThe broader x402 ecosystem continues to expand rapidly. Since launching in May 2025, x402 has processed over 100 million payments across various APIs, apps, and AI agents. Major platforms including Cloudflare, Google, and Vercel support the protocol. The x402 V2 upgrade, released in late 2025, made the protocol multi-chain by default, introduced wallet-based identity, dynamic payment routing, and compatibility with legacy payment rails — all improvements that make Aptos integration even more seamless.\n## [Why Build x402 on Aptos?](#why-build-x402-on-aptos)  \nThe agent economy needs a settlement layer that matches the speed of software. Most blockchains were optimized for human-paced interactions — a few seconds for finality is fine when someone is clicking a button. But when an AI agent is making autonomous decisions in milliseconds, every moment of latency is wasted compute, and every unnecessary fee is value destroyed.  \nx402 is the protocol. Aptos is the infrastructure. Together, they create the foundation for an agent economy that operates at internet speed, with internet-native payments, and the privacy guarantees that serious institutions demand."
+          },
+          {
+            "name": "X402 Payment Protocol for AI Agents - Simply Staking",
+            "url": "https://simplystaking.com/x402-payment-protocol-for-ai-agents",
+            "favicon": "https://favicons.linkup.so?domain=simplystaking.com",
+            "snippet": "## **Why the X402 Protocol Matters for AI Agents and Internet Native Crypto Payments**  \nx402 is an open payment protocol that brings crypto payments directly into the http server and client relationship. When a client makes a request to a resource server, the server responds with a 402 payment required message that includes the price, the accepted token and the destination address. Then the client signs an authorisation with its wallet and repeats the request with the payment details. The transaction settles on chain and the server releases the resource. Everything happens over standard http and follows the x402 specification documented on [x402.org](https://www.x402.org/).  \nIt is worth highlighting that this approach removes a huge amount of friction from traditional payment systems. There are no api keys or user accounts to manage. There is no need for long subscription models or credit card details. Furthermore, developers can monetise apis and paid services without handling sensitive information. The protocol allows AI agents to operate autonomously and pay directly for what they consume in real time. It is a clean separation where the server manages content, the client manages signatures, and the blockchain manages settlement.\n## **Why the X402 Payment Protocol Works Without a Token or Traditional Payment Methods**  \nThe x402 payment protocol does not introduce a token of its own, and therefore there is no supply schedule, no vesting and no investor allocation. Instead the protocol uses existing stablecoins like USDC or supported tokens that comply with the required signature standards. On EVM based chains it uses ERC 20 tokens that support transfer with authorisation while on Solana it uses SPL tokens. This makes x402 a neutral open protocol that focuses on utility rather than speculation as it allows seamless integration with stablecoin payments across a wide range of chains and wallets.\n## **Real World X402 Use Cases and the Growing X402 Ecosystem for APIs and Autonomous AI Agents**  \nEven though x402 is new it already has a growing ecosystem of real world applications. Aeon uses x402 to allow AI agents to pay merchants across regions such as Southeast Asia and Latin America. AiMo Network uses x402 for pay per inference AI interactions. Pinata allows users to upload or fetch IPFS content with account free stablecoin payments. Heurist Deep Research enables users to pay for long form AI generated research reports through tiny on chain transactions.  \nThere are also multiple developer tools including the x402.rs facilitator, PayAI multi network support, JavaScript libraries and Java SDKs. Furthermore, browser extensions and templates help developers integrate x402 without having to build full settlement logic themselves. This broad adoption shows how easily the payment protocol fits into real world environments and confirms that frictionless internet native payments are genuinely useful across industries."
+          },
+          {
+            "name": "What Is x402? The Payment Protocol Built for AI Agents - LI.FI - Liquidity Aggregation &amp; Orchestration across all Blockchains",
+            "url": "https://li.fi/knowledge-hub/what-is-x402-the-payment-protocol-built-for-ai-agents",
+            "favicon": "https://favicons.linkup.so?domain=li.fi",
+            "snippet": "## What Is x402? The Payment Protocol Built for AI Agents  \n*Quick note before we begin: this article is about the x402 payment protocol. There is an unrelated meme token also using the ticker \"x402\" on CoinMarketCap. Searches for \"x402 crypto\" often surface that token's price page. The two are completely separate. This piece covers the protocol, not the token.*  \nThe x402 protocol is a payment standard that activates the long-dormant HTTP 402 \"Payment Required\" status code for onchain stablecoin settlement. It was originally proposed by Coinbase in late 2025 and is now stewarded by the x402 Foundation (with backing from Cloudflare and the Linux Foundation).  \nThe activation gives AI agents a native way to pay for services over HTTP without credit cards, API keys, or human auth flows.  \nAgentic payments are one of the faster-moving problems in crypto right now.  \nStripe has its Agentic Commerce Protocol, OpenAI has its own wallet-based take, Anthropic's MCP defines how agents call tools.  \nx402 is the piece that handles the payment rail when an agent actually needs to spend money to get something done.  \n*If you're building agents or building services that agents will pay for, here's how the protocol works, who the facilitators are, and where the current edges of x402 end.*\n## **Frequently Asked Questions**  \n### **1. What is the x402 protocol?**  \nx402 is a payment standard that activates the HTTP 402 \"Payment Required\" status code for onchain stablecoin transactions. It lets AI agents and other software clients pay for web services in USDC (or other stablecoins) without credit cards, API keys, or human-side auth flows. The protocol was originally proposed by Coinbase and is now governed by the independent x402 Foundation.\n### **4. Can x402 work across chains?**  \nNot natively. x402 specifies same-chain payment: the client must hold the right stablecoin on the chain the server requests. Moving funds cross-chain requires separate routing infrastructure below the x402 client layer. Bridge aggregation and [LI.FI](https://li.fi/knowledge-hub)['s agentic commerce API](https://li.fi/knowledge-hub/what-is-x402-the-payment-protocol-built-for-ai-agents/introducing-li-fis-api-for-agentic-commerce) are infrastructure examples that fill this gap."
+          },
+          {
+            "name": "x402 Payment Protocol: How AI Agents Will Pay Online",
+            "url": "https://www.digitalapplied.com/blog/x402-payment-protocol-ai-agents-pay-coinbase-cloudflare",
+            "favicon": "https://favicons.linkup.so?domain=www.digitalapplied.com",
+            "snippet": "# x402 Payment Protocol: How AI Agents Will Pay Online  \nCoinbase and Cloudflare launch x402 protocol using HTTP 402 for native AI agent payments via USDC. Integration guide for agentic commerce developers.  \nHTTP Status Code Used  \nMinimum Viable Payment  \nEnd-to-End Payment Time  \nHuman Approvals Required\n## Key Takeaways  \nThe HTTP 402 status code has sat dormant in the web specification for over 30 years, labeled “Payment Required” and reserved for future use. In early 2026, Coinbase and Cloudflare finally put it to work. The x402 protocol turns HTTP 402 into a complete machine-readable payment negotiation layer, enabling AI agents to autonomously pay for digital services without human authorization at each transaction.  \nThe timing is not coincidental. As AI agents move from assistants that answer questions to autonomous actors that book travel, procure software, and execute multi-step workflows, they inevitably need to spend money. Credit cards require human billing cycles. API keys require pre-negotiated contracts. Neither model works for an agent that needs to make thousands of micropayments per hour across hundreds of services it has never interacted with before. x402 solves this by building payment capability into the HTTP protocol itself. For a broader view of how payment infrastructure for agents is evolving, our guide to [Stripe's Machine Payments Protocol](https://www.digitalapplied.com/blog/stripe-machine-payments-protocol-ai-agents-autonomous-pay) provides useful context on the proprietary alternative.\n## x402 vs. Stripe Machine Payments Protocol  \nTwo open specifications emerged in early 2026 to solve agent payments, and understanding their differences is important for choosing the right approach for your use case. [Stripe's Machine Payments Protocol](https://www.digitalapplied.com/blog/stripe-machine-payments-protocol-ai-agents-autonomous-pay) and x402 share the goal of enabling autonomous agent payments but reflect fundamentally different philosophies about where payment infrastructure should live.  \nThe practical decision point is usually existing infrastructure and payment scale. Businesses already integrated with Stripe for customer-facing payments will find Stripe's Machine Payments Protocol easier to adopt—it layers onto existing accounts and uses familiar billing semantics. Businesses building new agentic commerce infrastructure, particularly those that need true micropayment support (under $0.30 per transaction) or want to avoid Stripe dependency, will find x402 more aligned with their needs.  \nThe protocols are not mutually exclusive. An agent can support both: check for x402 capability first, fall back to Stripe MCP if the server does not support x402. Most major agent frameworks are expected to support both protocols by mid-2026."
+          },
+          {
+            "name": "x402 Protocol: Internet-Native Payments for AI Agents. - Blog 0xProcessing",
+            "url": "https://0xprocessing.com/blog/x402-protocol/",
+            "favicon": "https://favicons.linkup.so?domain=0xprocessing.com",
+            "snippet": "### How do AI agents use the x402 protocol?  \nx402 for AI agents allows agents to autonomously pay for data, computations and services from other agents. An agent can decide for itself that it needs access to a specific API and pay for it instantly via x402, without human intervention.\n### How does x402 differ from standard subscriptions?  \nThe x402 payment protocol operates on a pay-per-use model, rather than a flat-rate one. You pay only for what you actually use, and do not commit to a month in advance. Furthermore, no accounts or bank cards are required – just a crypto wallet.\n### What are ‘programmable payments’ in the context of x402?  \nProgrammatic payments are payments that are initiated and executed by programmes without human intervention. Smart contracts, AI agents and automated services can pay each other for data, computations and access, following the logic built into them."
+          },
+          {
+            "name": "Deep Dive: Is x402 Payments Protocol the Stripe for AI Agents?",
+            "url": "https://www.fintechwrapup.com/p/deep-dive-is-x402-payments-protocol",
+            "favicon": "https://favicons.linkup.so?domain=www.fintechwrapup.com",
+            "snippet": "# Deep Dive: Is x402 Payments Protocol the Stripe for AI Agents?  \n*“Remember when your browser said* *404 Not Found? Well, now it might just say* *402 – Payment Required.”* This tongue-in-cheek greeting belies a serious development: x402, Coinbase’s new open payment protocol, injects native stablecoin payments directly into web traffic. It’s as if every HTTP request could carry a paywall of its own – one that AI agents and browsers could clear automatically. The crypto Twitterverse went wild (and wallets got itchy) when x402 launched, but beyond the meme coins and market caps lies a technically intriguing, and potentially transformative, vision for internet commerce. In this deep dive we’ll pry open x402’s guts, survey who’s trying it (and why), and sift the hype from the hard data. Buckle up – we’re about to pay attention to HTTP 402.\n## How x402 Payments Protocol Works  \nLet’s spell out the x402 handshake in a nutshell (this is where a flowchart could help readers visualize the process, showing the HTTP request, the 402 response, the signed payment header, and the final fulfillment):  \n1. **Client Request:**A buyer (human app or AI agent) sends an HTTP request to a protected endpoint (e.g. GET /api/data).\n2. **402 Response:**The server wants payment, so it replies 402 Payment Required and includes a JSON body with payment details – typically price (e.g. “0.01 USDC”), acceptable tokens, and a recipient address or invoice for the payment.\n3. **Client Pays:**The client parses the 402 response and uses its wallet to create a signed payment payload (a cryptographic authorization for the specified token transfer).\n4. **Resubmit with X-PAYMENT:**The client re-sends the original HTTP request, this time including an X-PAYMENT header containing the signed payload.\n5. **Verify & Settle:**The server checks the payment. It can verify the signature itself or (more commonly) send it to the facilitator. The facilitator confirms the payload meets the requirements and then broadcasts the stablecoin transaction on-chain (e.g. USDC on Base).\n6. **Confirmation:**Once the blockchain confirms the transaction, the facilitator informs the server. The server then completes the response.\n7. **200 OK with Content:**The server responds with 200 OK. The requested resource (API result, webpage, dataset, etc.) appears in the body, and an X-PAYMENT-RESPONSE header provides the transaction confirmation details to the client.\n8. **Done:**The client has obtained the data and the server has collected payment – all within a single programmatic flow.  \nThis flow makes web payments feel like an extra header in an API call. It’s remarkably efficient: one round-trip that covers inquiry, payment, and final data delivery. As Coinbase notes, x402 is deliberately “stateless,” “HTTP-native,” and “developer-friendly”. No new session protocols or login screens are needed; any standard HTTP library can implement it.  \nIn practice, developers unlock this with just a few lines of code. Vercel, for instance, introduced an x402-next middleware to protect API routes with paywalls, and an x402-fetch wrapper for clients. In a Vercel blog post, engineers emphasize: *“Unlike vendor-specific payment APIs, x402 is designed as an open web protocol… It is not tied to any centralized payment provider and can support different payment networks or schemes.”*. Likewise, Circle Labs built a demo where an AI agent autonomously pays $0.01 USDC to retrieve a blockchain risk report, all via x402 calls.  \n> *“The agent didn’t need to pre-register an account or ask a human to complete a purchase. Payment is part of the conversation.”*– from Circle’s x402 tutorial."
+          },
+          {
+            "name": "Coinbase x402 AI Payments Protocol Expands With Agentic.market Launch",
+            "url": "https://www.turkishnyradio.com/coinbase-x402-ai-payments-protocol-expands-with-agentic-market-launch/",
+            "favicon": "https://favicons.linkup.so?domain=www.turkishnyradio.com",
+            "snippet": "## **Coinbase x402 AI Payments Protocol How it Works**  \nThe Coinbase x402 AI payments protocol, introduced in May 2025, is designed to enable machine-to-machine payments directly over the internet. Its name references the HTTP “402 Payment Required” code, aligning with its purpose of embedding payments into [digital interactions.](https://www.turkishnyradio.com/visa-introduces-ai-powered-payments-for-automated-shopping-and-checkout/)  \nAgentic.market builds on this foundation by combining two layers:  \n- A user-facing interface where individuals can browse available services\n- A programmable system that allows AI agents to independently search, evaluate, and integrate tools  \nEach agent is assigned a wallet and a set of predefined “skills,” which act as instructions for interacting with specific services. This allows agents to not only purchase services but also offer services within the same network.  \nThe Coinbase x402 AI payments protocol therefore functions as both a payment layer and an access framework for AI-driven activity.\n## **FAQs About Coinbase x402 AI Payments Protocol**  \n### **1. What is Coinbase x402 AI payments protocol?**  \nCoinbase x402 AI payments protocol helps AI agents pay for services using stablecoins, making it easier for them to access tools and complete tasks without human involvement.\n### **2. How do payments work on Coinbase x402 AI payments protocol?**  \nPayments happen through built-in wallets using stablecoins, so AI agents can pay instantly for services while avoiding price swings and keeping transactions smooth and predictable."
+          },
+          {
+            "name": "Google AP2 vs x402: The Two Protocols Competing to Power AI Agent Payments - DEV Community",
+            "url": "https://dev.to/neilvolner/google-ap2-vs-x402-the-two-protocols-competing-to-power-ai-agent-payments-5e9j",
+            "favicon": "https://favicons.linkup.so?domain=dev.to",
+            "snippet": "## Google AP2 vs x402: The Two Protocols Competing to Power AI Agent Payments  \nTwo payment protocols are racing to become the standard for how AI agents pay for things. One comes from Google with 60+ enterprise partners. The other comes from Coinbase and is already processing millions of transactions. Here is what builders need to know.\n### Protocol 1: x402 — The Crypto-Native Approach  \n**Created by**: Coinbase, with support from Cloudflare, Stripe, Google, Vercel  \n**How it works**: x402 leverages the HTTP 402 (\"Payment Required\") status code that has been reserved since the 1990s but never standardized. When an AI agent hits an x402 endpoint:  \n1. Agent sends HTTP request to API endpoint\n2. Server returns HTTP 402 with payment details (price, token, address, expiry)\n3. Agent signs a USDC payment on-chain\n4. Agent retries the request with payment proof in the header\n5. Server verifies payment and delivers the response  \nTotal time: approximately 2 seconds on Base or Solana.  \n**Key stats**:  \n- 50M+ cumulative transactions\n- Live on Base, Solana, XRPL, Aptos, and more\n- Supported by Stripe, Alchemy, MoonPay, Zuplo\n- Stablecoin-native (primarily USDC)\n- Completely permissionless — any API becomes a paywall  \n**Strength**: Simplicity. Developers add a few lines of middleware and their API accepts agent payments. No registration, no approval process, no intermediaries.  \n**Limitation**: Crypto-only. Agents must hold stablecoins. The merchants must accept crypto settlement.\n### The Critical Difference: Who Pays?  \nThe fundamental divergence between x402 and AP2 is *who controls the wallet*.  \n**x402**: The agent itself holds funds and pays autonomously. The agent has its own wallet, its own balance, and makes independent payment decisions. This is true agent autonomy.  \n**AP2**: The human user authorizes payment through mandates. The agent acts on behalf of the user, using the user's payment methods. The human retains ultimate control.  \nThis is not just a technical distinction — it reflects two fundamentally different visions of the agent economy:  \n| Dimension | x402 | AP2 |\n|---|---|---|\n| Who pays | Agent (own wallet) | Human (via mandate) |\n| Payment methods | Stablecoins (USDC) | Cards, bank, stablecoins |\n| Merchant setup | Add middleware (minutes) | Full integration (weeks) |\n| Authorization | Permissionless | Mandate-based |\n| Settlement | On-chain (instant) | Traditional rails (days) |\n| Best for | Agent-to-agent commerce | Agent-to-merchant commerce |  \nDimension x402 AP2 Who pays Agent (own wallet) Human (via mandate) Payment methods Stablecoins (USDC) Cards, bank, stablecoins Merchant setup Add middleware ("
+          },
+          {
+            "name": "AI Agent Payments and the x402 Protocol: The Future of Autonomous Payment Infrastructure - WooshPay",
+            "url": "https://www.wooshpay.com/resources/2026/04/25/ai-agent-payments-and-the-x402-protocol-the-future-of-autonomous-payment-infrastructure/",
+            "favicon": "https://favicons.linkup.so?domain=www.wooshpay.com",
+            "snippet": "##### What Is the x402 Protocol?  \n\"(《世界人权宣言》) **x402 protocol** is an open payment protocol built around HTTP `402 Payment Required`. Instead of treating payment as a separate checkout process, x402 allows a server to respond to a request with payment instructions. The client, which may be a human-operated app, a programmatic service, or an AI agent, can then complete payment and retry the request with proof of payment.  \nIn a typical x402 flow:  \n1. A client requests a paid resource, such as an API endpoint or digital service.\n2. The server returns `402 Payment Required`with payment details.\n3. The client creates a signed payment payload.\n4. The client retries the request with the payment signature.\n5. The server verifies and settles the payment.\n6. The server returns the requested resource.  \nThis model makes x402 especially relevant for **machine-to-machine payments**, **pay-per-use APIs**, **micropayments**和 **AI agents that autonomously pay for API access**. Coinbase’s x402 documentation describes it as a protocol for instant, automatic stablecoin payments over HTTP, while x402’s own documentation positions HTTP 402 as a foundation for API-native payments.\n### 1.What is the x402 protocol?  \nThe x402 protocol is an open payment protocol built around HTTP `402 Payment Required`. It allows servers to request payment directly through HTTP and allows clients, including AI agents, to pay programmatically for APIs, content, or digital resources.\n### 4.How does x402 support AI agent payments?  \nx402 supports AI agent payments by allowing a service to return payment requirements through HTTP and allowing the agent to retry the request with a signed payment payload."
+          },
+          {
+            "name": "x402 protocol: Architecture and payment flow for AI Agents | Chainstack Blog",
+            "url": "https://chainstack.com/x402-protocol-for-ai-agents/",
+            "favicon": "https://favicons.linkup.so?domain=chainstack.com",
+            "snippet": "#### Autonomous AI agent payments  \nEnables AI agents to automatically discover, negotiate, and pay for services, compute, or data without human intervention, turning agents into first‑class economic actors.  \n- [Google’s Agent Payments Protocol (AP2)](https://cloud.google.com/blog/products/ai-machine-learning/announcing-agents-to-payments-ap2-protocol): Uses x402 to let agents pay one another in stablecoins for completing tasks such as data retrieval, compute jobs, and multi‑step workflows.\n- [Cloudflare Agent SDK + MCP](https://developers.cloudflare.com/agents/x402/): Developers can now build agents that pay via x402 for features exposed through Model Context Protocol (MCP) servers.\n- **Stripe x402 on Base:**Stripe has launched support for x402 payments on Base, letting developers charge autonomous AI agents directly in USDC for API calls, compute, data access, or HTTP requests via Stripe’s PaymentIntents API.  \n<!--THE END-->  \n- [Kite AI](https://gokite.ai/): A native Layer‑1 blockchain integrated with x402, designed for autonomous agent payments and settlement, processing billions of inference calls and enabling agents to transact independently.\n### Payment & monetization tools  \n- [PayAI](https://docs.payai.network/x402/servers/introduction): Infrastructure for selling services directly via x402, abstracting blockchain complexity and simplifying merchant-side integrations.\n- [Coinbase Hosted Facilitator (Base)](https://docs.cdp.coinbase.com/x402): Managed verification and settlement infrastructure with supported network integrations.\n- [MCP with x402](https://x402.gitbook.io/x402/guides/mcp-server-with-x402): Enables developers to payment-gate Model Context Protocol (MCP) servers using x402, allowing AI agents to pay per tool invocation or data request.\n## FAQ  \n**What is x402 protocol?**  \nx402 is an open protocol that enables AI agents and applications to pay for APIs, data, and compute resources programmatically using stablecoins over HTTP. It revives the HTTP 402 “Payment Required” status code with a standardized implementation for real-world use.  \n**Why does Solana dominate x402 payments?**  \nSolana accounts for 50-80% of x402 transactions due to its sub-second finality (\\~400ms), ultra-low fees (\\~$0.00025 per transaction), high throughput, and native USDC support. These characteristics make it ideal for real-time micropayments at scale.  \n**How do AI agents use x402 to pay for services?**  \nAI agents send HTTP requests to x402-enabled APIs. When payment is required, the server returns a 402 response with payment details. The agent cryptographically signs the payment, resubmits the request, and the server verifies and settles the transaction on-chain before providing access.  \n**What blockchain infrastructure do x402 agents need?**  \nx402 agents need reliable RPC endpoints to verify balances, submit transactions, and confirm settlements. Enterprise-grade infrastructure like Chainstack provides the 99.99% uptime, low latency, and predictable pricing required for production agent workloads.  \n**Can x402 work on blockchains other than Solana?**"
+          },
+          {
+            "name": "AI Agent Payments and the x402 Protocol: The Future of Autonomous Payment Infrastructure - WooshPay",
+            "url": "https://wooshpay.com/resources/2026/04/25/ai-agent-payments-and-the-x402-protocol-the-future-of-autonomous-payment-infrastructure/",
+            "favicon": "https://favicons.linkup.so?domain=wooshpay.com",
+            "snippet": "##### What Is the x402 Protocol?  \nThe **x402 protocol** is an open payment protocol built around HTTP `402 Payment Required`. Instead of treating payment as a separate checkout process, x402 allows a server to respond to a request with payment instructions. The client, which may be a human-operated app, a programmatic service, or an AI agent, can then complete payment and retry the request with proof of payment.  \nIn a typical x402 flow:  \n1. A client requests a paid resource, such as an API endpoint or digital service.\n2. The server returns `402 Payment Required`with payment details.\n3. The client creates a signed payment payload.\n4. The client retries the request with the payment signature.\n5. The server verifies and settles the payment.\n6. The server returns the requested resource.  \nThis model makes x402 especially relevant for **machine-to-machine payments**, **pay-per-use APIs**, **micropayments**, and **AI agents that autonomously pay for API access**. Coinbase’s x402 documentation describes it as a protocol for instant, automatic stablecoin payments over HTTP, while x402’s own documentation positions HTTP 402 as a foundation for API-native payments.\n### 1.What is the x402 protocol?  \nThe x402 protocol is an open payment protocol built around HTTP `402 Payment Required`. It allows servers to request payment directly through HTTP and allows clients, including AI agents, to pay programmatically for APIs, content, or digital resources.\n### 4.How does x402 support AI agent payments?  \nx402 supports AI agent payments by allowing a service to return payment requirements through HTTP and allowing the agent to retry the request with a signed payment payload."
+          },
+          {
+            "name": "What is Agent2Agent x402: The Complete Guide to AI Agent Payment Protocol | Eco Support Center",
+            "url": "https://eco.com/support/en/articles/12328618-what-is-agent2agent-x402-the-complete-guide-to-ai-agent-payment-protocol",
+            "favicon": "https://favicons.linkup.so?domain=eco.com",
+            "snippet": "The emergence of AI agents capable of autonomous decision-making has created a fundamental challenge: how can these digital entities transact value with each other and complete financial tasks on behalf of users? The answer lies in Agent2Agent x402, a groundbreaking protocol that bridges the gap between AI communication and payments, enabling a new era of autonomous digital commerce.  \nAgent2Agent x402 represents the convergence of Google's Agent2Agent (A2A) communication protocol with Coinbase's x402 payment standard, creating the first comprehensive framework for AI-driven transactions. This integration allows AI agents to not only communicate and coordinate tasks but also handle payments seamlessly using stablecoins and traditional payment methods.\n## The Evolution to x402: Enabling AI Agent Payments  \nWhile the A2A protocol solved communication challenges between AI agents, it lacked a crucial component for true autonomy: the ability to handle payments. This gap led to the development of x402, an open protocol that leverages the long-dormant HTTP 402 \"Payment Required\" status code to enable instant stablecoin payments directly over web protocols.  \nThe [x402 protocol](https://www.coinbase.com/developer-platform/discover/launches/x402) transforms how AI agents can transact by embedding payment capabilities directly into HTTP interactions. When an AI agent requests a paid service, the server responds with HTTP 402, prompting automatic payment and retry - all happening in seconds without human intervention.\n## Google's Agent Payments Protocol (AP2): The Complete Framework  \nGoogle's recent launch of the [Agent Payments Protocol (AP2)](https://finance.yahoo.com/news/google-reveals-ai-agent-payments-171355151.html) represents the culmination of Agent2Agent x402 development. AP2 serves as an extension to both the A2A protocol and Anthropic's Model Context Protocol (MCP), creating a unified standard for AI agent payments.  \nThe AP2 framework supports multiple payment types:  \n**Traditional Payment Rails**: Credit cards, debit cards, and real-time bank transfers ensure compatibility with existing payment infrastructure.  \n**Stablecoin Payments**: Through the x402 extension, agents can transact using USDC and other stablecoins on networks like Base, providing instant settlement and lower fees.  \n**Cross-Chain Compatibility**: The protocol is designed to be blockchain-agnostic, supporting future expansion to additional networks and digital assets."
+          },
+          {
+            "name": "What Is x402? The Payment Protocol for AI Agents and Onchain APIs | Alchemy",
+            "url": "https://www.alchemy.com/blog/how-x402-brings-real-time-crypto-payments-to-the-web",
+            "favicon": "https://favicons.linkup.so?domain=www.alchemy.com",
+            "snippet": "# What is x402? The payment protocol for AI agents and onchain APIs  \nAuthor: [Uttam Singh](https://www.alchemy.com/author/uttam-singh)  \n[AI agents](https://www.alchemy.com/dapps/best/ai-agents) need to pay for things: API calls, data feeds, compute. But they don't have credit cards. They can't fill out signup forms. The standard billing model assumes a human on the other end. When the client is software, that model breaks.  \n[x402](https://www.x402.org/) is an open-source protocol built to fix this. It embeds cryptocurrency payments directly into HTTP using the 402 \"Payment Required\" status code, which has been in the spec since the 1990s but was never put to use. A client sends a request, gets payment terms back, pays in crypto, and retries. No API keys. No subscriptions. No billing dashboards.  \nSince launching in May 2025, x402 has processed over 100 million payments. In December 2025, [x402 V2](https://www.x402.org/writing/x402-v2-launch) shipped with multi-chain support, wallet-based sessions, and an extensible architecture. In April 2026, [Coinbase](https://www.alchemy.com/dapps/coinbase) contributed the protocol to the [Linux Foundation](https://www.linuxfoundation.org/press/linux-foundation-is-launching-the-x402-foundation-and-welcoming-the-contribution-of-the-x402-protocol), which launched the x402 Foundation with over 20 founding members including Google, Visa, Stripe, AWS, Mastercard, Circle, Microsoft, and Shopify.\n## What can you build with x402?  \n- Pay-per-call API endpoints for AI inference, data feeds, or compute\n- Micropayment systems for digital content: images, videos, research papers, datasets\n- Autonomous agent-to-agent commerce where AI agents buy data, compute, or API access from each other\n- Usage-based billing for storage, bandwidth, or any metered resource\n- Freemium APIs with crypto-gated premium tiers\n- Multi-chain data pipelines that pay per request at sub-cent rates using V2 sessions  \nThese aren't hypothetical. AI agents are already querying blockchain data to manage DeFi positions, monitoring token prices and executing trades without human oversight, and running multi-chain indexing pipelines end to end. Some are buying compute and deploying smart contracts through x402-enabled services.  \nFor a detailed comparison of x402 with the Machine Payments Protocol (MPP), see [x402 vs MPP: comparing agent payment protocols](https://www.alchemy.com/blog/x402-vs-mpp-comparing-agent-payment-protocols).\n### What is the difference between x402 and MPP?  \nx402 embeds [stablecoin payments](https://www.alchemy.com/dapps/best/stablecoin-payments) directly into HTTP. MPP (Machine Payments Protocol) extends the same 402 pattern with payment-method-agnostic rails, session-based billing, MCP transport support, and standardized protocol primitives like idempotency and replay protection. MPP is backwards compatible with x402. [Read the full comparison](https://www.alchemy.com/blog/x402-vs-mpp-comparing-agent-payment-protocols)."
+          },
+          {
+            "name": "x402 Foundation Launches with Major Backing to Power the Next Wave of AI Agent Payments - Coin Pulse HQ",
+            "url": "https://coinpulsehq.com/coinbase-ceo-davos-crypto-bill/",
+            "favicon": "https://favicons.linkup.so?domain=coinpulsehq.com",
+            "snippet": "## Why Agentic AI Needs a New Payment Protocol  \nThe push for the x402 standard stems from a growing industry consensus. Many executives believe AI agents—autonomous software programs that perform tasks—will soon become prolific users of digital payments. These agents could handle everything from booking travel and paying subscriptions to purchasing data or API access, all without direct human intervention.  \nProponents argue current payment systems aren’t built for this. They require human authentication, handle complex checkout flows, and often struggle with microtransactions. The x402 protocol is designed as an open standard enabling AI agents and web services to pay for digital services autonomously. It aims to function on both crypto and traditional fiat payment rails.  \nIndustry leaders have been vocal about this vision. “There will be more AI agents transacting online than humans very soon,” Coinbase CEO Brian Armstrong stated. His comment echoes a prediction from Circle CEO Jeremy Allaire in January 2026 that “literally billions of AI agents” will be transacting on blockchain networks within three to five years.  \nFormer Binance CEO Changpeng Zhao made a similar point earlier this year. He suggested cryptocurrency is the “native currency for AI agents,” ideal for machines to settle transactions without the need for credit cards or bank accounts.\n## Challenges and the Road Ahead for x402  \nDespite the high-profile backing, the x402 Foundation faces significant hurdles. Standardization processes within large foundations can be slow, requiring consensus among competing corporate interests. The protocol must also achieve critical mass among AI developers and service providers to become truly useful.  \nSecurity is another paramount concern. Autonomous AI agents making payments create new attack surfaces. The protocol and its implementations will need to be rigorously audited to prevent fraud and theft on a potentially massive scale. Furthermore, regulatory clarity around AI agents conducting financial transactions is still evolving in most jurisdictions.  \nWhat this means for investors and the market is a validation of the intersection between AI and crypto infrastructure. Projects building tools for autonomous agents, oracle networks for real-world data, and scalable blockchains may see increased interest. However, the success of x402 itself is not guaranteed. It will depend on the foundation’s ability to execute, developer adoption, and the actual growth of useful, transactional AI agents in the wild.\n## FAQs  \n**Q1:** What is the x402 Foundation?\nThe x402 Foundation is a new non-profit organization established under the Linux Foundation. Its purpose is to govern and standardize the x402 protocol, an open standard designed to let AI agents and web services make autonomous payments using both cryptocurrency and traditional money.  \n**Q2:** Which major companies are involved?\nFounding members include Google, Microsoft, Amazon Web Services (AWS), Coinbase, American Express, Mastercard, Visa, Stripe, Shopify, Cloudflare, Circle, and several blockchain organizations like Solana Foundation and Polygon Labs.  \n**Q3:** What is an “AI agent” in this context?\nAn AI agent is an autonomous software program that can perform tasks, make decisions, and interact with other software and services without constant human direction. In this case, the focus is on agents that need to pay for API access, data, or digital services.  \n**Q4:** Why is the Linux Foundation involved?\nThe Linux Foundation is serving as a neutral, non-profit home for the x402 protocol. This open-source model is intended to encourage broader collaboration and adoption from developers and companies than if a single corporation controlled the standard.  \n**Q5:** Has the x402 protocol been used yet?"
+          },
+          {
+            "name": "Google AP2 vs x402: The Two Protocols Competing to Power AI Agent Payments - DEV Community",
+            "url": "https://dev.to/noopy420/google-ap2-vs-x402-the-two-protocols-competing-to-power-ai-agent-payments-5e9j",
+            "favicon": "https://favicons.linkup.so?domain=dev.to",
+            "snippet": "## Google AP2 vs x402: The Two Protocols Competing to Power AI Agent Payments  \nTwo payment protocols are racing to become the standard for how AI agents pay for things. One comes from Google with 60+ enterprise partners. The other comes from Coinbase and is already processing millions of transactions. Here is what builders need to know.\n### Protocol 1: x402 — The Crypto-Native Approach  \n**Created by**: Coinbase, with support from Cloudflare, Stripe, Google, Vercel  \n**How it works**: x402 leverages the HTTP 402 (\"Payment Required\") status code that has been reserved since the 1990s but never standardized. When an AI agent hits an x402 endpoint:  \n1. Agent sends HTTP request to API endpoint\n2. Server returns HTTP 402 with payment details (price, token, address, expiry)\n3. Agent signs a USDC payment on-chain\n4. Agent retries the request with payment proof in the header\n5. Server verifies payment and delivers the response  \nTotal time: approximately 2 seconds on Base or Solana.  \n**Key stats**:  \n- 50M+ cumulative transactions\n- Live on Base, Solana, XRPL, Aptos, and more\n- Supported by Stripe, Alchemy, MoonPay, Zuplo\n- Stablecoin-native (primarily USDC)\n- Completely permissionless — any API becomes a paywall  \n**Strength**: Simplicity. Developers add a few lines of middleware and their API accepts agent payments. No registration, no approval process, no intermediaries.  \n**Limitation**: Crypto-only. Agents must hold stablecoins. The merchants must accept crypto settlement.\n### They Are Complementary, Not Competing  \nHere is the insight most analysis misses: **x402 and AP2 solve different problems**.  \nx402 is for **agent-to-agent** and **agent-to-API** transactions. When an AI research agent needs market data from another agent, it pays via x402. No humans involved. Instant, permissionless, stablecoin-settled.  \nAP2 is for **agent-to-merchant** and **human-delegated** transactions. When an AI shopping assistant buys concert tickets on your behalf, it uses AP2. Human authorization, traditional payment rails, Mastercard fraud protection.  \nGoogle themselves acknowledged this by including the **A2A x402 extension** in AP2, developed in collaboration with Coinbase, Ethereum Foundation, and MetaMask. AP2 handles the human-facing commerce. x402 handles the machine-facing commerce. Together, they cover the full spectrum."
+          },
+          {
+            "name": "x402-payment-tron - AI Skill for OpenClaw | clawbot",
+            "url": "https://clawbot.ai/skills/x402-payment-tron.html",
+            "favicon": "https://favicons.linkup.so?domain=clawbot.ai",
+            "snippet": "x402-payment-tron is an OpenClaw skill. Pay for x402-enabled Agent endpoints using USDT on TRON It belongs to the [Other](https://clawbot.ai/skills/category/other.html) collection. For background, see [Agent-to-Agent Commerce - Agent-to-Agent Business](https://clawbot.ai/wiki/infrastructure/agent-to-agent-commerce-agent-to-agent-business.html) in our wiki.  \nx402-payment-tron 工具。  \nx402-payment-tron has 3.0K downloads from the OpenClaw community.  \nInstalls in one command: \\`openclaw skill install x402-payment-tron\\`  \nWorks inside your existing OpenClaw setup. No extra config.  \nOpen-source. Community-maintained.  \nInstalling x402-payment-tron in OpenClaw takes just one command. Make sure you have OpenClaw set up and running before proceeding.  \nRun the following command in your terminal to add x402-payment-tron to your OpenClaw instance:  \n```\nopenclaw skill install x402-payment-tron\n```  \nConfirm the skill is properly installed and ready to use:  \n```\nopenclaw skill list\n```  \nThe skill is now available in your OpenClaw conversations. Simply describe what you want to accomplish, and OpenClaw will automatically invoke x402-payment-tron when relevant.  \nWhat people do with x402-payment-tron:  \n| Author | Hades-Ye |\n|---|---|\n| Category | [Other](/skills/category/other.html) |\n| Version | 0.0.4 |\n| Updated | 2026-03-01 |\n| Downloads | 2,951 |\n| Score | 1,105 |\n| Homepage | [https://clawhub.ai/Hades-Ye/x402-payment-tron](https://clawhub.ai/Hades-Ye/x402-payment-tron) |\nAuthor Hades-Ye Category Other Version 0.0.4 Updated 2026-03-01 Downloads 2,951 Score 1,105 Homepage https://clawhub.ai/Hades-Ye/x402-payment-tron  \nx402 ↗ is an open payment standard built around HTTP 402 (Payment Required). Services return a 402 response with payment instructions, and clients pay programmatically without accounts, sessions, or A With x402-payment-tron on OpenClaw, you can handle this directly from your AI assistant.  \nx402 is an open, internet-native payment protocol built on top of the HTTP 402 status code. With x402-payment-tron on OpenClaw, you can handle this directly from your AI assistant.  \nWhat is the x402 payment protocol? x402 is an open payment standard developed by Coinbase and launched in May 2025. It serves as a decentralized payment rail for the internet, enabling AI agents and w With x402-payment-tron on OpenClaw, you can handle this directly from your AI assistant.  \nRun \"openclaw skill install x402-payment-tron\" in your terminal. OpenClaw must be set up first. After install, the skill is available in your conversations automatically.  \nYes. x402-payment-tron is free and open-source. Install it from the OpenClaw skill directory at no cost. Maintained by Hades-Ye.  \nLearn more from these authoritative sources:  \nAdd x402-payment-tron to your OpenClaw setup. One command. Done.  \nDiscover other popular skills in the Other category."
+          },
+          {
+            "name": "Payments MCP: Coinbase links AI agents to crypto via x402 - eTrendy Stock",
+            "url": "https://etrendystock.com/payments-mcp-coinbase-links-ai-agents-to-crypto-via-x402-112012.html",
+            "favicon": "https://favicons.linkup.so?domain=etrendystock.com",
+            "snippet": "Coinbase has launched Payments MCP, a Model Context Protocol implementation that gives AI agents access to wallets, onramps and onchain payments. The company published the launch on October 23, 2025, positioning the tool as a way for popular large language models to move funds using prompts, not custom code. Independent coverage confirmed the rollout and its focus on agentic commerce.  \nPayments MCP is built to ride on x402, an open payment protocol that repurposes the long dormant HTTP 402 “Payment Required” response to signal that a request needs a programmatic payment. The protocol’s whitepaper details how services return 402 with payment instructions and how a client completes settlement before receiving the resource. Coinbase says this is designed for machine-to-machine micropayments, including AI agents buying API calls.  \nCoinbase’s launch post says wallet creation and sign-in can be done with just an email and that the desktop app runs locally for security. Owners can configure an AI agent, set spending limits and review transactions through a point-and-click interface. A discovery feature, the x402 Bazaar, is integrated to help agents find APIs they can pay for.\nAt launch, Coinbase says Payments MCP has been tested with Claude Desktop and Google’s Gemini, among others, and provides a quick installer and sample configuration. The GitHub repository for payments-mcp shows an npx installer and notes first-class integration with Claude Desktop’s MCP client, while Coinbase’s x402 MCP guide walks through connecting an MCP server that can make paid API calls.  \nThe payment rail centers on stablecoins. Coinbase’s documentation describes x402 as enabling instant stablecoin payments directly over HTTP, with its hosted facilitator handling fee-free USDC payments on the Base network. External explainers likewise note the repurposing of HTTP 402 to embed payment flows in standard web requests.  \nThe broader governance story is forming in parallel. Cloudflare announced on September 23, 2025 that it will work with Coinbase to create an x402 Foundation to steer the standard’s adoption. Cloudflare’s technical blog the same week said it is adding x402 support to its Agents SDK and MCP integrations.  \nWhat changes for users and developers today is scope and control. With Payments MCP, Coinbase claims that an AI can, within preset limits, pay for compute, access paywalled data, or run lightweight business operations, while humans remain in charge through explicit permissions and spend caps. Reporters who previewed the launch also emphasized the product’s goal of letting models transact using natural-language prompts rather than bespoke code."
+          },
+          {
+            "name": "Will AI Agent Payments via x402 Drive New Coinbase Revenue? | FereAI",
+            "url": "https://www.fereai.xyz/share/fc190022-a848-4487-814e-b53d7ae86a01/will-ai-agent-payments-via-x402-drive-new-coinbase-2026-jun-16-fc190022",
+            "favicon": "https://favicons.linkup.so?domain=www.fereai.xyz",
+            "snippet": "# Will AI Agent Payments via x402 Drive New Coinbase Revenue?  \n## Will AI Agent Payments via x402 Drive New Coinbase Revenue?  \n**Likely yes**, but the revenue is nascent and material impact is 2–3 years away. The infrastructure is in place, adoption is accelerating, and Coinbase's first-mover positioning on Base chain gives it a structural revenue opportunity — though concrete fee revenue figures remain undisclosed.\n### What Is x402?  \nx402 is an **open payment protocol co-developed by Coinbase and Cloudflare**, launched in May 2025, that revives the dormant HTTP 402 \"Payment Required\" status code. It enables AI agents to autonomously pay for digital services using stablecoins (primarily USDC) without human intervention — no API keys, accounts, or subscriptions required.  \n**Payment flow:**  \n1. AI agent sends HTTP request to protected resource\n2. Server returns `402 Payment Required`with payment requirements\n3. Agent constructs a signed payment, retries, and receives the resource (\\~2 seconds finality)\n### Adoption Metrics — AI Agent Payments Are Growing  \nThe data shows **exponential early growth**:  \n| Metric | Value | Source |\n|---|---|---|\n| **Total x402 Transactions (Q1 2026)** | 50+ million | [MoonPay](https://www.moonpay.com/blog/x402-transactions) |\n| **Peak Weekly Payments** | \\~500,000 | [RebelFi via research](https://www.galaxy.com/research/insights/x402-adoption-2026) |\n| **Agent Transaction Spike on Base** | **10,000%** | [Coinbase (Nina Coughlin, Head of Stablecoin BD)](https://www.coinbase.com/developer) |\n| **Solana x402 Volume** | 35M+ transactions, $10M+ | [Solana.com](https://solana.com/x402) |\n| **14-Week Beta Participants** | 1,000+ developers, 9,500+ agents, 187,000 autonomous crypto transactions | [Galaxy Research](https://galaxyresearch.io/x402) |  \nMetric Value Source Total x402 Transactions (Q1 2026) 50+ million MoonPay Peak Weekly Payments \\~500,000 RebelFi via research Agent Transaction Spike on Base 10,000%  \nGalaxy Research projects x402 will reach **30% of Base daily transactions** and **5% of Solana non-vote transactions** by 2026. \\[Source: [https://www.galaxy.com/research/insights/x402-adoption-2026](https://www.galaxy.com/research/insights/x402-adoption-2026)]"
+          },
+          {
+            "name": "Agentic Payment Protocols for AI Agent Commerce",
+            "url": "https://zenvanriel.com/ai-engineer-blog/agentic-payment-protocols-ai-agent-commerce-guide/",
+            "favicon": "https://favicons.linkup.so?domain=zenvanriel.com",
+            "snippet": "# Agentic Payment Protocols for AI Agent Commerce  \nThe most significant barrier to truly autonomous AI agents has never been intelligence. It has been money. An agent can write code, book flights, and negotiate deals, but the moment it needs to pay for something, a human must intervene. That bottleneck is dissolving rapidly as three competing payment protocols emerge to give AI agents their own wallets.  \nIn the past month alone, Google donated the Agent Payments Protocol (AP2) to the FIDO Alliance, Coinbase’s x402 surpassed 119 million transactions, and Cloudflare launched zero-friction agent provisioning with Stripe. For engineers building [agentic AI systems](https://zenvanriel.com/ai-engineer-blog/agentic-ai-autonomous-systems-engineering-guide/), understanding these protocols is becoming as essential as understanding API design.\n## Coinbase’s x402: The Crypto-Native Path  \nWhile AP2 targets traditional payment rails, Coinbase’s x402 protocol revives the HTTP 402 “Payment Required” status code for blockchain-native transactions. The approach is elegantly simple for engineers building [API-driven systems](https://zenvanriel.com/ai-engineer-blog/ai-api-design-best-practices/).  \nWhen an agent requests a paid resource, the server responds with HTTP 402 and payment instructions in the header. The agent constructs a payment payload, submits it via the PAYMENT-SIGNATURE header, and retries the request. No accounts. No API keys. No manual payment flows.  \nThe numbers validate the approach: 119 million transactions on Base, 35 million on Solana, roughly $600 million in annualized volume, and zero protocol fees. For AI agents that need to access paid APIs or purchase compute on demand, x402 removes friction that traditional payment systems cannot eliminate.  \n**Warning:** x402 requires stablecoin integration. If your infrastructure cannot support blockchain transactions, this protocol adds significant complexity. For traditional enterprise environments, AP2 may be more practical despite its slower transaction finality.  \nThe x402 Foundation, co-governed by Coinbase and Cloudflare, provides TypeScript, Go, and Python SDKs. Support spans Base, Ethereum, Arbitrum, Polygon, and Solana. For engineers already working with crypto infrastructure, the integration path is straightforward.\n## Implementation Considerations  \nChoosing between protocols depends on your agent architecture and deployment constraints.  \n**Use AP2 when**: You need integration with traditional payment networks, your users already have credit cards or bank accounts, and you prioritize standards body governance over bleeding-edge capabilities.  \n**Use x402 when**: Your infrastructure already supports blockchain transactions, you need micropayments or pay-per-use pricing, and you want minimal protocol overhead with direct HTTP integration.  \n**Use Cloudflare/Stripe when**: Your agents need to provision cloud services, you want a proven production system rather than emerging standards, and you can work within the $100 monthly default spending cap per provider.  \nFor most [AI agent implementations](https://zenvanriel.com/ai-engineer-blog/ai-agent-tool-integration-guide/), combining protocols may prove optimal. An agent might use Cloudflare/Stripe for infrastructure provisioning, x402 for API micropayments, and AP2 for larger consumer transactions that require traditional payment verification."
+          },
+          {
+            "name": "Coinbase’s x402 launches Agentic.market to expand AI agent payments",
+            "url": "https://crypto.news/coinbases-x402-launches-agentic-market-to-expand-ai-agent-payments/",
+            "favicon": "https://favicons.linkup.so?domain=crypto.news",
+            "snippet": "# Coinbase’s x402 launches Agentic.market to expand AI agent payments  \n**Coinbase-backed AI payments protocol x402 has launched Agentic.market, a new platform built to help AI agents find and use compatible online services.**  \n- Coinbase-backed x402 launched Agentic.market, helping AI agents find, access, and pay for compatible online services more easily.\n- The platform offers human browsing tools and agent-facing integrations, removing API key barriers for service discovery.\n- Support from Google, Microsoft, AWS, Visa, and Stripe expands momentum around x402-based AI payment infrastructure.  \nThe launch adds a discovery layer to the protocol by offering a single place where users and AI agents can search for tools that support x402-based payments.  \nCoinbase product lead Nick Prince [said](https://x.com/Nick_Prince12/status/2046268042326290472) the platform aims to “give humans and their agents access to thousands of services, with zero API keys required.” He described Agentic.market as a storefront where users can discover, compare, and use services that work with x402.\n## **Platform targets easier AI agent discovery**  \nPrince said the platform addresses a gap in the AI agent market. He said many users have depended on scattered information and informal recommendations to find services that AI agents can access. Agentic.market is designed to solve that issue by organizing those services in one place.  \nThe marketplace includes services and websites that AI agents can use, such as CoinGecko, Google Flights, and X. Prince also [said](https://x.com/Nick_Prince12/status/2046262146523107342) the platform includes a web interface for people and a programming layer that lets AI agents search, filter, and connect to services on their own during operation.  \nAdditionally, the x402 protocol launched in May 2025 and allows AI agents to make internet payments using stablecoins. It takes its name from the rarely used HTTP status code “402 Payment Required.” Coinbase and its partners present the protocol as infrastructure for AI-driven online commerce.  \nPrince said the platform gives an [AI agent](https://crypto.news/ai-giants-join-forces-the-story-behind-the-asi-token/) “skills,” or code that explains how to use a service. He added that agents also get a wallet, which allows them to “buy services and also sell services.” This setup is meant to let agents complete more tasks without requiring direct human control for each action.\n## **Support grows across tech and payments firms**  \nEarlier this month, Google, Microsoft, and Amazon Web Services backed the [launch](https://crypto.news/coinbase-moves-x402-protocol-to-usage-based-model-for-agentic-ai-tasks/) of the x402 Foundation, which will govern the protocol. American Express, Mastercard, Visa, Cloudflare, Shopify, Stripe, Circle, Base, Polygon Labs, the Solana Foundation, Thirdweb, and KakaoPay also expressed support for the initiative.  \n> “There will be more AI agents transacting online than humans very soon,” noted Coinbase CEO Brian Armstrong.  \nCircle CEO Jeremy Allaire made a similar forecast in January, saying “literally billions of AI agents” could transact on blockchains within three to five years. The launch of Agentic.market places x402 more directly within that growing AI payments push."
+          }
+        ]
+      },
+      "durationMs": 7875
+    },
+    {
+      "step": 2,
+      "service": "llm (OpenRouter)",
+      "url": "https://openrouter.services.sapiom.ai/v1/chat/completions",
+      "requestBody": {
+        "model": "openai/gpt-4o-mini",
+        "messages": [
+          {
+            "role": "user",
+            "content": "Summarize this in exactly one short sentence: The x402 payment protocol is an open, internet-native payment standard built around the HTTP 402 \"Payment Required\" status code, designed specifically for AI agents and programmatic clients to pay for APIs, data, and digital services autonomously using stablecoins like USDC. When a client (such as an AI agent) requests a paid resource, the server responds with HTTP 402 including payment details (price, accepted token, destination). The client then signs a payment authorization with its crypto wallet and resubmits the request with this payment proof. The server verifies and settles the payment on-chain, then delivers the requested content—all within a seamless, programmatic HTTP flow without requiring accounts, API keys, subscriptions, or human intervention.\n\nKey features include:\n- Native "
+          }
+        ],
+        "max_tokens": 900
+      },
+      "startedAt": "2026-07-04T11:06:31.465Z",
+      "httpStatus": 200,
+      "responseSample": "{\"id\":\"gen-1783163194-w85wwdGGtfxOS49GEHiQ\",\"object\":\"chat.completion\",\"created\":1783163194,\"model\":\"openai/gpt-4o-mini\",\"provider\":\"OpenAI\",\"system_fingerprint\":\"fp_85fd54540d\",\"service_tier\":null,\"choices\":[{\"index\":0,\"logprobs\":null,\"finish_reason\":\"stop\",\"native_finish_reason\":\"stop\",\"message\":{\"role\":\"assistant\",\"content\":\"The x402 payment protocol enables AI agents to autonomously pay for APIs and digital services using stablecoins via a seamless, programmatic HTTP process that utilizes th",
+      "responseJson": {
+        "id": "gen-1783163194-w85wwdGGtfxOS49GEHiQ",
+        "object": "chat.completion",
+        "created": 1783163194,
+        "model": "openai/gpt-4o-mini",
+        "provider": "OpenAI",
+        "system_fingerprint": "fp_85fd54540d",
+        "service_tier": null,
+        "choices": [
+          {
+            "index": 0,
+            "logprobs": null,
+            "finish_reason": "stop",
+            "native_finish_reason": "stop",
+            "message": {
+              "role": "assistant",
+              "content": "The x402 payment protocol enables AI agents to autonomously pay for APIs and digital services using stablecoins via a seamless, programmatic HTTP process that utilizes the HTTP 402 status code.",
+              "refusal": null,
+              "reasoning": null
+            }
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 170,
+          "completion_tokens": 37,
+          "total_tokens": 207,
+          "cost": 0.0000477,
+          "is_byok": false,
+          "prompt_tokens_details": {
+            "cached_tokens": 0,
+            "cache_write_tokens": 0,
+            "audio_tokens": 0,
+            "video_tokens": 0
+          },
+          "cost_details": {
+            "upstream_inference_cost": 0.0000477,
+            "upstream_inference_prompt_cost": 0.0000255,
+            "upstream_inference_completions_cost": 0.0000222
+          },
+          "completion_tokens_details": {
+            "reasoning_tokens": 0,
+            "image_tokens": 0,
+            "audio_tokens": 0
+          }
+        }
+      },
+      "durationMs": 3990
+    },
+    {
+      "step": 3,
+      "service": "search (Linkup)",
+      "url": "https://linkup.services.sapiom.ai/v1/search",
+      "requestBody": {
+        "q": "Follow-up: who invented the protocol described here: The x402 payment protocol enables AI agents to autonomously pay for APIs and digital services using stablecoins via a seamless, programmatic HTTP process that utilizes the HTTP 402 status code.",
+        "depth": "standard",
+        "outputType": "sourcedAnswer"
+      },
+      "startedAt": "2026-07-04T11:06:35.455Z",
+      "httpStatus": 200,
+      "responseSample": "{\"answer\":\"The x402 payment protocol was invented by Coinbase in collaboration with Cloudflare and other industry players. It was created in 2025 to modernize and implement the HTTP 402 status code as a native payment mechanism for websites, APIs, and AI agents. The x402 project was contributed to the Linux Foundation by Coinbase and is now stewarded by the x402 Foundation.\",\"sources\":[{\"name\":\"GitHub - x402-foundation/x402: A payments protocol for the internet. Built on HTTP. · GitHub\",\"url\":\"h",
+      "responseJson": {
+        "answer": "The x402 payment protocol was invented by Coinbase in collaboration with Cloudflare and other industry players. It was created in 2025 to modernize and implement the HTTP 402 status code as a native payment mechanism for websites, APIs, and AI agents. The x402 project was contributed to the Linux Foundation by Coinbase and is now stewarded by the x402 Foundation.",
+        "sources": [
+          {
+            "name": "GitHub - x402-foundation/x402: A payments protocol for the internet. Built on HTTP. · GitHub",
+            "url": "https://github.com/x402-foundation/x402",
+            "favicon": "https://favicons.linkup.so?domain=github.com",
+            "snippet": "Network, token, and currency agnostic: we welcome contributions that add support for new networks (both crypto and fiat), signing standards, or schemes, so long as they meet our acceptance criteria laid out in CONTRIBUTING.md. x402 may extend support to fiat based networks, but will never deprioritize onchain payments in favor of fiat payments.\nBlockchains allow for a large number of flexible ways to move money. To help facilitate an expanding number of payment use cases, the x402 protocol is extensible to different ways of settling payments via its scheme field.\nThe following outlines the flow of a payment using the x402 protocol.\nNetwork, token, and currency agnostic: we welcome contributions that add support for new networks (both crypto and fiat), signing standards, or schemes, so long as they meet our acceptance criteria laid out in CONTRIBUTING.md. x402 may extend support to fiat based networks, but will never deprioritize onchain payments in favor of fiat payments.\nBackwards Compatible: x402 will not deprecate support for any existing networks unless such removal is deemed necessary for the security of the standard. Whenever possible, x402 will aim for backwards compatibility for non-major version changes. Trust minimizing: all payment schemes must not allow for the facilitator or resource server to move funds, other than in accordance with client intentions"
+          },
+          {
+            "name": "x402 - Payment Required | Internet-Native Payments Standard",
+            "url": "https://x402.org/",
+            "favicon": "https://favicons.linkup.so?domain=x402.org",
+            "snippet": "Filling out a form is a human behavior that doesn’t match the programmatic nature of the internet. It’s time for an open, internet-native form of payments. Payments that are amazing for humans and AI agents. x402 is built-in to existing HTTP requests, with no additional communication required.\nIt’s designed for API monetization, agentic commerce, paywalled content, and any scenario where traditional payment methods are too slow or expensive. Yes, x402 is production-ready and has processed millions of transactions. The protocol is open-source and has been audited for security.\nFilling out a form is a human behavior that doesn’t match the programmatic nature of the internet. It’s time for an open, internet-native form of payments. Payments that are amazing for humans and AI agents. x402 is built-in to existing HTTP requests, with no additional communication required.\nThe old way of doing payments is barely working for a human world, let alone an agentic future. x402 does in moments what existing systems can’t do at all.\nx402 is an open, neutral standard for internet-native payments. It absolves the Internet’s original sin by natively making payments possible between clients and servers, creating win-win economies that empower agentic payments at scale."
+          },
+          {
+            "name": "x402: An AI-Native Payment Protocol for the Web | by Jung-Hua Liu | Medium",
+            "url": "https://medium.com/@gwrx2005/x402-an-ai-native-payment-protocol-for-the-web-419358450936",
+            "favicon": "https://favicons.linkup.so?domain=medium.com",
+            "snippet": "The HTTP 402 status code — “Payment ... never been implemented in a standardized way[1]. In 2025, Coinbase, in collaboration with Cloudflare and other industry players, resurrected and modernized the 402 code through the creation ...\nIt revives the long-reserved HTTP 402 “Payment Required” status code as a mechanism for websites, APIs, and AI agents to negotiate and settle micropayments in real time[1][2]. Originating from work by Coinbase and now stewarded by the x402 Foundation (with backing from Cloudflare, Visa, and others), x402 is designed to enable internet-native money transfers that are fast, low-cost, and chain-agnostic[3][4]. Unlike traditional blockchain payment systems or credit card networks, x402 operates as an open protocol layer — not a new coin or proprietary platform — allowing any client and ser\nThe HTTP 402 status code — “Payment Required” — was reserved in the HTTP/1.1 specification decades ago in anticipation of such a native payment layer, but until now it has never been implemented in a standardized way[1]. In 2025, Coinbase, in collaboration with Cloudflare and other industry players, resurrected and modernized the 402 code through the creation of x402, an open Web3 payment protocol[2][12]. Coinbase had been exploring internet payment standards since as early as 2015, but the technology and ecosystem were finally ripe to make it practical[13]. Cloudflare CEO Matthew Prin\nKey Innovation: Unlike a traditional blockchain payment system (where a user might manually send cryptocurrency to a merchant’s address and wait for confirmation), x402 is not a standalone application or token — it is a protocol layer that plugs into the existing web.\nIt has been called “the inscription of the AI era” — drawing an analogy to Bitcoin Ordinals (inscriptions) which allowed anyone to write data/assets to a blockchain, x402 similarly could enable AI entities to write money flows on the internet autonomously[32][33]. This paradigm shift (from humans initiating every transaction to AIs transacting on our behalf or with each other) is viewed as a foundational layer for Web3’s next evolution[32]. The remainder of this paper is organized as follows. In the next section, we provide background on HTTP 402 and prior payment protocols, and distinguish x402 from other emerging solutions."
+          },
+          {
+            "name": "x402 payments | Stripe Documentation",
+            "url": "https://docs.stripe.com/payments/machine/x402",
+            "favicon": "https://favicons.linkup.so?domain=docs.stripe.com",
+            "snippet": "Read https://docs.stripe.com/payments/machine/x402.md?lang=node, and create an API that uses x402 to charge for access using the Base network for crypto.\nx402 is a protocol for internet payments. When a client requests a paid resource, your server returns an HTTP 402 response with payment details. The client pays, then retries the request with an authorization. Stripe handles deposit addresses and automatically captures the PaymentIntent when funds settle on-chain.\nIn this guide, you build the server. Your server indicates that payment is required and returns the content after successful payment. You interact with Stripe and a facilitator to complete the payment. You can build an API that uses x402 with a single prompt to your coding agent:\nAlternatively, use curl to fetch the latest payments from the Stripe API: ... To run mainnet transactions, integrate with an x402 facilitator that supports mainnet.\nRead https://docs.stripe.com/payments/machine/x402.md?lang=node, and create an API that uses x402 to charge for access using the Base network for crypto."
+          },
+          {
+            "name": "Overview - Coinbase Developer Documentation",
+            "url": "https://docs.cdp.coinbase.com/x402/welcome",
+            "favicon": "https://favicons.linkup.so?domain=docs.cdp.coinbase.com",
+            "snippet": "For a detailed explanation, see How x402 Works. At a high level: The buyer requests a resource from the server (e.g. an API call, see client/server roles) If payment is required, the server responds with a 402 Payment Required, including payment instructions in the PAYMENT-REQUIRED header · The buyer constructs and sends a payment payload via the PAYMENT-SIGNATURE header · The server verifies and settles the payment via the facilitator.\nSellers: Service providers who want to monetize their APIs or content. x402 enables direct, programmatic payments from clients with minimal setup. Buyers: Human developers and AI agents seeking to access paid services without accounts or manual payment flows. Both sellers and buyers interact directly through HTTP requests, with payment handled transparently through the protocol.\nFor a detailed explanation, see How x402 Works. At a high level: The buyer requests a resource from the server (e.g. an API call, see client/server roles) If payment is required, the server responds with a 402 Payment Required, including payment instructions in the PAYMENT-REQUIRED header · The buyer constructs and sends a payment payload via the PAYMENT-SIGNATURE header · The server verifies and settles the payment via the facilitator.\nThe Coinbase Developer Platform (CDP) offers a Coinbase-hosted facilitator service that processes ERC-20 payments on Base, Polygon, Arbitrum, World, and Solana with a generous free tier of 1,000 transactions per month, offering a streamlined and predictable experience for both buyers and sellers. Facilitators handle verification and settlement, so sellers do not need to maintain blockchain infrastructure. CDP’s x402 facilitator provides:\nAll ERC-20 payments on Base, Polygon, Arbitrum, World, and Solana — via EIP-3009 (USDC, EURC) or Permit2 (any ERC-20) — with a generous free tier (1,000 transactions/month, then $0.001/transaction) ... CDP’s x402 facilitator is designed as a facilitator on top of an open standard, which is not tied to any single provider."
+          },
+          {
+            "name": "x402 Foundation",
+            "url": "https://www.linuxfoundation.org/x402foundation",
+            "favicon": "https://favicons.linkup.so?domain=www.linuxfoundation.org",
+            "snippet": "The x402 Foundation is being established as a neutral, industry-led home for the x402 standard. Our mission is to foster the development and widespread adoption of a payment protocol purpose-built for the future of automated, machine-to-machine (M2M) transactions.\nThe x402 Foundation is being established as a neutral, industry-led home for the x402 standard. Our mission is to foster the development and widespread adoption of a payment protocol purpose-built for the future of automated, machine-to-machine (M2M) transactions.\nThe x402 project was contributed to the Linux Foundation by Coinbase and has been established as x402, a Series of LF Projects, LLC. The x402 protocol is an open-source, internet-native payment standard designed to enable seamless, autonomous commerce and machine-to-machine transactions using stablecoins.\nDedicated to enabling x402 as a global payment protocol for autonomous commerce."
+          },
+          {
+            "name": "What is x402? | Payment Protocol for AI Agents on Solana",
+            "url": "https://solana.com/x402/what-is-x402",
+            "favicon": "https://favicons.linkup.so?domain=solana.com",
+            "snippet": "Solana&#x27;s 400ms finality and $0.00025 transaction costs make it an efficient settlement layer for x402 payments. Whether it&#x27;s an AI agent making thousands of API calls or a user accessing premium content, Solana enables instant, low-cost payments that provides stable, predictable pricing for global services. Further, its low latency makes it easy to add layers like escrow and dispute resolution without noticeably increasing transfer time. AI is no longer confined to generating text or images. Improvements in tool use and context protocols have accelerated the ability of agents to effectively use tools and work on tasks with minimal human intervention.\nSolana's 400ms finality and $0.00025 transaction costs make it an efficient settlement layer for x402 payments. Whether it's an AI agent making thousands of API calls or a user accessing premium content, Solana enables instant, low-cost payments that provides stable, predictable pricing for global services. Further, its low latency makes it easy to add layers like escrow and dispute resolution without noticeably increasing transfer time. AI is no longer confined to generating text or images. Improvements in tool use and context protocols have accelerated the ability of agents to effectively use tools and work on tasks with minimal human intervention.\nThis shift signals the rise of agentic payments, a new layer of the internet economy where machine to machine transactions make up a growing portion of services demand. Today these volumes are early, but growing. Since the launch of x402 on Solana this summer, we have seen 35M+ transactions and $10M+ volumes processed over x402.\nThe x402 community spans partners building everything from client SDKs to payment facilitators. Major platforms like Cloudflare, Google, and Vercel support x402, while teams are building early applications with growing userbases and volumes.\nLearn how x402 enables AI agents to make internet-native payments with the HTTP 402 status code."
+          },
+          {
+            "name": "GitHub - coinbase/x402: A payments protocol for the internet. Built on HTTP. · GitHub",
+            "url": "https://github.com/coinbase/x402",
+            "favicon": "https://favicons.linkup.so?domain=github.com",
+            "snippet": "Blockchains allow for a large number of flexible ways to move money. To help facilitate an expanding number of payment use cases, the x402 protocol is extensible to different ways of settling payments via its scheme field.\nThe following outlines the flow of a payment using the x402 protocol.\nNetwork, token, and currency agnostic: we welcome contributions that add support for new networks (both crypto and fiat), signing standards, or schemes, so long as they meet our acceptance criteria laid out in CONTRIBUTING.md. x402 may extend support to fiat based networks, but will never deprioritize onchain payments in favor of fiat payments.\nBackwards Compatible: x402 will not deprecate support for any existing networks unless such removal is deemed necessary for the security of the standard. Whenever possible, x402 will aim for backwards compatibility for non-major version changes. Trust minimizing: all payment schemes must not allow for the facilitator or resource server to move funds, other than in accordance with client intentions\nEasy to use: It is the goal of the x402 community to improve ease of use relative to other forms of payment on the Internet. This means abstracting as many details of crypto as possible away from the client and resource server, and into the facilitator."
+          },
+          {
+            "name": "x402",
+            "url": "https://www.coinbase.com/developer-platform/products/x402",
+            "favicon": "https://favicons.linkup.so?domain=www.coinbase.com",
+            "snippet": "Filling out a form is a human behavior that doesn’t match the programmatic nature of the internet. It’s time for an open, internet-native form of payments. Payments that are amazing for humans and AI agents. x402 is built-in to existing HTTP requests, with no additional communication required.\nIt’s designed for API monetization, agentic commerce, paywalled content, and any scenario where traditional payment methods are too slow or expensive. Yes, x402 is production-ready and has processed millions of transactions. The protocol is open-source and has been audited for security.\nFilling out a form is a human behavior that doesn’t match the programmatic nature of the internet. It’s time for an open, internet-native form of payments. Payments that are amazing for humans and AI agents. x402 is built-in to existing HTTP requests, with no additional communication required.\nThe old way of doing payments is barely working for a human world, let alone an agentic future. x402 does in moments what existing systems can’t do at all.\nx402 is an open, neutral standard for internet-native payments. It absolves the Internet’s original sin by natively making payments possible between clients and servers, creating win-win economies that empower agentic payments at scale."
+          },
+          {
+            "name": "r/ethdev on Reddit: What is x402? The Internet Native Payments Standard for APIs, Data, and Agents",
+            "url": "https://www.reddit.com/r/ethdev/comments/1s8gyua/what_is_x402_the_internet_native_payments/",
+            "favicon": "https://favicons.linkup.so?domain=www.reddit.com",
+            "snippet": "— A reminder that an Internet-specific payment protocol was envisioned in the original HTTP specifications. ... Talk about foresight: When the Web was built, they included a 402 ERROR, PAYMENT REQUIRED status code, but reserved it for future use simply because nobody had invented a native payment protocol for the internet at the time.\nI built an API monetization layer using the x402 protocol - here's what I learned ... Save tokens and time with this open source, local semantic search (ollama + sqlite-vec) Claude Code plugin ... 402 Payment Required: This code is reserved for future use.\nx402 is an HTTP-native payment protocol that enables autonomous agents and APIs to execute micropayments per request without human intervention or account setup. When an AI agent encounters a paywall or paid resource, x402 allows it to instantly settle the cost using stablecoins and continue without interruption.\nThis article breaks down x402, the internet-native payments protocol built on HTTP 402, covering:\n— A reminder that an Internet-specific payment protocol was envisioned in the original HTTP specifications. ... Talk about foresight: When the Web was built, they included a 402 ERROR, PAYMENT REQUIRED status code, but reserved it for future use simply because nobody had invented a native payment protocol for the internet at the time."
+          },
+          {
+            "name": "x402 and Agentic Commerce: Redefining Autonomous Payments in Financial Services | Amazon Web Services",
+            "url": "https://aws.amazon.com/blogs/industries/x402-and-agentic-commerce-redefining-autonomous-payments-in-financial-services/",
+            "favicon": "https://favicons.linkup.so?domain=aws.amazon.com",
+            "snippet": "Update — May 7, 2026: AWS has launched Amazon Bedrock AgentCore Payments (Preview) — bringing native, managed payment capabilities to AI agents built on Amazon Bedrock. AgentCore Payments lets agents autonomously discover, authorize, and execute x402 micropayments with built-in wallet ...\nUpdate — May 7, 2026: AWS has launched Amazon Bedrock AgentCore Payments (Preview) — bringing native, managed payment capabilities to AI agents built on Amazon Bedrock. AgentCore Payments lets agents autonomously discover, authorize, and execute x402 micropayments with built-in wallet management, policy-based spending controls, and a full audit trail — no custom payment infrastructure required.\nThe architectures and reference implementations described in this post now integrate directly with AgentCore Payments. Get started with AgentCore payments. How the x402 Protocol Lets AI Agents Transact Autonomously, and What That Means for the Financial Services Industry\nEvery transaction is recorded on-chain, providing a full audit trail by design. And because payments are denominated in USDC, cryptocurrency volatility is not a factor for enterprise deployments. x402 is a general-purpose protocol; retailers, media companies, logistics providers, and SaaS platforms are exploring it.\nWith the launch of AgentCore Payments, AWS extends AgentCore with end-to-end payment capabilities purpose-built for agentic commerce. Where the x402 protocol defines how agents and services negotiate payment, AgentCore Payments provides the managed infrastructure that makes it production-ready — eliminating the need for builders to assemble wallet SDKs, payment middleware, and custom authorization logic."
+          },
+          {
+            "name": "What is x402 and why will it transform payments? - Chris Skinner's blog",
+            "url": "https://thefinanser.com/2026/03/what-is-x402-and-why-will-it-transform-payments",
+            "favicon": "https://favicons.linkup.so?domain=thefinanser.com",
+            "snippet": "If you haven’t, it’s built to ensure open, free, frictionless payments, and could be revolutionary for embedded, invisible finance. Built by Coinbase, the x402 protocol is an open-source, web-native payment standard.\nThe next era of payments: when money moves at internet speed I just found an interesting report by KPMG about a new payment standard called x402. Have you heard of it? If you haven’t, it’s built to ensure open, free, frictionless payments, and could be revolutionary for embedded, invisible finance.\nI just found an interesting report by KPMG about a new payment standard called x402. Have you heard of it? If you haven’t, it’s built to ensure open, free, frictionless payments, and could be revolutionary for embedded, invisible finance. Built by Coinbase, the x402 protocol is an open-source, web-native payment standard.\nWhy is it called x402? Because it acts as an HTTP for money, using the long-unused 402 HTTP status code, for automated machine-to-machine or human-to-machine transactions. TBH, it aims to solve an issue that’s been around for the past fifty years. What’s the issue? The fact that the internet was never designed for commerce. It was designed for information exchange. For most of the past fifty years, payments have been built on infrastructure designed for a different world: a human-centric, card-based, offline financial system.\nCross-border payments still pause for weekends and holidays, onboarding still requires accounts and credentials, and transactions still assume a human at the keyboard … but the next phase of the digital economy won’t be driven primarily by humans … it will be driven by machines. So x402 addresses a key flaw in today’s internet: native payments."
+          },
+          {
+            "name": "Exploring the x402 Protocol for Internet-Native Payments",
+            "url": "https://www.permit.io/blog/exploring-the-x402-protocol-for-internet-native-payments",
+            "favicon": "https://favicons.linkup.so?domain=www.permit.io",
+            "snippet": "The client then crafts a signed payment payload, resends the request with this info in a header, and the server verifies it via a facilitator that handles blockchain settlement. Confirmation happens quickly on efficient networks, granting access with a 200 OK response. This flow is stateless, meaning no ongoing sessions are required, which keeps things lightweight for developers. What makes x402 stand out is its developer-friendly design.\nThe internet has long been a place for seamless data exchange, but economic transactions have often felt clunky by comparison. Enter the x402 protocol, an open standard that's breathing new life into the HTTP 402 \"Payment Required\" status code. Developed with input from major players in tech and finance, x402 aims to make payments as native to the web as requesting a webpage.\nWe'll also touch on the critical role of authorization in these systems, where tools like Permit.io can provide the policy-based controls needed to secure access post-payment. Whether you're building APIs for AI agents or exploring new monetization models, understanding x402 could reshape how you think about digital value exchange. At its core, x402 builds on the familiar HTTP protocol, turning a standard request-response loop into a payment-enabled interaction.\nThe client then crafts a signed payment payload, resends the request with this info in a header, and the server verifies it via a facilitator that handles blockchain settlement. Confirmation happens quickly on efficient networks, granting access with a 200 OK response. This flow is stateless, meaning no ongoing sessions are required, which keeps things lightweight for developers. What makes x402 stand out is its developer-friendly design.\nThis elegance opens doors for scenarios where traditional payment gateways fall short, like instant, low-value transactions. Micropayments have been a tantalizing idea for years, promising ways to monetize content or services without subscriptions. High fees from credit cards or banks have kept them impractical, but x402 changes that by tapping into low-cost blockchain layers."
+          },
+          {
+            "name": "How x402 and Dynamic Enable Internet-Native Payments for AI and APIs | Fireblocks",
+            "url": "https://www.fireblocks.com/blog/how-x402-and-dynamic-enable-internet-native-payments-for-ai-and-apis",
+            "favicon": "https://favicons.linkup.so?domain=www.fireblocks.com",
+            "snippet": "This blog explains how x402 revives the HTTP 402 status code to enable machine-native, onchain payments and how developers can easily get started with…\nThis blog explains how x402 revives the HTTP 402 status code to enable machine-native, onchain payments and how developers can easily get started with…\nHere’s how the x402 payment flow works, step by step: Client makes a request: The buyer calls an API or requests a resource. Server replies with 402 Payment Required: The server includes payment instructions in the response.\nSettlement happens onchain: The facilitator (or server) submits the payment to the blockchain. Resource is delivered: The server responds and delivers the requested data. x402 fits naturally into Dynamic’s wallet stack because both are built around simple request and response patterns.\nThe result is a clean payment loop that works with standard HTTP tooling. Developers can choose between embedded wallets or external wallets through the Node SDK. Embedded wallets can be implemented as consumer wallets (browser-based) or server wallets, depending on the use case. The setup remains lightweight because x402 only requires small frontend and backend middleware and a wallet capable of signing messages."
+          },
+          {
+            "name": "Introducing x402: a new standard for internet-native payments | Coinbase",
+            "url": "https://www.coinbase.com/developer-platform/discover/launches/x402",
+            "favicon": "https://favicons.linkup.so?domain=www.coinbase.com",
+            "snippet": "Chainlink: Built a demo using the x402 protocol that requires USDC payment to enable user interaction with a contract on Base Sepolia to mint a random NFT using Chainlink VRF.\nBuffetPay: Smart x402 payments with built-in guardrails and multi-wallet control, streamlining secure, programmable payments. Cal.com: Embeds automated scheduling and paid human interactions directly into workflows, accessible by both agents and users alike. Cred Protocol: Provides decentralized credit scoring infrastructure, allowing AI agents to autonomously assess on-chain creditworthiness in real-time.\nTL;DR: Coinbase is launching x402, a payment protocol that enables instant stablecoin payments directly over HTTP.\nChainlink: Built a demo using the x402 protocol that requires USDC payment to enable user interaction with a contract on Base Sepolia to mint a random NFT using Chainlink VRF.\nConsumer and Supply Chain Automation: AI inventory managers dynamically request and pay for real-time price quotes, supply chain data, and logistics, instantly adapting to market changes autonomously. AI-driven Creative Tools: Intelligent content creation systems autonomously access premium media libraries, design tools, and specialized software, instantly paying for resources to produce high-quality content independently. Instead of static tools that require constant human setup, x402 transforms AI into truly dynamic agents—capable of autonomously discovering, acquiring, and leveraging new capabilities on-demand."
+          },
+          {
+            "name": "Sherlock — x402 Explained: The HTTP 402 Payment Protocol for AI Agents, APIs, and Stablecoin Payments",
+            "url": "https://sherlock.xyz/post/x402-explained-the-http-402-payment-protocol",
+            "favicon": "https://favicons.linkup.so?domain=sherlock.xyz",
+            "snippet": "Executive Summary: x402 is an open payment protocol created by Coinbase and Cloudflare that uses the HTTP 402 &quot;Payment Required&quot; status code to embed stablecoin payments directly into web requests.\nExecutive Summary: x402 is an open payment protocol created by Coinbase and Cloudflare that uses the HTTP 402 \"Payment Required\" status code to embed stablecoin payments directly into web requests. It allows any application, API, or AI agent to send and receive instant payments in USDC over HTTP without accounts, credit cards, or manual intervention.\nThe protocol supports Base, Ethereum, Arbitrum, Polygon, and Solana, and is backed by the x402 Foundation co-governed by Coinbase and Cloudflare. Major integrations include World (Sam Altman's AgentKit for human-verified AI payments), Solana's native developer tooling, and Cloudflare Workers.\nHTTP 402: Payment Required. For nearly three decades, every major browser and server framework has recognized it, but nobody built anything meaningful on top of it. The spec literally says \"reserved for future use.\" In May 2025, Coinbase shipped that future. The protocol is called x402, and it is quietly becoming the payment layer for the next generation of the internet.\nAt Sherlock, we spend our time deep in the infrastructure layer of Web3, auditing the smart contracts and protocols that move real value on-chain. x402 is one of the most significant pieces of infrastructure to emerge in this cycle, and it is worth understanding thoroughly, both as a technology and as a market catalyst. x402 is an open payment protocol that embeds stablecoin payments directly into HTTP, the same request/response cycle that powers every website and API on the internet."
+          },
+          {
+            "name": "A Deep Dive into x402: Revolutionizing AI Payments on the Web | by Ovienathaniel | Medium",
+            "url": "https://medium.com/@ovienathaniel44/a-deep-dive-into-x402-revolutionizing-ai-payments-on-the-web-9a4b7333cc2f",
+            "favicon": "https://favicons.linkup.so?domain=medium.com",
+            "snippet": "Back then, when the initial HTTP specification was drafted, Sir Tim Berners-Lee, the inventor of the World Wide Web, in 1999, reserved the 402 Payment Required for future use. It was meant to signal that a resource needs payment, but without ...\nBack then, when the initial HTTP specification was drafted, Sir Tim Berners-Lee, the inventor of the World Wide Web, in 1999, reserved the 402 Payment Required for future use. It was meant to signal that a resource needs payment, but without a standard way to handle it, it gathered dust for decades. Fast-forward to today: with blockchain tech and stablecoins (digital currencies pegged to real money like the US dollar), x402 revives 402 as a practical tool.\nDiscover x402 — the new web standard turning HTTP into a payment protocol, enabling AI agents to autonomously pay for APIs, compute, and content.\nI would say x402 replaces that entire stack with a native, stateless payment handshake, turning “access denied” into “pay and proceed.” · The x402 protocol works through a two-step HTTP flow that leverages cryptocurrency (specifically, stablecoins like USDC ) for instantaneous, low-cost settlement:\nThis stateless design means there’s no need for session tokens, accounts, or complex API keysc, just a successful payment · While x402 is an open standard, Facilitators play a critical role in bridging the traditional HTTP web with the underlying blockchain infrastructure. Companies like Coinbase (one of the protocol’s originators) offer these services."
+          },
+          {
+            "name": "x402 Protocol: The Internet’s First Native Payment Layer | by HeimLabs | Medium",
+            "url": "https://medium.com/@heimlabs/x402-protocol-the-internets-first-native-payment-layer-662822567d8d",
+            "favicon": "https://favicons.linkup.so?domain=medium.com",
+            "snippet": "Just as cookies, compression, encryption, and caching became native primitives, x402 makes payments a primitive too a subtle shift with enormous consequences. It changes how software interacts, how value flows, and how digital services monetize. That’s why both non-technical readers and protocol engineers feel the “click” when they see it.\nx402 Protocol: The Internet’s First Native Payment Layer For more than three decades, the internet mastered one thing better than any invention in human history: moving information. It could stream …\nIt’s not a checkout system, not a Stripe clone, not a Web3 wrapper, and not a wallet prompt in disguise. It’s a protocol-level extension, embedding payments directly into the Web’s everyday request response cycle. With x402, value moves over HTTP the same way data does instantly, natively, and verifiably.\nJust as cookies, compression, encryption, and caching became native primitives, x402 makes payments a primitive too a subtle shift with enormous consequences. It changes how software interacts, how value flows, and how digital services monetize. That’s why both non-technical readers and protocol engineers feel the “click” when they see it.\nx402 isn’t merely a protocol. It’s the long overdue upgrade the web always needed. we’re already seeing the first wave of systems that depend on x402 style, machine native payments:"
+          },
+          {
+            "name": "x402 Protocol - Payment Standard for APIs and AI Agents | RelAI",
+            "url": "https://relai.fi/x402",
+            "favicon": "https://favicons.linkup.so?domain=relai.fi",
+            "snippet": "No 30-day net terms, no chargebacks, no payment disputes. AI agents can autonomously discover, negotiate, and pay for API access without human intervention. x402 is fully open-source and permissionless. Anyone can implement it - no vendor lock-in, no gatekeepers. Works across Solana, Base, Avalanche, SKALE, Ethereum, and Polygon. One protocol, many networks.\nx402 enables instant micropayments for APIs and AI agents. Open standard built on HTTP 402 with multi-chain support.\nx402 is the open internet-native payment protocol built on HTTP 402. Learn how x402 enables instant micropayments for APIs, AI agents, and machine-to-machine commerce on Solana, Base, Avalanche, and SKALE.\nOriginally reserved by the HTTP specification for \"future use,\" status code 402 was designed to signal that payment is required before a resource can be accessed. The x402 protocol, pioneered by Coinbase, standardizes this flow: when a server returns HTTP 402, it includes payment requirements in the response headers.\nNo 30-day net terms, no chargebacks, no payment disputes. AI agents can autonomously discover, negotiate, and pay for API access without human intervention. x402 is fully open-source and permissionless. Anyone can implement it - no vendor lock-in, no gatekeepers. Works across Solana, Base, Avalanche, SKALE, Ethereum, and Polygon. One protocol, many networks."
+          },
+          {
+            "name": "How to x402: The Complete Guide to the AI Agent Payment Protocol | Simplescraper Blog",
+            "url": "https://simplescraper.io/blog/x402-payment-protocol",
+            "favicon": "https://favicons.linkup.so?domain=simplescraper.io",
+            "snippet": "You can add x402 to existing API endpoints without breaking current clients. x402-aware clients auto-pay; everyone else sees a standard 402. Now that you understand the protocol, let&#x27;s build something. By the end of this section you&#x27;ll have a running Express server that charges per request and a client that pays automatically. You&#x27;ll need an Ethereum-compatible wallet on Base Sepolia (the testnet) and some test USDC to pay with. The private key never leaves your machine; it&#x27;s only used to sign payments locally.\nHTTP status code 402 \"Payment Required\" is less common - it was assigned in the early 1990s, with the expectation that future technology would one day make micropayments a core part of the web. Three decades on, the rise of autonomous AI agents combined with near-zero-cost blockchain settlements means that day may have finally arrived. x402, a protocol built on top of HTTP 402, makes per-request payments work via US dollar pegged stablecoins.\nCoinbase launched the x402 protocol standard in May 2025 to connect these two developments - cheap settlement and agent demand. A V2 release followed within six months, and the x402 Foundation (co-founded with Cloudflare) now governs the open spec. Current work is focused on multi-chain support, framework integrations, and purpose-built SDKs for agent developers. ... Tim Berners-Lee and the architects of HTTP reserve status code 402 \"Payment Required\" - expecting micropayments to become core to the web.\nTraditional APIs require you to prove who you are before they let you pay. x402 only cares that payment is confirmed, which is what makes it work for AI agents that need to hit hundreds of different APIs without signing enterprise agreements for each one. While the protocol is designed for AI agents, it works just as well for manual browsing - a site can request payment from an installed wallet extension, and the user pays to access the page without creating an account.\nYou can add x402 to existing API endpoints without breaking current clients. x402-aware clients auto-pay; everyone else sees a standard 402. Now that you understand the protocol, let's build something. By the end of this section you'll have a running Express server that charges per request and a client that pays automatically. You'll need an Ethereum-compatible wallet on Base Sepolia (the testnet) and some test USDC to pay with. The private key never leaves your machine; it's only used to sign payments locally."
+          }
+        ]
+      },
+      "durationMs": 4953
+    }
+  ],
+  "pollSnapshots": [
+    {
+      "t_ms": 139,
+      "timestamp": "2026-07-04T11:06:23.728Z",
+      "balance": 4.734628,
+      "txnCount": 20
+    },
+    {
+      "t_ms": 1229,
+      "timestamp": "2026-07-04T11:06:24.818Z",
+      "balance": 4.734628,
+      "txnCount": 20
+    },
+    {
+      "t_ms": 2372,
+      "timestamp": "2026-07-04T11:06:25.961Z",
+      "balance": 4.728628,
+      "txnCount": 20
+    },
+    {
+      "t_ms": 3503,
+      "timestamp": "2026-07-04T11:06:27.092Z",
+      "balance": 4.728628,
+      "txnCount": 20
+    },
+    {
+      "t_ms": 4573,
+      "timestamp": "2026-07-04T11:06:28.162Z",
+      "balance": 4.728628,
+      "txnCount": 20
+    },
+    {
+      "t_ms": 5655,
+      "timestamp": "2026-07-04T11:06:29.244Z",
+      "balance": 4.728628,
+      "txnCount": 20
+    },
+    {
+      "t_ms": 6749,
+      "timestamp": "2026-07-04T11:06:30.338Z",
+      "balance": 4.728628,
+      "txnCount": 20
+    },
+    {
+      "t_ms": 7815,
+      "timestamp": "2026-07-04T11:06:31.404Z",
+      "balance": 4.728628,
+      "txnCount": 20
+    },
+    {
+      "t_ms": 8889,
+      "timestamp": "2026-07-04T11:06:32.478Z",
+      "balance": 4.728628,
+      "txnCount": 20
+    },
+    {
+      "t_ms": 9958,
+      "timestamp": "2026-07-04T11:06:33.547Z",
+      "balance": 4.728628,
+      "txnCount": 20
+    },
+    {
+      "t_ms": 11247,
+      "timestamp": "2026-07-04T11:06:34.836Z",
+      "balance": 4.728628,
+      "txnCount": 20
+    },
+    {
+      "t_ms": 12330,
+      "timestamp": "2026-07-04T11:06:35.919Z",
+      "balance": 4.72806,
+      "txnCount": 20
+    },
+    {
+      "t_ms": 13412,
+      "timestamp": "2026-07-04T11:06:37.001Z",
+      "balance": 4.72806,
+      "txnCount": 20
+    },
+    {
+      "t_ms": 14496,
+      "timestamp": "2026-07-04T11:06:38.085Z",
+      "balance": 4.722528,
+      "txnCount": 20
+    },
+    {
+      "t_ms": 15567,
+      "timestamp": "2026-07-04T11:06:39.156Z",
+      "balance": 4.722528,
+      "txnCount": 20
+    },
+    {
+      "t_ms": 16635,
+      "timestamp": "2026-07-04T11:06:40.224Z",
+      "balance": 4.722528,
+      "txnCount": 20
+    },
+    {
+      "t_ms": 17785,
+      "timestamp": "2026-07-04T11:06:41.374Z",
+      "balance": 4.722528,
+      "txnCount": 20
+    },
+    {
+      "t_ms": 18853,
+      "timestamp": "2026-07-04T11:06:42.442Z",
+      "balance": 4.722528,
+      "txnCount": 20
+    },
+    {
+      "t_ms": 19923,
+      "timestamp": "2026-07-04T11:06:43.512Z",
+      "balance": 4.722528,
+      "txnCount": 20
+    },
+    {
+      "t_ms": 20991,
+      "timestamp": "2026-07-04T11:06:44.580Z",
+      "balance": 4.722528,
+      "txnCount": 20
+    },
+    {
+      "t_ms": 22060,
+      "timestamp": "2026-07-04T11:06:45.649Z",
+      "balance": 4.722528,
+      "txnCount": 20
+    },
+    {
+      "t_ms": 23148,
+      "timestamp": "2026-07-04T11:06:46.737Z",
+      "balance": 4.722528,
+      "txnCount": 20
+    },
+    {
+      "t_ms": 24213,
+      "timestamp": "2026-07-04T11:06:47.802Z",
+      "balance": 4.722528,
+      "txnCount": 20
+    },
+    {
+      "t_ms": 25286,
+      "timestamp": "2026-07-04T11:06:48.875Z",
+      "balance": 4.722528,
+      "txnCount": 20
+    },
+    {
+      "t_ms": 26363,
+      "timestamp": "2026-07-04T11:06:49.952Z",
+      "balance": 4.722528,
+      "txnCount": 20
+    },
+    {
+      "t_ms": 27432,
+      "timestamp": "2026-07-04T11:06:51.021Z",
+      "balance": 4.722528,
+      "txnCount": 20
+    },
+    {
+      "t_ms": 28498,
+      "timestamp": "2026-07-04T11:06:52.087Z",
+      "balance": 4.722528,
+      "txnCount": 20
+    },
+    {
+      "t_ms": 29580,
+      "timestamp": "2026-07-04T11:06:53.169Z",
+      "balance": 4.722528,
+      "txnCount": 20
+    },
+    {
+      "t_ms": 30658,
+      "timestamp": "2026-07-04T11:06:54.247Z",
+      "balance": 4.722528,
+      "txnCount": 20
+    },
+    {
+      "t_ms": 31731,
+      "timestamp": "2026-07-04T11:06:55.320Z",
+      "balance": 4.722528,
+      "txnCount": 20
+    }
+  ],
+  "chainTxns": [
+    {
+      "id": "93c0b7b6-89fb-4ded-aa69-c83cf1ccea94",
+      "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+      "serviceName": "sapiom_linkup",
+      "actionName": "execute",
+      "resourceName": "/v1/search",
+      "serviceId": "e6f3caac-b1fa-4e38-9b1a-11d56270f989",
+      "status": "completed",
+      "requiresPayment": true,
+      "qualifiers": {},
+      "metadata": {
+        "createdByApiKeyId": "bfb69755-474f-41c3-bc82-22ca4aa97eec",
+        "preemptiveAuthorization": true
+      },
+      "createdAt": "2026-07-04T11:06:35.634Z",
+      "updatedAt": "2026-07-04T11:06:40.485Z",
+      "authorizedAt": "2026-07-04T11:06:37.037Z",
+      "completedAt": "2026-07-04T11:06:40.485Z",
+      "outcome": "success",
+      "currentPaymentTransactionId": "6582b72f-232d-449d-b661-83611a0e82e9",
+      "trace": {
+        "id": "2ed07039-9b71-4e73-940d-ebf4da479584",
+        "externalId": "chain-1783163183588-07885448"
+      },
+      "agentId": "0fb9cd83-730d-4148-a92c-c4eb29717cd1",
+      "agent": {
+        "id": "0fb9cd83-730d-4148-a92c-c4eb29717cd1",
+        "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+        "label": "chain-task",
+        "name": "chain-task",
+        "description": null,
+        "status": "active",
+        "createdAt": "2026-07-04T11:04:39.247Z",
+        "updatedAt": "2026-07-04T11:04:39.247Z",
+        "numericId": 16
+      },
+      "costs": [
+        {
+          "id": "e8a4705b-2e60-4f7d-941b-76f539d8f667",
+          "transactionId": "93c0b7b6-89fb-4ded-aa69-c83cf1ccea94",
+          "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+          "paymentTransactionId": "6582b72f-232d-449d-b661-83611a0e82e9",
+          "fiatAmount": "0.006000000000000000",
+          "fiatAssetId": "4657ab13-b6e6-4ba4-9df8-47b351c0041c",
+          "isEstimate": false,
+          "isActive": true,
+          "supersedesCostId": null,
+          "supersededAt": null,
+          "costDetails": {
+            "source": "payment_transaction",
+            "network": "sapiom",
+            "protocol": "x402",
+            "paymentTransactionId": "6582b72f-232d-449d-b661-83611a0e82e9"
+          },
+          "createdAt": "2026-07-04T11:06:36.930Z",
+          "updatedAt": "2026-07-04T11:06:36.930Z",
+          "inferredFromFactId": null
+        }
+      ],
+      "traceId": "2ed07039-9b71-4e73-940d-ebf4da479584",
+      "apiKeyId": "bfb69755-474f-41c3-bc82-22ca4aa97eec",
+      "createdByActorType": "api_key",
+      "createdByActorId": "bfb69755-474f-41c3-bc82-22ca4aa97eec",
+      "mandateId": null,
+      "facilitatedByServiceAccount": null,
+      "service": {
+        "id": "e6f3caac-b1fa-4e38-9b1a-11d56270f989",
+        "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+        "numericId": 1,
+        "globalServiceId": "9f581c91-f60a-49ca-8778-3eb84a805852",
+        "name": "sapiom_linkup",
+        "label": null,
+        "description": null,
+        "metadata": null,
+        "createdAt": "2026-07-04T04:51:39.594Z",
+        "updatedAt": "2026-07-04T04:51:39.594Z",
+        "deletedAt": null
+      },
+      "preparingAt": "2026-07-04T11:06:36.961Z",
+      "deniedAt": null,
+      "cancelledAt": null,
+      "authorizationRequests": [
+        {
+          "id": "704c95c3-236b-48c3-ac50-2d1095d876a2",
+          "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+          "transactionId": "93c0b7b6-89fb-4ded-aa69-c83cf1ccea94",
+          "status": "authorized",
+          "createdAt": "2026-07-04T11:06:35.668Z",
+          "updatedAt": "2026-07-04T11:06:35.711Z",
+          "completedAt": "2026-07-04T11:06:35.726Z",
+          "processingAt": "2026-07-04T11:06:35.715Z",
+          "authorizedAt": "2026-07-04T11:06:35.726Z",
+          "deniedAt": null,
+          "ruleExecutions": []
+        },
+        {
+          "id": "c87b80c7-a737-4bb3-b181-d93769592eeb",
+          "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+          "transactionId": "93c0b7b6-89fb-4ded-aa69-c83cf1ccea94",
+          "status": "authorized",
+          "createdAt": "2026-07-04T11:06:36.930Z",
+          "updatedAt": "2026-07-04T11:06:36.988Z",
+          "completedAt": "2026-07-04T11:06:37.037Z",
+          "processingAt": "2026-07-04T11:06:36.993Z",
+          "authorizedAt": "2026-07-04T11:06:37.037Z",
+          "deniedAt": null,
+          "ruleExecutions": [
+            {
+              "id": "84283bbf-ffd6-4284-bbb1-71fabe460142",
+              "ruleId": "5d35cc64-3d49-4069-bb77-52d66ae5b3d5",
+              "rule": {
+                "id": "5d35cc64-3d49-4069-bb77-52d66ae5b3d5",
+                "numericId": 1,
+                "name": "System: Payment Authorization"
+              },
+              "transactionId": "93c0b7b6-89fb-4ded-aa69-c83cf1ccea94",
+              "transactionAuthorizationRequestId": "c87b80c7-a737-4bb3-b181-d93769592eeb",
+              "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+              "status": "completed",
+              "inputData": {
+                "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+                "actionName": "execute",
+                "serviceName": "sapiom_linkup",
+                "resourceName": "/v1/search",
+                "transactionId": "93c0b7b6-89fb-4ded-aa69-c83cf1ccea94",
+                "transactionAuthorizationRequestId": "c87b80c7-a737-4bb3-b181-d93769592eeb"
+              },
+              "outputData": {
+                "reason": "Payment successfully authorized",
+                "decision": "ALLOWED",
+                "metadata": {
+                  "ruleType": "payment_authorization",
+                  "networkId": "204c0cae-d114-46b0-a1dd-89b788e98ed2",
+                  "authorizationDetails": {
+                    "payload": {
+                      "nonce": "e80093ea-aca9-48d8-b64d-8648f1466d56",
+                      "token": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6InNhcGlvbS1wYXltZW50LWtleS12MSJ9.eyJzdWIiOiI2NTgyYjcyZi0yMzJkLTQ0OWQtYjY2MS04MzYxMWEwZTgyZTkiLCJ0cmFuc2ZlcklkIjoiMjA0YzBjYWUtZDExNC00NmIwLWExZGQtODliNzg4ZTk4ZWQyIiwiYWNjb3VudElkIjoiMGY2YTU2YmEtZGViMy00MzA3LTkyYWEtZWY3OTIyOTMwMmZmIiwicGF5VG8iOiIzOTdiOTM5NS1kMzBkLTQyY2MtYWJmOS0wYzU2NjI5ZDFjMmYiLCJhbW91bnQiOiIwLjAwNjAwMDAwMDAwMDAwMDAwMCIsIm5vbmNlIjoiZTgwMDkzZWEtYWNhOS00OGQ4LWI2NGQtODY0OGYxNDY2ZDU2IiwiaWRlbnRpdHkiOnsidmVyc2lvbiI6MiwidGVuYW50SWQiOiI3MjM0YTdmOS00MDc0LTRhYWQtYjEzZi04NGUwZTI4YjQ2OWEiLCJvcmdhbml6YXRpb25JZCI6ImY0YmEyODViLTA4NTUtNGFlMy05OTBjLWU1YmRlZTI5MWM0NyIsInBheW1lbnRBY2NvdW50SWQiOiIwZjZhNTZiYS1kZWIzLTQzMDctOTJhYS1lZjc5MjI5MzAyZmYifSwiaWF0IjoxNzgzMTYzMTk3fQ.J-Iz_MWKzaf_eGHKki_varyybY6H1C1X3hilxc32TO0W_HUDEKoH2qr49y1FtAOD8Qpl3T8TPdmpXD-II0Zx5eo3YP83tkCYia0iIONkUrppkBUoHWeow-824mrfOFzZXol40YDMNLPWOL4I41nfTqOZR37PUwzt1bqkHKhoqAkeccYAsHNdnbCpDHA5vjRXjfj5OSuJeOW20y3MN1FyTjll3Kxod5gXcRgoG0xAJHmF4bMPOFTALmn2mTpFd1PkVcAdt0SxsVfxoqZokqvBUt8tmAk4u0ZghVr5jKuBew73DJ-7Uw-51bp6u5KSwS8VOjlMaC_9jexUvNKVUOdbaQ",
+                      "amount": "0.006000000000000000",
+                      "accountId": "0f6a56ba-deb3-4307-92aa-ef79229302ff",
+                      "authorizationId": "204c0cae-d114-46b0-a1dd-89b788e98ed2"
+                    },
+                    "accepted": {
+                      "asset": "USD",
+                      "extra": {},
+                      "payTo": "397b9395-d30d-42cc-abf9-0c56629d1c2f",
+                      "amount": "0.006",
+                      "scheme": "exact",
+                      "network": "sapiom:main",
+                      "maxTimeoutSeconds": 300
+                    },
+                    "resource": {
+                      "url": "http://linkup.services.sapiom.ai/v1/search",
+                      "mimeType": "application/json",
+                      "description": ""
+                    },
+                    "x402Version": 2
+                  },
+                  "paymentTransactionId": "6582b72f-232d-449d-b661-83611a0e82e9"
+                }
+              },
+              "errorMessage": null,
+              "errorDetails": null,
+              "startedAt": "2026-07-04T11:06:37.000Z",
+              "completedAt": "2026-07-04T11:06:37.031Z",
+              "executionTimeMs": 31,
+              "retryCount": 0,
+              "parentExecutionId": null,
+              "createdAt": "2026-07-04T11:06:36.988Z",
+              "updatedAt": "2026-07-04T11:06:36.988Z"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "e15848db-29c7-462a-81d2-9b11de35bd75",
+      "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+      "serviceName": "sapiom_openrouter",
+      "actionName": "generate",
+      "resourceName": "/v1/chat/completions",
+      "serviceId": "0fb63c2c-067f-4d39-9ef2-036408fbb822",
+      "status": "completed",
+      "requiresPayment": true,
+      "qualifiers": {},
+      "metadata": {
+        "createdByApiKeyId": "bfb69755-474f-41c3-bc82-22ca4aa97eec",
+        "preemptiveAuthorization": true
+      },
+      "createdAt": "2026-07-04T11:06:31.768Z",
+      "updatedAt": "2026-07-04T11:06:35.536Z",
+      "authorizedAt": "2026-07-04T11:06:33.166Z",
+      "completedAt": "2026-07-04T11:06:35.537Z",
+      "outcome": "success",
+      "currentPaymentTransactionId": "93fd5b72-90de-4e31-84e0-0e2e77e601bd",
+      "trace": {
+        "id": "2ed07039-9b71-4e73-940d-ebf4da479584",
+        "externalId": "chain-1783163183588-07885448"
+      },
+      "agentId": "0fb9cd83-730d-4148-a92c-c4eb29717cd1",
+      "agent": {
+        "id": "0fb9cd83-730d-4148-a92c-c4eb29717cd1",
+        "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+        "label": "chain-task",
+        "name": "chain-task",
+        "description": null,
+        "status": "active",
+        "createdAt": "2026-07-04T11:04:39.247Z",
+        "updatedAt": "2026-07-04T11:04:39.247Z",
+        "numericId": 16
+      },
+      "costs": [
+        {
+          "id": "8114698f-9ba0-466f-b3e8-340653cee837",
+          "transactionId": "e15848db-29c7-462a-81d2-9b11de35bd75",
+          "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+          "paymentTransactionId": "93fd5b72-90de-4e31-84e0-0e2e77e601bd",
+          "fiatAmount": "0.000568000000000000",
+          "fiatAssetId": "4657ab13-b6e6-4ba4-9df8-47b351c0041c",
+          "isEstimate": false,
+          "isActive": false,
+          "supersedesCostId": null,
+          "supersededAt": "2026-07-04T11:06:35.520Z",
+          "costDetails": {
+            "source": "payment_transaction",
+            "network": "sapiom",
+            "protocol": "x402",
+            "paymentTransactionId": "93fd5b72-90de-4e31-84e0-0e2e77e601bd"
+          },
+          "createdAt": "2026-07-04T11:06:33.037Z",
+          "updatedAt": "2026-07-04T11:06:35.499Z",
+          "inferredFromFactId": null
+        },
+        {
+          "id": "5a6f7d19-3185-4007-a4b8-d465b91fb8d5",
+          "transactionId": "e15848db-29c7-462a-81d2-9b11de35bd75",
+          "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+          "paymentTransactionId": "93fd5b72-90de-4e31-84e0-0e2e77e601bd",
+          "fiatAmount": "0.000100000000000000",
+          "fiatAssetId": "4657ab13-b6e6-4ba4-9df8-47b351c0041c",
+          "isEstimate": false,
+          "isActive": true,
+          "supersedesCostId": "8114698f-9ba0-466f-b3e8-340653cee837",
+          "supersededAt": null,
+          "costDetails": {
+            "source": "payment_capture",
+            "network": "sapiom",
+            "protocol": "x402",
+            "capturedAmount": "0.0001",
+            "originalAmount": "0.000568000000000000"
+          },
+          "createdAt": "2026-07-04T11:06:35.499Z",
+          "updatedAt": "2026-07-04T11:06:35.499Z",
+          "inferredFromFactId": null
+        }
+      ],
+      "traceId": "2ed07039-9b71-4e73-940d-ebf4da479584",
+      "apiKeyId": "bfb69755-474f-41c3-bc82-22ca4aa97eec",
+      "createdByActorType": "api_key",
+      "createdByActorId": "bfb69755-474f-41c3-bc82-22ca4aa97eec",
+      "mandateId": null,
+      "facilitatedByServiceAccount": null,
+      "service": {
+        "id": "0fb63c2c-067f-4d39-9ef2-036408fbb822",
+        "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+        "numericId": 2,
+        "globalServiceId": "b813ffc4-8dfa-442c-83c1-c77255da1f61",
+        "name": "sapiom_openrouter",
+        "label": null,
+        "description": null,
+        "metadata": null,
+        "createdAt": "2026-07-04T05:14:31.042Z",
+        "updatedAt": "2026-07-04T05:14:31.042Z",
+        "deletedAt": null
+      },
+      "preparingAt": "2026-07-04T11:06:33.074Z",
+      "deniedAt": null,
+      "cancelledAt": null,
+      "authorizationRequests": [
+        {
+          "id": "7741a96d-ea17-4a12-9333-16b4a60fddee",
+          "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+          "transactionId": "e15848db-29c7-462a-81d2-9b11de35bd75",
+          "status": "authorized",
+          "createdAt": "2026-07-04T11:06:33.037Z",
+          "updatedAt": "2026-07-04T11:06:33.095Z",
+          "completedAt": "2026-07-04T11:06:33.166Z",
+          "processingAt": "2026-07-04T11:06:33.098Z",
+          "authorizedAt": "2026-07-04T11:06:33.166Z",
+          "deniedAt": null,
+          "ruleExecutions": [
+            {
+              "id": "bd2eabd9-1490-4f12-9165-c55d1cdeac03",
+              "ruleId": "5d35cc64-3d49-4069-bb77-52d66ae5b3d5",
+              "rule": {
+                "id": "5d35cc64-3d49-4069-bb77-52d66ae5b3d5",
+                "numericId": 1,
+                "name": "System: Payment Authorization"
+              },
+              "transactionId": "e15848db-29c7-462a-81d2-9b11de35bd75",
+              "transactionAuthorizationRequestId": "7741a96d-ea17-4a12-9333-16b4a60fddee",
+              "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+              "status": "completed",
+              "inputData": {
+                "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+                "actionName": "generate",
+                "serviceName": "sapiom_openrouter",
+                "resourceName": "/v1/chat/completions",
+                "transactionId": "e15848db-29c7-462a-81d2-9b11de35bd75",
+                "transactionAuthorizationRequestId": "7741a96d-ea17-4a12-9333-16b4a60fddee"
+              },
+              "outputData": {
+                "reason": "Payment successfully authorized",
+                "decision": "ALLOWED",
+                "metadata": {
+                  "ruleType": "payment_authorization",
+                  "networkId": "44f9ad9e-88cd-4ff4-a8ac-34e330dab0fd",
+                  "authorizationDetails": {
+                    "payload": {
+                      "nonce": "654331bb-badf-446c-bef0-d0243a72856f",
+                      "token": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6InNhcGlvbS1wYXltZW50LWtleS12MSJ9.eyJzdWIiOiI5M2ZkNWI3Mi05MGRlLTRlMzEtODRlMC0wZTJlNzdlNjAxYmQiLCJ0cmFuc2ZlcklkIjoiNDRmOWFkOWUtODhjZC00ZmY0LWE4YWMtMzRlMzMwZGFiMGZkIiwiYWNjb3VudElkIjoiMGY2YTU2YmEtZGViMy00MzA3LTkyYWEtZWY3OTIyOTMwMmZmIiwicGF5VG8iOiIzOTdiOTM5NS1kMzBkLTQyY2MtYWJmOS0wYzU2NjI5ZDFjMmYiLCJhbW91bnQiOiIwLjAwMDU2ODAwMDAwMDAwMDAwMCIsIm5vbmNlIjoiNjU0MzMxYmItYmFkZi00NDZjLWJlZjAtZDAyNDNhNzI4NTZmIiwiaWRlbnRpdHkiOnsidmVyc2lvbiI6MiwidGVuYW50SWQiOiI3MjM0YTdmOS00MDc0LTRhYWQtYjEzZi04NGUwZTI4YjQ2OWEiLCJvcmdhbml6YXRpb25JZCI6ImY0YmEyODViLTA4NTUtNGFlMy05OTBjLWU1YmRlZTI5MWM0NyIsInBheW1lbnRBY2NvdW50SWQiOiIwZjZhNTZiYS1kZWIzLTQzMDctOTJhYS1lZjc5MjI5MzAyZmYifSwiaWF0IjoxNzgzMTYzMTkzfQ.WCp_jBhPr8W0GCf2RVWaqPIEaXu7b2qZ1OkNvYablsNh-wFwXu46BDGLUHe-po2srMiX3MUyAhtBooWm7k9LPOKQeiJrQQa3G3kFZSi2heuJIrfZLTF89Upd4VrIjjcr3zr_eKJ5qVgepLgEp50dQeJiQall5nmi4kx9TMiq7DKxwEfib5Q9t9vEpHaXdzFfuEkxpO5atyPzfIhm7wdxmycHol3Z9CcojB4dgX25Kc5JPE2UEplS5FAOp3tYlK5eUl8kvsOCG0xdGKZKo1k8zzzVTfQQqQiP6IabKSwlBHCl3bPSRuKi0DphaOvz6mpMd6o-_CNbhIFDvT4p8rE-pQ",
+                      "amount": "0.000568000000000000",
+                      "accountId": "0f6a56ba-deb3-4307-92aa-ef79229302ff",
+                      "authorizationId": "44f9ad9e-88cd-4ff4-a8ac-34e330dab0fd"
+                    },
+                    "accepted": {
+                      "asset": "USD",
+                      "extra": {},
+                      "payTo": "397b9395-d30d-42cc-abf9-0c56629d1c2f",
+                      "amount": "0.000568",
+                      "scheme": "upto",
+                      "network": "sapiom:main",
+                      "maxTimeoutSeconds": 300
+                    },
+                    "resource": {
+                      "url": "http://openrouter.services.sapiom.ai/v1/chat/completions",
+                      "mimeType": "application/json",
+                      "description": "OpenRouter chat completion"
+                    },
+                    "x402Version": 2
+                  },
+                  "paymentTransactionId": "93fd5b72-90de-4e31-84e0-0e2e77e601bd"
+                }
+              },
+              "errorMessage": null,
+              "errorDetails": null,
+              "startedAt": "2026-07-04T11:06:33.123Z",
+              "completedAt": "2026-07-04T11:06:33.160Z",
+              "executionTimeMs": 37,
+              "retryCount": 0,
+              "parentExecutionId": null,
+              "createdAt": "2026-07-04T11:06:33.095Z",
+              "updatedAt": "2026-07-04T11:06:33.095Z"
+            }
+          ]
+        },
+        {
+          "id": "6945e1ac-bafd-4066-8b16-d42fa7798845",
+          "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+          "transactionId": "e15848db-29c7-462a-81d2-9b11de35bd75",
+          "status": "authorized",
+          "createdAt": "2026-07-04T11:06:31.818Z",
+          "updatedAt": "2026-07-04T11:06:31.849Z",
+          "completedAt": "2026-07-04T11:06:31.863Z",
+          "processingAt": "2026-07-04T11:06:31.853Z",
+          "authorizedAt": "2026-07-04T11:06:31.863Z",
+          "deniedAt": null,
+          "ruleExecutions": []
+        }
+      ]
+    },
+    {
+      "id": "6ea07ff3-84a8-46d6-b517-09a61d78b6b2",
+      "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+      "serviceName": "sapiom_linkup",
+      "actionName": "execute",
+      "resourceName": "/v1/search",
+      "serviceId": "e6f3caac-b1fa-4e38-9b1a-11d56270f989",
+      "status": "completed",
+      "requiresPayment": true,
+      "qualifiers": {},
+      "metadata": {
+        "createdByApiKeyId": "bfb69755-474f-41c3-bc82-22ca4aa97eec",
+        "preemptiveAuthorization": true
+      },
+      "createdAt": "2026-07-04T11:06:23.813Z",
+      "updatedAt": "2026-07-04T11:06:31.604Z",
+      "authorizedAt": "2026-07-04T11:06:25.251Z",
+      "completedAt": "2026-07-04T11:06:31.611Z",
+      "outcome": "success",
+      "currentPaymentTransactionId": "df6840c3-7f18-421d-90a1-8fe8d093ae80",
+      "trace": {
+        "id": "2ed07039-9b71-4e73-940d-ebf4da479584",
+        "externalId": "chain-1783163183588-07885448"
+      },
+      "agentId": "0fb9cd83-730d-4148-a92c-c4eb29717cd1",
+      "agent": {
+        "id": "0fb9cd83-730d-4148-a92c-c4eb29717cd1",
+        "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+        "label": "chain-task",
+        "name": "chain-task",
+        "description": null,
+        "status": "active",
+        "createdAt": "2026-07-04T11:04:39.247Z",
+        "updatedAt": "2026-07-04T11:04:39.247Z",
+        "numericId": 16
+      },
+      "costs": [
+        {
+          "id": "d8a79a7b-d7f7-4b16-b0ea-9589ad890199",
+          "transactionId": "6ea07ff3-84a8-46d6-b517-09a61d78b6b2",
+          "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+          "paymentTransactionId": "df6840c3-7f18-421d-90a1-8fe8d093ae80",
+          "fiatAmount": "0.006000000000000000",
+          "fiatAssetId": "4657ab13-b6e6-4ba4-9df8-47b351c0041c",
+          "isEstimate": false,
+          "isActive": true,
+          "supersedesCostId": null,
+          "supersededAt": null,
+          "costDetails": {
+            "source": "payment_transaction",
+            "network": "sapiom",
+            "protocol": "x402",
+            "paymentTransactionId": "df6840c3-7f18-421d-90a1-8fe8d093ae80"
+          },
+          "createdAt": "2026-07-04T11:06:25.108Z",
+          "updatedAt": "2026-07-04T11:06:25.108Z",
+          "inferredFromFactId": null
+        }
+      ],
+      "traceId": "2ed07039-9b71-4e73-940d-ebf4da479584",
+      "apiKeyId": "bfb69755-474f-41c3-bc82-22ca4aa97eec",
+      "createdByActorType": "api_key",
+      "createdByActorId": "bfb69755-474f-41c3-bc82-22ca4aa97eec",
+      "mandateId": null,
+      "facilitatedByServiceAccount": null,
+      "service": {
+        "id": "e6f3caac-b1fa-4e38-9b1a-11d56270f989",
+        "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+        "numericId": 1,
+        "globalServiceId": "9f581c91-f60a-49ca-8778-3eb84a805852",
+        "name": "sapiom_linkup",
+        "label": null,
+        "description": null,
+        "metadata": null,
+        "createdAt": "2026-07-04T04:51:39.594Z",
+        "updatedAt": "2026-07-04T04:51:39.594Z",
+        "deletedAt": null
+      },
+      "preparingAt": "2026-07-04T11:06:25.138Z",
+      "deniedAt": null,
+      "cancelledAt": null,
+      "authorizationRequests": [
+        {
+          "id": "c0bca67d-323c-4ca9-93ff-77bf725c5a58",
+          "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+          "transactionId": "6ea07ff3-84a8-46d6-b517-09a61d78b6b2",
+          "status": "authorized",
+          "createdAt": "2026-07-04T11:06:23.863Z",
+          "updatedAt": "2026-07-04T11:06:23.885Z",
+          "completedAt": "2026-07-04T11:06:23.895Z",
+          "processingAt": "2026-07-04T11:06:23.888Z",
+          "authorizedAt": "2026-07-04T11:06:23.895Z",
+          "deniedAt": null,
+          "ruleExecutions": []
+        },
+        {
+          "id": "938d85ca-aeb9-486f-a35c-10430fbd9dbd",
+          "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+          "transactionId": "6ea07ff3-84a8-46d6-b517-09a61d78b6b2",
+          "status": "authorized",
+          "createdAt": "2026-07-04T11:06:25.108Z",
+          "updatedAt": "2026-07-04T11:06:25.183Z",
+          "completedAt": "2026-07-04T11:06:25.251Z",
+          "processingAt": "2026-07-04T11:06:25.187Z",
+          "authorizedAt": "2026-07-04T11:06:25.251Z",
+          "deniedAt": null,
+          "ruleExecutions": [
+            {
+              "id": "ab1cf462-f5b1-47a1-a70b-812a7ca9a49e",
+              "ruleId": "5d35cc64-3d49-4069-bb77-52d66ae5b3d5",
+              "rule": {
+                "id": "5d35cc64-3d49-4069-bb77-52d66ae5b3d5",
+                "numericId": 1,
+                "name": "System: Payment Authorization"
+              },
+              "transactionId": "6ea07ff3-84a8-46d6-b517-09a61d78b6b2",
+              "transactionAuthorizationRequestId": "938d85ca-aeb9-486f-a35c-10430fbd9dbd",
+              "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+              "status": "completed",
+              "inputData": {
+                "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+                "actionName": "execute",
+                "serviceName": "sapiom_linkup",
+                "resourceName": "/v1/search",
+                "transactionId": "6ea07ff3-84a8-46d6-b517-09a61d78b6b2",
+                "transactionAuthorizationRequestId": "938d85ca-aeb9-486f-a35c-10430fbd9dbd"
+              },
+              "outputData": {
+                "reason": "Payment successfully authorized",
+                "decision": "ALLOWED",
+                "metadata": {
+                  "ruleType": "payment_authorization",
+                  "networkId": "500f84cd-bd16-4985-9934-4dcb505b28a8",
+                  "authorizationDetails": {
+                    "payload": {
+                      "nonce": "67cbe923-cf6c-49a9-b735-d16735c3384c",
+                      "token": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6InNhcGlvbS1wYXltZW50LWtleS12MSJ9.eyJzdWIiOiJkZjY4NDBjMy03ZjE4LTQyMWQtOTBhMS04ZmU4ZDA5M2FlODAiLCJ0cmFuc2ZlcklkIjoiNTAwZjg0Y2QtYmQxNi00OTg1LTk5MzQtNGRjYjUwNWIyOGE4IiwiYWNjb3VudElkIjoiMGY2YTU2YmEtZGViMy00MzA3LTkyYWEtZWY3OTIyOTMwMmZmIiwicGF5VG8iOiIzOTdiOTM5NS1kMzBkLTQyY2MtYWJmOS0wYzU2NjI5ZDFjMmYiLCJhbW91bnQiOiIwLjAwNjAwMDAwMDAwMDAwMDAwMCIsIm5vbmNlIjoiNjdjYmU5MjMtY2Y2Yy00OWE5LWI3MzUtZDE2NzM1YzMzODRjIiwiaWRlbnRpdHkiOnsidmVyc2lvbiI6MiwidGVuYW50SWQiOiI3MjM0YTdmOS00MDc0LTRhYWQtYjEzZi04NGUwZTI4YjQ2OWEiLCJvcmdhbml6YXRpb25JZCI6ImY0YmEyODViLTA4NTUtNGFlMy05OTBjLWU1YmRlZTI5MWM0NyIsInBheW1lbnRBY2NvdW50SWQiOiIwZjZhNTZiYS1kZWIzLTQzMDctOTJhYS1lZjc5MjI5MzAyZmYifSwiaWF0IjoxNzgzMTYzMTg1fQ.r2RROrkD-HwLAIKzWVfKYE6gk0Le_qUukFwiQOmIQQdz_ItngmuQhequzfXYfrEH2iVeMFIsl5V4STGalpKD6IdxMk8Tt0Ld3reVLQqRTNNn14mhfsspXAxg39Cu7Ah84Xu0nwLSD6xZjqBh6aOFnRJMl2PNEqsWaZtRkKhWy7DJVJ9I5uq0BR-XWlF5QGHFoQ1Hh44YqnhI2-tF1aRzxLU_FS8SjQfWrgboCUDVNO5vBzjPBR5YzQM4_0w5-XzPMlxaKM_xrIjZn7DVhjLUQcLEI8owevzwJ65oT7Qn4aAeVW2aCC96mDHBui0M9YBmu0vzGj_zn5yTT2NSSndyyg",
+                      "amount": "0.006000000000000000",
+                      "accountId": "0f6a56ba-deb3-4307-92aa-ef79229302ff",
+                      "authorizationId": "500f84cd-bd16-4985-9934-4dcb505b28a8"
+                    },
+                    "accepted": {
+                      "asset": "USD",
+                      "extra": {},
+                      "payTo": "397b9395-d30d-42cc-abf9-0c56629d1c2f",
+                      "amount": "0.006",
+                      "scheme": "exact",
+                      "network": "sapiom:main",
+                      "maxTimeoutSeconds": 300
+                    },
+                    "resource": {
+                      "url": "http://linkup.services.sapiom.ai/v1/search",
+                      "mimeType": "application/json",
+                      "description": ""
+                    },
+                    "x402Version": 2
+                  },
+                  "paymentTransactionId": "df6840c3-7f18-421d-90a1-8fe8d093ae80"
+                }
+              },
+              "errorMessage": null,
+              "errorDetails": null,
+              "startedAt": "2026-07-04T11:06:25.202Z",
+              "completedAt": "2026-07-04T11:06:25.243Z",
+              "executionTimeMs": 41,
+              "retryCount": 0,
+              "parentExecutionId": null,
+              "createdAt": "2026-07-04T11:06:25.183Z",
+              "updatedAt": "2026-07-04T11:06:25.183Z"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "windows": [
+    {
+      "id": "93c0b7b6-89fb-4ded-aa69-c83cf1ccea94",
+      "serviceName": "sapiom_linkup",
+      "authorizedAt": 1783163197037,
+      "liveCreatedAt": 1783163196930,
+      "holdAmount": "0.006000000000000000",
+      "liveAmount": "0.006000000000000000"
+    },
+    {
+      "id": "e15848db-29c7-462a-81d2-9b11de35bd75",
+      "serviceName": "sapiom_openrouter",
+      "authorizedAt": 1783163193166,
+      "liveCreatedAt": 1783163195499,
+      "holdAmount": "0.000568000000000000",
+      "liveAmount": "0.000100000000000000"
+    },
+    {
+      "id": "6ea07ff3-84a8-46d6-b517-09a61d78b6b2",
+      "serviceName": "sapiom_linkup",
+      "authorizedAt": 1783163185251,
+      "liveCreatedAt": 1783163185108,
+      "holdAmount": "0.006000000000000000",
+      "liveAmount": "0.006000000000000000"
+    }
+  ],
+  "verdict": {
+    "stitchConfirmed": true,
+    "internalTraceIdCount": 1,
+    "chainTxnCount": 3,
+    "holdOverlapDetected": false,
+    "peakBalanceDipUsd": 0.012100000000000222,
+    "totalChainWallMs": 16818,
+    "note": "Sapiom find-or-create grouped all chained calls under ONE internal traceId despite being separate transactions — trace-based cost-per-task attribution (BUILD 4) is viable."
+  }
+}
