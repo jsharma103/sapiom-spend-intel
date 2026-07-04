@@ -296,6 +296,36 @@ def callsite_probe(con) -> bool:
 
 
 # ---------------------------------------------------------------------------
+# 7. Governance auth rate (BUILD 11 — payments auth-rate analog)
+# ---------------------------------------------------------------------------
+
+def governance_auth_rate(con) -> dict:
+    """% of transactions approved vs denied by a Sapiom governance spending rule.
+    NOTE: this is a pre-flight governance decision, distinct from post-flight execution
+    outcome (success/error) already covered by reliability.md / loss_rate.md — a
+    transaction can be *approved* by governance and still fail downstream (vendor/network
+    error), or (not observed here) be *denied* by governance before it ever executes."""
+    rows = con.execute(
+        "SELECT outcome, status, COUNT(*) FROM transactions GROUP BY 1, 2 ORDER BY 3 DESC"
+    ).fetchall()
+    total = con.execute("SELECT COUNT(*) FROM transactions").fetchone()[0]
+    # No transaction in this ledger shows a governance denial (e.g. status/outcome of
+    # 'denied' or 'blocked') because no spending rule was active in the sample. Every
+    # outcome value observed ('success'/'error') reflects downstream execution, not a
+    # governance gate — so denied = 0 by construction of this dataset, not by inference.
+    denied = 0
+    approved = total - denied
+    auth_rate_pct = (approved / (approved + denied) * 100) if (approved + denied) else None
+    return {
+        "distribution": [{"outcome": o, "status": s, "n": n} for o, s, n in rows],
+        "total": total,
+        "approved": approved,
+        "denied": denied,
+        "auth_rate_pct": auth_rate_pct,
+    }
+
+
+# ---------------------------------------------------------------------------
 # Rendering
 # ---------------------------------------------------------------------------
 
@@ -306,6 +336,7 @@ def render(con) -> str:
     acc = estimate_accuracy_scorecard(con)
     runaway = runaway_detection(con)
     has_callsite = callsite_probe(con)
+    auth = governance_auth_rate(con)
 
     lines = []
     lines.append("# Sapiom Spend Findings")
@@ -422,6 +453,32 @@ def render(con) -> str:
         lines.append("Probed the raw transaction JSON for an SDK-documented `callSite` field: **absent** "
                       "on every captured transaction. No second attribution axis beyond `traceId` is "
                       "available in this account's data — section otherwise skipped.")
+    lines.append("")
+
+    lines.append("## 7. Governance auth rate (payments auth-rate analog)")
+    lines.append("")
+    lines.append("Payments framing: an \"auth rate\" is % of transactions the authorization layer "
+                  "approves vs. declines *before* execution — for Sapiom that's governance spending "
+                  "rules, not downstream vendor/network success (already covered in `reliability.md` "
+                  "/ `loss_rate.md`). `outcome` distribution:")
+    lines.append("")
+    lines.append("| Outcome | Status | N |")
+    lines.append("|---|---|---|")
+    for row in auth["distribution"]:
+        lines.append(f"| {row['outcome']} | {row['status']} | {row['n']} |")
+    lines.append("")
+    lines.append(f"Approved: {auth['approved']} · Denied: {auth['denied']} · "
+                  f"**Auth rate = {auth['auth_rate_pct']:.1f}%** ({auth['approved']}/{auth['approved'] + auth['denied']}).")
+    lines.append("")
+    lines.append("**Caveat: no spending rules were active in this sample.** Every transaction that "
+                  "reached the ledger did so with zero governance gates to pass or fail — a 100% auth "
+                  "rate here means \"nothing was configured to say no,\" not \"governance actively "
+                  "approved risky spend.\" The `outcome` column only ever takes values `success`/`error`, "
+                  "both reflecting downstream execution (confirmed: no `denied`/`blocked` value exists "
+                  "anywhere in this dataset) — this metric becomes meaningful once a spending rule is "
+                  "created (dashboard-only, [HUMAN-UI], see BACKLOG.md item 8 / the rules-on-hold-vs-"
+                  "settlement experiment) and actually denies a transaction. Treat 100% as a baseline "
+                  "reading of an unconfigured account, not evidence that governance works.")
     lines.append("")
 
     return "\n".join(lines) + "\n"

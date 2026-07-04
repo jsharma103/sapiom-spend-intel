@@ -255,8 +255,10 @@
     grid.appendChild(tile);
   })();
 
-  footer.textContent = 'Static, offline viewer.';
-  footer.title = 'Reads dashboard_data.js only, no network, no backend. Regenerate with: python export_dashboard.py';
+  const ar = data.tile_auth_rate || {};
+  const authRateStr = (ar.auth_rate_pct === null || ar.auth_rate_pct === undefined) ? 'n/a' : `${Number(ar.auth_rate_pct).toFixed(0)}%`;
+  footer.innerHTML = `Static, offline viewer. Governance auth rate: <b>${authRateStr}</b> (${ar.approved ?? 0}/${(ar.approved ?? 0) + (ar.denied ?? 0)}, no spending rules active in this sample — findings.md §7).`;
+  footer.title = 'Reads dashboard_data.js only, no network, no backend. Regenerate with: python export_dashboard.py. ' + (ar.note || '');
 })();
 </script>
 

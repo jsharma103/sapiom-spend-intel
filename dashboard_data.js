@@ -1,5 +1,5 @@
 window.DASHBOARD_DATA = {
-  "generated_at": "2026-07-04T16:58:37.263860+00:00",
+  "generated_at": "2026-07-04T17:01:27.722694+00:00",
   "header": {
     "n_txns": 81,
     "n_agents": 16,
@@ -188,5 +188,11 @@ window.DASHBOARD_DATA = {
     "loss_rate_bps": 0.0,
     "n_failed_with_cost_row": 0,
     "note": "2/81 txns failed (2.5%) but 0/2 produced a cost row \u2014 Sapiom did not charge for either failure in this sample (both were pre-settlement client/gateway errors, not mid-flight failures after a hold). Loss rate = 0 bps of TPV. Full queries + caveats: loss_rate.md."
+  },
+  "tile_auth_rate": {
+    "approved": 81,
+    "denied": 0,
+    "auth_rate_pct": 100.0,
+    "note": "No spending rules were active in this sample \u2014 100% reflects an unconfigured account (nothing to deny), not proof governance works. Full distribution + caveat: findings.md \u00a77."
   }
 };

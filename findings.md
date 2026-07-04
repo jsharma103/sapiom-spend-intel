@@ -37,8 +37,8 @@ Negative values on flat single-row services are real, not a bug: for those servi
 
 | Trace External ID | Steps | Cost | Wall time |
 |---|---|---|---|
-| chain-1783163079023-ddff4761 | 3 | $0.012100 | 16.21s |
 | chain-1783163183588-07885448 | 3 | $0.012100 | 15.23s |
+| chain-1783163079023-ddff4761 | 3 | $0.012100 | 16.21s |
 
 ## 4. Estimate-accuracy scorecard
 
@@ -80,4 +80,17 @@ Note: in tonight's real data, the agent literally *named* `spend-runaway` (25 ca
 ## 6. callSite lineage
 
 Probed the raw transaction JSON for an SDK-documented `callSite` field: **absent** on every captured transaction. No second attribution axis beyond `traceId` is available in this account's data — section otherwise skipped.
+
+## 7. Governance auth rate (payments auth-rate analog)
+
+Payments framing: an "auth rate" is % of transactions the authorization layer approves vs. declines *before* execution — for Sapiom that's governance spending rules, not downstream vendor/network success (already covered in `reliability.md` / `loss_rate.md`). `outcome` distribution:
+
+| Outcome | Status | N |
+|---|---|---|
+| success | completed | 79 |
+| error | completed | 2 |
+
+Approved: 81 · Denied: 0 · **Auth rate = 100.0%** (81/81).
+
+**Caveat: no spending rules were active in this sample.** Every transaction that reached the ledger did so with zero governance gates to pass or fail — a 100% auth rate here means "nothing was configured to say no," not "governance actively approved risky spend." The `outcome` column only ever takes values `success`/`error`, both reflecting downstream execution (confirmed: no `denied`/`blocked` value exists anywhere in this dataset) — this metric becomes meaningful once a spending rule is created (dashboard-only, [HUMAN-UI], see BACKLOG.md item 8 / the rules-on-hold-vs-settlement experiment) and actually denies a transaction. Treat 100% as a baseline reading of an unconfigured account, not evidence that governance works.
 

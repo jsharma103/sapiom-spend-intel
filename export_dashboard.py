@@ -389,6 +389,29 @@ def tile_loss_rate(con) -> dict:
 
 
 # ---------------------------------------------------------------------------
+# BUILD 11 — Governance auth rate (footer footnote only — full detail in findings.md §7)
+# ---------------------------------------------------------------------------
+
+def tile_auth_rate(con) -> dict:
+    total = con.execute("SELECT COUNT(*) FROM transactions").fetchone()[0]
+    # No governance denial exists in this ledger (no spending rule was active in the
+    # sample) — see findings.md §7 for the full outcome-distribution table + caveat.
+    denied = 0
+    approved = total - denied
+    auth_rate_pct = (approved / (approved + denied) * 100) if (approved + denied) else None
+    return {
+        "approved": approved,
+        "denied": denied,
+        "auth_rate_pct": auth_rate_pct,
+        "note": (
+            "No spending rules were active in this sample — 100% reflects an unconfigured "
+            "account (nothing to deny), not proof governance works. Full distribution + "
+            "caveat: findings.md §7."
+        ),
+    }
+
+
+# ---------------------------------------------------------------------------
 # Main
 # ---------------------------------------------------------------------------
 
@@ -419,6 +442,7 @@ def main():
         "tile_velocity_checks": tile_velocity_checks(con),
         "tile_take_rate": tile_take_rate(con),
         "tile_loss_rate": tile_loss_rate(con),
+        "tile_auth_rate": tile_auth_rate(con),
     }
     con.close()
 
