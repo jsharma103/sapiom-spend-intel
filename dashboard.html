@@ -5,102 +5,151 @@
 <title>Sapiom Spend — CEO Dashboard</title>
 <style>
   :root {
-    --bg: #0b0e14;
-    --panel: #131722;
-    --panel-border: #232a3b;
-    --text: #e6e9f0;
-    --muted: #8a92a6;
-    --green: #35d07f;
-    --red: #ff5c5c;
-    --amber: #ffb454;
-    --blue: #5b8ff9;
+    /* surfaces */
+    --page:            #f9f9f7;
+    --surface:         #fcfcfb;
+    --border:          rgba(11,11,11,0.10);
+    --gridline:        #e1e0d9;
+    --baseline:        #c3c2b7;
+    /* ink */
+    --ink-primary:     #0b0b0b;
+    --ink-secondary:   #52514e;
+    --ink-muted:       #898781;
+    /* the ONE accent hue (categorical slot 1 / blue) */
+    --accent:          #2a78d6;
+    /* status — reserved, fixed meaning, same hex both modes */
+    --status-good:       #0ca30c;
+    --status-good-text:  #006300;
+    --status-warning:    #fab219;
+    --status-serious:    #ec835a;
+    --status-critical:   #d03b3b;
+    /* chip background washes (precomputed rgba — same values work in both modes) */
+    --wash-good:      rgba(12,163,12,0.14);
+    --wash-warning:   rgba(250,178,25,0.16);
+    --wash-serious:   rgba(236,131,90,0.16);
+    --wash-critical:  rgba(208,59,59,0.14);
+    --wash-muted:     rgba(137,135,129,0.12);
+    /* optional sequential ramp — only relevant if a meter is added later */
+    --seq-track: #86b6ef;
+    --seq-fill:  #2a78d6; /* = accent */
   }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --page:            #0d0d0d;
+      --surface:         #1a1a19;
+      --border:          rgba(255,255,255,0.10);
+      --gridline:        #2c2c2a;
+      --baseline:        #383835;
+      --ink-primary:     #ffffff;
+      --ink-secondary:   #c3c2b7;
+      --ink-muted:       #898781;
+      --accent:          #3987e5;
+      --status-good:       #0ca30c;
+      --status-good-text:  #0ca30c;
+      --status-warning:    #fab219;
+      --status-serious:    #ec835a;
+      --status-critical:   #d03b3b;
+      --seq-track: #6da7ec;
+      --seq-fill:  #3987e5; /* = accent */
+    }
+  }
+
   * { box-sizing: border-box; }
   body {
     margin: 0;
-    background: var(--bg);
-    color: var(--text);
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+    background: var(--page);
+    color: var(--ink-primary);
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
     padding: 32px;
   }
+  @media (max-width: 480px) {
+    body { padding: 16px; }
+  }
   h1 { font-size: 22px; margin: 0 0 4px 0; }
-  .subtitle { color: var(--muted); font-size: 13px; margin-bottom: 24px; }
-  .row-label { color: var(--muted); font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; margin: 22px 0 8px 2px; }
+  .subtitle { color: var(--ink-secondary); font-size: 13px; margin-bottom: 24px; }
+  .row-label { color: var(--ink-muted); font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; margin: 28px 0 8px 2px; }
   .section-title {
-    font-size: 16px; font-weight: 700; margin: 40px 0 4px 0;
-    padding-top: 24px; border-top: 1px solid var(--panel-border);
+    font-size: 17px; font-weight: 700; margin: 40px 0 4px 0;
+    padding-top: 24px; border-top: 1px solid var(--border);
   }
   .section-title.first { margin-top: 28px; padding-top: 0; border-top: none; }
-  .section-subtitle { color: var(--muted); font-size: 12.5px; line-height: 1.5; max-width: 780px; margin-bottom: 6px; }
+  .section-subtitle { color: var(--ink-secondary); font-size: 12.5px; line-height: 1.5; max-width: 780px; margin-bottom: 6px; }
   .kpi-subhead {
-    color: var(--blue); font-size: 11px; font-weight: 700; text-transform: uppercase;
-    letter-spacing: 0.12em; margin: 22px 0 8px 2px;
+    color: var(--ink-secondary); font-size: 11px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.12em; margin: 28px 0 8px 2px;
   }
-  .definition { color: var(--muted); font-size: 12.5px; margin-top: 10px; line-height: 1.5; font-style: italic; }
+  .definition { color: var(--ink-secondary); font-size: 12.5px; margin-top: 10px; line-height: 1.5; font-style: italic; }
   .hero-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 20px;
+    gap: 24px;
   }
   .grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 20px;
+    gap: 24px;
   }
   .tile {
-    background: var(--panel);
-    border: 1px solid var(--panel-border);
-    border-radius: 12px;
-    padding: 22px 24px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 24px 28px;
   }
-  .tile.hero { padding: 26px 26px 22px; }
+  .tile.hero {
+    padding: 32px 32px 28px;
+    border-top: 3px solid var(--accent);
+  }
   .tile h2 {
-    font-size: 13px;
+    font-size: 12.5px;
     text-transform: uppercase;
-    letter-spacing: 0.06em;
-    color: var(--muted);
+    letter-spacing: 0.05em;
+    color: var(--ink-secondary);
     margin: 0 0 12px 0;
     font-weight: 600;
   }
-  .big-number { font-size: 40px; font-weight: 700; line-height: 1.05; cursor: default; }
-  .hero .big-number { font-size: 56px; }
-  .big-number.green { color: var(--green); }
-  .big-number.red { color: var(--red); }
-  .big-number.amber { color: var(--amber); }
-  .subline { color: var(--text); font-size: 14px; margin-top: 10px; opacity: 0.85; }
-  .scale-note { font-size: 12.5px; margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--panel-border); line-height: 1.5; cursor: help; }
-  .scale-note.amber { color: var(--amber); }
-  .scale-note.blue { color: var(--blue); }
-  .caption { color: var(--muted); font-size: 12.5px; margin-top: 8px; line-height: 1.5; }
-  table { width: 100%; border-collapse: collapse; font-size: 13px; margin-top: 8px; }
-  th, td { text-align: left; padding: 5px 6px; border-bottom: 1px solid var(--panel-border); }
-  th { color: var(--muted); font-weight: 500; }
-  tr.flag-red td { color: var(--red); font-weight: 600; }
-  .badge {
-    display: inline-block;
-    padding: 3px 10px;
-    border-radius: 999px;
-    font-size: 12px;
-    font-weight: 600;
-    vertical-align: middle;
+  .big-number {
+    font-size: 28px; font-weight: 700; line-height: 1.05; cursor: default;
+    color: var(--ink-primary); font-variant-numeric: proportional-nums;
   }
-  .badge.green { background: rgba(53,208,127,0.15); color: var(--green); }
-  .badge.red { background: rgba(255,92,92,0.15); color: var(--red); }
-  .grade-badge { display: inline-block; padding: 2px 11px; border-radius: 6px; font-weight: 700; font-size: 13px; }
-  .grade-badge.A { background: rgba(53,208,127,0.18); color: var(--green); }
-  .grade-badge.B { background: rgba(53,208,127,0.12); color: var(--green); }
-  .grade-badge.C { background: rgba(255,180,84,0.18); color: var(--amber); }
-  .grade-badge.D { background: rgba(255,92,92,0.15); color: var(--red); }
-  .grade-badge.F { background: rgba(255,92,92,0.22); color: var(--red); }
-  .grade-badge.NA { background: rgba(138,146,166,0.14); color: var(--muted); }
+  #grid .big-number { font-size: 32px; }
+  #hero-grid .big-number { font-size: 56px; }
+  .subline { color: var(--ink-secondary); font-size: 14px; margin-top: 10px; }
+  .scale-note { font-size: 12.5px; margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--border); line-height: 1.5; cursor: help; color: var(--ink-secondary); }
+  .caption { color: var(--ink-secondary); font-size: 12.5px; margin-top: 8px; line-height: 1.5; }
+
+  .table-scroll { overflow-x: auto; }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; margin-top: 8px; }
+  th, td { text-align: left; padding: 8px 10px; }
+  th { color: var(--ink-muted); font-weight: 600; font-size: 12px; border-bottom: 1px solid var(--baseline); }
+  td { color: var(--ink-primary); border-bottom: 1px solid var(--gridline); }
+  th.num, td.num { text-align: right; font-variant-numeric: tabular-nums; }
+
+  /* status-chip — the icon+label mechanism. Reserved to: Reconciliation
+     ties/mismatch, Velocity Checks clean/flagged, Refund-on-Failure, and the
+     KYA velocity grade + Flag column. Text is always ink, never the status
+     hue — only the 7px dot carries the color. */
+  .status-chip {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 3px 10px; border-radius: 999px;
+    font-size: 12px; font-weight: 600;
+    color: var(--ink-primary);
+  }
+  .status-chip .dot { width: 7px; height: 7px; border-radius: 50%; flex: none; }
+  .status-chip.good      { background: var(--wash-good);     } .status-chip.good .dot      { background: var(--status-good); }
+  .status-chip.warning   { background: var(--wash-warning);  } .status-chip.warning .dot   { background: var(--status-warning); }
+  .status-chip.serious   { background: var(--wash-serious);  } .status-chip.serious .dot   { background: var(--status-serious); }
+  .status-chip.critical  { background: var(--wash-critical); } .status-chip.critical .dot  { background: var(--status-critical); }
+  .status-chip.muted     { background: var(--wash-muted);    } .status-chip.muted .dot     { background: var(--ink-muted); }
+
   .tile.placeholder { opacity: 0.55; border-style: dashed; }
-  .tile.placeholder .big-number { color: var(--muted); font-size: 30px; }
+  .tile.placeholder .big-number { color: var(--ink-muted); }
   .lock-tag {
     display: inline-block; font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase;
-    color: var(--muted); background: rgba(138,146,166,0.14); border-radius: 999px; padding: 3px 10px; margin-top: 8px;
+    color: var(--ink-muted); background: var(--wash-muted); border-radius: 999px; padding: 3px 10px; margin-top: 8px;
   }
-  .footer { margin-top: 28px; color: var(--muted); font-size: 12px; }
-  .error { color: var(--red); }
+  .lock-tag::before { content: "🔒 "; }
+  .footer { margin-top: 28px; color: var(--ink-muted); font-size: 12px; }
 </style>
 </head>
 <body>
@@ -152,6 +201,15 @@
   const usd2 = (n) => usd(n, 2);
   const pct = (n, d = 1) => (n === null || n === undefined) ? 'n/a' : `${Number(n) >= 0 ? '+' : ''}${Number(n).toFixed(d)}%`;
   const fmtMs = (ms) => (ms === null || ms === undefined) ? 'n/a' : (Math.abs(ms) < 1000 ? `${ms.toFixed(0)}ms` : `${(ms / 1000).toFixed(2)}s`);
+  // status-chip markup helper — icon+label, never bare color (§2.5).
+  const chip = (status, label) => `<span class="status-chip ${status}"><span class="dot"></span>${label}</span>`;
+  // Wrap a <table> in an overflow-x scroller so a 7-column table never breaks
+  // layout on a narrow tile (§5).
+  const scrollWrap = (table) => {
+    const wrap = el('div', 'table-scroll');
+    wrap.appendChild(table);
+    return wrap;
+  };
 
   const heroGrid = document.getElementById('hero-grid');
   const grid = document.getElementById('grid');
@@ -165,8 +223,8 @@
   const data = window.DASHBOARD_DATA;
   if (!data) {
     subtitle.textContent = '';
-    heroGrid.appendChild(el('div', 'tile hero error',
-      '<h2>Load error</h2><div class="big-number red">n/a</div>' +
+    heroGrid.appendChild(el('div', 'tile hero',
+      '<h2>Load error</h2><div class="big-number">n/a</div>' +
       '<div class="caption">dashboard_data.js did not load. Run export_dashboard.py from the repo root, ' +
       'then reopen dashboard.html from the same directory.</div>'));
     return;
@@ -184,7 +242,7 @@
     tile.appendChild(el('h2', null, 'TPV — Total Payment Volume'));
     tile.appendChild(el('div', 'big-number', usd(t.value_usd, 6)));
     tile.appendChild(el('div', 'subline', t.subline || ''));
-    const note = el('div', 'scale-note blue', t.scale_note || '');
+    const note = el('div', 'scale-note', t.scale_note || '');
     note.title = t.method_note || '';
     tile.appendChild(note);
     heroGrid.appendChild(tile);
@@ -198,10 +256,10 @@
     const v = t.ratio_pct;
     // Valence fix: this is a float-inefficiency signal, not a capture-failure /
     // revenue-leakage signal (settling below the hold is the system working as
-    // designed) — always amber/neutral, never red or green.
-    tile.appendChild(el('div', 'big-number amber', v === null || v === undefined ? 'n/a' : `${v.toFixed(1)}%`));
+    // designed) — magnitude only, neutral ink, never a status color.
+    tile.appendChild(el('div', 'big-number', v === null || v === undefined ? 'n/a' : `${v.toFixed(1)}%`));
     tile.appendChild(el('div', 'subline', t.subline || ''));
-    const note = el('div', 'scale-note amber', t.scale_note || '');
+    const note = el('div', 'scale-note', t.scale_note || '');
     note.title = t.method_note || '';
     tile.appendChild(note);
     tile.appendChild(el('div', 'caption', t.scope_note || ''));
@@ -213,12 +271,12 @@
     const t = data.hero_reconciliation || {};
     const tile = el('div', 'tile hero');
     tile.appendChild(el('h2', null, 'Reconciliation'));
-    const badge = t.green
-      ? '<span class="badge green">TIES OUT</span>'
-      : '<span class="badge red">MISMATCH</span>';
-    tile.appendChild(el('div', 'big-number green', `${usd(t.diff_usd)} ${badge}`));
+    // The $ number is always neutral ink; only the chip carries good/critical
+    // state, and only when the ledger actually ties (t.green), never hardcoded.
+    const badge = t.green ? chip('good', 'TIES OUT') : chip('critical', 'MISMATCH');
+    tile.appendChild(el('div', 'big-number', `${usd(t.diff_usd)} ${badge}`));
     tile.appendChild(el('div', 'subline', t.subline || ''));
-    const note = el('div', 'scale-note amber', t.scale_note || '');
+    const note = el('div', 'scale-note', t.scale_note || '');
     note.title = t.method_note || '';
     tile.appendChild(note);
     tile.appendChild(el('div', 'caption', t.ingest_note || ''));
@@ -232,17 +290,17 @@
     const header = el('h2', null, 'Auth → Capture Time');
     header.title = t.footnote || '';
     tile.appendChild(header);
-    tile.appendChild(el('div', 'big-number amber', `${fmtMs(t.headline_p50_ms)} / ${fmtMs(t.headline_p95_ms)}`));
+    tile.appendChild(el('div', 'big-number', `${fmtMs(t.headline_p50_ms)} / ${fmtMs(t.headline_p95_ms)}`));
     const sub = el('div', 'subline', `${t.headline_service || 'n/a'} — p50 / p95`);
     sub.title = t.footnote || '';
     tile.appendChild(sub);
     const table = el('table');
-    table.innerHTML = '<tr><th>Service</th><th>N</th><th>p50</th><th>p95</th></tr>';
+    table.innerHTML = '<tr><th>Service</th><th class="num">N</th><th class="num">p50</th><th class="num">p95</th></tr>';
     const rows = t.rows || [];
     const chained = rows.find(r => r.service_name === t.headline_service);
     if (chained) {
       const row = document.createElement('tr');
-      row.innerHTML = `<td>${chained.service_name}</td><td>${chained.n}</td><td>${fmtMs(chained.p50_ms)}</td><td>${fmtMs(chained.p95_ms)}</td>`;
+      row.innerHTML = `<td>${chained.service_name}</td><td class="num">${chained.n}</td><td class="num">${fmtMs(chained.p50_ms)}</td><td class="num">${fmtMs(chained.p95_ms)}</td>`;
       table.appendChild(row);
     }
     if (t.flat_n) {
@@ -253,10 +311,10 @@
       const flatRange = (t.flat_min_ms == null || t.flat_max_ms == null)
         ? 'sub-second (write-before-authorize; see note)'
         : `${fmtMs(t.flat_min_ms)} to ${fmtMs(t.flat_max_ms)}`;
-      row.innerHTML = `<td>5 flat services</td><td>${t.flat_n}</td><td colspan="2">${flatRange}</td>`;
+      row.innerHTML = `<td>5 flat services</td><td class="num">${t.flat_n}</td><td class="num" colspan="2">${flatRange}</td>`;
       table.appendChild(row);
     }
-    tile.appendChild(table);
+    tile.appendChild(scrollWrap(table));
     grid.appendChild(tile);
   })();
 
@@ -266,20 +324,24 @@
     const tile = el('div', 'tile');
     tile.appendChild(el('h2', null, 'Velocity Checks'));
     const flagged = t.flagged || [];
-    tile.appendChild(el('div', `big-number ${flagged.length ? 'red' : 'green'}`,
-      flagged.length ? `${flagged.length} FLAGGED` : 'CLEAN'));
+    // True state, but warning (not critical) — same signal as the KYA Flag
+    // column, rendered as an icon+label chip rather than bare color.
+    const statusChip = flagged.length
+      ? chip('warning', `${flagged.length} FLAGGED`)
+      : chip('good', 'CLEAN');
+    tile.appendChild(el('div', 'big-number', statusChip));
     const sub = el('div', 'subline', flagged.length ? `${flagged.join(', ')} — anomalously fast` : 'No agent anomalously fast vs peers');
     sub.title = 'Agent runaway = card-testing analog: peer-relative flag when median inter-call gap < 20% of the peer-agent median gap.';
     tile.appendChild(sub);
     const table = el('table');
-    table.innerHTML = '<tr><th>Agent</th><th>Calls</th><th>Median gap</th><th>Peak/60s</th></tr>';
+    table.innerHTML = '<tr><th>Agent</th><th class="num">Calls</th><th class="num">Median gap</th><th class="num">Peak/60s</th></tr>';
     (t.per_agent || []).slice(0, 3).forEach((a) => {
       const row = document.createElement('tr');
-      if (a.runaway) row.className = 'flag-red';
-      row.innerHTML = `<td>${a.agent_name}${a.runaway ? ' ●' : ''}</td><td>${a.n}</td><td>${a.median_gap_s === null || a.median_gap_s === undefined ? 'n/a' : a.median_gap_s.toFixed(2) + 's'}</td><td>${a.peak_calls_per_min ?? 'n/a'}</td>`;
+      const flag = a.runaway ? ` ${chip('warning', 'RUNAWAY')}` : '';
+      row.innerHTML = `<td>${a.agent_name}${flag}</td><td class="num">${a.n}</td><td class="num">${a.median_gap_s === null || a.median_gap_s === undefined ? 'n/a' : a.median_gap_s.toFixed(2) + 's'}</td><td class="num">${a.peak_calls_per_min ?? 'n/a'}</td>`;
       table.appendChild(row);
     });
-    tile.appendChild(table);
+    tile.appendChild(scrollWrap(table));
     grid.appendChild(tile);
   })();
 
@@ -304,9 +366,9 @@
     // Type qualifier folded into the Markup cell as a small muted sub-line,
     // rather than a 5th column — a dedicated column of "floor artifact"/"real
     // markup" text overflowed this tile's narrow (300px min) width.
-    table.innerHTML = '<tr><th>Service</th><th>Sapiom</th><th>Public</th><th>Markup</th></tr>' +
-      rows.map((r) => `<tr><td>${r.provider}</td><td>${usd(r.sapiom_price_usd)}</td><td>${usd(r.public_price_usd)}</td><td>${pct(r.markup_pct)}<br><span style="color:var(--muted);font-size:11px;">${r.likely_floor_artifact ? 'floor artifact' : 'real markup'}</span></td></tr>`).join('');
-    tile.appendChild(table);
+    table.innerHTML = '<tr><th>Service</th><th class="num">Sapiom</th><th class="num">Public</th><th class="num">Markup</th></tr>' +
+      rows.map((r) => `<tr><td>${r.provider}</td><td class="num">${usd(r.sapiom_price_usd)}</td><td class="num">${usd(r.public_price_usd)}</td><td class="num">${pct(r.markup_pct)}<br><span style="color:var(--ink-muted);font-size:11px;">${r.likely_floor_artifact ? 'floor artifact' : 'real markup'}</span></td></tr>`).join('');
+    tile.appendChild(scrollWrap(table));
     const caption = el('div', 'caption',
       `N=1 call per service — not a statistically powered sample. No blended headline shown here; ` +
       `of the dollar-weighted margin across all 4 rows, audio is ~88% and llm is ~12% (see take_rate.md).`);
@@ -322,7 +384,8 @@
     const header = el('h2', null, 'Loss Rate');
     header.title = t.note || '';
     tile.appendChild(header);
-    tile.appendChild(el('div', `big-number ${t.loss_rate_bps ? 'red' : 'green'}`, `${(t.loss_rate_bps ?? 0).toFixed(0)} bps`));
+    // Magnitude, not a status: caveat warns against reading 0bps as proven-safe.
+    tile.appendChild(el('div', 'big-number', `${(t.loss_rate_bps ?? 0).toFixed(0)} bps`));
     const sub = el('div', 'subline', `${t.n_failed ?? 0}/${t.n_txns ?? 0} txns failed (${pct(t.failed_pct)}), ${t.n_failed_with_cost_row ?? 0}/${t.n_failed ?? 0} charged`);
     sub.title = t.note || '';
     tile.appendChild(sub);
@@ -338,7 +401,9 @@
     header.title = t.note || '';
     tile.appendChild(header);
     const v = t.auth_rate_pct;
-    tile.appendChild(el('div', 'big-number green', v === null || v === undefined ? 'n/a' : `${Number(v).toFixed(0)}%`));
+    // Magnitude, not a status: tile's own note says 100% is an artifact of no
+    // spending rules active, not proof governance works.
+    tile.appendChild(el('div', 'big-number', v === null || v === undefined ? 'n/a' : `${Number(v).toFixed(0)}%`));
     const sub = el('div', 'subline', `${t.approved ?? 0}/${(t.approved ?? 0) + (t.denied ?? 0)} approved — no spending rules active in this sample`);
     sub.title = t.note || '';
     tile.appendChild(sub);
@@ -357,7 +422,7 @@
     header.title = t.method_note || '';
     tile.appendChild(header);
     const r = t.overhang_ratio;
-    tile.appendChild(el('div', 'big-number amber', r === null || r === undefined ? 'n/a' : `${r.toFixed(2)}x`));
+    tile.appendChild(el('div', 'big-number', r === null || r === undefined ? 'n/a' : `${r.toFixed(2)}x`));
     tile.appendChild(el('div', 'definition', t.definition || ''));
     tile.appendChild(el('div', 'caption', t.clears_note || ''));
     tile.appendChild(el('div', 'caption', t.scope_note || ''));
@@ -398,7 +463,9 @@
     header.title = t.note || '';
     tile.appendChild(header);
     const p = t.pct;
-    tile.appendChild(el('div', 'big-number green', p === null || p === undefined ? 'n/a' : `${p.toFixed(0)}%`));
+    // Magnitude, not a status: caveat says non-null isn't always meaningfully
+    // attributed (2/81 carry service_name='unknown').
+    tile.appendChild(el('div', 'big-number', p === null || p === undefined ? 'n/a' : `${p.toFixed(0)}%`));
     const def = el('div', 'definition', t.definition || '');
     def.title = t.note || '';
     tile.appendChild(def);
@@ -414,7 +481,7 @@
     header.title = t.method_note || '';
     tile.appendChild(header);
     const v = t.overstatement_pct;
-    tile.appendChild(el('div', 'big-number amber', v === null || v === undefined ? 'n/a' : `+${v.toFixed(1)}%`));
+    tile.appendChild(el('div', 'big-number', v === null || v === undefined ? 'n/a' : `+${v.toFixed(1)}%`));
     tile.appendChild(el('div', 'definition', t.definition || ''));
     gridVisible.appendChild(tile);
   })();
@@ -424,7 +491,7 @@
     const t = data.tile_hold_release_latency || {};
     const tile = el('div', 'tile');
     tile.appendChild(el('h2', null, 'Hold-Release Latency'));
-    tile.appendChild(el('div', 'big-number amber', `${fmtMs(t.p50_ms)} / ${fmtMs(t.p95_ms)}`));
+    tile.appendChild(el('div', 'big-number', `${fmtMs(t.p50_ms)} / ${fmtMs(t.p95_ms)}`));
     const sub = el('div', 'subline', `${t.service || 'n/a'} — p50 / p95`);
     tile.appendChild(sub);
     tile.appendChild(el('div', 'definition', t.definition || ''));
@@ -443,7 +510,10 @@
     header.title = t.note || '';
     tile.appendChild(header);
     const rate = t.direct_test_retention_rate_pct;
-    tile.appendChild(el('div', 'big-number red', rate === null || rate === undefined ? 'n/a' : `${rate.toFixed(0)}% RETAINED`));
+    // True state — money frozen on failure, the one tile that should read as
+    // unambiguously serious.
+    const rateContent = (rate === null || rate === undefined) ? 'n/a' : chip('critical', `${rate.toFixed(0)}% RETAINED`);
+    tile.appendChild(el('div', 'big-number', rateContent));
     tile.appendChild(el('div', 'subline', t.subline || ''));
     tile.appendChild(el('div', 'definition', t.definition || ''));
     const caveat = el('div', 'caption',
@@ -471,19 +541,24 @@
     kyaTile.appendChild(def);
     kyaTile.appendChild(el('div', 'caption', k.visible_caveat || ''));
     const table = el('table');
-    table.innerHTML = '<tr><th>Agent</th><th>Spend</th><th>Calls</th><th>Median gap</th><th>Peak/60s</th><th>Flag</th><th>Velocity Grade</th></tr>';
+    table.innerHTML = '<tr><th>Agent</th><th class="num">Spend</th><th class="num">Calls</th><th class="num">Median gap</th><th class="num">Peak/60s</th><th>Flag</th><th>Velocity Grade</th></tr>';
+    // Velocity grade -> status-chip variant. Same reserved-color rule as every
+    // other true-state signal: A/B good, C warning, D serious, F critical,
+    // N/A muted (§2.3).
+    const GRADE_STATUS = { A: 'good', B: 'good', C: 'warning', D: 'serious', F: 'critical' };
     (k.rows || []).forEach((r) => {
       const row = document.createElement('tr');
-      if (r.runaway) row.className = 'flag-red';
       const gapStr = (r.median_gap_s === null || r.median_gap_s === undefined) ? 'n/a' : `${r.median_gap_s.toFixed(2)}s`;
       const grade = r.velocity_grade;
-      const gradeClass = grade === 'N/A' ? 'NA' : grade;
-      row.innerHTML = `<td>${r.agent_name}${r.runaway ? ' ●' : ''}</td><td>${usd(r.spend_usd, 6)}</td>` +
-        `<td>${r.n_calls}</td><td>${gapStr}</td><td>${r.peak_calls_per_min ?? 'n/a'}</td>` +
-        `<td>${r.runaway ? 'RUNAWAY' : ''}</td><td><span class="grade-badge ${gradeClass}">${grade}</span></td>`;
+      const statusClass = GRADE_STATUS[grade] || 'muted';
+      const flag = r.runaway ? ' ●' : '';
+      const flagChip = r.runaway ? chip('warning', 'RUNAWAY') : '';
+      row.innerHTML = `<td>${r.agent_name}${flag}</td><td class="num">${usd(r.spend_usd, 6)}</td>` +
+        `<td class="num">${r.n_calls}</td><td class="num">${gapStr}</td><td class="num">${r.peak_calls_per_min ?? 'n/a'}</td>` +
+        `<td>${flagChip}</td><td>${chip(statusClass, grade)}</td>`;
       table.appendChild(row);
     });
-    kyaTile.appendChild(table);
+    kyaTile.appendChild(scrollWrap(table));
   })();
 
   footer.innerHTML = 'Static, offline viewer. No network, no backend — reads dashboard_data.js only. Regenerate with: python export_dashboard.py.';

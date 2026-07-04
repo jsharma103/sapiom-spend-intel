@@ -1,5 +1,5 @@
 window.DASHBOARD_DATA = {
-  "generated_at": "2026-07-04T18:51:45.928262+00:00",
+  "generated_at": "2026-07-04T19:16:32.153849+00:00",
   "header": {
     "n_txns": 81,
     "n_agents": 16,
