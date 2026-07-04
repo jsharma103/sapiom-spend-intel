@@ -1,0 +1,1038 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Sapiom Spend — CEO Dashboard</title>
+<style>
+  :root {
+    /* surfaces */
+    --page:            #f9f9f7;
+    --surface:         #fcfcfb;
+    --border:          rgba(11,11,11,0.10);
+    --gridline:        #e1e0d9;
+    --baseline:        #c3c2b7;
+    /* ink */
+    --ink-primary:     #0b0b0b;
+    --ink-secondary:   #52514e;
+    --ink-muted:       #898781;
+    /* the ONE accent hue (categorical slot 1 / blue) */
+    --accent:          #2a78d6;
+    /* status — reserved, fixed meaning, same hex both modes */
+    --status-good:       #0ca30c;
+    --status-good-text:  #006300;
+    --status-warning:    #fab219;
+    --status-serious:    #ec835a;
+    --status-critical:   #d03b3b;
+    /* chip background washes (precomputed rgba — same values work in both modes) */
+    --wash-good:      rgba(12,163,12,0.14);
+    --wash-warning:   rgba(250,178,25,0.16);
+    --wash-serious:   rgba(236,131,90,0.16);
+    --wash-critical:  rgba(208,59,59,0.14);
+    --wash-muted:     rgba(137,135,129,0.12);
+    /* optional sequential ramp — only relevant if a meter is added later */
+    --seq-track: #86b6ef;
+    --seq-fill:  #2a78d6; /* = accent */
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --page:            #0d0d0d;
+      --surface:         #1a1a19;
+      --border:          rgba(255,255,255,0.10);
+      --gridline:        #2c2c2a;
+      --baseline:        #383835;
+      --ink-primary:     #ffffff;
+      --ink-secondary:   #c3c2b7;
+      --ink-muted:       #898781;
+      --accent:          #3987e5;
+      --status-good:       #0ca30c;
+      --status-good-text:  #0ca30c;
+      --status-warning:    #fab219;
+      --status-serious:    #ec835a;
+      --status-critical:   #d03b3b;
+      --seq-track: #6da7ec;
+      --seq-fill:  #3987e5; /* = accent */
+    }
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--page);
+    color: var(--ink-primary);
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+    padding: 32px;
+  }
+  @media (max-width: 480px) {
+    body { padding: 16px; }
+  }
+  h1 { font-size: 22px; margin: 0 0 4px 0; }
+  .subtitle { color: var(--ink-secondary); font-size: 13px; margin-bottom: 24px; }
+  .row-label { color: var(--ink-muted); font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; margin: 28px 0 8px 2px; }
+  .section-title {
+    font-size: 17px; font-weight: 700; margin: 40px 0 4px 0;
+    padding-top: 24px; border-top: 1px solid var(--border);
+  }
+  .section-title.first { margin-top: 28px; padding-top: 0; border-top: none; }
+  .section-subtitle { color: var(--ink-secondary); font-size: 12.5px; line-height: 1.5; max-width: 780px; margin-bottom: 6px; }
+  .kpi-subhead {
+    color: var(--ink-secondary); font-size: 11px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.12em; margin: 28px 0 8px 2px;
+  }
+  .definition { color: var(--ink-secondary); font-size: 12.5px; margin-top: 10px; line-height: 1.5; font-style: italic; }
+  .hero-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 24px;
+  }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 24px;
+  }
+  .tile {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 24px 28px;
+  }
+  .tile.hero {
+    padding: 32px 32px 28px;
+    border-top: 3px solid var(--accent);
+  }
+  .tile h2 {
+    font-size: 12.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--ink-secondary);
+    margin: 0 0 12px 0;
+    font-weight: 600;
+  }
+  .big-number {
+    font-size: 28px; font-weight: 700; line-height: 1.05; cursor: default;
+    color: var(--ink-primary); font-variant-numeric: proportional-nums;
+  }
+  #grid .big-number { font-size: 32px; }
+  #hero-grid .big-number { font-size: 56px; }
+  .subline { color: var(--ink-secondary); font-size: 14px; margin-top: 10px; }
+  .scale-note { font-size: 12.5px; margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--border); line-height: 1.5; cursor: help; color: var(--ink-secondary); }
+  .caption { color: var(--ink-secondary); font-size: 12.5px; margin-top: 8px; line-height: 1.5; }
+
+  .table-scroll { overflow-x: auto; }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; margin-top: 8px; }
+  th, td { text-align: left; padding: 8px 10px; }
+  th { color: var(--ink-muted); font-weight: 600; font-size: 12px; border-bottom: 1px solid var(--baseline); }
+  td { color: var(--ink-primary); border-bottom: 1px solid var(--gridline); }
+  th.num, td.num { text-align: right; font-variant-numeric: tabular-nums; }
+
+  /* status-chip — the icon+label mechanism. Reserved to: Reconciliation
+     ties/mismatch, Velocity Checks clean/flagged, Refund-on-Failure, and the
+     KYA velocity grade + Flag column. Text is always ink, never the status
+     hue — only the 7px dot carries the color. */
+  .status-chip {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 3px 10px; border-radius: 999px;
+    font-size: 12px; font-weight: 600;
+    color: var(--ink-primary);
+  }
+  .status-chip .dot { width: 7px; height: 7px; border-radius: 50%; flex: none; }
+  .status-chip.good      { background: var(--wash-good);     } .status-chip.good .dot      { background: var(--status-good); }
+  .status-chip.warning   { background: var(--wash-warning);  } .status-chip.warning .dot   { background: var(--status-warning); }
+  .status-chip.serious   { background: var(--wash-serious);  } .status-chip.serious .dot   { background: var(--status-serious); }
+  .status-chip.critical  { background: var(--wash-critical); } .status-chip.critical .dot  { background: var(--status-critical); }
+  .status-chip.muted     { background: var(--wash-muted);    } .status-chip.muted .dot     { background: var(--ink-muted); }
+
+  .tile.placeholder { opacity: 0.55; border-style: dashed; }
+  .tile.placeholder .big-number { color: var(--ink-muted); }
+  .lock-tag {
+    display: inline-block; font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase;
+    color: var(--ink-muted); background: var(--wash-muted); border-radius: 999px; padding: 3px 10px; margin-top: 8px;
+  }
+  .lock-tag::before { content: "🔒 "; }
+  .footer { margin-top: 28px; color: var(--ink-muted); font-size: 12px; }
+</style>
+</head>
+<body>
+
+<h1>Sapiom Spend — CEO Dashboard</h1>
+<div class="subtitle" id="subtitle">Loading...</div>
+
+<div class="section-title first">Section 1 — Payments KPIs — measured on Sapiom</div>
+<div class="section-subtitle">Metrics a payments executive already knows how to read, measured live on Sapiom's own ledger.</div>
+
+<div class="row-label">Hero KPIs</div>
+<div class="hero-grid" id="hero-grid"></div>
+
+<div class="row-label">Detail</div>
+<div class="grid" id="grid"></div>
+
+<div class="section-title">Section 2 — Agent-native KPIs — proposed definitions</div>
+<div class="section-subtitle">Those are your world's metrics. Here's what I think agent payments actually needs to measure — failures that are bounded, visible, and recoverable, plus a per-agent "Know Your Agent" read. Vocabulary from Sapiom's own public framing (ComputerWeekly / Unite.AI). Definitions are the product here; every number still traces to an existing file.</div>
+
+<div class="kpi-subhead">Bounded</div>
+<div class="grid" id="grid-bounded"></div>
+
+<div class="kpi-subhead">Visible</div>
+<div class="grid" id="grid-visible"></div>
+
+<div class="kpi-subhead">Recoverable</div>
+<div class="grid" id="grid-recoverable"></div>
+
+<div class="row-label">KYA Scorecard — Know Your Agent</div>
+<div class="tile" id="kya-tile"></div>
+
+<div class="footer" id="footer"></div>
+
+<!-- Same-directory <script src>, not fetch(): a fetch() of a local JSON file
+     is blocked by CORS when this page is opened directly via file:// in
+     Chrome. A plain <script src> has no such restriction, so this dashboard
+     opens correctly with a simple double-click, no local server needed, and
+     works unchanged when served from GitHub Pages. -->
+<script>
+window.DASHBOARD_DATA = {
+  "generated_at": "2026-07-04T21:11:17.849783+00:00",
+  "header": {
+    "n_txns": 81,
+    "n_agents": 16,
+    "live_spend_usd": 0.277472,
+    "period_start": "2026-07-04 04:51:39.614000",
+    "period_end": "2026-07-04 11:06:35.634000"
+  },
+  "hero_tpv": {
+    "value_usd": 0.277472,
+    "n_txns": 81,
+    "n_agents": 16,
+    "period_hours": 6.248894444444445,
+    "daily_rate_usd": 1.0656809871257225,
+    "scale_multiple_to_1m_day": 938367.1211936768,
+    "subline": "81 txns \u00b7 16 agents \u00b7 live spend",
+    "scale_note": "at $1M/day TPV \u2192 ~938,367x tonight's pace (a ratio, not a load test \u2014 this pipeline has not been run at that volume)",
+    "method_note": "Tonight's fleet ran at a ~$1.07/day pace over 81 txns / 16 agents; scale multiple = $1M/day / that rate."
+  },
+  "hero_capture_ratio": {
+    "ratio_pct": 17.953875996838853,
+    "sum_held_usd": 0.027838,
+    "sum_settled_usd": 0.004998,
+    "n_chains": 27,
+    "overhang_ratio": 5.569827931172469,
+    "subline": "holds are ~5.6x oversized vs settlement \u2014 a float inefficiency, not lost revenue (authorize $1.00 \u2192 capture $0.18)",
+    "scale_note": "instantaneously frozen \u2248 $61\u2013$138 at $1M/day TPV (Little's Law; holds clear in 5.3\u201312.0s) \u2014 lever = hold-lifetime & max_tokens right-sizing. Assumes steady-state (non-bursty) call arrivals \u2014 see dryrun/float_model.md \u00a75.",
+    "scope_note": "Scope: n=27 LLM chains (sapiom_openrouter only), one session, gpt-4o-mini \u2014 LLM-specific, not platform-wide.",
+    "instantaneous_frozen_p50_usd": 61.284722222222214,
+    "instantaneous_frozen_p95_usd": 138.4375,
+    "hold_lifetime_p50_s": 5.295,
+    "hold_lifetime_p95_s": 11.961,
+    "naive_flow_at_scale_usd": 4569827.931172469,
+    "method_note": "Sigma settled (0.004998) / Sigma held (0.027838) dollar-weighted across all 27 supersession chains (hold \u2192 final capture). Little's Law: frozen$ = held$/day \u00d7 (hold_lifetime_sec / 86400) \u2014 at $1M/day TPV, p50 (5.29s) \u2192 $61.28, p95 (11.96s) \u2192 $138.44. Full derivation + sensitivity: dryrun/float_model.md. (Superseded framing: naively scaling the capture ratio gives $4,569,828 \u2014 a per-day FLOW, not an instantaneous stock; it implicitly assumes a ~4.57-day hold lifetime vs. the measured 5.3-12.0s, ~33,000x off. See float_model.md \u00a74d.)"
+  },
+  "hero_reconciliation": {
+    "diff_usd": 0.0,
+    "green": true,
+    "naive_sum_usd": 0.30531,
+    "live_sum_usd": 0.277472,
+    "overstatement_pct": 10.032724022604082,
+    "subline": "naive sum overstates +10% \u2014 must filter, not sum, chains",
+    "scale_note": "at $1M/day TPV \u2192 ~$100K/day phantom spend if uncorrected (assumes tonight's traffic mix/restatement rate holds at scale)",
+    "ingest_note": "Ties out as of this ledger snapshot (ingested through 2026-07-04 11:06:35.634000). The live account has since spent more in dry-run experiments not captured in this snapshot (see RUN_LOG.md) \u2014 re-ingest before claiming this ties out today.",
+    "phantom_at_scale_usd": 100327.24022604081,
+    "method_note": "Latest balance snapshot vs (initial balance \u2212 live spend): diff $0.000000. Naive = every cost row including superseded holds ($0.305310); live = superseded_at IS NULL only ($0.277472)."
+  },
+  "tile_auth_to_capture": {
+    "rows": [
+      {
+        "service_name": "sapiom_blaxel",
+        "n": 1,
+        "p50_ms": -832,
+        "p95_ms": -832
+      },
+      {
+        "service_name": "sapiom_elevenlabs",
+        "n": 1,
+        "p50_ms": -142,
+        "p95_ms": -142
+      },
+      {
+        "service_name": "sapiom_fal",
+        "n": 1,
+        "p50_ms": -520,
+        "p95_ms": -520
+      },
+      {
+        "service_name": "sapiom_linkup",
+        "n": 43,
+        "p50_ms": -141,
+        "p95_ms": -95
+      },
+      {
+        "service_name": "sapiom_openrouter",
+        "n": 31,
+        "p50_ms": 5295,
+        "p95_ms": 11961
+      },
+      {
+        "service_name": "unknown",
+        "n": 1,
+        "p50_ms": -128,
+        "p95_ms": -128
+      }
+    ],
+    "headline_service": "sapiom_openrouter",
+    "headline_n": 31,
+    "headline_p50_ms": 5295,
+    "headline_p95_ms": 11961,
+    "flat_n": 47,
+    "flat_services_label": "sapiom_blaxel, sapiom_elevenlabs, sapiom_fal, sapiom_linkup, unknown",
+    "flat_min_ms": -832,
+    "flat_max_ms": -95,
+    "footnote": "Flat single-row services show a small negative latency \u2014 the cost row is written as part of authorization itself, before authorizedAt is stamped, not a bug. Only chained/restated services (LLM calls) show genuine positive wait for final capture."
+  },
+  "tile_velocity_checks": {
+    "flagged": [
+      "fleet-test"
+    ],
+    "per_agent": [
+      {
+        "agent_name": "fleet-test",
+        "n": 10,
+        "median_gap_s": 0.076,
+        "peak_calls_per_min": 10,
+        "peer_median_gap_s": 8.3995,
+        "runaway": true
+      },
+      {
+        "agent_name": "spend-runaway",
+        "n": 25,
+        "median_gap_s": 7.983499999999999,
+        "peak_calls_per_min": 9,
+        "peer_median_gap_s": 8.38525,
+        "runaway": false
+      },
+      {
+        "agent_name": "spend-researcher",
+        "n": 12,
+        "median_gap_s": 18.789,
+        "peak_calls_per_min": 4,
+        "peer_median_gap_s": 7.96925,
+        "runaway": false
+      },
+      {
+        "agent_name": "spend-writer",
+        "n": 10,
+        "median_gap_s": 23.046,
+        "peak_calls_per_min": 3,
+        "peer_median_gap_s": 7.96925,
+        "runaway": false
+      },
+      {
+        "agent_name": "chain-task",
+        "n": 6,
+        "median_gap_s": 7.955,
+        "peak_calls_per_min": 3,
+        "peer_median_gap_s": 8.3995,
+        "runaway": false
+      }
+    ]
+  },
+  "tile_take_rate": {
+    "rows": [
+      {
+        "service": "search",
+        "provider": "Linkup",
+        "operation": "1 query, standard depth, sourcedAnswer",
+        "sapiom_price_usd": 0.006,
+        "public_price_usd": 0.006,
+        "markup_pct": 0.0,
+        "confidence": "HIGH",
+        "ledger_n": 43,
+        "ledger_all_identical": true,
+        "likely_floor_artifact": false,
+        "markup_display": "0% spread (N=43)",
+        "margin_usd": 0.0,
+        "margin_share_of_blended_pct": 0.0
+      },
+      {
+        "service": "llm",
+        "provider": "OpenRouter (gpt-4o-mini)",
+        "operation": "14 prompt + 2 completion tokens",
+        "sapiom_price_usd": 0.0001,
+        "public_price_usd": 3.2999999999999997e-06,
+        "markup_pct": 2930.303030303031,
+        "confidence": "HIGH",
+        "likely_floor_artifact": true,
+        "markup_display": "flat sub-cent",
+        "margin_usd": 9.67e-05,
+        "margin_share_of_blended_pct": 12.137567465796398
+      },
+      {
+        "service": "images",
+        "provider": "Fal.ai (flux/schnell)",
+        "operation": "1 image, 512x512 (1MP billed)",
+        "sapiom_price_usd": 0.003,
+        "public_price_usd": 0.003,
+        "markup_pct": 0.0,
+        "confidence": "HIGH",
+        "likely_floor_artifact": false,
+        "markup_display": "0% spread",
+        "margin_usd": 0.0,
+        "margin_share_of_blended_pct": 0.0
+      },
+      {
+        "service": "audio",
+        "provider": "ElevenLabs (multilingual v2)",
+        "operation": "text-to-speech, 3 characters",
+        "sapiom_price_usd": 0.001,
+        "public_price_usd": 0.00030000000000000003,
+        "markup_pct": 233.33333333333331,
+        "confidence": "HIGH",
+        "likely_floor_artifact": true,
+        "markup_display": "flat sub-cent",
+        "margin_usd": 0.0007,
+        "margin_share_of_blended_pct": 87.86243253420349
+      }
+    ],
+    "blended_take_rate_pct_not_a_headline": 7.888118811881196,
+    "blended_take_rate_bps_not_a_headline": 788.8118811881195,
+    "blended_markup_pct_not_a_headline": 8.563627959971203,
+    "n_high_rows": 4,
+    "n_per_service": 1,
+    "linkup_ledger_n": 43,
+    "linkup_ledger_all_identical": true,
+    "real_markup_services": [
+      "search",
+      "images"
+    ],
+    "floor_artifact_services": [
+      "llm",
+      "audio"
+    ],
+    "floor_margin_share_pct": 99.99999999999989,
+    "note": "9-service sweep (dryrun/service_sweep_result.json), N=1 call per service, full table + MED/DROP rows + sources in take_rate.md. No blended headline is shown: the two real-dollar-volume services (search, images) settle at exactly vendor list price (0% markup \u2014 search is corroborated by all 43 historical sapiom_linkup transactions in the ledger, not just this N=1 sweep call, and all 43 settle at the identical $0.006000); the two tiny-dollar rows (llm, audio) are near-certain minimum-billing-floor artifacts, not percentage markups \u2014 their raw percentages are withheld from the tile's headline cell for that reason (see markup_pct on each row for the number, and take_rate.md for the full writeup). Of the dollar-weighted margin across all 4 rows, audio/ElevenLabs is ~88% and llm/OpenRouter is ~12% (recomputed from this same table \u2014 corrects take_rate.md's/NARRATIVE.md's earlier, backwards claim that the LLM row drove 'almost entirely' of the margin). CAVEAT: every 'public price' in this table is the vendor's published retail list price, not Sapiom's actual negotiated cost (Sapiom likely gets volume/negotiated rates below retail, and does not publish its own per-call pricing) \u2014 so this table measures Sapiom-retail vs. vendor-retail (a build-vs-buy comparison for the agent), not Sapiom's true take rate against its own COGS. Full caveat in take_rate.md."
+  },
+  "tile_loss_rate": {
+    "n_txns": 81,
+    "n_failed": 2,
+    "failed_pct": 2.4691358024691357,
+    "total_tpv_usd": 0.277472,
+    "failed_tpv_usd": 0.0,
+    "loss_rate_pct": 0.0,
+    "loss_rate_bps": 0.0,
+    "n_failed_with_cost_row": 0,
+    "note": "2/81 txns failed (2.5%) but 0/2 produced a cost row \u2014 Sapiom did not charge for either failure in this sample (both were pre-settlement client/gateway errors, not mid-flight failures after a hold). Loss rate = 0 bps of TPV. Full queries + caveats: loss_rate.md.",
+    "cross_reference": "0 bps applies only to this n=81 sample's pre-hold failures. Post-hold failures are NOT free: see Refund-on-Failure \u2014 in a direct test, 4/4 forced post-hold failures had their hold retained/frozen (not released), not this 0 bps rate."
+  },
+  "tile_auth_rate": {
+    "approved": 81,
+    "denied": 0,
+    "auth_rate_pct": 100.0,
+    "note": "No spending rules were active in this sample \u2014 100% reflects an unconfigured account (nothing to deny), not proof governance works. Full distribution + caveat: findings.md \u00a77."
+  },
+  "tile_capital_overhang": {
+    "overhang_ratio": 5.56982793117247,
+    "sum_held_usd": 0.027838,
+    "sum_settled_usd": 0.004998,
+    "definition": "held$ \u00f7 settled$ across all supersession chains \u2014 same chains as Capture Ratio, inverse framing.",
+    "clears_note": "Clears in 5.3\u201312.0s \u2014 not permanently parked capital.",
+    "scope_note": "Scope: n=27 LLM chains (sapiom_openrouter only), one session, gpt-4o-mini \u2014 LLM-specific, not platform-wide.",
+    "method_note": "$0.027838 held / $0.004998 settled across 27 chains = 5.57x."
+  },
+  "tile_blast_radius": {
+    "available": false,
+    "definition": "Max spend one agent reaches before a cap stops it.",
+    "note": "Needs governance rules active \u2014 no spending rule was configured in this sample (BACKLOG #8, [HUMAN-UI])."
+  },
+  "tile_cap_utilization": {
+    "available": false,
+    "definition": "Spend \u00f7 budget, per agent.",
+    "note": "Needs governance rules active \u2014 no per-agent budget exists without a spending rule configured."
+  },
+  "tile_attribution_completeness": {
+    "complete": 81,
+    "total": 81,
+    "pct": 100.0,
+    "n_unknown_service": 2,
+    "definition": "% of txns with agent, traceId, service, outcome all populated.",
+    "visible_caveat": "2/81 txns carry service_name='unknown' \u2014 present, but unresolved.",
+    "note": "81/81 txns have all 4 fields non-null (100%), but 2/81 carry service_name='unknown' \u2014 present, but an unresolved value, so non-null isn't always meaningfully attributed. Noted, not hidden."
+  },
+  "tile_phantom_spend_rate": {
+    "overstatement_pct": 10.032724022604082,
+    "naive_sum_usd": 0.30531,
+    "live_sum_usd": 0.277472,
+    "definition": "Naive sum of every cost row vs. live (non-superseded) spend.",
+    "method_note": "Latest balance snapshot vs (initial balance \u2212 live spend): diff $0.000000. Naive = every cost row including superseded holds ($0.305310); live = superseded_at IS NULL only ($0.277472)."
+  },
+  "tile_hold_release_latency": {
+    "p50_ms": 5295,
+    "p95_ms": 11961,
+    "service": "sapiom_openrouter",
+    "n": 31,
+    "definition": "p50/p95 time from hold to final capture (chained services only).",
+    "scope_note": "Scope: sapiom_openrouter only (n=31), one session, gpt-4o-mini \u2014 LLM-specific, not platform-wide."
+  },
+  "tile_refund_on_failure": {
+    "n_failed": 2,
+    "n_failed_with_hold": 0,
+    "direct_test_n": 4,
+    "direct_test_retained": 4,
+    "direct_test_retention_rate_pct": 100.0,
+    "direct_test_mean_retained_usd": 0.076803,
+    "definition": "% of a hold released back vs. retained/frozen, when a call fails after the hold is placed.",
+    "subline": "100% of hold retained/frozen on post-hold failure (4/4 forced trials)",
+    "note": "In-sample: 0/2 of the n=81 sample's natural failures ever held a cost \u2014 both died pre-hold, so there was nothing to release (loss_rate.md). Direct test: when a hold DOES exist and the call then errors, 4/4 forced trials show the hold RETAINED/FROZEN \u2014 availableBalance dropped by exactly $0.076803 each time (zero variance) while totalBalance never moved, so this is not a completed charge, and it is not released either (findings.md \u00a79; dryrun/failure_capture_n3.md; dryrun/hold_linearity_extension.md; dryrun/refund_watch.log \u2014 still being watched for a delayed release). Over-requested max_tokens makes the frozen amount larger. Honest caveat: the per-failure retention mechanic is deterministic and measured (4/4) \u2014 the FLEET FREQUENCY of post-hold failures in live traffic is NOT measured; do not read this as a $/day loss rate."
+  },
+  "kya_scorecard": {
+    "rows": [
+      {
+        "agent_name": "fleet-test",
+        "spend_usd": 0.001,
+        "n_calls": 10,
+        "median_gap_s": 0.076,
+        "peak_calls_per_min": 10,
+        "runaway": true,
+        "velocity_score": 90,
+        "velocity_grade": "F"
+      },
+      {
+        "agent_name": "spend-runaway",
+        "spend_usd": 0.15,
+        "n_calls": 25,
+        "median_gap_s": 7.983499999999999,
+        "peak_calls_per_min": 9,
+        "runaway": false,
+        "velocity_score": 27,
+        "velocity_grade": "C"
+      },
+      {
+        "agent_name": "spend-researcher",
+        "spend_usd": 0.072,
+        "n_calls": 12,
+        "median_gap_s": 18.789,
+        "peak_calls_per_min": 4,
+        "runaway": false,
+        "velocity_score": 12,
+        "velocity_grade": "B"
+      },
+      {
+        "agent_name": "cap-test",
+        "spend_usd": 0.0003,
+        "n_calls": 3,
+        "median_gap_s": 8.8155,
+        "peak_calls_per_min": 3,
+        "runaway": false,
+        "velocity_score": 9,
+        "velocity_grade": "A"
+      },
+      {
+        "agent_name": "chain-task",
+        "spend_usd": 0.0242,
+        "n_calls": 6,
+        "median_gap_s": 7.955,
+        "peak_calls_per_min": 3,
+        "runaway": false,
+        "velocity_score": 9,
+        "velocity_grade": "A"
+      },
+      {
+        "agent_name": "scale-test",
+        "spend_usd": 0.0003,
+        "n_calls": 3,
+        "median_gap_s": 6.9755,
+        "peak_calls_per_min": 3,
+        "runaway": false,
+        "velocity_score": 9,
+        "velocity_grade": "A"
+      },
+      {
+        "agent_name": "spend-writer",
+        "spend_usd": 0.00291,
+        "n_calls": 10,
+        "median_gap_s": 23.046,
+        "peak_calls_per_min": 3,
+        "runaway": false,
+        "velocity_score": 9,
+        "velocity_grade": "A"
+      },
+      {
+        "agent_name": "dryrun-researcher",
+        "spend_usd": 0.006,
+        "n_calls": 1,
+        "median_gap_s": null,
+        "peak_calls_per_min": null,
+        "runaway": false,
+        "velocity_score": null,
+        "velocity_grade": "N/A"
+      },
+      {
+        "agent_name": "estimate-test",
+        "spend_usd": 0.000972,
+        "n_calls": 2,
+        "median_gap_s": null,
+        "peak_calls_per_min": null,
+        "runaway": false,
+        "velocity_score": null,
+        "velocity_grade": "N/A"
+      },
+      {
+        "agent_name": "sweep-audio",
+        "spend_usd": 0.001,
+        "n_calls": 1,
+        "median_gap_s": null,
+        "peak_calls_per_min": null,
+        "runaway": false,
+        "velocity_score": null,
+        "velocity_grade": "N/A"
+      },
+      {
+        "agent_name": "sweep-compute",
+        "spend_usd": 0.00069,
+        "n_calls": 2,
+        "median_gap_s": null,
+        "peak_calls_per_min": null,
+        "runaway": false,
+        "velocity_score": null,
+        "velocity_grade": "N/A"
+      },
+      {
+        "agent_name": "sweep-data",
+        "spend_usd": 0.0,
+        "n_calls": 1,
+        "median_gap_s": null,
+        "peak_calls_per_min": null,
+        "runaway": false,
+        "velocity_score": null,
+        "velocity_grade": "N/A"
+      },
+      {
+        "agent_name": "sweep-images",
+        "spend_usd": 0.003,
+        "n_calls": 2,
+        "median_gap_s": null,
+        "peak_calls_per_min": null,
+        "runaway": false,
+        "velocity_score": null,
+        "velocity_grade": "N/A"
+      },
+      {
+        "agent_name": "sweep-llm",
+        "spend_usd": 0.0001,
+        "n_calls": 1,
+        "median_gap_s": null,
+        "peak_calls_per_min": null,
+        "runaway": false,
+        "velocity_score": null,
+        "velocity_grade": "N/A"
+      },
+      {
+        "agent_name": "sweep-scraping",
+        "spend_usd": 0.009,
+        "n_calls": 1,
+        "median_gap_s": null,
+        "peak_calls_per_min": null,
+        "runaway": false,
+        "velocity_score": null,
+        "velocity_grade": "N/A"
+      },
+      {
+        "agent_name": "sweep-search",
+        "spend_usd": 0.006,
+        "n_calls": 1,
+        "median_gap_s": null,
+        "peak_calls_per_min": null,
+        "runaway": false,
+        "velocity_score": null,
+        "velocity_grade": "N/A"
+      }
+    ],
+    "visible_caveat": "Illustrative \u2014 velocity-only, one session; spend is shown but not a factor in this grade.",
+    "formula_note": "Velocity score = 60 pts if peer-relative velocity anomaly flagged (findings.md \u00a75) + up to 30 pts scaled from peak calls in any 60s window (peak x 3, capped). Grade: A 0-9 / B 10-24 / C 25-49 / D 50-74 / F 75-100. Agents with <3 calls show N/A \u2014 not enough data for a median gap. Spend is NOT part of this score (spend-runaway is ~54% of all TPV and grades C; fleet-test is ~0.4% of TPV and grades F) \u2014 velocity-only, illustrative, one session."
+  }
+};
+</script>
+<script>
+(function () {
+  const el = (tag, cls, html) => {
+    const e = document.createElement(tag);
+    if (cls) e.className = cls;
+    if (html !== undefined) e.innerHTML = html;
+    return e;
+  };
+  const usd = (n, d = 6) => (n === null || n === undefined) ? 'n/a' : `$${Number(n).toFixed(d)}`;
+  const usd2 = (n) => usd(n, 2);
+  const pct = (n, d = 1) => (n === null || n === undefined) ? 'n/a' : `${Number(n) >= 0 ? '+' : ''}${Number(n).toFixed(d)}%`;
+  const fmtMs = (ms) => (ms === null || ms === undefined) ? 'n/a' : (Math.abs(ms) < 1000 ? `${ms.toFixed(0)}ms` : `${(ms / 1000).toFixed(2)}s`);
+  // status-chip markup helper — icon+label, never bare color (§2.5).
+  const chip = (status, label) => `<span class="status-chip ${status}"><span class="dot"></span>${label}</span>`;
+  // Wrap a <table> in an overflow-x scroller so a 7-column table never breaks
+  // layout on a narrow tile (§5).
+  const scrollWrap = (table) => {
+    const wrap = el('div', 'table-scroll');
+    wrap.appendChild(table);
+    return wrap;
+  };
+
+  const heroGrid = document.getElementById('hero-grid');
+  const grid = document.getElementById('grid');
+  const gridBounded = document.getElementById('grid-bounded');
+  const gridVisible = document.getElementById('grid-visible');
+  const gridRecoverable = document.getElementById('grid-recoverable');
+  const kyaTile = document.getElementById('kya-tile');
+  const subtitle = document.getElementById('subtitle');
+  const footer = document.getElementById('footer');
+
+  const data = window.DASHBOARD_DATA;
+  if (!data) {
+    subtitle.textContent = '';
+    heroGrid.appendChild(el('div', 'tile hero',
+      '<h2>Load error</h2><div class="big-number">n/a</div>' +
+      '<div class="caption">dashboard_data.js did not load. Run export_dashboard.py from the repo root, ' +
+      'then reopen dashboard.html from the same directory.</div>'));
+    return;
+  }
+
+  const h = data.header || {};
+  const genDate = (data.generated_at || '').slice(0, 10);
+  subtitle.textContent = `${h.n_txns} txns · ${h.n_agents} agents · generated ${genDate}`;
+  subtitle.title = `Period: ${h.period_start} -> ${h.period_end}`;
+
+  // ---- Hero 1: TPV --------------------------------------------------------
+  (function heroTpv() {
+    const t = data.hero_tpv || {};
+    const tile = el('div', 'tile hero');
+    tile.appendChild(el('h2', null, 'TPV — Total Payment Volume'));
+    tile.appendChild(el('div', 'big-number', usd(t.value_usd, 6)));
+    tile.appendChild(el('div', 'subline', t.subline || ''));
+    const note = el('div', 'scale-note', t.scale_note || '');
+    note.title = t.method_note || '';
+    tile.appendChild(note);
+    heroGrid.appendChild(tile);
+  })();
+
+  // ---- Hero 2: Capture ratio -----------------------------------------------
+  (function heroCapture() {
+    const t = data.hero_capture_ratio || {};
+    const tile = el('div', 'tile hero');
+    tile.appendChild(el('h2', null, 'Capture Ratio'));
+    const v = t.ratio_pct;
+    // Valence fix: this is a float-inefficiency signal, not a capture-failure /
+    // revenue-leakage signal (settling below the hold is the system working as
+    // designed) — magnitude only, neutral ink, never a status color.
+    tile.appendChild(el('div', 'big-number', v === null || v === undefined ? 'n/a' : `${v.toFixed(1)}%`));
+    tile.appendChild(el('div', 'subline', t.subline || ''));
+    const note = el('div', 'scale-note', t.scale_note || '');
+    note.title = t.method_note || '';
+    tile.appendChild(note);
+    tile.appendChild(el('div', 'caption', t.scope_note || ''));
+    heroGrid.appendChild(tile);
+  })();
+
+  // ---- Hero 3: Reconciliation ----------------------------------------------
+  (function heroReconciliation() {
+    const t = data.hero_reconciliation || {};
+    const tile = el('div', 'tile hero');
+    tile.appendChild(el('h2', null, 'Reconciliation'));
+    // The $ number is always neutral ink; only the chip carries good/critical
+    // state, and only when the ledger actually ties (t.green), never hardcoded.
+    const badge = t.green ? chip('good', 'TIES OUT') : chip('critical', 'MISMATCH');
+    tile.appendChild(el('div', 'big-number', `${usd(t.diff_usd)} ${badge}`));
+    tile.appendChild(el('div', 'subline', t.subline || ''));
+    const note = el('div', 'scale-note', t.scale_note || '');
+    note.title = t.method_note || '';
+    tile.appendChild(note);
+    tile.appendChild(el('div', 'caption', t.ingest_note || ''));
+    heroGrid.appendChild(tile);
+  })();
+
+  // ---- Tile 4: Auth -> Capture time -----------------------------------------
+  (function tileAuthCapture() {
+    const t = data.tile_auth_to_capture || {};
+    const tile = el('div', 'tile');
+    const header = el('h2', null, 'Auth → Capture Time');
+    header.title = t.footnote || '';
+    tile.appendChild(header);
+    tile.appendChild(el('div', 'big-number', `${fmtMs(t.headline_p50_ms)} / ${fmtMs(t.headline_p95_ms)}`));
+    const sub = el('div', 'subline', `${t.headline_service || 'n/a'} — p50 / p95`);
+    sub.title = t.footnote || '';
+    tile.appendChild(sub);
+    const table = el('table');
+    table.innerHTML = '<tr><th>Service</th><th class="num">N</th><th class="num">p50</th><th class="num">p95</th></tr>';
+    const rows = t.rows || [];
+    const chained = rows.find(r => r.service_name === t.headline_service);
+    if (chained) {
+      const row = document.createElement('tr');
+      row.innerHTML = `<td>${chained.service_name}</td><td class="num">${chained.n}</td><td class="num">${fmtMs(chained.p50_ms)}</td><td class="num">${fmtMs(chained.p95_ms)}</td>`;
+      table.appendChild(row);
+    }
+    if (t.flat_n) {
+      const row = document.createElement('tr');
+      row.title = t.flat_services_label || '';
+      // Real computed min/max range, not a hardcoded "~0ms" (one flat service is
+      // actually -832ms) — see tile.footnote for why these are negative.
+      const flatRange = (t.flat_min_ms == null || t.flat_max_ms == null)
+        ? 'sub-second (write-before-authorize; see note)'
+        : `${fmtMs(t.flat_min_ms)} to ${fmtMs(t.flat_max_ms)}`;
+      row.innerHTML = `<td>5 flat services</td><td class="num">${t.flat_n}</td><td class="num" colspan="2">${flatRange}</td>`;
+      table.appendChild(row);
+    }
+    tile.appendChild(scrollWrap(table));
+    grid.appendChild(tile);
+  })();
+
+  // ---- Tile 5: Velocity checks ----------------------------------------------
+  (function tileVelocity() {
+    const t = data.tile_velocity_checks || {};
+    const tile = el('div', 'tile');
+    tile.appendChild(el('h2', null, 'Velocity Checks'));
+    const flagged = t.flagged || [];
+    // True state, but warning (not critical) — same signal as the KYA Flag
+    // column, rendered as an icon+label chip rather than bare color.
+    const statusChip = flagged.length
+      ? chip('warning', `${flagged.length} FLAGGED`)
+      : chip('good', 'CLEAN');
+    tile.appendChild(el('div', 'big-number', statusChip));
+    const sub = el('div', 'subline', flagged.length ? `${flagged.join(', ')} — anomalously fast` : 'No agent anomalously fast vs peers');
+    sub.title = 'Agent runaway = card-testing analog: peer-relative flag when median inter-call gap < 20% of the peer-agent median gap.';
+    tile.appendChild(sub);
+    const table = el('table');
+    table.innerHTML = '<tr><th>Agent</th><th class="num">Calls</th><th class="num">Median gap</th><th class="num">Peak/60s</th></tr>';
+    (t.per_agent || []).slice(0, 3).forEach((a) => {
+      const row = document.createElement('tr');
+      const flag = a.runaway ? ` ${chip('warning', 'RUNAWAY')}` : '';
+      row.innerHTML = `<td>${a.agent_name}${flag}</td><td class="num">${a.n}</td><td class="num">${a.median_gap_s === null || a.median_gap_s === undefined ? 'n/a' : a.median_gap_s.toFixed(2) + 's'}</td><td class="num">${a.peak_calls_per_min ?? 'n/a'}</td>`;
+      table.appendChild(row);
+    });
+    tile.appendChild(scrollWrap(table));
+    grid.appendChild(tile);
+  })();
+
+  // ---- Tile 6: Take rate ----------------------------------------------------
+  // No blended-take-rate headline (adversarial-audit fix): N=1 call per service,
+  // and 2 of 4 rows are minimum-fee-floor artifacts, not real markups — their raw
+  // percentages (e.g. +2,930%, +233%) are deliberately kept OFF this tile's visible
+  // cell text (round 2 adversarial-audit fix) since a bare % next to a genuine 0%
+  // row reads as a comparable take rate. Raw markup_pct is still in t.note/title
+  // tooltips and in take_rate.md for anyone who wants the number.
+  (function tileTakeRate() {
+    const t = data.tile_take_rate || {};
+    const tile = el('div', 'tile');
+    const header = el('h2', null, 'Take Rate');
+    header.title = t.note || '';
+    tile.appendChild(header);
+    const rows = t.rows || [];
+    const searchRow = rows.find((r) => r.service === 'search');
+    const imagesRow = rows.find((r) => r.service === 'images');
+    const realLabel = [searchRow, imagesRow].filter(Boolean).map((r) => r.provider).join(' & ') || 'search & images';
+    const ledgerN = t.linkup_ledger_n;
+    const sub = el('div', 'subline',
+      `${realLabel}: Sapiom charge = vendor public list price, 0% spread` +
+      (ledgerN ? ` (search: N=${ledgerN} identical historical txns, not just N=1).` : '.') +
+      ` Audio & LLM: flat sub-cent settle — looks like a large % only because vendor cost ` +
+      `is a fraction of a cent → likely minimum-ticket floor, unconfirmed, NOT a take rate.`);
+    sub.title = 'Vendor "public price" = retail list price, not Sapiom\'s actual negotiated cost — ' +
+      'see take_rate.md CAVEAT (this table is a build-vs-buy comparison, not Sapiom\'s true take rate).';
+    tile.appendChild(sub);
+    const table = el('table');
+    // Markup cell shows markup_display (qualitative for floor-artifact rows, "0%
+    // spread" for real rows) — never a bare floor-artifact percentage. The raw
+    // number, if anyone wants it, is in the row's title= tooltip.
+    table.innerHTML = '<tr><th>Service</th><th class="num">Sapiom</th><th class="num">Public</th><th class="num">Markup</th></tr>' +
+      rows.map((r) => `<tr><td>${r.provider}</td><td class="num">${usd(r.sapiom_price_usd)}</td><td class="num">${usd(r.public_price_usd)}</td><td class="num" title="${r.likely_floor_artifact ? `raw calc vs. vendor list price: ${pct(r.markup_pct)} — minimum-billing-floor artifact, not a real markup` : 'exact match to vendor public list price'}">${r.markup_display || pct(r.markup_pct)}<br><span style="color:var(--ink-muted);font-size:11px;">${r.likely_floor_artifact ? 'floor artifact, not a %' : 'real, matches list price'}</span></td></tr>`).join('');
+    tile.appendChild(scrollWrap(table));
+    const caption = el('div', 'caption',
+      `N=1 sweep call per service (search corroborated by N=${ledgerN ?? '?'} in the ledger). No blended ` +
+      `take-rate headline is shown — it would derive entirely from the two floor-artifact rows above, ` +
+      `not from a real margin (see take_rate.md).`);
+    caption.title = t.note || '';
+    tile.appendChild(caption);
+    grid.appendChild(tile);
+  })();
+
+  // ---- Tile 7: Loss rate (BUILD 10 — promoted to its own tile in BUILD 12) --
+  (function tileLossRate() {
+    const t = data.tile_loss_rate || {};
+    const tile = el('div', 'tile');
+    const header = el('h2', null, 'Loss Rate');
+    header.title = t.note || '';
+    tile.appendChild(header);
+    // Magnitude, not a status: caveat warns against reading 0bps as proven-safe.
+    tile.appendChild(el('div', 'big-number', `${(t.loss_rate_bps ?? 0).toFixed(0)} bps`));
+    const sub = el('div', 'subline', `${t.n_failed ?? 0}/${t.n_txns ?? 0} txns failed (${pct(t.failed_pct)}), ${t.n_failed_with_cost_row ?? 0}/${t.n_failed ?? 0} charged`);
+    sub.title = t.note || '';
+    tile.appendChild(sub);
+    tile.appendChild(el('div', 'caption', t.cross_reference || ''));
+    grid.appendChild(tile);
+  })();
+
+  // ---- Tile 8: Auth rate (BUILD 11 — promoted to its own tile in BUILD 12) --
+  (function tileAuthRate() {
+    const t = data.tile_auth_rate || {};
+    const tile = el('div', 'tile');
+    const header = el('h2', null, 'Auth Rate');
+    header.title = t.note || '';
+    tile.appendChild(header);
+    const v = t.auth_rate_pct;
+    // Magnitude, not a status: tile's own note says 100% is an artifact of no
+    // spending rules active, not proof governance works.
+    tile.appendChild(el('div', 'big-number', v === null || v === undefined ? 'n/a' : `${Number(v).toFixed(0)}%`));
+    const sub = el('div', 'subline', `${t.approved ?? 0}/${(t.approved ?? 0) + (t.denied ?? 0)} approved — no spending rules active in this sample`);
+    sub.title = t.note || '';
+    tile.appendChild(sub);
+    grid.appendChild(tile);
+  })();
+
+  // =====================================================================
+  // Section 2 — Agent-native KPIs — proposed definitions
+  // =====================================================================
+
+  // ---- BOUNDED: Capital Overhang Ratio (real number) -------------------------
+  (function tileCapitalOverhang() {
+    const t = data.tile_capital_overhang || {};
+    const tile = el('div', 'tile');
+    const header = el('h2', null, 'Capital Overhang Ratio');
+    header.title = t.method_note || '';
+    tile.appendChild(header);
+    const r = t.overhang_ratio;
+    tile.appendChild(el('div', 'big-number', r === null || r === undefined ? 'n/a' : `${r.toFixed(2)}x`));
+    tile.appendChild(el('div', 'definition', t.definition || ''));
+    tile.appendChild(el('div', 'caption', t.clears_note || ''));
+    tile.appendChild(el('div', 'caption', t.scope_note || ''));
+    gridBounded.appendChild(tile);
+  })();
+
+  // ---- BOUNDED: Blast Radius $ (greyed placeholder, no fake number) ---------
+  (function tileBlastRadius() {
+    const t = data.tile_blast_radius || {};
+    const tile = el('div', 'tile placeholder');
+    tile.appendChild(el('h2', null, 'Blast Radius $'));
+    tile.appendChild(el('div', 'big-number', '—'));
+    const lock = el('div', 'lock-tag', 'Needs governance rules active');
+    lock.title = t.note || '';
+    tile.appendChild(lock);
+    tile.appendChild(el('div', 'definition', t.definition || ''));
+    gridBounded.appendChild(tile);
+  })();
+
+  // ---- BOUNDED: Cap Utilization (greyed placeholder, no fake number) --------
+  (function tileCapUtilization() {
+    const t = data.tile_cap_utilization || {};
+    const tile = el('div', 'tile placeholder');
+    tile.appendChild(el('h2', null, 'Cap Utilization'));
+    tile.appendChild(el('div', 'big-number', '—'));
+    const lock = el('div', 'lock-tag', 'Needs governance rules active');
+    lock.title = t.note || '';
+    tile.appendChild(lock);
+    tile.appendChild(el('div', 'definition', t.definition || ''));
+    gridBounded.appendChild(tile);
+  })();
+
+  // ---- VISIBLE: Attribution Completeness -------------------------------------
+  (function tileAttributionCompleteness() {
+    const t = data.tile_attribution_completeness || {};
+    const tile = el('div', 'tile');
+    const header = el('h2', null, 'Attribution Completeness');
+    header.title = t.note || '';
+    tile.appendChild(header);
+    const p = t.pct;
+    // Magnitude, not a status: caveat says non-null isn't always meaningfully
+    // attributed (2/81 carry service_name='unknown').
+    tile.appendChild(el('div', 'big-number', p === null || p === undefined ? 'n/a' : `${p.toFixed(0)}%`));
+    const def = el('div', 'definition', t.definition || '');
+    def.title = t.note || '';
+    tile.appendChild(def);
+    tile.appendChild(el('div', 'caption', t.visible_caveat || ''));
+    gridVisible.appendChild(tile);
+  })();
+
+  // ---- VISIBLE: Phantom Spend Rate --------------------------------------------
+  (function tilePhantomSpendRate() {
+    const t = data.tile_phantom_spend_rate || {};
+    const tile = el('div', 'tile');
+    const header = el('h2', null, 'Phantom Spend Rate');
+    header.title = t.method_note || '';
+    tile.appendChild(header);
+    const v = t.overstatement_pct;
+    tile.appendChild(el('div', 'big-number', v === null || v === undefined ? 'n/a' : `+${v.toFixed(1)}%`));
+    tile.appendChild(el('div', 'definition', t.definition || ''));
+    gridVisible.appendChild(tile);
+  })();
+
+  // ---- RECOVERABLE: Hold-Release Latency --------------------------------------
+  (function tileHoldReleaseLatency() {
+    const t = data.tile_hold_release_latency || {};
+    const tile = el('div', 'tile');
+    tile.appendChild(el('h2', null, 'Hold-Release Latency'));
+    tile.appendChild(el('div', 'big-number', `${fmtMs(t.p50_ms)} / ${fmtMs(t.p95_ms)}`));
+    const sub = el('div', 'subline', `${t.service || 'n/a'} — p50 / p95`);
+    tile.appendChild(sub);
+    tile.appendChild(el('div', 'definition', t.definition || ''));
+    tile.appendChild(el('div', 'caption', t.scope_note || ''));
+    gridRecoverable.appendChild(tile);
+  })();
+
+  // ---- RECOVERABLE: Refund-on-Failure ------------------------------------------
+  // Rewritten per adversarial audit: this used to wrongly say the mid-flight-
+  // failure case was "not yet run". It was run and is confirmed (findings.md §9)
+  // — a direct test, not the n=81 in-sample data, answers the real question.
+  (function tileRefundOnFailure() {
+    const t = data.tile_refund_on_failure || {};
+    const tile = el('div', 'tile');
+    const header = el('h2', null, 'Refund-on-Failure');
+    header.title = t.note || '';
+    tile.appendChild(header);
+    const rate = t.direct_test_retention_rate_pct;
+    // True state — money frozen on failure, the one tile that should read as
+    // unambiguously serious.
+    const rateContent = (rate === null || rate === undefined) ? 'n/a' : chip('critical', `${rate.toFixed(0)}% RETAINED`);
+    tile.appendChild(el('div', 'big-number', rateContent));
+    tile.appendChild(el('div', 'subline', t.subline || ''));
+    tile.appendChild(el('div', 'definition', t.definition || ''));
+    const caveat = el('div', 'caption',
+      `In-sample: ${t.n_failed_with_hold ?? 0}/${t.n_failed ?? 0} natural failures ever held a cost (both died pre-hold — nothing to release). ` +
+      `Direct test: when a hold DOES exist and the call errors, ${t.direct_test_retained ?? 0}/${t.direct_test_n ?? 0} forced trials show the hold ` +
+      `RETAINED/FROZEN (mean ${usd(t.direct_test_mean_retained_usd, 6)}, zero variance) — availableBalance dropped but totalBalance never moved, ` +
+      `so it's not a completed charge and not released either. Caveat: this per-failure rate is measured and deterministic; how OFTEN calls fail ` +
+      `post-hold in live traffic is NOT measured — do not read this as a $/day loss rate.`);
+    caveat.title = t.note || '';
+    tile.appendChild(caveat);
+    gridRecoverable.appendChild(tile);
+  })();
+
+  // ---- KYA Scorecard (closes Section 2) --------------------------------------
+  // Relabeled per adversarial audit: this grade is velocity-only (spend is shown
+  // but never scored) — "composite risk grade" overclaimed what it measures.
+  (function kyaScorecard() {
+    const k = data.kya_scorecard || {};
+    const header = el('h2', null, 'KYA Scorecard — Know Your Agent');
+    header.title = k.formula_note || '';
+    kyaTile.appendChild(header);
+    const def = el('div', 'definition',
+      'One row per agent — spend, calls, velocity, peak burst, anomaly flag → illustrative A-F velocity grade (formula in tooltip).');
+    def.title = k.formula_note || '';
+    kyaTile.appendChild(def);
+    kyaTile.appendChild(el('div', 'caption', k.visible_caveat || ''));
+    const table = el('table');
+    table.innerHTML = '<tr><th>Agent</th><th class="num">Spend</th><th class="num">Calls</th><th class="num">Median gap</th><th class="num">Peak/60s</th><th>Flag</th><th>Velocity Grade</th></tr>';
+    // Velocity grade -> status-chip variant. Same reserved-color rule as every
+    // other true-state signal: A/B good, C warning, D serious, F critical,
+    // N/A muted (§2.3).
+    const GRADE_STATUS = { A: 'good', B: 'good', C: 'warning', D: 'serious', F: 'critical' };
+    (k.rows || []).forEach((r) => {
+      const row = document.createElement('tr');
+      const gapStr = (r.median_gap_s === null || r.median_gap_s === undefined) ? 'n/a' : `${r.median_gap_s.toFixed(2)}s`;
+      const grade = r.velocity_grade;
+      const statusClass = GRADE_STATUS[grade] || 'muted';
+      const flag = r.runaway ? ' ●' : '';
+      const flagChip = r.runaway ? chip('warning', 'RUNAWAY') : '';
+      row.innerHTML = `<td>${r.agent_name}${flag}</td><td class="num">${usd(r.spend_usd, 6)}</td>` +
+        `<td class="num">${r.n_calls}</td><td class="num">${gapStr}</td><td class="num">${r.peak_calls_per_min ?? 'n/a'}</td>` +
+        `<td>${flagChip}</td><td>${chip(statusClass, grade)}</td>`;
+      table.appendChild(row);
+    });
+    kyaTile.appendChild(scrollWrap(table));
+  })();
+
+  footer.innerHTML = 'Static, offline viewer. No network, no backend — reads dashboard_data.js only. Regenerate with: python export_dashboard.py.';
+})();
+</script>
+
+</body>
+</html>
