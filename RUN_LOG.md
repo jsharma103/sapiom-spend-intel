@@ -113,9 +113,25 @@ or the blended "789 bps" figure presented as if it were a real, statistically-gr
   covered vendor markup. `findings.md`'s existing `sapiom_linkup | 43` rows (settlement
   latency, x402 tax, §1-2) independently corroborate the N=43 ledger count above — untouched,
   already correct.
-- **Safety before commit:** `git grep -I "sk_live_"` on the 6 staged files — zero hits. `gh
-  auth status` active account = `jsharma103`; `git config user.email` =
-  `jsharma3962@gmail.com` (personal) — both correct, so pushed. Staged exactly
-  `dashboard.html dashboard_data.js dashboard_data.json export_dashboard.py findings.md
-  take_rate.md RUN_LOG.md` by name, not `-A` — left the untracked `dryrun/*` files and
-  `DESIGN.md` from other in-flight work alone.
+- **Safety before commit:** `git grep -I "sk_live_"` on the 6 staged files — zero hits (the
+  only literal `sk_live_` text anywhere in the diff is this same safety-check sentence in
+  prior/this RUN_LOG prose, not a key value; confirmed with a key-shaped regex,
+  `sk_live_[A-Za-z0-9_]{6,}`, on added lines only — zero matches). `gh auth status` active
+  account = `jsharma103`; `git config user.email` = `jsharma3962@gmail.com` (personal) — both
+  correct, so pushed. Staged exactly `dashboard.html dashboard_data.js dashboard_data.json
+  export_dashboard.py findings.md take_rate.md RUN_LOG.md` by name, not `-A` — left the
+  untracked `dryrun/*` files and `DESIGN.md` from other in-flight work alone. Committed as
+  `64c51b0`, pushed clean to `origin/main`.
+- **GitHub Pages check — FAILED, pre-existing, unrelated to this change.** `curl -sI
+  https://jsharma103.github.io/sapiom-spend-intel/dashboard.html` → **404** after the push (no
+  propagation-lag retry needed — the cause isn't lag). `gh api repos/jsharma103/sapiom-spend-intel
+  --jq '{has_pages, private, visibility}'` → `{"has_pages": false, "private": true, "visibility":
+  "private"}` and `gh api .../pages` → 404 ("Not Found") — Pages is not currently enabled on this
+  repo at all, so no new "pages build and deployment" run was even queued for `64c51b0` (`gh run
+  list` still shows the prior commit `6749c9a`'s run as the latest, which itself failed with
+  GitHub's own transient `"Deployment failed, try again later"` error). This predates my commit —
+  `has_pages` was already `false` before I pushed, so this is a repo/account-level Pages
+  configuration issue (likely needs re-enabling in Settings → Pages, or a plan/visibility check
+  since Pages on a private repo needs GitHub Pro/Team), not something introduced by this
+  take-rate change. Not in scope to fix here (outside the take-rate task and outside repo-settings
+  access from this session) — flagging for Jay to check Settings → Pages directly.
