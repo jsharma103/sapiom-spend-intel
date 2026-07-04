@@ -1,0 +1,229 @@
+{
+  "transactions_page": {
+    "data": [
+      {
+        "id": "79bee69d-5250-4353-8a6b-4d59df4c4b9a",
+        "serviceName": "sapiom_linkup",
+        "actionName": "execute",
+        "status": "completed",
+        "outcome": "success",
+        "createdAt": "2026-07-04T04:51:39.614Z",
+        "authorizedAt": "2026-07-04T04:51:41.199Z",
+        "completedAt": "2026-07-04T04:51:48.742Z",
+        "agentId": "696d14ad-f55f-462b-9a3c-3ece77b39cfa",
+        "agent": {
+          "id": "696d14ad-f55f-462b-9a3c-3ece77b39cfa",
+          "name": "dryrun-researcher",
+          "label": "dryrun-researcher"
+        },
+        "traceId": "ec58649c-dd30-44d9-87de-7b4d291a4c69",
+        "costs": [
+          {
+            "id": "a9c1c6bf-18b7-4d23-a574-a9678640f0d8",
+            "transactionId": "79bee69d-5250-4353-8a6b-4d59df4c4b9a",
+            "fiatAmount": "0.006000000000000000",
+            "isEstimate": false,
+            "isActive": true,
+            "supersedesCostId": null,
+            "supersededAt": null,
+            "createdAt": "2026-07-04T04:51:41.012Z"
+          }
+        ]
+      },
+      {
+        "id": "945ac7f8-a716-4cc4-83e1-6d915f02d611",
+        "serviceName": "sapiom_openrouter",
+        "actionName": "generate",
+        "status": "completed",
+        "outcome": "success",
+        "createdAt": "2026-07-04T05:15:46.843Z",
+        "authorizedAt": "2026-07-04T05:15:48.262Z",
+        "completedAt": "2026-07-04T05:16:00.590Z",
+        "agentId": "c211d1ea-6cd5-42aa-ab5d-51df7b48a831",
+        "agent": {
+          "id": "c211d1ea-6cd5-42aa-ab5d-51df7b48a831",
+          "name": "estimate-test",
+          "label": "estimate-test"
+        },
+        "traceId": "67548dbd-e996-44c9-bedb-d2ef683c2aa0",
+        "costs": [
+          {
+            "id": "0c0d9a7d-bab6-41a3-ab7b-46fd0ff4707a",
+            "transactionId": "945ac7f8-a716-4cc4-83e1-6d915f02d611",
+            "fiatAmount": "0.000500000000000000",
+            "isEstimate": false,
+            "isActive": true,
+            "supersedesCostId": "33172d21-6958-4fb7-bab1-a8b376eacda2",
+            "supersededAt": null,
+            "createdAt": "2026-07-04T05:16:00.507Z"
+          },
+          {
+            "id": "33172d21-6958-4fb7-bab1-a8b376eacda2",
+            "transactionId": "945ac7f8-a716-4cc4-83e1-6d915f02d611",
+            "fiatAmount": "0.000544000000000000",
+            "isEstimate": false,
+            "isActive": false,
+            "supersedesCostId": null,
+            "supersededAt": "2026-07-04T05:16:00.545Z",
+            "createdAt": "2026-07-04T05:15:48.119Z"
+          }
+        ]
+      },
+      {
+        "id": "fdb23e45-6c96-4cb8-a89a-29d603fc386b",
+        "serviceName": "sapiom_openrouter",
+        "actionName": "generate",
+        "status": "completed",
+        "outcome": "success",
+        "createdAt": "2026-07-04T05:14:31.074Z",
+        "authorizedAt": "2026-07-04T05:14:32.625Z",
+        "completedAt": "2026-07-04T05:14:43.433Z",
+        "agentId": "c211d1ea-6cd5-42aa-ab5d-51df7b48a831",
+        "agent": {
+          "id": "c211d1ea-6cd5-42aa-ab5d-51df7b48a831",
+          "name": "estimate-test",
+          "label": "estimate-test"
+        },
+        "traceId": "1bc3872d-d339-4818-8349-36f922028995",
+        "costs": [
+          {
+            "id": "79706828-6652-488a-b46d-149022590b90",
+            "transactionId": "fdb23e45-6c96-4cb8-a89a-29d603fc386b",
+            "fiatAmount": "0.000544000000000000",
+            "isEstimate": false,
+            "isActive": false,
+            "supersedesCostId": null,
+            "supersededAt": "2026-07-04T05:14:43.439Z",
+            "createdAt": "2026-07-04T05:14:32.459Z"
+          },
+          {
+            "id": "9b40407c-dc35-472e-a80a-4eb61e18da7f",
+            "transactionId": "fdb23e45-6c96-4cb8-a89a-29d603fc386b",
+            "fiatAmount": "0.000472000000000000",
+            "isEstimate": false,
+            "isActive": true,
+            "supersedesCostId": "79706828-6652-488a-b46d-149022590b90",
+            "supersededAt": null,
+            "createdAt": "2026-07-04T05:14:43.405Z"
+          }
+        ]
+      },
+      {
+        "id": "d0000000-0000-4000-8000-000000000004",
+        "serviceName": "sapiom_linkup",
+        "actionName": "execute",
+        "status": "completed",
+        "outcome": "success",
+        "createdAt": "2026-07-04T05:00:00.000Z",
+        "authorizedAt": "2026-07-04T05:00:01.000Z",
+        "completedAt": "2026-07-04T05:00:05.000Z",
+        "agentId": "696d14ad-f55f-462b-9a3c-3ece77b39cfa",
+        "agent": {
+          "id": "696d14ad-f55f-462b-9a3c-3ece77b39cfa",
+          "name": "dryrun-researcher",
+          "label": "dryrun-researcher"
+        },
+        "traceId": "d1111111-1111-4111-8111-111111111111",
+        "costs": []
+      },
+      {
+        "id": "e0000000-0000-4000-8000-000000000005",
+        "serviceName": "sapiom_linkup",
+        "actionName": "execute",
+        "status": "completed",
+        "outcome": "success",
+        "createdAt": "2026-07-04T05:05:00.000Z",
+        "authorizedAt": "2026-07-04T05:05:01.000Z",
+        "completedAt": "2026-07-04T05:05:05.000Z",
+        "agentId": "8a2e4b3f-1c9d-4e6a-9f5b-2d7c6e8a1b3c",
+        "agent": {
+          "id": "8a2e4b3f-1c9d-4e6a-9f5b-2d7c6e8a1b3c",
+          "name": "test-runaway",
+          "label": "test-runaway"
+        },
+        "traceId": "e1111111-1111-4111-8111-111111111111",
+        "costs": [
+          {
+            "id": "e2222222-2222-4222-8222-222222222222",
+            "transactionId": "e0000000-0000-4000-8000-000000000005",
+            "fiatAmount": "0.006000000000000000",
+            "isEstimate": false,
+            "isActive": true,
+            "supersedesCostId": null,
+            "supersededAt": null,
+            "createdAt": "2026-07-04T05:05:02.000Z"
+          },
+          {
+            "id": "e3333333-3333-4333-8333-333333333333",
+            "transactionId": "e0000000-0000-4000-8000-000000000005",
+            "fiatAmount": "0.006000000000000000",
+            "isEstimate": false,
+            "isActive": true,
+            "supersedesCostId": null,
+            "supersededAt": null,
+            "createdAt": "2026-07-04T05:05:03.000Z"
+          }
+        ]
+      },
+      {
+        "id": "f0000000-0000-4000-8000-000000000006",
+        "serviceName": "sapiom_linkup",
+        "actionName": "execute",
+        "status": "completed",
+        "outcome": "success",
+        "createdAt": "2026-07-04T05:10:00.000Z",
+        "authorizedAt": "2026-07-04T05:10:01.000Z",
+        "completedAt": "2026-07-04T05:10:05.000Z",
+        "agentId": "8a2e4b3f-1c9d-4e6a-9f5b-2d7c6e8a1b3c",
+        "agent": {
+          "id": "8a2e4b3f-1c9d-4e6a-9f5b-2d7c6e8a1b3c",
+          "name": "test-runaway",
+          "label": "test-runaway"
+        },
+        "traceId": "f1111111-1111-4111-8111-111111111111",
+        "costs": [
+          {
+            "id": "f2222222-2222-4222-8222-222222222222",
+            "transactionId": "f0000000-0000-4000-8000-000000000006",
+            "fiatAmount": "0.000300000000000000",
+            "isEstimate": false,
+            "isActive": false,
+            "supersedesCostId": null,
+            "supersededAt": "2026-07-04T05:10:04.000Z",
+            "createdAt": "2026-07-04T05:10:02.000Z"
+          }
+        ]
+      }
+    ],
+    "links": {
+      "self": "/transactions?",
+      "next": null,
+      "prev": null
+    },
+    "meta": {
+      "page": {
+        "limit": 20,
+        "hasNext": false,
+        "hasPrev": false
+      }
+    }
+  },
+  "accounts": {
+    "data": [
+      {
+        "id": "3476b284-c756-4d2e-8927-ec7c83d47e60",
+        "publicId": "0f6a56ba-deb3-4307-92aa-ef79229302ff",
+        "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+        "assetId": "4657ab13-b6e6-4ba4-9df8-47b351c0041c",
+        "isDefault": true,
+        "totalBalance": "4.981028000000000000",
+        "availableBalance": "4.981028000000000000",
+        "unavailableBalance": "0.000000000000000000",
+        "pendingCreditBalance": "0.000000000000000000",
+        "status": "ACTIVE",
+        "createdAt": "2026-07-04T04:01:31.382Z",
+        "updatedAt": "2026-07-04T05:16:02.556Z"
+      }
+    ]
+  }
+}

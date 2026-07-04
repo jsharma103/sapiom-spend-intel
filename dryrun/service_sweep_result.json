@@ -1,0 +1,3804 @@
+{
+  "ranAt": "2026-07-04T10:24:06.585Z",
+  "mode": "run",
+  "probeSideEffects": false,
+  "costGuard": {
+    "minBalanceRequiredUsd": 0.5,
+    "hardBudgetUsd": 0.2,
+    "plannedTotalUsd": 0.071,
+    "runningEstimatedTotalUsd": 0.071,
+    "actualTotalUsd": 0.0161,
+    "budgetAborted": false
+  },
+  "balance": {
+    "beforeUsd": 4.766518,
+    "afterUsd": 4.750418
+  },
+  "results": [
+    {
+      "service": "search",
+      "provider": "Linkup",
+      "endpoint": "https://linkup.services.sapiom.ai/v1/search",
+      "method": "POST",
+      "requestBody": {
+        "q": "capital of France",
+        "depth": "standard",
+        "outputType": "sourcedAnswer"
+      },
+      "agentName": "sweep-search",
+      "plannedEstCostUsd": 0.01,
+      "httpStatus": 200,
+      "keyWorks": "WORKS",
+      "charged": true,
+      "actualCostUsd": 0.006,
+      "matchedTransactionId": "463243e4-52dd-43ca-8b4c-9796a1889bb4",
+      "responseShape": "{ answer: string, sources: array(20) of object }",
+      "responseSample": "{\"answer\":\"The capital of France is Paris.\",\"sources\":[{\"name\":\"Paris - Wikipedia\",\"url\":\"https://en.wikipedia.org/wiki/Paris\",\"favicon\":\"https://favicons.linkup.so?domain=en.wikipedia.org\",\"snippet\":\"Clovis the Frank, the first king of the Merovingian dynasty, made the city his capital from 508. As the Frankish domination of Gaul began, there was a gradual immigration by the Franks to Paris, and the Parisian Francien dialects were born. Fortification of the Île de la Cité failed to avert ...\\nClovis the Frank, the first king of the Merovingian dynasty, made the city his capital from 508. As the Frankish domination of Gaul began, there was a gradual immigration by the Franks to Paris, and the Parisian Francien dialects were born. Fortification of the Île de la Cité failed to avert sacking …(truncated)",
+      "error": null
+    },
+    {
+      "service": "llm",
+      "provider": "OpenRouter",
+      "endpoint": "https://openrouter.services.sapiom.ai/v1/chat/completions",
+      "method": "POST",
+      "requestBody": {
+        "model": "openai/gpt-4o-mini",
+        "messages": [
+          {
+            "role": "user",
+            "content": "Say hello in one short sentence."
+          }
+        ],
+        "max_tokens": 30
+      },
+      "agentName": "sweep-llm",
+      "plannedEstCostUsd": 0.001,
+      "httpStatus": 200,
+      "keyWorks": "WORKS",
+      "charged": true,
+      "actualCostUsd": 0.0001,
+      "matchedTransactionId": "bc4de23b-cfa7-43a1-9da8-80499930e2cf",
+      "responseShape": "{ id: string, object: string, created: number, model: string, provider: string, system_fingerprint: string, service_tier: null, choices: array(1) of object, usage: { prompt_tokens: number, completion_tokens: number, total_tokens: number, cost: number, is_byok: boolean, prompt_tokens_details: object, cost_details: object, completion_tokens_details: object } }",
+      "responseSample": "{\"id\":\"gen-1783160613-2mxqNyoRWR9BGlZwkNmw\",\"object\":\"chat.completion\",\"created\":1783160613,\"model\":\"openai/gpt-4o-mini\",\"provider\":\"OpenAI\",\"system_fingerprint\":\"fp_30f4302bf1\",\"service_tier\":null,\"choices\":[{\"index\":0,\"logprobs\":null,\"finish_reason\":\"stop\",\"native_finish_reason\":\"stop\",\"message\":{\"role\":\"assistant\",\"content\":\"Hello!\",\"refusal\":null,\"reasoning\":null}}],\"usage\":{\"prompt_tokens\":14,\"completion_tokens\":2,\"total_tokens\":16,\"cost\":0.0000033,\"is_byok\":false,\"prompt_tokens_details\":{\"cached_tokens\":0,\"cache_write_tokens\":0,\"audio_tokens\":0,\"video_tokens\":0},\"cost_details\":{\"upstream_inference_cost\":0.0000033,\"upstream_inference_prompt_cost\":0.0000021,\"upstream_inference_completions_cost\":0.0000012},\"completion_tokens_details\":{\"reasoning_tokens\":0,\"image_tokens\":0,\"audio_tokens\"…(truncated)",
+      "error": null
+    },
+    {
+      "service": "images",
+      "provider": "Fal.ai",
+      "endpoint": "https://fal.services.sapiom.ai/v1/run/fal-ai/flux/schnell",
+      "method": "POST",
+      "requestBody": {
+        "prompt": "a red dot",
+        "image_size": "square",
+        "num_images": 1
+      },
+      "agentName": "sweep-images",
+      "plannedEstCostUsd": 0.01,
+      "httpStatus": 404,
+      "keyWorks": "KEY OK (bad request)",
+      "charged": false,
+      "actualCostUsd": null,
+      "matchedTransactionId": "7333a425-6a4f-476d-9610-955c642b9c87",
+      "responseShape": "{ message: string, error: string, statusCode: number }",
+      "responseSample": "{\"message\":\"Cannot POST /v1/run/fal-ai/flux/schnell\",\"error\":\"Not Found\",\"statusCode\":404}",
+      "error": null
+    },
+    {
+      "service": "audio",
+      "provider": "ElevenLabs",
+      "endpoint": "https://elevenlabs.services.sapiom.ai/v1/text-to-speech/21m00Tcm4TlvDq8ikWAM",
+      "method": "POST",
+      "requestBody": {
+        "text": "Hi.",
+        "model_id": "eleven_multilingual_v2"
+      },
+      "agentName": "sweep-audio",
+      "plannedEstCostUsd": 0.02,
+      "httpStatus": 200,
+      "keyWorks": "WORKS",
+      "charged": true,
+      "actualCostUsd": 0.001,
+      "matchedTransactionId": "e0fda2a5-19b8-459b-bfe1-8469178b2cea",
+      "responseShape": "{ url: string, expiresAt: string }",
+      "responseSample": "{\"url\":\"https://x402-elevenlabs-gateway.onrender.com/audio/audio/6754611c-df16-4e38-a491-e8015f62b23b-tts-21m00Tcm4TlvDq8ikWAM.mp3\",\"expiresAt\":\"2026-07-04T11:23:42.517Z\"}",
+      "error": null
+    },
+    {
+      "service": "compute",
+      "provider": "Blaxel",
+      "endpoint": "https://compute.services.sapiom.ai/v1/runs",
+      "method": "POST",
+      "requestBody": {
+        "code": "print(1)",
+        "language": "python"
+      },
+      "agentName": "sweep-compute",
+      "plannedEstCostUsd": 0.02,
+      "httpStatus": null,
+      "keyWorks": "ERROR",
+      "charged": false,
+      "actualCostUsd": null,
+      "matchedTransactionId": "eb918dba-a2b5-46b0-96e1-5aff42e92b76",
+      "responseShape": null,
+      "responseSample": null,
+      "error": "fetch failed"
+    },
+    {
+      "service": "data",
+      "provider": "Neon",
+      "endpoint": "https://neon.services.sapiom.ai/v1/databases/price",
+      "method": "POST",
+      "requestBody": {
+        "duration": "15m"
+      },
+      "agentName": "sweep-data",
+      "plannedEstCostUsd": 0,
+      "httpStatus": 200,
+      "keyWorks": "WORKS",
+      "charged": false,
+      "actualCostUsd": null,
+      "matchedTransactionId": "f4c02c1f-f9b0-4198-bfea-8d082001d2bf",
+      "responseShape": "{ price: string, currency: string, duration: string, computeSize: string, expiresIn: string }",
+      "responseSample": "{\"price\":\"$0.000001\",\"currency\":\"USD\",\"duration\":\"15m\",\"computeSize\":\"0.25 CU\",\"expiresIn\":\"900 seconds\"}",
+      "error": null
+    },
+    {
+      "service": "scraping",
+      "provider": "Firecrawl",
+      "endpoint": "https://firecrawl.services.sapiom.ai/v2/scrape",
+      "method": "POST",
+      "requestBody": {
+        "url": "https://example.com",
+        "formats": [
+          "markdown"
+        ]
+      },
+      "agentName": "sweep-scraping",
+      "plannedEstCostUsd": 0.01,
+      "httpStatus": 200,
+      "keyWorks": "WORKS",
+      "charged": true,
+      "actualCostUsd": 0.009,
+      "matchedTransactionId": "87f1b514-043e-4689-ad2b-c7f05d74ad97",
+      "responseShape": "{ success: boolean, data: { markdown: string, metadata: object } }",
+      "responseSample": "{\"success\":true,\"data\":{\"markdown\":\"# Example Domain\\n\\nThis domain is for use in documentation examples without needing permission. Avoid use in operations.\\n\\n[Learn more](https://iana.org/domains/example)\",\"metadata\":{\"title\":\"Example Domain\",\"viewport\":\"width=device-width, initial-scale=1\",\"language\":\"en\",\"favicon\":\"data:,\",\"scrapeId\":\"019f2ca7-fb0d-70f3-89d1-de6344125847\",\"sourceURL\":\"https://example.com\",\"url\":\"https://example.com/\",\"statusCode\":200,\"contentType\":\"text/html\",\"proxyUsed\":\"basic\",\"cacheState\":\"hit\",\"cachedAt\":\"2026-07-04T10:22:16.029Z\",\"creditsUsed\":1,\"concurrencyLimited\":false}}}",
+      "error": null
+    },
+    {
+      "service": "messaging",
+      "provider": "QStash",
+      "endpoint": "https://qstash.services.sapiom.ai/v2/publish/not-a-valid-destination",
+      "method": "POST",
+      "requestBody": {},
+      "agentName": "sweep-messaging",
+      "plannedEstCostUsd": 0,
+      "httpStatus": null,
+      "keyWorks": "SKIPPED",
+      "charged": false,
+      "actualCostUsd": 0,
+      "matchedTransactionId": null,
+      "responseShape": null,
+      "responseSample": null,
+      "error": null,
+      "note": "side effect (real webhook/job dispatch) — not fired; pass --probe-side-effects to fire an auth-only probe"
+    },
+    {
+      "service": "verify",
+      "provider": "Prelude",
+      "endpoint": "https://prelude.services.sapiom.ai/verifications",
+      "method": "POST",
+      "requestBody": {
+        "target": {
+          "type": "phone_number",
+          "value": "not-a-real-phone-number"
+        }
+      },
+      "agentName": "sweep-verify",
+      "plannedEstCostUsd": 0,
+      "httpStatus": null,
+      "keyWorks": "SKIPPED",
+      "charged": false,
+      "actualCostUsd": 0,
+      "matchedTransactionId": null,
+      "responseShape": null,
+      "responseSample": null,
+      "error": null,
+      "note": "side effect (real SMS send) — not fired; pass --probe-side-effects to fire an auth-only probe"
+    }
+  ],
+  "ambiguities": [
+    {
+      "service": "data (Neon)",
+      "note": "The task asked for the \"cheapest/read-ish DB op\". Actually provisioning even the shortest-lived (15m) Postgres DB is a real, non-trivial charge and not read-ish. data.md documents sapiom_database_price / POST {NEON}/v1/databases/price as explicitly FREE (\"no payment required\"). We use that as the data-service call: it still round-trips through the Neon gateway with the API key (proving auth) at guaranteed $0 cost, rather than guessing at Neon provisioning cost, which is not published anywhere in data.md."
+    },
+    {
+      "service": "scraping",
+      "note": "The task labelled this bucket \"(Anchor Browser)\", but scraping.md documents Anchor Browser only for sapiom_screenshot (webpage screenshot). The action that actually matches \"scrape one simple URL\" is Firecrawl's POST {FIRECRAWL}/v2/scrape, which is what SKILL.md/scraping.md map to \"scrape/fetch\". We used Firecrawl scrape against https://example.com; a screenshot call would exercise Anchor Browser instead but is a different action (render+screenshot, not scrape) and not documented as cheaper."
+    },
+    {
+      "service": "pricing (all services)",
+      "note": "None of search.md, ai-models.md, images.md, audio.md, compute.md, or scraping.md publish a flat per-call USD price. The estCostUsd values below are conservative estimates: the OpenRouter figure is anchored to real captured costs in cap_experiment_result.json (~$0.0001-0.0006 for short gpt-4o-mini completions); the others are generous upper-bound guesses at typical vendor rates (Linkup, Fal.ai flux/schnell, ElevenLabs TTS, Blaxel sandbox run, Firecrawl scrape) rounded up for safety margin in the budget guard. Actual costs are captured post-hoc from GET /v1/transactions and reported per-service alongside the estimate."
+    },
+    {
+      "service": "messaging (QStash) / verify (Prelude)",
+      "note": "Both are side-effecting: verify sends a real SMS to a real phone number; messaging/QStash schedules a real HTTP delivery (webhook). Neither is fired by default. With --probe-side-effects we fire a deliberately malformed request (bad phone format / bad destination) intended to be rejected by provider-side validation before any real dispatch happens — but this is inherently a best-effort guess about where that provider validates, since neither reference doc documents a \"dry validate\" mode."
+    }
+  ],
+  "rawAccountsBefore": {
+    "data": [
+      {
+        "id": "3476b284-c756-4d2e-8927-ec7c83d47e60",
+        "publicId": "0f6a56ba-deb3-4307-92aa-ef79229302ff",
+        "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+        "assetId": "4657ab13-b6e6-4ba4-9df8-47b351c0041c",
+        "isDefault": true,
+        "totalBalance": "4.766518000000000000",
+        "availableBalance": "4.766518000000000000",
+        "unavailableBalance": "0.000000000000000000",
+        "pendingCreditBalance": "0.000000000000000000",
+        "status": "ACTIVE",
+        "createdAt": "2026-07-04T04:01:31.382Z",
+        "updatedAt": "2026-07-04T08:15:29.740Z",
+        "deletedAt": null,
+        "creditLimitId": null,
+        "tenant": {
+          "id": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+          "organizationId": "f4ba285b-0855-4ae3-990c-e5bdee291c47",
+          "name": "Jsharma3962's Organization Workspace",
+          "type": "internal",
+          "externalCustomerId": null,
+          "externalId": null,
+          "createdAt": "2026-07-04T04:01:31.382Z",
+          "updatedAt": "2026-07-04T04:01:31.382Z",
+          "suspendedAt": null,
+          "deletedAt": null,
+          "fundingLedgerAccountId": null
+        },
+        "asset": {
+          "id": "4657ab13-b6e6-4ba4-9df8-47b351c0041c",
+          "name": "USD",
+          "symbol": "USD",
+          "network": "fiat",
+          "type": "FIAT",
+          "decimals": 6,
+          "createdAt": "2025-11-14T01:59:05.889Z",
+          "updatedAt": "2025-11-14T01:59:05.889Z",
+          "deletedAt": null
+        },
+        "billingProfileId": null
+      }
+    ],
+    "nextCursor": null
+  },
+  "rawAccountsAfter": {
+    "data": [
+      {
+        "id": "3476b284-c756-4d2e-8927-ec7c83d47e60",
+        "publicId": "0f6a56ba-deb3-4307-92aa-ef79229302ff",
+        "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+        "assetId": "4657ab13-b6e6-4ba4-9df8-47b351c0041c",
+        "isDefault": true,
+        "totalBalance": "4.750418000000000000",
+        "availableBalance": "4.750418000000000000",
+        "unavailableBalance": "0.000000000000000000",
+        "pendingCreditBalance": "0.000000000000000000",
+        "status": "ACTIVE",
+        "createdAt": "2026-07-04T04:01:31.382Z",
+        "updatedAt": "2026-07-04T10:23:54.273Z",
+        "deletedAt": null,
+        "creditLimitId": null,
+        "tenant": {
+          "id": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+          "organizationId": "f4ba285b-0855-4ae3-990c-e5bdee291c47",
+          "name": "Jsharma3962's Organization Workspace",
+          "type": "internal",
+          "externalCustomerId": null,
+          "externalId": null,
+          "createdAt": "2026-07-04T04:01:31.382Z",
+          "updatedAt": "2026-07-04T04:01:31.382Z",
+          "suspendedAt": null,
+          "deletedAt": null,
+          "fundingLedgerAccountId": null
+        },
+        "asset": {
+          "id": "4657ab13-b6e6-4ba4-9df8-47b351c0041c",
+          "name": "USD",
+          "symbol": "USD",
+          "network": "fiat",
+          "type": "FIAT",
+          "decimals": 6,
+          "createdAt": "2025-11-14T01:59:05.889Z",
+          "updatedAt": "2025-11-14T01:59:05.889Z",
+          "deletedAt": null
+        },
+        "billingProfileId": null
+      }
+    ],
+    "nextCursor": null
+  },
+  "rawTransactions": {
+    "data": [
+      {
+        "id": "87f1b514-043e-4689-ad2b-c7f05d74ad97",
+        "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+        "serviceName": "unknown",
+        "actionName": "create",
+        "resourceName": "https://firecrawl.services.sapiom.ai/v2/scrape",
+        "serviceId": "8fce8316-304e-4a46-9cc9-b4e0a4fa9ba7",
+        "status": "completed",
+        "requiresPayment": true,
+        "qualifiers": {},
+        "metadata": {
+          "createdByApiKeyId": "bfb69755-474f-41c3-bc82-22ca4aa97eec",
+          "preemptiveAuthorization": true
+        },
+        "createdAt": "2026-07-04T10:23:51.400Z",
+        "updatedAt": "2026-07-04T10:23:54.312Z",
+        "authorizedAt": "2026-07-04T10:23:52.825Z",
+        "completedAt": "2026-07-04T10:23:54.312Z",
+        "outcome": "success",
+        "currentPaymentTransactionId": "f5fadad1-b757-400c-9841-a4579c4f0f8f",
+        "trace": {
+          "id": "64939f60-4b11-4526-8b4e-bb7fba6a2b5a",
+          "externalId": null
+        },
+        "agentId": "d6db5ded-0839-404d-8e31-73f79b7f90de",
+        "agent": {
+          "id": "d6db5ded-0839-404d-8e31-73f79b7f90de",
+          "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+          "label": "sweep-scraping",
+          "name": "sweep-scraping",
+          "description": null,
+          "status": "active",
+          "createdAt": "2026-07-04T10:23:51.391Z",
+          "updatedAt": "2026-07-04T10:23:51.391Z",
+          "numericId": 15
+        },
+        "costs": [
+          {
+            "id": "9649142c-9967-45e3-9c58-bd843056e7be",
+            "transactionId": "87f1b514-043e-4689-ad2b-c7f05d74ad97",
+            "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+            "paymentTransactionId": "f5fadad1-b757-400c-9841-a4579c4f0f8f",
+            "fiatAmount": "0.009000000000000000",
+            "fiatAssetId": "4657ab13-b6e6-4ba4-9df8-47b351c0041c",
+            "isEstimate": false,
+            "isActive": true,
+            "supersedesCostId": null,
+            "supersededAt": null,
+            "costDetails": {
+              "source": "payment_transaction",
+              "network": "sapiom",
+              "protocol": "x402",
+              "paymentTransactionId": "f5fadad1-b757-400c-9841-a4579c4f0f8f"
+            },
+            "createdAt": "2026-07-04T10:23:52.697Z",
+            "updatedAt": "2026-07-04T10:23:52.697Z",
+            "inferredFromFactId": null
+          }
+        ],
+        "traceId": "64939f60-4b11-4526-8b4e-bb7fba6a2b5a",
+        "apiKeyId": "bfb69755-474f-41c3-bc82-22ca4aa97eec",
+        "createdByActorType": "api_key",
+        "createdByActorId": "bfb69755-474f-41c3-bc82-22ca4aa97eec",
+        "mandateId": null,
+        "facilitatedByServiceAccount": null,
+        "service": {
+          "id": "8fce8316-304e-4a46-9cc9-b4e0a4fa9ba7",
+          "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+          "numericId": 5,
+          "globalServiceId": null,
+          "name": "unknown",
+          "label": null,
+          "description": null,
+          "metadata": null,
+          "createdAt": "2026-07-04T10:23:44.678Z",
+          "updatedAt": "2026-07-04T10:23:44.678Z",
+          "deletedAt": null
+        },
+        "preparingAt": "2026-07-04T10:23:52.731Z",
+        "deniedAt": null,
+        "cancelledAt": null,
+        "authorizationRequests": [
+          {
+            "id": "734920b9-29da-4fa7-ae1e-f70b735a3e36",
+            "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+            "transactionId": "87f1b514-043e-4689-ad2b-c7f05d74ad97",
+            "status": "authorized",
+            "createdAt": "2026-07-04T10:23:52.697Z",
+            "updatedAt": "2026-07-04T10:23:52.763Z",
+            "completedAt": "2026-07-04T10:23:52.825Z",
+            "processingAt": "2026-07-04T10:23:52.767Z",
+            "authorizedAt": "2026-07-04T10:23:52.825Z",
+            "deniedAt": null,
+            "ruleExecutions": [
+              {
+                "id": "08988284-9922-4ef4-a1b6-35a5821a970f",
+                "ruleId": "5d35cc64-3d49-4069-bb77-52d66ae5b3d5",
+                "rule": {
+                  "id": "5d35cc64-3d49-4069-bb77-52d66ae5b3d5",
+                  "numericId": 1,
+                  "name": "System: Payment Authorization"
+                },
+                "transactionId": "87f1b514-043e-4689-ad2b-c7f05d74ad97",
+                "transactionAuthorizationRequestId": "734920b9-29da-4fa7-ae1e-f70b735a3e36",
+                "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+                "status": "completed",
+                "inputData": {
+                  "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+                  "actionName": "create",
+                  "serviceName": "unknown",
+                  "resourceName": "https://firecrawl.services.sapiom.ai/v2/scrape",
+                  "transactionId": "87f1b514-043e-4689-ad2b-c7f05d74ad97",
+                  "transactionAuthorizationRequestId": "734920b9-29da-4fa7-ae1e-f70b735a3e36"
+                },
+                "outputData": {
+                  "reason": "Payment successfully authorized",
+                  "decision": "ALLOWED",
+                  "metadata": {
+                    "ruleType": "payment_authorization",
+                    "networkId": "aa2e3a09-5f0c-4335-87c0-154df79ad498",
+                    "authorizationDetails": {
+                      "payload": {
+                        "nonce": "e943bc9a-1656-412d-a276-72c8eb6e210a",
+                        "token": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6InNhcGlvbS1wYXltZW50LWtleS12MSJ9.eyJzdWIiOiJmNWZhZGFkMS1iNzU3LTQwMGMtOTg0MS1hNDU3OWM0ZjBmOGYiLCJ0cmFuc2ZlcklkIjoiYWEyZTNhMDktNWYwYy00MzM1LTg3YzAtMTU0ZGY3OWFkNDk4IiwiYWNjb3VudElkIjoiMGY2YTU2YmEtZGViMy00MzA3LTkyYWEtZWY3OTIyOTMwMmZmIiwicGF5VG8iOiIzOTdiOTM5NS1kMzBkLTQyY2MtYWJmOS0wYzU2NjI5ZDFjMmYiLCJhbW91bnQiOiIwLjAwOTAwMDAwMDAwMDAwMDAwMCIsIm5vbmNlIjoiZTk0M2JjOWEtMTY1Ni00MTJkLWEyNzYtNzJjOGViNmUyMTBhIiwiaWRlbnRpdHkiOnsidmVyc2lvbiI6MiwidGVuYW50SWQiOiI3MjM0YTdmOS00MDc0LTRhYWQtYjEzZi04NGUwZTI4YjQ2OWEiLCJvcmdhbml6YXRpb25JZCI6ImY0YmEyODViLTA4NTUtNGFlMy05OTBjLWU1YmRlZTI5MWM0NyIsInBheW1lbnRBY2NvdW50SWQiOiIwZjZhNTZiYS1kZWIzLTQzMDctOTJhYS1lZjc5MjI5MzAyZmYifSwiaWF0IjoxNzgzMTYwNjMyfQ.S7m-z9Oum7a2I6x4XjCBFZ_CKRcMZHGjABhbyKCNAhy_UHfpON2CJ5HXQFwQcOxwX2R35Pfb5XfRe_vn9-Q5svv3YE90m05oI2PW4KoMEYIHeG95toqmSBjZssCfa6uOxXOozcgqUx30rboZ4--tcwyPgeuBSq35t-B4wLx98as1wZyvuxxxZxOAyeRHzFTPU8dZtMlPj47Afod2NjC2CcoQ7lpxOtAMGDc3cl08J5csu1WSEPvYMIucQM6pTphHE6Tz8W_BtFWSF0IYhkpHDRYj093t85cwvBSEPgehlIaLM6BclTIMXSuHoz4DZa80DWqYqDuvx0mPsuw50YbFUw",
+                        "amount": "0.009000000000000000",
+                        "accountId": "0f6a56ba-deb3-4307-92aa-ef79229302ff",
+                        "authorizationId": "aa2e3a09-5f0c-4335-87c0-154df79ad498"
+                      },
+                      "accepted": {
+                        "asset": "USD",
+                        "extra": {},
+                        "payTo": "397b9395-d30d-42cc-abf9-0c56629d1c2f",
+                        "amount": "0.009",
+                        "scheme": "exact",
+                        "network": "sapiom:main",
+                        "maxTimeoutSeconds": 300
+                      },
+                      "resource": {
+                        "url": "http://firecrawl.services.sapiom.ai/v2/scrape",
+                        "mimeType": "application/json",
+                        "description": ""
+                      },
+                      "x402Version": 2
+                    },
+                    "paymentTransactionId": "f5fadad1-b757-400c-9841-a4579c4f0f8f"
+                  }
+                },
+                "errorMessage": null,
+                "errorDetails": null,
+                "startedAt": "2026-07-04T10:23:52.776Z",
+                "completedAt": "2026-07-04T10:23:52.817Z",
+                "executionTimeMs": 41,
+                "retryCount": 0,
+                "parentExecutionId": null,
+                "createdAt": "2026-07-04T10:23:52.763Z",
+                "updatedAt": "2026-07-04T10:23:52.763Z"
+              }
+            ]
+          },
+          {
+            "id": "322a1551-213b-42a7-a226-90d9a76d403d",
+            "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+            "transactionId": "87f1b514-043e-4689-ad2b-c7f05d74ad97",
+            "status": "authorized",
+            "createdAt": "2026-07-04T10:23:51.449Z",
+            "updatedAt": "2026-07-04T10:23:51.468Z",
+            "completedAt": "2026-07-04T10:23:51.479Z",
+            "processingAt": "2026-07-04T10:23:51.472Z",
+            "authorizedAt": "2026-07-04T10:23:51.479Z",
+            "deniedAt": null,
+            "ruleExecutions": []
+          }
+        ]
+      },
+      {
+        "id": "f4c02c1f-f9b0-4198-bfea-8d082001d2bf",
+        "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+        "serviceName": "sapiom_neon",
+        "actionName": "execute",
+        "resourceName": "database",
+        "serviceId": "2344f568-35ca-4010-b223-51a386cf94a8",
+        "status": "completed",
+        "requiresPayment": false,
+        "qualifiers": {},
+        "metadata": {
+          "createdByApiKeyId": "bfb69755-474f-41c3-bc82-22ca4aa97eec",
+          "preemptiveAuthorization": true
+        },
+        "createdAt": "2026-07-04T10:23:47.959Z",
+        "updatedAt": "2026-07-04T10:23:49.329Z",
+        "authorizedAt": "2026-07-04T10:23:48.028Z",
+        "completedAt": "2026-07-04T10:23:49.330Z",
+        "outcome": "success",
+        "currentPaymentTransactionId": null,
+        "trace": {
+          "id": "6c1a591b-4c95-4b7c-bc26-ed0d19d20513",
+          "externalId": null
+        },
+        "agentId": "79252126-1c13-469f-9cc8-079ae4b2afed",
+        "agent": {
+          "id": "79252126-1c13-469f-9cc8-079ae4b2afed",
+          "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+          "label": "sweep-data",
+          "name": "sweep-data",
+          "description": null,
+          "status": "active",
+          "createdAt": "2026-07-04T10:23:47.929Z",
+          "updatedAt": "2026-07-04T10:23:47.929Z",
+          "numericId": 14
+        },
+        "costs": [],
+        "traceId": "6c1a591b-4c95-4b7c-bc26-ed0d19d20513",
+        "apiKeyId": "bfb69755-474f-41c3-bc82-22ca4aa97eec",
+        "createdByActorType": "api_key",
+        "createdByActorId": "bfb69755-474f-41c3-bc82-22ca4aa97eec",
+        "mandateId": null,
+        "facilitatedByServiceAccount": null,
+        "service": {
+          "id": "2344f568-35ca-4010-b223-51a386cf94a8",
+          "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+          "numericId": 6,
+          "globalServiceId": "957575b6-38a2-4707-a5d0-632d2b0da375",
+          "name": "sapiom_neon",
+          "label": null,
+          "description": null,
+          "metadata": null,
+          "createdAt": "2026-07-04T10:23:47.923Z",
+          "updatedAt": "2026-07-04T10:23:47.923Z",
+          "deletedAt": null
+        },
+        "preparingAt": "2026-07-04T10:23:47.996Z",
+        "deniedAt": null,
+        "cancelledAt": null,
+        "authorizationRequests": [
+          {
+            "id": "1745140e-5475-4224-b52c-d8e558956b6f",
+            "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+            "transactionId": "f4c02c1f-f9b0-4198-bfea-8d082001d2bf",
+            "status": "authorized",
+            "createdAt": "2026-07-04T10:23:47.994Z",
+            "updatedAt": "2026-07-04T10:23:48.019Z",
+            "completedAt": "2026-07-04T10:23:48.028Z",
+            "processingAt": "2026-07-04T10:23:48.022Z",
+            "authorizedAt": "2026-07-04T10:23:48.028Z",
+            "deniedAt": null,
+            "ruleExecutions": []
+          }
+        ]
+      },
+      {
+        "id": "eb918dba-a2b5-46b0-96e1-5aff42e92b76",
+        "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+        "serviceName": "unknown",
+        "actionName": "create",
+        "resourceName": "https://compute.services.sapiom.ai/v1/runs",
+        "serviceId": "8fce8316-304e-4a46-9cc9-b4e0a4fa9ba7",
+        "status": "completed",
+        "requiresPayment": false,
+        "qualifiers": {},
+        "metadata": {
+          "createdByApiKeyId": "bfb69755-474f-41c3-bc82-22ca4aa97eec",
+          "preemptiveAuthorization": true
+        },
+        "createdAt": "2026-07-04T10:23:44.690Z",
+        "updatedAt": "2026-07-04T10:23:45.874Z",
+        "authorizedAt": "2026-07-04T10:23:44.815Z",
+        "completedAt": "2026-07-04T10:23:45.875Z",
+        "outcome": "error",
+        "currentPaymentTransactionId": null,
+        "trace": {
+          "id": "9549c29f-6106-43d5-8e79-63e1d46778a6",
+          "externalId": null
+        },
+        "agentId": "afe6ac0a-5328-4a09-af96-f1afcdc9db3d",
+        "agent": {
+          "id": "afe6ac0a-5328-4a09-af96-f1afcdc9db3d",
+          "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+          "label": "sweep-compute",
+          "name": "sweep-compute",
+          "description": null,
+          "status": "active",
+          "createdAt": "2026-07-04T10:23:44.683Z",
+          "updatedAt": "2026-07-04T10:23:44.683Z",
+          "numericId": 13
+        },
+        "costs": [],
+        "traceId": "9549c29f-6106-43d5-8e79-63e1d46778a6",
+        "apiKeyId": "bfb69755-474f-41c3-bc82-22ca4aa97eec",
+        "createdByActorType": "api_key",
+        "createdByActorId": "bfb69755-474f-41c3-bc82-22ca4aa97eec",
+        "mandateId": null,
+        "facilitatedByServiceAccount": null,
+        "service": {
+          "id": "8fce8316-304e-4a46-9cc9-b4e0a4fa9ba7",
+          "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+          "numericId": 5,
+          "globalServiceId": null,
+          "name": "unknown",
+          "label": null,
+          "description": null,
+          "metadata": null,
+          "createdAt": "2026-07-04T10:23:44.678Z",
+          "updatedAt": "2026-07-04T10:23:44.678Z",
+          "deletedAt": null
+        },
+        "preparingAt": "2026-07-04T10:23:44.746Z",
+        "deniedAt": null,
+        "cancelledAt": null,
+        "authorizationRequests": [
+          {
+            "id": "704d35a4-a7a0-41d8-a08b-ce7bd171bad3",
+            "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+            "transactionId": "eb918dba-a2b5-46b0-96e1-5aff42e92b76",
+            "status": "authorized",
+            "createdAt": "2026-07-04T10:23:44.745Z",
+            "updatedAt": "2026-07-04T10:23:44.800Z",
+            "completedAt": "2026-07-04T10:23:44.815Z",
+            "processingAt": "2026-07-04T10:23:44.805Z",
+            "authorizedAt": "2026-07-04T10:23:44.815Z",
+            "deniedAt": null,
+            "ruleExecutions": []
+          }
+        ]
+      },
+      {
+        "id": "e0fda2a5-19b8-459b-bfe1-8469178b2cea",
+        "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+        "serviceName": "sapiom_elevenlabs",
+        "actionName": "text-to-speech",
+        "resourceName": "/v1/text-to-speech/21m00Tcm4TlvDq8ikWAM",
+        "serviceId": "fa244a45-2d1b-4d6c-be6a-394da98594aa",
+        "status": "completed",
+        "requiresPayment": true,
+        "qualifiers": {},
+        "metadata": {
+          "createdByApiKeyId": "bfb69755-474f-41c3-bc82-22ca4aa97eec",
+          "preemptiveAuthorization": true
+        },
+        "createdAt": "2026-07-04T10:23:39.443Z",
+        "updatedAt": "2026-07-04T10:23:42.622Z",
+        "authorizedAt": "2026-07-04T10:23:39.873Z",
+        "completedAt": "2026-07-04T10:23:42.622Z",
+        "outcome": "success",
+        "currentPaymentTransactionId": "97f701cb-d0a7-40e3-97f6-aa31934981af",
+        "trace": {
+          "id": "3fae7dbc-7d22-4431-87c5-3141aa28f564",
+          "externalId": null
+        },
+        "agentId": "4470504d-c365-461b-8827-a587e82f762a",
+        "agent": {
+          "id": "4470504d-c365-461b-8827-a587e82f762a",
+          "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+          "label": "sweep-audio",
+          "name": "sweep-audio",
+          "description": null,
+          "status": "active",
+          "createdAt": "2026-07-04T10:23:39.435Z",
+          "updatedAt": "2026-07-04T10:23:39.435Z",
+          "numericId": 12
+        },
+        "costs": [
+          {
+            "id": "dc954029-6480-461c-9c0b-7ed553e2b203",
+            "transactionId": "e0fda2a5-19b8-459b-bfe1-8469178b2cea",
+            "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+            "paymentTransactionId": "97f701cb-d0a7-40e3-97f6-aa31934981af",
+            "fiatAmount": "0.001000000000000000",
+            "fiatAssetId": "4657ab13-b6e6-4ba4-9df8-47b351c0041c",
+            "isEstimate": false,
+            "isActive": true,
+            "supersedesCostId": null,
+            "supersededAt": null,
+            "costDetails": {
+              "source": "payment_transaction",
+              "network": "sapiom",
+              "protocol": "x402",
+              "paymentTransactionId": "97f701cb-d0a7-40e3-97f6-aa31934981af"
+            },
+            "createdAt": "2026-07-04T10:23:39.731Z",
+            "updatedAt": "2026-07-04T10:23:39.731Z",
+            "inferredFromFactId": null
+          }
+        ],
+        "traceId": "3fae7dbc-7d22-4431-87c5-3141aa28f564",
+        "apiKeyId": "bfb69755-474f-41c3-bc82-22ca4aa97eec",
+        "createdByActorType": "api_key",
+        "createdByActorId": "bfb69755-474f-41c3-bc82-22ca4aa97eec",
+        "mandateId": null,
+        "facilitatedByServiceAccount": null,
+        "service": {
+          "id": "fa244a45-2d1b-4d6c-be6a-394da98594aa",
+          "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+          "numericId": 4,
+          "globalServiceId": "28b42fd3-735a-4f75-93e8-ce60cf96c8d6",
+          "name": "sapiom_elevenlabs",
+          "label": null,
+          "description": null,
+          "metadata": null,
+          "createdAt": "2026-07-04T10:23:39.430Z",
+          "updatedAt": "2026-07-04T10:23:39.430Z",
+          "deletedAt": null
+        },
+        "preparingAt": "2026-07-04T10:23:39.765Z",
+        "deniedAt": null,
+        "cancelledAt": null,
+        "authorizationRequests": [
+          {
+            "id": "69e7d71a-f4b4-4a60-93c2-f06718834310",
+            "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+            "transactionId": "e0fda2a5-19b8-459b-bfe1-8469178b2cea",
+            "status": "authorized",
+            "createdAt": "2026-07-04T10:23:39.731Z",
+            "updatedAt": "2026-07-04T10:23:39.806Z",
+            "completedAt": "2026-07-04T10:23:39.873Z",
+            "processingAt": "2026-07-04T10:23:39.809Z",
+            "authorizedAt": "2026-07-04T10:23:39.873Z",
+            "deniedAt": null,
+            "ruleExecutions": [
+              {
+                "id": "7b7a147b-0b42-4d5c-90d3-3916c90b6d8c",
+                "ruleId": "5d35cc64-3d49-4069-bb77-52d66ae5b3d5",
+                "rule": {
+                  "id": "5d35cc64-3d49-4069-bb77-52d66ae5b3d5",
+                  "numericId": 1,
+                  "name": "System: Payment Authorization"
+                },
+                "transactionId": "e0fda2a5-19b8-459b-bfe1-8469178b2cea",
+                "transactionAuthorizationRequestId": "69e7d71a-f4b4-4a60-93c2-f06718834310",
+                "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+                "status": "completed",
+                "inputData": {
+                  "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+                  "actionName": "text-to-speech",
+                  "serviceName": "sapiom_elevenlabs",
+                  "resourceName": "/v1/text-to-speech/21m00Tcm4TlvDq8ikWAM",
+                  "transactionId": "e0fda2a5-19b8-459b-bfe1-8469178b2cea",
+                  "transactionAuthorizationRequestId": "69e7d71a-f4b4-4a60-93c2-f06718834310"
+                },
+                "outputData": {
+                  "reason": "Payment successfully authorized",
+                  "decision": "ALLOWED",
+                  "metadata": {
+                    "ruleType": "payment_authorization",
+                    "networkId": "8c256fbe-fec3-40c8-9d22-373ab9861e87",
+                    "authorizationDetails": {
+                      "payload": {
+                        "nonce": "21be167c-3368-425f-849d-11a5104334da",
+                        "token": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6InNhcGlvbS1wYXltZW50LWtleS12MSJ9.eyJzdWIiOiI5N2Y3MDFjYi1kMGE3LTQwZTMtOTdmNi1hYTMxOTM0OTgxYWYiLCJ0cmFuc2ZlcklkIjoiOGMyNTZmYmUtZmVjMy00MGM4LTlkMjItMzczYWI5ODYxZTg3IiwiYWNjb3VudElkIjoiMGY2YTU2YmEtZGViMy00MzA3LTkyYWEtZWY3OTIyOTMwMmZmIiwicGF5VG8iOiIzOTdiOTM5NS1kMzBkLTQyY2MtYWJmOS0wYzU2NjI5ZDFjMmYiLCJhbW91bnQiOiIwLjAwMTAwMDAwMDAwMDAwMDAwMCIsIm5vbmNlIjoiMjFiZTE2N2MtMzM2OC00MjVmLTg0OWQtMTFhNTEwNDMzNGRhIiwiaWRlbnRpdHkiOnsidmVyc2lvbiI6MiwidGVuYW50SWQiOiI3MjM0YTdmOS00MDc0LTRhYWQtYjEzZi04NGUwZTI4YjQ2OWEiLCJvcmdhbml6YXRpb25JZCI6ImY0YmEyODViLTA4NTUtNGFlMy05OTBjLWU1YmRlZTI5MWM0NyIsInBheW1lbnRBY2NvdW50SWQiOiIwZjZhNTZiYS1kZWIzLTQzMDctOTJhYS1lZjc5MjI5MzAyZmYifSwiaWF0IjoxNzgzMTYwNjE5fQ.wkiasLpijkqpMsU6uHuluLSAH8rJ0jF0YgIdrz8tpHI_F5qThcDMBSnFD8eD0SObvzGFMOuXn-fvQkI01DqbZoxKCiKSO9WRW38eL2xDTo6S0uZOOhnCH3xLCqHv9XdQktzi4dGL9g7MUKyck7RpiLitH-ZH38aojbBOPt0gok3H89XB80wB47yniXIxzr7K5tA8pTCsMma6TY8Vb97BeLHs2ur3zr0bBAvRdIsmddSRWcU62g0DYVm5ilbN_-WltyGzhBFLUsfvJgQweJTVp91xYFNjsC7Y9Lm0IsLCJhiWhIGa4q9Xj4-lcs5nuUW3thi5KgbQjLnAve1wk2vb7Q",
+                        "amount": "0.001000000000000000",
+                        "accountId": "0f6a56ba-deb3-4307-92aa-ef79229302ff",
+                        "authorizationId": "8c256fbe-fec3-40c8-9d22-373ab9861e87"
+                      },
+                      "accepted": {
+                        "asset": "USD",
+                        "extra": {},
+                        "payTo": "397b9395-d30d-42cc-abf9-0c56629d1c2f",
+                        "amount": "0.001000",
+                        "scheme": "exact",
+                        "network": "sapiom:main",
+                        "maxTimeoutSeconds": 120
+                      },
+                      "resource": {
+                        "url": "http://elevenlabs.services.sapiom.ai/v1/text-to-speech/21m00Tcm4TlvDq8ikWAM",
+                        "mimeType": "application/json",
+                        "description": ""
+                      },
+                      "x402Version": 2
+                    },
+                    "paymentTransactionId": "97f701cb-d0a7-40e3-97f6-aa31934981af"
+                  }
+                },
+                "errorMessage": null,
+                "errorDetails": null,
+                "startedAt": "2026-07-04T10:23:39.817Z",
+                "completedAt": "2026-07-04T10:23:39.868Z",
+                "executionTimeMs": 51,
+                "retryCount": 0,
+                "parentExecutionId": null,
+                "createdAt": "2026-07-04T10:23:39.806Z",
+                "updatedAt": "2026-07-04T10:23:39.806Z"
+              }
+            ]
+          },
+          {
+            "id": "26bd84b8-cee7-4cb4-90a5-cb4c064a111e",
+            "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+            "transactionId": "e0fda2a5-19b8-459b-bfe1-8469178b2cea",
+            "status": "authorized",
+            "createdAt": "2026-07-04T10:23:39.481Z",
+            "updatedAt": "2026-07-04T10:23:39.498Z",
+            "completedAt": "2026-07-04T10:23:39.507Z",
+            "processingAt": "2026-07-04T10:23:39.500Z",
+            "authorizedAt": "2026-07-04T10:23:39.507Z",
+            "deniedAt": null,
+            "ruleExecutions": []
+          }
+        ]
+      },
+      {
+        "id": "7333a425-6a4f-476d-9610-955c642b9c87",
+        "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+        "serviceName": "sapiom_fal",
+        "actionName": "execute",
+        "resourceName": "/v1/run/fal-ai/flux/schnell",
+        "serviceId": "14d7ea1e-1e5b-453d-8919-99108f49af4a",
+        "status": "completed",
+        "requiresPayment": false,
+        "qualifiers": {},
+        "metadata": {
+          "createdByApiKeyId": "bfb69755-474f-41c3-bc82-22ca4aa97eec",
+          "preemptiveAuthorization": true
+        },
+        "createdAt": "2026-07-04T10:23:36.069Z",
+        "updatedAt": "2026-07-04T10:23:37.378Z",
+        "authorizedAt": "2026-07-04T10:23:36.204Z",
+        "completedAt": "2026-07-04T10:23:37.379Z",
+        "outcome": "error",
+        "currentPaymentTransactionId": null,
+        "trace": {
+          "id": "710dfbdd-ca4b-4464-bac7-633ae9a6ba86",
+          "externalId": null
+        },
+        "agentId": "d4a5c9b6-120f-4934-b27c-56ab808ed210",
+        "agent": {
+          "id": "d4a5c9b6-120f-4934-b27c-56ab808ed210",
+          "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+          "label": "sweep-images",
+          "name": "sweep-images",
+          "description": null,
+          "status": "active",
+          "createdAt": "2026-07-04T10:23:36.049Z",
+          "updatedAt": "2026-07-04T10:23:36.049Z",
+          "numericId": 11
+        },
+        "costs": [],
+        "traceId": "710dfbdd-ca4b-4464-bac7-633ae9a6ba86",
+        "apiKeyId": "bfb69755-474f-41c3-bc82-22ca4aa97eec",
+        "createdByActorType": "api_key",
+        "createdByActorId": "bfb69755-474f-41c3-bc82-22ca4aa97eec",
+        "mandateId": null,
+        "facilitatedByServiceAccount": null,
+        "service": {
+          "id": "14d7ea1e-1e5b-453d-8919-99108f49af4a",
+          "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+          "numericId": 3,
+          "globalServiceId": "949f5fe1-c581-4c86-b03b-419d5957c4e1",
+          "name": "sapiom_fal",
+          "label": null,
+          "description": null,
+          "metadata": null,
+          "createdAt": "2026-07-04T10:23:36.041Z",
+          "updatedAt": "2026-07-04T10:23:36.041Z",
+          "deletedAt": null
+        },
+        "preparingAt": "2026-07-04T10:23:36.152Z",
+        "deniedAt": null,
+        "cancelledAt": null,
+        "authorizationRequests": [
+          {
+            "id": "038524f9-fe13-4431-ab89-756d53488984",
+            "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+            "transactionId": "7333a425-6a4f-476d-9610-955c642b9c87",
+            "status": "authorized",
+            "createdAt": "2026-07-04T10:23:36.150Z",
+            "updatedAt": "2026-07-04T10:23:36.194Z",
+            "completedAt": "2026-07-04T10:23:36.204Z",
+            "processingAt": "2026-07-04T10:23:36.197Z",
+            "authorizedAt": "2026-07-04T10:23:36.204Z",
+            "deniedAt": null,
+            "ruleExecutions": []
+          }
+        ]
+      },
+      {
+        "id": "bc4de23b-cfa7-43a1-9da8-80499930e2cf",
+        "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+        "serviceName": "sapiom_openrouter",
+        "actionName": "generate",
+        "resourceName": "/v1/chat/completions",
+        "serviceId": "0fb63c2c-067f-4d39-9ef2-036408fbb822",
+        "status": "completed",
+        "requiresPayment": true,
+        "qualifiers": {},
+        "metadata": {
+          "createdByApiKeyId": "bfb69755-474f-41c3-bc82-22ca4aa97eec",
+          "preemptiveAuthorization": true
+        },
+        "createdAt": "2026-07-04T10:23:30.674Z",
+        "updatedAt": "2026-07-04T10:23:33.974Z",
+        "authorizedAt": "2026-07-04T10:23:32.199Z",
+        "completedAt": "2026-07-04T10:23:33.974Z",
+        "outcome": "success",
+        "currentPaymentTransactionId": "8d88b554-b3a5-4c1a-a5d4-2842e8fa2f8d",
+        "trace": {
+          "id": "899e1e28-35c4-4dd4-8460-f6a6ed049043",
+          "externalId": null
+        },
+        "agentId": "ee76a098-545b-4f52-adff-dd8b68e92227",
+        "agent": {
+          "id": "ee76a098-545b-4f52-adff-dd8b68e92227",
+          "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+          "label": "sweep-llm",
+          "name": "sweep-llm",
+          "description": null,
+          "status": "active",
+          "createdAt": "2026-07-04T10:23:30.663Z",
+          "updatedAt": "2026-07-04T10:23:30.663Z",
+          "numericId": 10
+        },
+        "costs": [
+          {
+            "id": "b5259bd6-a409-4503-9ed8-9e8005a84438",
+            "transactionId": "bc4de23b-cfa7-43a1-9da8-80499930e2cf",
+            "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+            "paymentTransactionId": "8d88b554-b3a5-4c1a-a5d4-2842e8fa2f8d",
+            "fiatAmount": "0.000100000000000000",
+            "fiatAssetId": "4657ab13-b6e6-4ba4-9df8-47b351c0041c",
+            "isEstimate": false,
+            "isActive": true,
+            "supersedesCostId": null,
+            "supersededAt": null,
+            "costDetails": {
+              "source": "payment_transaction",
+              "network": "sapiom",
+              "protocol": "x402",
+              "paymentTransactionId": "8d88b554-b3a5-4c1a-a5d4-2842e8fa2f8d"
+            },
+            "createdAt": "2026-07-04T10:23:32.054Z",
+            "updatedAt": "2026-07-04T10:23:32.054Z",
+            "inferredFromFactId": null
+          }
+        ],
+        "traceId": "899e1e28-35c4-4dd4-8460-f6a6ed049043",
+        "apiKeyId": "bfb69755-474f-41c3-bc82-22ca4aa97eec",
+        "createdByActorType": "api_key",
+        "createdByActorId": "bfb69755-474f-41c3-bc82-22ca4aa97eec",
+        "mandateId": null,
+        "facilitatedByServiceAccount": null,
+        "service": {
+          "id": "0fb63c2c-067f-4d39-9ef2-036408fbb822",
+          "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+          "numericId": 2,
+          "globalServiceId": "b813ffc4-8dfa-442c-83c1-c77255da1f61",
+          "name": "sapiom_openrouter",
+          "label": null,
+          "description": null,
+          "metadata": null,
+          "createdAt": "2026-07-04T05:14:31.042Z",
+          "updatedAt": "2026-07-04T05:14:31.042Z",
+          "deletedAt": null
+        },
+        "preparingAt": "2026-07-04T10:23:32.089Z",
+        "deniedAt": null,
+        "cancelledAt": null,
+        "authorizationRequests": [
+          {
+            "id": "57c56914-c624-4f3d-8bd0-f37ed41a302b",
+            "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+            "transactionId": "bc4de23b-cfa7-43a1-9da8-80499930e2cf",
+            "status": "authorized",
+            "createdAt": "2026-07-04T10:23:30.711Z",
+            "updatedAt": "2026-07-04T10:23:30.725Z",
+            "completedAt": "2026-07-04T10:23:30.739Z",
+            "processingAt": "2026-07-04T10:23:30.728Z",
+            "authorizedAt": "2026-07-04T10:23:30.739Z",
+            "deniedAt": null,
+            "ruleExecutions": []
+          },
+          {
+            "id": "cbc245b5-cac9-436d-9f19-fe5c2cec5ef7",
+            "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+            "transactionId": "bc4de23b-cfa7-43a1-9da8-80499930e2cf",
+            "status": "authorized",
+            "createdAt": "2026-07-04T10:23:32.054Z",
+            "updatedAt": "2026-07-04T10:23:32.133Z",
+            "completedAt": "2026-07-04T10:23:32.199Z",
+            "processingAt": "2026-07-04T10:23:32.137Z",
+            "authorizedAt": "2026-07-04T10:23:32.199Z",
+            "deniedAt": null,
+            "ruleExecutions": [
+              {
+                "id": "8afac74e-b71f-4d8b-a254-f68f8f392511",
+                "ruleId": "5d35cc64-3d49-4069-bb77-52d66ae5b3d5",
+                "rule": {
+                  "id": "5d35cc64-3d49-4069-bb77-52d66ae5b3d5",
+                  "numericId": 1,
+                  "name": "System: Payment Authorization"
+                },
+                "transactionId": "bc4de23b-cfa7-43a1-9da8-80499930e2cf",
+                "transactionAuthorizationRequestId": "cbc245b5-cac9-436d-9f19-fe5c2cec5ef7",
+                "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+                "status": "completed",
+                "inputData": {
+                  "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+                  "actionName": "generate",
+                  "serviceName": "sapiom_openrouter",
+                  "resourceName": "/v1/chat/completions",
+                  "transactionId": "bc4de23b-cfa7-43a1-9da8-80499930e2cf",
+                  "transactionAuthorizationRequestId": "cbc245b5-cac9-436d-9f19-fe5c2cec5ef7"
+                },
+                "outputData": {
+                  "reason": "Payment successfully authorized",
+                  "decision": "ALLOWED",
+                  "metadata": {
+                    "ruleType": "payment_authorization",
+                    "networkId": "fa3cb2ac-2b49-4730-b5f6-98f40728f2d0",
+                    "authorizationDetails": {
+                      "payload": {
+                        "nonce": "beb433c4-ac1c-43da-8c11-019a921214a5",
+                        "token": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6InNhcGlvbS1wYXltZW50LWtleS12MSJ9.eyJzdWIiOiI4ZDg4YjU1NC1iM2E1LTRjMWEtYTVkNC0yODQyZThmYTJmOGQiLCJ0cmFuc2ZlcklkIjoiZmEzY2IyYWMtMmI0OS00NzMwLWI1ZjYtOThmNDA3MjhmMmQwIiwiYWNjb3VudElkIjoiMGY2YTU2YmEtZGViMy00MzA3LTkyYWEtZWY3OTIyOTMwMmZmIiwicGF5VG8iOiIzOTdiOTM5NS1kMzBkLTQyY2MtYWJmOS0wYzU2NjI5ZDFjMmYiLCJhbW91bnQiOiIwLjAwMDEwMDAwMDAwMDAwMDAwMCIsIm5vbmNlIjoiYmViNDMzYzQtYWMxYy00M2RhLThjMTEtMDE5YTkyMTIxNGE1IiwiaWRlbnRpdHkiOnsidmVyc2lvbiI6MiwidGVuYW50SWQiOiI3MjM0YTdmOS00MDc0LTRhYWQtYjEzZi04NGUwZTI4YjQ2OWEiLCJvcmdhbml6YXRpb25JZCI6ImY0YmEyODViLTA4NTUtNGFlMy05OTBjLWU1YmRlZTI5MWM0NyIsInBheW1lbnRBY2NvdW50SWQiOiIwZjZhNTZiYS1kZWIzLTQzMDctOTJhYS1lZjc5MjI5MzAyZmYifSwiaWF0IjoxNzgzMTYwNjEyfQ.NpbvqKRiz_MjVMwTS_BKU0onGRdZkf5OazXJDJ2BzaRt80BmvHUb64FWWFMYz_noCkGFZvLuQI0Y1Ry0Jypj_dENMw7ZWk_iwT-crSQf69BKlij7mgNnFpuWqU1oekJk1edwqYSOGCzHuvXgK7eIaO_Udv_eYBEbyDWsOAiDJoWtTheXd1lL0UGEmsJ93PccEVsQ2tVFL6BjUnTtegtcCOBSWhWzzp7gmmwwL0o5d6_H1aHmGtkB4JvKQBOct3UYDIbVQyFbSmrQ-9XHcB7it7M6K3klLs2KclW9R8AjyT2sUnv2SnhzT-7VPOR78RiLUUnX6ctjwSTbM3gzfE4d3Q",
+                        "amount": "0.000100000000000000",
+                        "accountId": "0f6a56ba-deb3-4307-92aa-ef79229302ff",
+                        "authorizationId": "fa3cb2ac-2b49-4730-b5f6-98f40728f2d0"
+                      },
+                      "accepted": {
+                        "asset": "USD",
+                        "extra": {},
+                        "payTo": "397b9395-d30d-42cc-abf9-0c56629d1c2f",
+                        "amount": "0.000100",
+                        "scheme": "upto",
+                        "network": "sapiom:main",
+                        "maxTimeoutSeconds": 300
+                      },
+                      "resource": {
+                        "url": "http://openrouter.services.sapiom.ai/v1/chat/completions",
+                        "mimeType": "application/json",
+                        "description": "OpenRouter chat completion"
+                      },
+                      "x402Version": 2
+                    },
+                    "paymentTransactionId": "8d88b554-b3a5-4c1a-a5d4-2842e8fa2f8d"
+                  }
+                },
+                "errorMessage": null,
+                "errorDetails": null,
+                "startedAt": "2026-07-04T10:23:32.147Z",
+                "completedAt": "2026-07-04T10:23:32.191Z",
+                "executionTimeMs": 44,
+                "retryCount": 0,
+                "parentExecutionId": null,
+                "createdAt": "2026-07-04T10:23:32.133Z",
+                "updatedAt": "2026-07-04T10:23:32.133Z"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "463243e4-52dd-43ca-8b4c-9796a1889bb4",
+        "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+        "serviceName": "sapiom_linkup",
+        "actionName": "execute",
+        "resourceName": "/v1/search",
+        "serviceId": "e6f3caac-b1fa-4e38-9b1a-11d56270f989",
+        "status": "completed",
+        "requiresPayment": true,
+        "qualifiers": {},
+        "metadata": {
+          "createdByApiKeyId": "bfb69755-474f-41c3-bc82-22ca4aa97eec",
+          "preemptiveAuthorization": true
+        },
+        "createdAt": "2026-07-04T10:23:24.059Z",
+        "updatedAt": "2026-07-04T10:23:28.611Z",
+        "authorizedAt": "2026-07-04T10:23:25.485Z",
+        "completedAt": "2026-07-04T10:23:28.611Z",
+        "outcome": "success",
+        "currentPaymentTransactionId": "b47a070a-7a6e-4429-b3ce-3ae01c7d93ec",
+        "trace": {
+          "id": "028e0b82-be4f-4ca1-a70f-74bf7fb18560",
+          "externalId": null
+        },
+        "agentId": "526c0631-fc63-4428-8c8c-538aa3d494d6",
+        "agent": {
+          "id": "526c0631-fc63-4428-8c8c-538aa3d494d6",
+          "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+          "label": "sweep-search",
+          "name": "sweep-search",
+          "description": null,
+          "status": "active",
+          "createdAt": "2026-07-04T10:23:24.047Z",
+          "updatedAt": "2026-07-04T10:23:24.047Z",
+          "numericId": 9
+        },
+        "costs": [
+          {
+            "id": "16fac900-a4f2-46f2-80ec-561ff3f945f7",
+            "transactionId": "463243e4-52dd-43ca-8b4c-9796a1889bb4",
+            "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+            "paymentTransactionId": "b47a070a-7a6e-4429-b3ce-3ae01c7d93ec",
+            "fiatAmount": "0.006000000000000000",
+            "fiatAssetId": "4657ab13-b6e6-4ba4-9df8-47b351c0041c",
+            "isEstimate": false,
+            "isActive": true,
+            "supersedesCostId": null,
+            "supersededAt": null,
+            "costDetails": {
+              "source": "payment_transaction",
+              "network": "sapiom",
+              "protocol": "x402",
+              "paymentTransactionId": "b47a070a-7a6e-4429-b3ce-3ae01c7d93ec"
+            },
+            "createdAt": "2026-07-04T10:23:25.389Z",
+            "updatedAt": "2026-07-04T10:23:25.389Z",
+            "inferredFromFactId": null
+          }
+        ],
+        "traceId": "028e0b82-be4f-4ca1-a70f-74bf7fb18560",
+        "apiKeyId": "bfb69755-474f-41c3-bc82-22ca4aa97eec",
+        "createdByActorType": "api_key",
+        "createdByActorId": "bfb69755-474f-41c3-bc82-22ca4aa97eec",
+        "mandateId": null,
+        "facilitatedByServiceAccount": null,
+        "service": {
+          "id": "e6f3caac-b1fa-4e38-9b1a-11d56270f989",
+          "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+          "numericId": 1,
+          "globalServiceId": "9f581c91-f60a-49ca-8778-3eb84a805852",
+          "name": "sapiom_linkup",
+          "label": null,
+          "description": null,
+          "metadata": null,
+          "createdAt": "2026-07-04T04:51:39.594Z",
+          "updatedAt": "2026-07-04T04:51:39.594Z",
+          "deletedAt": null
+        },
+        "preparingAt": "2026-07-04T10:23:25.421Z",
+        "deniedAt": null,
+        "cancelledAt": null,
+        "authorizationRequests": [
+          {
+            "id": "a2641483-c689-4c03-be68-45ce09a0a58f",
+            "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+            "transactionId": "463243e4-52dd-43ca-8b4c-9796a1889bb4",
+            "status": "authorized",
+            "createdAt": "2026-07-04T10:23:24.127Z",
+            "updatedAt": "2026-07-04T10:23:24.178Z",
+            "completedAt": "2026-07-04T10:23:24.187Z",
+            "processingAt": "2026-07-04T10:23:24.180Z",
+            "authorizedAt": "2026-07-04T10:23:24.187Z",
+            "deniedAt": null,
+            "ruleExecutions": []
+          },
+          {
+            "id": "6a3f5cb4-3431-4646-9b17-023965fd14d2",
+            "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+            "transactionId": "463243e4-52dd-43ca-8b4c-9796a1889bb4",
+            "status": "authorized",
+            "createdAt": "2026-07-04T10:23:25.389Z",
+            "updatedAt": "2026-07-04T10:23:25.439Z",
+            "completedAt": "2026-07-04T10:23:25.485Z",
+            "processingAt": "2026-07-04T10:23:25.445Z",
+            "authorizedAt": "2026-07-04T10:23:25.485Z",
+            "deniedAt": null,
+            "ruleExecutions": [
+              {
+                "id": "3a740b27-e3aa-487c-97ae-7b4badcaeb04",
+                "ruleId": "5d35cc64-3d49-4069-bb77-52d66ae5b3d5",
+                "rule": {
+                  "id": "5d35cc64-3d49-4069-bb77-52d66ae5b3d5",
+                  "numericId": 1,
+                  "name": "System: Payment Authorization"
+                },
+                "transactionId": "463243e4-52dd-43ca-8b4c-9796a1889bb4",
+                "transactionAuthorizationRequestId": "6a3f5cb4-3431-4646-9b17-023965fd14d2",
+                "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+                "status": "completed",
+                "inputData": {
+                  "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+                  "actionName": "execute",
+                  "serviceName": "sapiom_linkup",
+                  "resourceName": "/v1/search",
+                  "transactionId": "463243e4-52dd-43ca-8b4c-9796a1889bb4",
+                  "transactionAuthorizationRequestId": "6a3f5cb4-3431-4646-9b17-023965fd14d2"
+                },
+                "outputData": {
+                  "reason": "Payment successfully authorized",
+                  "decision": "ALLOWED",
+                  "metadata": {
+                    "ruleType": "payment_authorization",
+                    "networkId": "a85af3c7-71cb-47a7-a99a-851788025a06",
+                    "authorizationDetails": {
+                      "payload": {
+                        "nonce": "3a73cc43-2576-4e06-948b-cea113195561",
+                        "token": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6InNhcGlvbS1wYXltZW50LWtleS12MSJ9.eyJzdWIiOiJiNDdhMDcwYS03YTZlLTQ0MjktYjNjZS0zYWUwMWM3ZDkzZWMiLCJ0cmFuc2ZlcklkIjoiYTg1YWYzYzctNzFjYi00N2E3LWE5OWEtODUxNzg4MDI1YTA2IiwiYWNjb3VudElkIjoiMGY2YTU2YmEtZGViMy00MzA3LTkyYWEtZWY3OTIyOTMwMmZmIiwicGF5VG8iOiIzOTdiOTM5NS1kMzBkLTQyY2MtYWJmOS0wYzU2NjI5ZDFjMmYiLCJhbW91bnQiOiIwLjAwNjAwMDAwMDAwMDAwMDAwMCIsIm5vbmNlIjoiM2E3M2NjNDMtMjU3Ni00ZTA2LTk0OGItY2VhMTEzMTk1NTYxIiwiaWRlbnRpdHkiOnsidmVyc2lvbiI6MiwidGVuYW50SWQiOiI3MjM0YTdmOS00MDc0LTRhYWQtYjEzZi04NGUwZTI4YjQ2OWEiLCJvcmdhbml6YXRpb25JZCI6ImY0YmEyODViLTA4NTUtNGFlMy05OTBjLWU1YmRlZTI5MWM0NyIsInBheW1lbnRBY2NvdW50SWQiOiIwZjZhNTZiYS1kZWIzLTQzMDctOTJhYS1lZjc5MjI5MzAyZmYifSwiaWF0IjoxNzgzMTYwNjA1fQ.NK2VBfiwtfTUKnLIpDog_EiIPF5Jea7WrRv4-vglV-TwnDNtMDV0KQ_1jJIoXIj2wac2atd6OEheSMnhVkfgN0aiJ11q4qR9HRAhblonmgVXXW176UNy8yywLvAx9iLgwfapCxULhOoLesLzMIvifVmnR_row16DXg6eQwZb9zBgbeuG_L90S6mA5cCwJveiOQDgOvz4haityIYrGDzdqEPbjyPw2tjNG32dHvO-zyByG6ts-Y1kCYa96PU6OUYy60Dqhj-xbHx2Y-vH_Rrn5DW9gsuutnGiK_bGuvKJCK0xD5yZQGd5HXFXOHLrRJ_21XUEIfE8VGmPrUKEHw4rPg",
+                        "amount": "0.006000000000000000",
+                        "accountId": "0f6a56ba-deb3-4307-92aa-ef79229302ff",
+                        "authorizationId": "a85af3c7-71cb-47a7-a99a-851788025a06"
+                      },
+                      "accepted": {
+                        "asset": "USD",
+                        "extra": {},
+                        "payTo": "397b9395-d30d-42cc-abf9-0c56629d1c2f",
+                        "amount": "0.006",
+                        "scheme": "exact",
+                        "network": "sapiom:main",
+                        "maxTimeoutSeconds": 300
+                      },
+                      "resource": {
+                        "url": "http://linkup.services.sapiom.ai/v1/search",
+                        "mimeType": "application/json",
+                        "description": ""
+                      },
+                      "x402Version": 2
+                    },
+                    "paymentTransactionId": "b47a070a-7a6e-4429-b3ce-3ae01c7d93ec"
+                  }
+                },
+                "errorMessage": null,
+                "errorDetails": null,
+                "startedAt": "2026-07-04T10:23:25.452Z",
+                "completedAt": "2026-07-04T10:23:25.480Z",
+                "executionTimeMs": 28,
+                "retryCount": 0,
+                "parentExecutionId": null,
+                "createdAt": "2026-07-04T10:23:25.439Z",
+                "updatedAt": "2026-07-04T10:23:25.439Z"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "8e9a32ad-e864-450f-9087-e43b6d3c06a2",
+        "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+        "serviceName": "sapiom_openrouter",
+        "actionName": "generate",
+        "resourceName": "/v1/chat/completions",
+        "serviceId": "0fb63c2c-067f-4d39-9ef2-036408fbb822",
+        "status": "completed",
+        "requiresPayment": true,
+        "qualifiers": {},
+        "metadata": {
+          "createdByApiKeyId": "33b14bf3-e15e-431c-b2c9-a9c5d3eb8425",
+          "preemptiveAuthorization": true
+        },
+        "createdAt": "2026-07-04T08:15:13.284Z",
+        "updatedAt": "2026-07-04T08:15:29.438Z",
+        "authorizedAt": "2026-07-04T08:15:24.973Z",
+        "completedAt": "2026-07-04T08:15:29.438Z",
+        "outcome": "success",
+        "currentPaymentTransactionId": "6737f25d-3357-40cd-9379-753f1b3ab37c",
+        "trace": {
+          "id": "8657c8e4-9bfc-4b7e-aee9-bc7f185d59ae",
+          "externalId": null
+        },
+        "agentId": "d64a1fb6-c392-4c1c-81f9-b44f371f54c5",
+        "agent": {
+          "id": "d64a1fb6-c392-4c1c-81f9-b44f371f54c5",
+          "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+          "label": "fleet-test",
+          "name": "fleet-test",
+          "description": null,
+          "status": "active",
+          "createdAt": "2026-07-04T08:15:12.569Z",
+          "updatedAt": "2026-07-04T08:15:12.569Z",
+          "numericId": 8
+        },
+        "costs": [
+          {
+            "id": "64849846-95f3-4ad0-96bd-3a01a1181319",
+            "transactionId": "8e9a32ad-e864-450f-9087-e43b6d3c06a2",
+            "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+            "paymentTransactionId": "6737f25d-3357-40cd-9379-753f1b3ab37c",
+            "fiatAmount": "0.000543000000000000",
+            "fiatAssetId": "4657ab13-b6e6-4ba4-9df8-47b351c0041c",
+            "isEstimate": false,
+            "isActive": false,
+            "supersedesCostId": null,
+            "supersededAt": "2026-07-04T08:15:29.307Z",
+            "costDetails": {
+              "source": "payment_transaction",
+              "network": "sapiom",
+              "protocol": "x402",
+              "paymentTransactionId": "6737f25d-3357-40cd-9379-753f1b3ab37c"
+            },
+            "createdAt": "2026-07-04T08:15:24.862Z",
+            "updatedAt": "2026-07-04T08:15:29.287Z",
+            "inferredFromFactId": null
+          },
+          {
+            "id": "5b6175df-6ac5-4a82-b338-c539ea2efb4a",
+            "transactionId": "8e9a32ad-e864-450f-9087-e43b6d3c06a2",
+            "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+            "paymentTransactionId": "6737f25d-3357-40cd-9379-753f1b3ab37c",
+            "fiatAmount": "0.000100000000000000",
+            "fiatAssetId": "4657ab13-b6e6-4ba4-9df8-47b351c0041c",
+            "isEstimate": false,
+            "isActive": true,
+            "supersedesCostId": "64849846-95f3-4ad0-96bd-3a01a1181319",
+            "supersededAt": null,
+            "costDetails": {
+              "source": "payment_capture",
+              "network": "sapiom",
+              "protocol": "x402",
+              "capturedAmount": "0.0001",
+              "originalAmount": "0.000543000000000000"
+            },
+            "createdAt": "2026-07-04T08:15:29.287Z",
+            "updatedAt": "2026-07-04T08:15:29.287Z",
+            "inferredFromFactId": null
+          }
+        ],
+        "traceId": "8657c8e4-9bfc-4b7e-aee9-bc7f185d59ae",
+        "apiKeyId": "33b14bf3-e15e-431c-b2c9-a9c5d3eb8425",
+        "createdByActorType": "api_key",
+        "createdByActorId": "33b14bf3-e15e-431c-b2c9-a9c5d3eb8425",
+        "mandateId": null,
+        "facilitatedByServiceAccount": null,
+        "service": {
+          "id": "0fb63c2c-067f-4d39-9ef2-036408fbb822",
+          "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+          "numericId": 2,
+          "globalServiceId": "b813ffc4-8dfa-442c-83c1-c77255da1f61",
+          "name": "sapiom_openrouter",
+          "label": null,
+          "description": null,
+          "metadata": null,
+          "createdAt": "2026-07-04T05:14:31.042Z",
+          "updatedAt": "2026-07-04T05:14:31.042Z",
+          "deletedAt": null
+        },
+        "preparingAt": "2026-07-04T08:15:24.895Z",
+        "deniedAt": null,
+        "cancelledAt": null,
+        "authorizationRequests": [
+          {
+            "id": "668d7d68-e2ff-45e7-ae9c-135a6f636b7c",
+            "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+            "transactionId": "8e9a32ad-e864-450f-9087-e43b6d3c06a2",
+            "status": "authorized",
+            "createdAt": "2026-07-04T08:15:13.316Z",
+            "updatedAt": "2026-07-04T08:15:13.350Z",
+            "completedAt": "2026-07-04T08:15:13.365Z",
+            "processingAt": "2026-07-04T08:15:13.354Z",
+            "authorizedAt": "2026-07-04T08:15:13.365Z",
+            "deniedAt": null,
+            "ruleExecutions": []
+          },
+          {
+            "id": "4d92ebbe-c6d8-4e09-8b2a-6ccad569af3c",
+            "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+            "transactionId": "8e9a32ad-e864-450f-9087-e43b6d3c06a2",
+            "status": "authorized",
+            "createdAt": "2026-07-04T08:15:24.862Z",
+            "updatedAt": "2026-07-04T08:15:24.924Z",
+            "completedAt": "2026-07-04T08:15:24.973Z",
+            "processingAt": "2026-07-04T08:15:24.927Z",
+            "authorizedAt": "2026-07-04T08:15:24.973Z",
+            "deniedAt": null,
+            "ruleExecutions": [
+              {
+                "id": "4d981c05-a04a-435a-b2eb-bf0fcbc25e2f",
+                "ruleId": "5d35cc64-3d49-4069-bb77-52d66ae5b3d5",
+                "rule": {
+                  "id": "5d35cc64-3d49-4069-bb77-52d66ae5b3d5",
+                  "numericId": 1,
+                  "name": "System: Payment Authorization"
+                },
+                "transactionId": "8e9a32ad-e864-450f-9087-e43b6d3c06a2",
+                "transactionAuthorizationRequestId": "4d92ebbe-c6d8-4e09-8b2a-6ccad569af3c",
+                "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+                "status": "completed",
+                "inputData": {
+                  "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+                  "actionName": "generate",
+                  "serviceName": "sapiom_openrouter",
+                  "resourceName": "/v1/chat/completions",
+                  "transactionId": "8e9a32ad-e864-450f-9087-e43b6d3c06a2",
+                  "transactionAuthorizationRequestId": "4d92ebbe-c6d8-4e09-8b2a-6ccad569af3c"
+                },
+                "outputData": {
+                  "reason": "Payment successfully authorized",
+                  "decision": "ALLOWED",
+                  "metadata": {
+                    "ruleType": "payment_authorization",
+                    "networkId": "12c7c271-e380-4d57-9f46-2721cf8d71fa",
+                    "authorizationDetails": {
+                      "payload": {
+                        "nonce": "735155f5-5cf3-4007-af13-1d9d57326ad3",
+                        "token": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6InNhcGlvbS1wYXltZW50LWtleS12MSJ9.eyJzdWIiOiI2NzM3ZjI1ZC0zMzU3LTQwY2QtOTM3OS03NTNmMWIzYWIzN2MiLCJ0cmFuc2ZlcklkIjoiMTJjN2MyNzEtZTM4MC00ZDU3LTlmNDYtMjcyMWNmOGQ3MWZhIiwiYWNjb3VudElkIjoiMGY2YTU2YmEtZGViMy00MzA3LTkyYWEtZWY3OTIyOTMwMmZmIiwicGF5VG8iOiIzOTdiOTM5NS1kMzBkLTQyY2MtYWJmOS0wYzU2NjI5ZDFjMmYiLCJhbW91bnQiOiIwLjAwMDU0MzAwMDAwMDAwMDAwMCIsIm5vbmNlIjoiNzM1MTU1ZjUtNWNmMy00MDA3LWFmMTMtMWQ5ZDU3MzI2YWQzIiwiaWRlbnRpdHkiOnsidmVyc2lvbiI6MiwidGVuYW50SWQiOiI3MjM0YTdmOS00MDc0LTRhYWQtYjEzZi04NGUwZTI4YjQ2OWEiLCJvcmdhbml6YXRpb25JZCI6ImY0YmEyODViLTA4NTUtNGFlMy05OTBjLWU1YmRlZTI5MWM0NyIsInBheW1lbnRBY2NvdW50SWQiOiIwZjZhNTZiYS1kZWIzLTQzMDctOTJhYS1lZjc5MjI5MzAyZmYifSwiaWF0IjoxNzgzMTUyOTI0fQ.XSgrVedlA466vI9_pf8E0kai10OXioRt1yFynsDqAu6QvxnOrjGV2CHyrzufIR-SfoVbfDc8FM9UrHKYIt7LMV4CqfUVf8FGGCLjJ0YebgIGK2jPmMeHRCT0teOm8Ydablf6x8LQq-z_tCWzXzTxeVg_lF8UQjtoo10awjgvKP0sutNCN4tauKTQKDvE6KNdEEV6fulXPH2rOnZRRIObm09oAjt9TpUk-o4b7i5NU-pDHJpg9yrfOQEtH7L4h3S2q_wySPtMHLXxw7B8skC0YK9IK5otZB1QaTLtXuUtNwvwMFpGYjwpaILHF5bYTKcTl4i_wXCMGToXriMpyu7G8A",
+                        "amount": "0.000543000000000000",
+                        "accountId": "0f6a56ba-deb3-4307-92aa-ef79229302ff",
+                        "authorizationId": "12c7c271-e380-4d57-9f46-2721cf8d71fa"
+                      },
+                      "accepted": {
+                        "asset": "USD",
+                        "extra": {},
+                        "payTo": "397b9395-d30d-42cc-abf9-0c56629d1c2f",
+                        "amount": "0.000543",
+                        "scheme": "upto",
+                        "network": "sapiom:main",
+                        "maxTimeoutSeconds": 300
+                      },
+                      "resource": {
+                        "url": "http://openrouter.services.sapiom.ai/v1/chat/completions",
+                        "mimeType": "application/json",
+                        "description": "OpenRouter chat completion"
+                      },
+                      "x402Version": 2
+                    },
+                    "paymentTransactionId": "6737f25d-3357-40cd-9379-753f1b3ab37c"
+                  }
+                },
+                "errorMessage": null,
+                "errorDetails": null,
+                "startedAt": "2026-07-04T08:15:24.934Z",
+                "completedAt": "2026-07-04T08:15:24.968Z",
+                "executionTimeMs": 34,
+                "retryCount": 0,
+                "parentExecutionId": null,
+                "createdAt": "2026-07-04T08:15:24.924Z",
+                "updatedAt": "2026-07-04T08:15:24.924Z"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "41b1e9c0-8d62-44ff-9e8c-d46f6cda7577",
+        "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+        "serviceName": "sapiom_openrouter",
+        "actionName": "generate",
+        "resourceName": "/v1/chat/completions",
+        "serviceId": "0fb63c2c-067f-4d39-9ef2-036408fbb822",
+        "status": "completed",
+        "requiresPayment": true,
+        "qualifiers": {},
+        "metadata": {
+          "createdByApiKeyId": "33b14bf3-e15e-431c-b2c9-a9c5d3eb8425",
+          "preemptiveAuthorization": true
+        },
+        "createdAt": "2026-07-04T08:15:13.193Z",
+        "updatedAt": "2026-07-04T08:15:22.983Z",
+        "authorizedAt": "2026-07-04T08:15:13.976Z",
+        "completedAt": "2026-07-04T08:15:22.987Z",
+        "outcome": "success",
+        "currentPaymentTransactionId": "163ec8fb-dc65-4348-ba73-6b2d46492adc",
+        "trace": {
+          "id": "c8436a8d-7609-4b11-a98c-96af8232e827",
+          "externalId": null
+        },
+        "agentId": "d64a1fb6-c392-4c1c-81f9-b44f371f54c5",
+        "agent": {
+          "id": "d64a1fb6-c392-4c1c-81f9-b44f371f54c5",
+          "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+          "label": "fleet-test",
+          "name": "fleet-test",
+          "description": null,
+          "status": "active",
+          "createdAt": "2026-07-04T08:15:12.569Z",
+          "updatedAt": "2026-07-04T08:15:12.569Z",
+          "numericId": 8
+        },
+        "costs": [
+          {
+            "id": "a30a81b5-80cc-4f08-b30a-7bc22e388ca9",
+            "transactionId": "41b1e9c0-8d62-44ff-9e8c-d46f6cda7577",
+            "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+            "paymentTransactionId": "163ec8fb-dc65-4348-ba73-6b2d46492adc",
+            "fiatAmount": "0.000100000000000000",
+            "fiatAssetId": "4657ab13-b6e6-4ba4-9df8-47b351c0041c",
+            "isEstimate": false,
+            "isActive": true,
+            "supersedesCostId": "9e212738-c253-43fd-b534-67b42fb49327",
+            "supersededAt": null,
+            "costDetails": {
+              "source": "payment_capture",
+              "network": "sapiom",
+              "protocol": "x402",
+              "capturedAmount": "0.0001",
+              "originalAmount": "0.000543000000000000"
+            },
+            "createdAt": "2026-07-04T08:15:22.917Z",
+            "updatedAt": "2026-07-04T08:15:22.917Z",
+            "inferredFromFactId": null
+          },
+          {
+            "id": "9e212738-c253-43fd-b534-67b42fb49327",
+            "transactionId": "41b1e9c0-8d62-44ff-9e8c-d46f6cda7577",
+            "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+            "paymentTransactionId": "163ec8fb-dc65-4348-ba73-6b2d46492adc",
+            "fiatAmount": "0.000543000000000000",
+            "fiatAssetId": "4657ab13-b6e6-4ba4-9df8-47b351c0041c",
+            "isEstimate": false,
+            "isActive": false,
+            "supersedesCostId": null,
+            "supersededAt": "2026-07-04T08:15:22.941Z",
+            "costDetails": {
+              "source": "payment_transaction",
+              "network": "sapiom",
+              "protocol": "x402",
+              "paymentTransactionId": "163ec8fb-dc65-4348-ba73-6b2d46492adc"
+            },
+            "createdAt": "2026-07-04T08:15:13.836Z",
+            "updatedAt": "2026-07-04T08:15:22.917Z",
+            "inferredFromFactId": null
+          }
+        ],
+        "traceId": "c8436a8d-7609-4b11-a98c-96af8232e827",
+        "apiKeyId": "33b14bf3-e15e-431c-b2c9-a9c5d3eb8425",
+        "createdByActorType": "api_key",
+        "createdByActorId": "33b14bf3-e15e-431c-b2c9-a9c5d3eb8425",
+        "mandateId": null,
+        "facilitatedByServiceAccount": null,
+        "service": {
+          "id": "0fb63c2c-067f-4d39-9ef2-036408fbb822",
+          "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+          "numericId": 2,
+          "globalServiceId": "b813ffc4-8dfa-442c-83c1-c77255da1f61",
+          "name": "sapiom_openrouter",
+          "label": null,
+          "description": null,
+          "metadata": null,
+          "createdAt": "2026-07-04T05:14:31.042Z",
+          "updatedAt": "2026-07-04T05:14:31.042Z",
+          "deletedAt": null
+        },
+        "preparingAt": "2026-07-04T08:15:13.870Z",
+        "deniedAt": null,
+        "cancelledAt": null,
+        "authorizationRequests": [
+          {
+            "id": "e1e7754f-9d00-4796-9c42-7e814cc97ceb",
+            "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+            "transactionId": "41b1e9c0-8d62-44ff-9e8c-d46f6cda7577",
+            "status": "authorized",
+            "createdAt": "2026-07-04T08:15:13.229Z",
+            "updatedAt": "2026-07-04T08:15:13.255Z",
+            "completedAt": "2026-07-04T08:15:13.273Z",
+            "processingAt": "2026-07-04T08:15:13.260Z",
+            "authorizedAt": "2026-07-04T08:15:13.273Z",
+            "deniedAt": null,
+            "ruleExecutions": []
+          },
+          {
+            "id": "91b3f2ab-fce5-4af6-8ce1-51796f3d3acd",
+            "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+            "transactionId": "41b1e9c0-8d62-44ff-9e8c-d46f6cda7577",
+            "status": "authorized",
+            "createdAt": "2026-07-04T08:15:13.836Z",
+            "updatedAt": "2026-07-04T08:15:13.916Z",
+            "completedAt": "2026-07-04T08:15:13.976Z",
+            "processingAt": "2026-07-04T08:15:13.920Z",
+            "authorizedAt": "2026-07-04T08:15:13.976Z",
+            "deniedAt": null,
+            "ruleExecutions": [
+              {
+                "id": "22c6c1bc-4bf1-4374-953c-912d3b893d62",
+                "ruleId": "5d35cc64-3d49-4069-bb77-52d66ae5b3d5",
+                "rule": {
+                  "id": "5d35cc64-3d49-4069-bb77-52d66ae5b3d5",
+                  "numericId": 1,
+                  "name": "System: Payment Authorization"
+                },
+                "transactionId": "41b1e9c0-8d62-44ff-9e8c-d46f6cda7577",
+                "transactionAuthorizationRequestId": "91b3f2ab-fce5-4af6-8ce1-51796f3d3acd",
+                "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+                "status": "completed",
+                "inputData": {
+                  "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+                  "actionName": "generate",
+                  "serviceName": "sapiom_openrouter",
+                  "resourceName": "/v1/chat/completions",
+                  "transactionId": "41b1e9c0-8d62-44ff-9e8c-d46f6cda7577",
+                  "transactionAuthorizationRequestId": "91b3f2ab-fce5-4af6-8ce1-51796f3d3acd"
+                },
+                "outputData": {
+                  "reason": "Payment successfully authorized",
+                  "decision": "ALLOWED",
+                  "metadata": {
+                    "ruleType": "payment_authorization",
+                    "networkId": "aea96437-b804-401c-afb9-a78e0fd1f13f",
+                    "authorizationDetails": {
+                      "payload": {
+                        "nonce": "985a9f19-23bb-40a6-b315-c06e131f6320",
+                        "token": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6InNhcGlvbS1wYXltZW50LWtleS12MSJ9.eyJzdWIiOiIxNjNlYzhmYi1kYzY1LTQzNDgtYmE3My02YjJkNDY0OTJhZGMiLCJ0cmFuc2ZlcklkIjoiYWVhOTY0MzctYjgwNC00MDFjLWFmYjktYTc4ZTBmZDFmMTNmIiwiYWNjb3VudElkIjoiMGY2YTU2YmEtZGViMy00MzA3LTkyYWEtZWY3OTIyOTMwMmZmIiwicGF5VG8iOiIzOTdiOTM5NS1kMzBkLTQyY2MtYWJmOS0wYzU2NjI5ZDFjMmYiLCJhbW91bnQiOiIwLjAwMDU0MzAwMDAwMDAwMDAwMCIsIm5vbmNlIjoiOTg1YTlmMTktMjNiYi00MGE2LWIzMTUtYzA2ZTEzMWY2MzIwIiwiaWRlbnRpdHkiOnsidmVyc2lvbiI6MiwidGVuYW50SWQiOiI3MjM0YTdmOS00MDc0LTRhYWQtYjEzZi04NGUwZTI4YjQ2OWEiLCJvcmdhbml6YXRpb25JZCI6ImY0YmEyODViLTA4NTUtNGFlMy05OTBjLWU1YmRlZTI5MWM0NyIsInBheW1lbnRBY2NvdW50SWQiOiIwZjZhNTZiYS1kZWIzLTQzMDctOTJhYS1lZjc5MjI5MzAyZmYifSwiaWF0IjoxNzgzMTUyOTEzfQ.diG5-UAkqk9509_TgTCGzRGQfc1B5zQqMOrLCPYRm-J9widP_WQHtgB-NtIl0iQqTROoryZmDOBFXW7WAVkANV6HV5e46fHARmLD4izYao5tJQYL9C0zjcG1iAeUK2DzcJ5XxDimDPNbB9tEnPUzQ7WXfl_EWV7lPs3FSuKWUS82uzzWg7LaHc6gHuz9i3TsJ6xHeJSGIx0lrgSPk1O-85OICRkf3g8jaYchMZXzkDvZNPNuraZjA930PizDxnDjM5hAa0-0-85c8RcBX3pGlmNQ2WnykWi0YxrBfZPNz8UqDk7uR4SiK85JkV4GGVgbaOT1-MfOHIXpAl5lTGk4rQ",
+                        "amount": "0.000543000000000000",
+                        "accountId": "0f6a56ba-deb3-4307-92aa-ef79229302ff",
+                        "authorizationId": "aea96437-b804-401c-afb9-a78e0fd1f13f"
+                      },
+                      "accepted": {
+                        "asset": "USD",
+                        "extra": {},
+                        "payTo": "397b9395-d30d-42cc-abf9-0c56629d1c2f",
+                        "amount": "0.000543",
+                        "scheme": "upto",
+                        "network": "sapiom:main",
+                        "maxTimeoutSeconds": 300
+                      },
+                      "resource": {
+                        "url": "http://openrouter.services.sapiom.ai/v1/chat/completions",
+                        "mimeType": "application/json",
+                        "description": "OpenRouter chat completion"
+                      },
+                      "x402Version": 2
+                    },
+                    "paymentTransactionId": "163ec8fb-dc65-4348-ba73-6b2d46492adc"
+                  }
+                },
+                "errorMessage": null,
+                "errorDetails": null,
+                "startedAt": "2026-07-04T08:15:13.929Z",
+                "completedAt": "2026-07-04T08:15:13.969Z",
+                "executionTimeMs": 40,
+                "retryCount": 0,
+                "parentExecutionId": null,
+                "createdAt": "2026-07-04T08:15:13.916Z",
+                "updatedAt": "2026-07-04T08:15:13.916Z"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "81b6d3ee-5c65-44f4-aeb3-210ae776c231",
+        "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+        "serviceName": "sapiom_openrouter",
+        "actionName": "generate",
+        "resourceName": "/v1/chat/completions",
+        "serviceId": "0fb63c2c-067f-4d39-9ef2-036408fbb822",
+        "status": "completed",
+        "requiresPayment": true,
+        "qualifiers": {},
+        "metadata": {
+          "createdByApiKeyId": "33b14bf3-e15e-431c-b2c9-a9c5d3eb8425",
+          "preemptiveAuthorization": true
+        },
+        "createdAt": "2026-07-04T08:15:13.120Z",
+        "updatedAt": "2026-07-04T08:15:26.272Z",
+        "authorizedAt": "2026-07-04T08:15:14.299Z",
+        "completedAt": "2026-07-04T08:15:26.272Z",
+        "outcome": "success",
+        "currentPaymentTransactionId": "f9bdcfb4-0ac2-43c6-af7a-bf2ef035fafc",
+        "trace": {
+          "id": "0169dd1d-dddb-47c6-838b-f955e2e2e7e5",
+          "externalId": null
+        },
+        "agentId": "d64a1fb6-c392-4c1c-81f9-b44f371f54c5",
+        "agent": {
+          "id": "d64a1fb6-c392-4c1c-81f9-b44f371f54c5",
+          "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+          "label": "fleet-test",
+          "name": "fleet-test",
+          "description": null,
+          "status": "active",
+          "createdAt": "2026-07-04T08:15:12.569Z",
+          "updatedAt": "2026-07-04T08:15:12.569Z",
+          "numericId": 8
+        },
+        "costs": [
+          {
+            "id": "1e250d38-bd3f-4330-ae82-02bcf1d5404f",
+            "transactionId": "81b6d3ee-5c65-44f4-aeb3-210ae776c231",
+            "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+            "paymentTransactionId": "f9bdcfb4-0ac2-43c6-af7a-bf2ef035fafc",
+            "fiatAmount": "0.000100000000000000",
+            "fiatAssetId": "4657ab13-b6e6-4ba4-9df8-47b351c0041c",
+            "isEstimate": false,
+            "isActive": true,
+            "supersedesCostId": "dad6ab3f-8b99-4987-8acf-3849791e4ff7",
+            "supersededAt": null,
+            "costDetails": {
+              "source": "payment_capture",
+              "network": "sapiom",
+              "protocol": "x402",
+              "capturedAmount": "0.0001",
+              "originalAmount": "0.000543000000000000"
+            },
+            "createdAt": "2026-07-04T08:15:26.260Z",
+            "updatedAt": "2026-07-04T08:15:26.260Z",
+            "inferredFromFactId": null
+          },
+          {
+            "id": "dad6ab3f-8b99-4987-8acf-3849791e4ff7",
+            "transactionId": "81b6d3ee-5c65-44f4-aeb3-210ae776c231",
+            "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+            "paymentTransactionId": "f9bdcfb4-0ac2-43c6-af7a-bf2ef035fafc",
+            "fiatAmount": "0.000543000000000000",
+            "fiatAssetId": "4657ab13-b6e6-4ba4-9df8-47b351c0041c",
+            "isEstimate": false,
+            "isActive": false,
+            "supersedesCostId": null,
+            "supersededAt": "2026-07-04T08:15:26.279Z",
+            "costDetails": {
+              "source": "payment_transaction",
+              "network": "sapiom",
+              "protocol": "x402",
+              "paymentTransactionId": "f9bdcfb4-0ac2-43c6-af7a-bf2ef035fafc"
+            },
+            "createdAt": "2026-07-04T08:15:14.123Z",
+            "updatedAt": "2026-07-04T08:15:26.260Z",
+            "inferredFromFactId": null
+          }
+        ],
+        "traceId": "0169dd1d-dddb-47c6-838b-f955e2e2e7e5",
+        "apiKeyId": "33b14bf3-e15e-431c-b2c9-a9c5d3eb8425",
+        "createdByActorType": "api_key",
+        "createdByActorId": "33b14bf3-e15e-431c-b2c9-a9c5d3eb8425",
+        "mandateId": null,
+        "facilitatedByServiceAccount": null,
+        "service": {
+          "id": "0fb63c2c-067f-4d39-9ef2-036408fbb822",
+          "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+          "numericId": 2,
+          "globalServiceId": "b813ffc4-8dfa-442c-83c1-c77255da1f61",
+          "name": "sapiom_openrouter",
+          "label": null,
+          "description": null,
+          "metadata": null,
+          "createdAt": "2026-07-04T05:14:31.042Z",
+          "updatedAt": "2026-07-04T05:14:31.042Z",
+          "deletedAt": null
+        },
+        "preparingAt": "2026-07-04T08:15:14.163Z",
+        "deniedAt": null,
+        "cancelledAt": null,
+        "authorizationRequests": [
+          {
+            "id": "64efd7dc-f225-4056-afa3-338f06584048",
+            "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+            "transactionId": "81b6d3ee-5c65-44f4-aeb3-210ae776c231",
+            "status": "authorized",
+            "createdAt": "2026-07-04T08:15:13.198Z",
+            "updatedAt": "2026-07-04T08:15:13.231Z",
+            "completedAt": "2026-07-04T08:15:13.241Z",
+            "processingAt": "2026-07-04T08:15:13.233Z",
+            "authorizedAt": "2026-07-04T08:15:13.241Z",
+            "deniedAt": null,
+            "ruleExecutions": []
+          },
+          {
+            "id": "15137bb9-6b50-40fb-979f-a529eb5e2202",
+            "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+            "transactionId": "81b6d3ee-5c65-44f4-aeb3-210ae776c231",
+            "status": "authorized",
+            "createdAt": "2026-07-04T08:15:14.123Z",
+            "updatedAt": "2026-07-04T08:15:14.253Z",
+            "completedAt": "2026-07-04T08:15:14.299Z",
+            "processingAt": "2026-07-04T08:15:14.256Z",
+            "authorizedAt": "2026-07-04T08:15:14.299Z",
+            "deniedAt": null,
+            "ruleExecutions": [
+              {
+                "id": "d5c01e37-46e7-4daf-a3d4-dfa7b52fb79f",
+                "ruleId": "5d35cc64-3d49-4069-bb77-52d66ae5b3d5",
+                "rule": {
+                  "id": "5d35cc64-3d49-4069-bb77-52d66ae5b3d5",
+                  "numericId": 1,
+                  "name": "System: Payment Authorization"
+                },
+                "transactionId": "81b6d3ee-5c65-44f4-aeb3-210ae776c231",
+                "transactionAuthorizationRequestId": "15137bb9-6b50-40fb-979f-a529eb5e2202",
+                "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+                "status": "completed",
+                "inputData": {
+                  "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+                  "actionName": "generate",
+                  "serviceName": "sapiom_openrouter",
+                  "resourceName": "/v1/chat/completions",
+                  "transactionId": "81b6d3ee-5c65-44f4-aeb3-210ae776c231",
+                  "transactionAuthorizationRequestId": "15137bb9-6b50-40fb-979f-a529eb5e2202"
+                },
+                "outputData": {
+                  "reason": "Payment successfully authorized",
+                  "decision": "ALLOWED",
+                  "metadata": {
+                    "ruleType": "payment_authorization",
+                    "networkId": "f0964100-808c-41b8-88bc-61c26e526c2f",
+                    "authorizationDetails": {
+                      "payload": {
+                        "nonce": "40d77a03-8740-485a-8bc8-04a95d8a92d9",
+                        "token": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6InNhcGlvbS1wYXltZW50LWtleS12MSJ9.eyJzdWIiOiJmOWJkY2ZiNC0wYWMyLTQzYzYtYWY3YS1iZjJlZjAzNWZhZmMiLCJ0cmFuc2ZlcklkIjoiZjA5NjQxMDAtODA4Yy00MWI4LTg4YmMtNjFjMjZlNTI2YzJmIiwiYWNjb3VudElkIjoiMGY2YTU2YmEtZGViMy00MzA3LTkyYWEtZWY3OTIyOTMwMmZmIiwicGF5VG8iOiIzOTdiOTM5NS1kMzBkLTQyY2MtYWJmOS0wYzU2NjI5ZDFjMmYiLCJhbW91bnQiOiIwLjAwMDU0MzAwMDAwMDAwMDAwMCIsIm5vbmNlIjoiNDBkNzdhMDMtODc0MC00ODVhLThiYzgtMDRhOTVkOGE5MmQ5IiwiaWRlbnRpdHkiOnsidmVyc2lvbiI6MiwidGVuYW50SWQiOiI3MjM0YTdmOS00MDc0LTRhYWQtYjEzZi04NGUwZTI4YjQ2OWEiLCJvcmdhbml6YXRpb25JZCI6ImY0YmEyODViLTA4NTUtNGFlMy05OTBjLWU1YmRlZTI5MWM0NyIsInBheW1lbnRBY2NvdW50SWQiOiIwZjZhNTZiYS1kZWIzLTQzMDctOTJhYS1lZjc5MjI5MzAyZmYifSwiaWF0IjoxNzgzMTUyOTE0fQ.fU4pMvKtk3z1I8rRdhOztCBeJvJrB4YMowM8kXePqGIVwA2TSe1xO9TSj-xOWZKww5YjWK-hA0hhEGYEzT1ywob6daJVGZGJKFMm9zAk5Ac8nT6CdjGgunKmIUk3kTvaF3skkrTlsb18aJbkOQq7ID4sjwWRTTf84ajWwmJ1pc7aeA5FIeFCBf8J6w6GTZShsDrE4Oycsz5vvWYO-skMR71yLd0mxCtadP7AJa_wAUgRqRWyoKa9ka3x_2IOAxD5fRQQdtMK5kvxgYTYYjNTzt0iuznCBBz_mia7HG3BxIMOEgA74jeoZBx1RLnUP9YRLEXaymQx68I6UgL4zWL3UA",
+                        "amount": "0.000543000000000000",
+                        "accountId": "0f6a56ba-deb3-4307-92aa-ef79229302ff",
+                        "authorizationId": "f0964100-808c-41b8-88bc-61c26e526c2f"
+                      },
+                      "accepted": {
+                        "asset": "USD",
+                        "extra": {},
+                        "payTo": "397b9395-d30d-42cc-abf9-0c56629d1c2f",
+                        "amount": "0.000543",
+                        "scheme": "upto",
+                        "network": "sapiom:main",
+                        "maxTimeoutSeconds": 300
+                      },
+                      "resource": {
+                        "url": "http://openrouter.services.sapiom.ai/v1/chat/completions",
+                        "mimeType": "application/json",
+                        "description": "OpenRouter chat completion"
+                      },
+                      "x402Version": 2
+                    },
+                    "paymentTransactionId": "f9bdcfb4-0ac2-43c6-af7a-bf2ef035fafc"
+                  }
+                },
+                "errorMessage": null,
+                "errorDetails": null,
+                "startedAt": "2026-07-04T08:15:14.264Z",
+                "completedAt": "2026-07-04T08:15:14.293Z",
+                "executionTimeMs": 29,
+                "retryCount": 0,
+                "parentExecutionId": null,
+                "createdAt": "2026-07-04T08:15:14.253Z",
+                "updatedAt": "2026-07-04T08:15:14.253Z"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "8cf1ecba-5220-4df1-af18-c7be6239ec74",
+        "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+        "serviceName": "sapiom_openrouter",
+        "actionName": "generate",
+        "resourceName": "/v1/chat/completions",
+        "serviceId": "0fb63c2c-067f-4d39-9ef2-036408fbb822",
+        "status": "completed",
+        "requiresPayment": true,
+        "qualifiers": {},
+        "metadata": {
+          "createdByApiKeyId": "33b14bf3-e15e-431c-b2c9-a9c5d3eb8425",
+          "preemptiveAuthorization": true
+        },
+        "createdAt": "2026-07-04T08:15:13.044Z",
+        "updatedAt": "2026-07-04T08:15:24.770Z",
+        "authorizedAt": "2026-07-04T08:15:14.131Z",
+        "completedAt": "2026-07-04T08:15:24.769Z",
+        "outcome": "success",
+        "currentPaymentTransactionId": "63433ee0-7004-42c1-b919-71300e0da223",
+        "trace": {
+          "id": "1368c4c7-4ba4-415b-8536-d8b4f852c8a2",
+          "externalId": null
+        },
+        "agentId": "d64a1fb6-c392-4c1c-81f9-b44f371f54c5",
+        "agent": {
+          "id": "d64a1fb6-c392-4c1c-81f9-b44f371f54c5",
+          "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+          "label": "fleet-test",
+          "name": "fleet-test",
+          "description": null,
+          "status": "active",
+          "createdAt": "2026-07-04T08:15:12.569Z",
+          "updatedAt": "2026-07-04T08:15:12.569Z",
+          "numericId": 8
+        },
+        "costs": [
+          {
+            "id": "d1990099-acd0-44a1-8268-59f01b6fd7b7",
+            "transactionId": "8cf1ecba-5220-4df1-af18-c7be6239ec74",
+            "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+            "paymentTransactionId": "63433ee0-7004-42c1-b919-71300e0da223",
+            "fiatAmount": "0.000543000000000000",
+            "fiatAssetId": "4657ab13-b6e6-4ba4-9df8-47b351c0041c",
+            "isEstimate": false,
+            "isActive": false,
+            "supersedesCostId": null,
+            "supersededAt": "2026-07-04T08:15:24.787Z",
+            "costDetails": {
+              "source": "payment_transaction",
+              "network": "sapiom",
+              "protocol": "x402",
+              "paymentTransactionId": "63433ee0-7004-42c1-b919-71300e0da223"
+            },
+            "createdAt": "2026-07-04T08:15:14.017Z",
+            "updatedAt": "2026-07-04T08:15:24.755Z",
+            "inferredFromFactId": null
+          },
+          {
+            "id": "ec48c68c-f5da-471e-a180-7d5945aea77e",
+            "transactionId": "8cf1ecba-5220-4df1-af18-c7be6239ec74",
+            "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+            "paymentTransactionId": "63433ee0-7004-42c1-b919-71300e0da223",
+            "fiatAmount": "0.000100000000000000",
+            "fiatAssetId": "4657ab13-b6e6-4ba4-9df8-47b351c0041c",
+            "isEstimate": false,
+            "isActive": true,
+            "supersedesCostId": "d1990099-acd0-44a1-8268-59f01b6fd7b7",
+            "supersededAt": null,
+            "costDetails": {
+              "source": "payment_capture",
+              "network": "sapiom",
+              "protocol": "x402",
+              "capturedAmount": "0.0001",
+              "originalAmount": "0.000543000000000000"
+            },
+            "createdAt": "2026-07-04T08:15:24.755Z",
+            "updatedAt": "2026-07-04T08:15:24.755Z",
+            "inferredFromFactId": null
+          }
+        ],
+        "traceId": "1368c4c7-4ba4-415b-8536-d8b4f852c8a2",
+        "apiKeyId": "33b14bf3-e15e-431c-b2c9-a9c5d3eb8425",
+        "createdByActorType": "api_key",
+        "createdByActorId": "33b14bf3-e15e-431c-b2c9-a9c5d3eb8425",
+        "mandateId": null,
+        "facilitatedByServiceAccount": null,
+        "service": {
+          "id": "0fb63c2c-067f-4d39-9ef2-036408fbb822",
+          "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+          "numericId": 2,
+          "globalServiceId": "b813ffc4-8dfa-442c-83c1-c77255da1f61",
+          "name": "sapiom_openrouter",
+          "label": null,
+          "description": null,
+          "metadata": null,
+          "createdAt": "2026-07-04T05:14:31.042Z",
+          "updatedAt": "2026-07-04T05:14:31.042Z",
+          "deletedAt": null
+        },
+        "preparingAt": "2026-07-04T08:15:14.061Z",
+        "deniedAt": null,
+        "cancelledAt": null,
+        "authorizationRequests": [
+          {
+            "id": "68c0e033-2755-4147-ae99-850dc3e79bdf",
+            "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+            "transactionId": "8cf1ecba-5220-4df1-af18-c7be6239ec74",
+            "status": "authorized",
+            "createdAt": "2026-07-04T08:15:14.017Z",
+            "updatedAt": "2026-07-04T08:15:14.084Z",
+            "completedAt": "2026-07-04T08:15:14.131Z",
+            "processingAt": "2026-07-04T08:15:14.086Z",
+            "authorizedAt": "2026-07-04T08:15:14.131Z",
+            "deniedAt": null,
+            "ruleExecutions": [
+              {
+                "id": "40ad4358-31fa-4e85-8895-d5f710bc115f",
+                "ruleId": "5d35cc64-3d49-4069-bb77-52d66ae5b3d5",
+                "rule": {
+                  "id": "5d35cc64-3d49-4069-bb77-52d66ae5b3d5",
+                  "numericId": 1,
+                  "name": "System: Payment Authorization"
+                },
+                "transactionId": "8cf1ecba-5220-4df1-af18-c7be6239ec74",
+                "transactionAuthorizationRequestId": "68c0e033-2755-4147-ae99-850dc3e79bdf",
+                "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+                "status": "completed",
+                "inputData": {
+                  "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+                  "actionName": "generate",
+                  "serviceName": "sapiom_openrouter",
+                  "resourceName": "/v1/chat/completions",
+                  "transactionId": "8cf1ecba-5220-4df1-af18-c7be6239ec74",
+                  "transactionAuthorizationRequestId": "68c0e033-2755-4147-ae99-850dc3e79bdf"
+                },
+                "outputData": {
+                  "reason": "Payment successfully authorized",
+                  "decision": "ALLOWED",
+                  "metadata": {
+                    "ruleType": "payment_authorization",
+                    "networkId": "8eea1033-f2db-4695-ab14-dc8526b83e33",
+                    "authorizationDetails": {
+                      "payload": {
+                        "nonce": "3fc528ec-4bff-4ee6-ae8a-8c33e7ef8914",
+                        "token": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6InNhcGlvbS1wYXltZW50LWtleS12MSJ9.eyJzdWIiOiI2MzQzM2VlMC03MDA0LTQyYzEtYjkxOS03MTMwMGUwZGEyMjMiLCJ0cmFuc2ZlcklkIjoiOGVlYTEwMzMtZjJkYi00Njk1LWFiMTQtZGM4NTI2YjgzZTMzIiwiYWNjb3VudElkIjoiMGY2YTU2YmEtZGViMy00MzA3LTkyYWEtZWY3OTIyOTMwMmZmIiwicGF5VG8iOiIzOTdiOTM5NS1kMzBkLTQyY2MtYWJmOS0wYzU2NjI5ZDFjMmYiLCJhbW91bnQiOiIwLjAwMDU0MzAwMDAwMDAwMDAwMCIsIm5vbmNlIjoiM2ZjNTI4ZWMtNGJmZi00ZWU2LWFlOGEtOGMzM2U3ZWY4OTE0IiwiaWRlbnRpdHkiOnsidmVyc2lvbiI6MiwidGVuYW50SWQiOiI3MjM0YTdmOS00MDc0LTRhYWQtYjEzZi04NGUwZTI4YjQ2OWEiLCJvcmdhbml6YXRpb25JZCI6ImY0YmEyODViLTA4NTUtNGFlMy05OTBjLWU1YmRlZTI5MWM0NyIsInBheW1lbnRBY2NvdW50SWQiOiIwZjZhNTZiYS1kZWIzLTQzMDctOTJhYS1lZjc5MjI5MzAyZmYifSwiaWF0IjoxNzgzMTUyOTE0fQ.R1_yuUHrvUDwoRRLcoo4WmT34cyXxFrl8mwzbX68A7GzdNvgsam9z6BgWTY5cnNkBOxw-bbeq19Cyd13xy1h3Xc11U3VClsEblIOGGSJd3Fw1XWU9PC4CTiPEbYteiPnsvMe9tLB27f6ZuqVtWt2-UB2V2n0jhAO2-M7iQSdBie1pqh9a4cKnMVyycHUPJLStf7vpXpmlHGD2Z1Qk_ZuGQXXpphxHlTrbHOzkt8D1iH6cFuMfhC0COVq8gJEXIzVJUGcNZx0FDPSw6QRov3Yk6mec2jV1-l202-_vqbu8bhoN9skOuTHlhnXtcYglrmZ6AnkNeQ8DwRdygrg4xeNng",
+                        "amount": "0.000543000000000000",
+                        "accountId": "0f6a56ba-deb3-4307-92aa-ef79229302ff",
+                        "authorizationId": "8eea1033-f2db-4695-ab14-dc8526b83e33"
+                      },
+                      "accepted": {
+                        "asset": "USD",
+                        "extra": {},
+                        "payTo": "397b9395-d30d-42cc-abf9-0c56629d1c2f",
+                        "amount": "0.000543",
+                        "scheme": "upto",
+                        "network": "sapiom:main",
+                        "maxTimeoutSeconds": 300
+                      },
+                      "resource": {
+                        "url": "http://openrouter.services.sapiom.ai/v1/chat/completions",
+                        "mimeType": "application/json",
+                        "description": "OpenRouter chat completion"
+                      },
+                      "x402Version": 2
+                    },
+                    "paymentTransactionId": "63433ee0-7004-42c1-b919-71300e0da223"
+                  }
+                },
+                "errorMessage": null,
+                "errorDetails": null,
+                "startedAt": "2026-07-04T08:15:14.093Z",
+                "completedAt": "2026-07-04T08:15:14.125Z",
+                "executionTimeMs": 32,
+                "retryCount": 0,
+                "parentExecutionId": null,
+                "createdAt": "2026-07-04T08:15:14.084Z",
+                "updatedAt": "2026-07-04T08:15:14.084Z"
+              }
+            ]
+          },
+          {
+            "id": "70bfc227-e726-4423-a115-6f7d0ac45e8e",
+            "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+            "transactionId": "8cf1ecba-5220-4df1-af18-c7be6239ec74",
+            "status": "authorized",
+            "createdAt": "2026-07-04T08:15:13.083Z",
+            "updatedAt": "2026-07-04T08:15:13.137Z",
+            "completedAt": "2026-07-04T08:15:13.146Z",
+            "processingAt": "2026-07-04T08:15:13.140Z",
+            "authorizedAt": "2026-07-04T08:15:13.146Z",
+            "deniedAt": null,
+            "ruleExecutions": []
+          }
+        ]
+      },
+      {
+        "id": "d87ad117-4ef9-45e3-afd1-a70c0d173b6f",
+        "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+        "serviceName": "sapiom_openrouter",
+        "actionName": "generate",
+        "resourceName": "/v1/chat/completions",
+        "serviceId": "0fb63c2c-067f-4d39-9ef2-036408fbb822",
+        "status": "completed",
+        "requiresPayment": true,
+        "qualifiers": {},
+        "metadata": {
+          "createdByApiKeyId": "33b14bf3-e15e-431c-b2c9-a9c5d3eb8425",
+          "preemptiveAuthorization": true
+        },
+        "createdAt": "2026-07-04T08:15:12.977Z",
+        "updatedAt": "2026-07-04T08:15:18.445Z",
+        "authorizedAt": "2026-07-04T08:15:14.043Z",
+        "completedAt": "2026-07-04T08:15:18.445Z",
+        "outcome": "success",
+        "currentPaymentTransactionId": "37f9d635-f2e2-4b95-8e8a-ffe8dc326573",
+        "trace": {
+          "id": "8f495174-6f9a-4fc6-a9e2-3221c21d80c3",
+          "externalId": null
+        },
+        "agentId": "d64a1fb6-c392-4c1c-81f9-b44f371f54c5",
+        "agent": {
+          "id": "d64a1fb6-c392-4c1c-81f9-b44f371f54c5",
+          "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+          "label": "fleet-test",
+          "name": "fleet-test",
+          "description": null,
+          "status": "active",
+          "createdAt": "2026-07-04T08:15:12.569Z",
+          "updatedAt": "2026-07-04T08:15:12.569Z",
+          "numericId": 8
+        },
+        "costs": [
+          {
+            "id": "59f95e35-62ea-4569-a9d5-17b9e2d3b178",
+            "transactionId": "d87ad117-4ef9-45e3-afd1-a70c0d173b6f",
+            "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+            "paymentTransactionId": "37f9d635-f2e2-4b95-8e8a-ffe8dc326573",
+            "fiatAmount": "0.000100000000000000",
+            "fiatAssetId": "4657ab13-b6e6-4ba4-9df8-47b351c0041c",
+            "isEstimate": false,
+            "isActive": true,
+            "supersedesCostId": "4fc4d99a-4477-43f5-8021-4a3dad950bf2",
+            "supersededAt": null,
+            "costDetails": {
+              "source": "payment_capture",
+              "network": "sapiom",
+              "protocol": "x402",
+              "capturedAmount": "0.0001",
+              "originalAmount": "0.000543000000000000"
+            },
+            "createdAt": "2026-07-04T08:15:18.485Z",
+            "updatedAt": "2026-07-04T08:15:18.485Z",
+            "inferredFromFactId": null
+          },
+          {
+            "id": "4fc4d99a-4477-43f5-8021-4a3dad950bf2",
+            "transactionId": "d87ad117-4ef9-45e3-afd1-a70c0d173b6f",
+            "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+            "paymentTransactionId": "37f9d635-f2e2-4b95-8e8a-ffe8dc326573",
+            "fiatAmount": "0.000543000000000000",
+            "fiatAssetId": "4657ab13-b6e6-4ba4-9df8-47b351c0041c",
+            "isEstimate": false,
+            "isActive": false,
+            "supersedesCostId": null,
+            "supersededAt": "2026-07-04T08:15:18.519Z",
+            "costDetails": {
+              "source": "payment_transaction",
+              "network": "sapiom",
+              "protocol": "x402",
+              "paymentTransactionId": "37f9d635-f2e2-4b95-8e8a-ffe8dc326573"
+            },
+            "createdAt": "2026-07-04T08:15:13.926Z",
+            "updatedAt": "2026-07-04T08:15:18.485Z",
+            "inferredFromFactId": null
+          }
+        ],
+        "traceId": "8f495174-6f9a-4fc6-a9e2-3221c21d80c3",
+        "apiKeyId": "33b14bf3-e15e-431c-b2c9-a9c5d3eb8425",
+        "createdByActorType": "api_key",
+        "createdByActorId": "33b14bf3-e15e-431c-b2c9-a9c5d3eb8425",
+        "mandateId": null,
+        "facilitatedByServiceAccount": null,
+        "service": {
+          "id": "0fb63c2c-067f-4d39-9ef2-036408fbb822",
+          "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+          "numericId": 2,
+          "globalServiceId": "b813ffc4-8dfa-442c-83c1-c77255da1f61",
+          "name": "sapiom_openrouter",
+          "label": null,
+          "description": null,
+          "metadata": null,
+          "createdAt": "2026-07-04T05:14:31.042Z",
+          "updatedAt": "2026-07-04T05:14:31.042Z",
+          "deletedAt": null
+        },
+        "preparingAt": "2026-07-04T08:15:13.958Z",
+        "deniedAt": null,
+        "cancelledAt": null,
+        "authorizationRequests": [
+          {
+            "id": "7ad62597-31d1-4dbe-ae1e-893d061c4869",
+            "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+            "transactionId": "d87ad117-4ef9-45e3-afd1-a70c0d173b6f",
+            "status": "authorized",
+            "createdAt": "2026-07-04T08:15:13.021Z",
+            "updatedAt": "2026-07-04T08:15:13.084Z",
+            "completedAt": "2026-07-04T08:15:13.094Z",
+            "processingAt": "2026-07-04T08:15:13.086Z",
+            "authorizedAt": "2026-07-04T08:15:13.094Z",
+            "deniedAt": null,
+            "ruleExecutions": []
+          },
+          {
+            "id": "83e56c0b-f154-4cc0-811b-15968df2e964",
+            "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+            "transactionId": "d87ad117-4ef9-45e3-afd1-a70c0d173b6f",
+            "status": "authorized",
+            "createdAt": "2026-07-04T08:15:13.926Z",
+            "updatedAt": "2026-07-04T08:15:13.994Z",
+            "completedAt": "2026-07-04T08:15:14.043Z",
+            "processingAt": "2026-07-04T08:15:13.998Z",
+            "authorizedAt": "2026-07-04T08:15:14.043Z",
+            "deniedAt": null,
+            "ruleExecutions": [
+              {
+                "id": "c6f26ae0-8e0b-4dfb-833a-49bfd8d7be0f",
+                "ruleId": "5d35cc64-3d49-4069-bb77-52d66ae5b3d5",
+                "rule": {
+                  "id": "5d35cc64-3d49-4069-bb77-52d66ae5b3d5",
+                  "numericId": 1,
+                  "name": "System: Payment Authorization"
+                },
+                "transactionId": "d87ad117-4ef9-45e3-afd1-a70c0d173b6f",
+                "transactionAuthorizationRequestId": "83e56c0b-f154-4cc0-811b-15968df2e964",
+                "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+                "status": "completed",
+                "inputData": {
+                  "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+                  "actionName": "generate",
+                  "serviceName": "sapiom_openrouter",
+                  "resourceName": "/v1/chat/completions",
+                  "transactionId": "d87ad117-4ef9-45e3-afd1-a70c0d173b6f",
+                  "transactionAuthorizationRequestId": "83e56c0b-f154-4cc0-811b-15968df2e964"
+                },
+                "outputData": {
+                  "reason": "Payment successfully authorized",
+                  "decision": "ALLOWED",
+                  "metadata": {
+                    "ruleType": "payment_authorization",
+                    "networkId": "08caf78d-7fc0-49c4-b42a-7fb9d40e7965",
+                    "authorizationDetails": {
+                      "payload": {
+                        "nonce": "1e6928ef-ef83-4b4b-8335-4077e4e3d019",
+                        "token": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6InNhcGlvbS1wYXltZW50LWtleS12MSJ9.eyJzdWIiOiIzN2Y5ZDYzNS1mMmUyLTRiOTUtOGU4YS1mZmU4ZGMzMjY1NzMiLCJ0cmFuc2ZlcklkIjoiMDhjYWY3OGQtN2ZjMC00OWM0LWI0MmEtN2ZiOWQ0MGU3OTY1IiwiYWNjb3VudElkIjoiMGY2YTU2YmEtZGViMy00MzA3LTkyYWEtZWY3OTIyOTMwMmZmIiwicGF5VG8iOiIzOTdiOTM5NS1kMzBkLTQyY2MtYWJmOS0wYzU2NjI5ZDFjMmYiLCJhbW91bnQiOiIwLjAwMDU0MzAwMDAwMDAwMDAwMCIsIm5vbmNlIjoiMWU2OTI4ZWYtZWY4My00YjRiLTgzMzUtNDA3N2U0ZTNkMDE5IiwiaWRlbnRpdHkiOnsidmVyc2lvbiI6MiwidGVuYW50SWQiOiI3MjM0YTdmOS00MDc0LTRhYWQtYjEzZi04NGUwZTI4YjQ2OWEiLCJvcmdhbml6YXRpb25JZCI6ImY0YmEyODViLTA4NTUtNGFlMy05OTBjLWU1YmRlZTI5MWM0NyIsInBheW1lbnRBY2NvdW50SWQiOiIwZjZhNTZiYS1kZWIzLTQzMDctOTJhYS1lZjc5MjI5MzAyZmYifSwiaWF0IjoxNzgzMTUyOTE0fQ.fzGzLYjeZH7n0vEhzVHqPo0otY7awHvQxc3vYEnLzCRIcHtT0eit_POlvhYvjkL7AfZscnSmre3MvhWJEW1DXzRxMDs1T6ZASVTxmEQSp-u_7dQ0j5YU_AMDlx2gcrljQ1tmpcT1TEGxnKzrjURExYHd2Z82QAxlrFXJRD2Y8odykXCNVq49Ak83yz69EPgkRhOAxU5D_WEG0rm9di_c4Zu9GRwrVJg3j2d2ohD_hwd7uzVFOBw6jMU4k_p_YFGPCL7OWGz6xK4Ila_KAKKiYo3KWFRIi30TWhKih1pchNNx-AYLsYVM6PX9H0IVVBcCBvwgOCUhW3NhhxZ99f-9jA",
+                        "amount": "0.000543000000000000",
+                        "accountId": "0f6a56ba-deb3-4307-92aa-ef79229302ff",
+                        "authorizationId": "08caf78d-7fc0-49c4-b42a-7fb9d40e7965"
+                      },
+                      "accepted": {
+                        "asset": "USD",
+                        "extra": {},
+                        "payTo": "397b9395-d30d-42cc-abf9-0c56629d1c2f",
+                        "amount": "0.000543",
+                        "scheme": "upto",
+                        "network": "sapiom:main",
+                        "maxTimeoutSeconds": 300
+                      },
+                      "resource": {
+                        "url": "http://openrouter.services.sapiom.ai/v1/chat/completions",
+                        "mimeType": "application/json",
+                        "description": "OpenRouter chat completion"
+                      },
+                      "x402Version": 2
+                    },
+                    "paymentTransactionId": "37f9d635-f2e2-4b95-8e8a-ffe8dc326573"
+                  }
+                },
+                "errorMessage": null,
+                "errorDetails": null,
+                "startedAt": "2026-07-04T08:15:14.006Z",
+                "completedAt": "2026-07-04T08:15:14.037Z",
+                "executionTimeMs": 31,
+                "retryCount": 0,
+                "parentExecutionId": null,
+                "createdAt": "2026-07-04T08:15:13.994Z",
+                "updatedAt": "2026-07-04T08:15:13.994Z"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "b95f8823-5fec-4bdd-8a0c-9fbcd3838de5",
+        "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+        "serviceName": "sapiom_openrouter",
+        "actionName": "generate",
+        "resourceName": "/v1/chat/completions",
+        "serviceId": "0fb63c2c-067f-4d39-9ef2-036408fbb822",
+        "status": "completed",
+        "requiresPayment": true,
+        "qualifiers": {},
+        "metadata": {
+          "createdByApiKeyId": "33b14bf3-e15e-431c-b2c9-a9c5d3eb8425",
+          "preemptiveAuthorization": true
+        },
+        "createdAt": "2026-07-04T08:15:12.896Z",
+        "updatedAt": "2026-07-04T08:15:27.795Z",
+        "authorizedAt": "2026-07-04T08:15:14.409Z",
+        "completedAt": "2026-07-04T08:15:27.795Z",
+        "outcome": "success",
+        "currentPaymentTransactionId": "44b9af38-0112-4776-91b4-6be5317d5d2c",
+        "trace": {
+          "id": "435f8dc1-86fc-4f3c-abd9-0f697a0b911c",
+          "externalId": null
+        },
+        "agentId": "d64a1fb6-c392-4c1c-81f9-b44f371f54c5",
+        "agent": {
+          "id": "d64a1fb6-c392-4c1c-81f9-b44f371f54c5",
+          "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+          "label": "fleet-test",
+          "name": "fleet-test",
+          "description": null,
+          "status": "active",
+          "createdAt": "2026-07-04T08:15:12.569Z",
+          "updatedAt": "2026-07-04T08:15:12.569Z",
+          "numericId": 8
+        },
+        "costs": [
+          {
+            "id": "2548f3ca-782b-49ae-b187-f16d991fc1d8",
+            "transactionId": "b95f8823-5fec-4bdd-8a0c-9fbcd3838de5",
+            "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+            "paymentTransactionId": "44b9af38-0112-4776-91b4-6be5317d5d2c",
+            "fiatAmount": "0.000543000000000000",
+            "fiatAssetId": "4657ab13-b6e6-4ba4-9df8-47b351c0041c",
+            "isEstimate": false,
+            "isActive": false,
+            "supersedesCostId": null,
+            "supersededAt": "2026-07-04T08:15:27.731Z",
+            "costDetails": {
+              "source": "payment_transaction",
+              "network": "sapiom",
+              "protocol": "x402",
+              "paymentTransactionId": "44b9af38-0112-4776-91b4-6be5317d5d2c"
+            },
+            "createdAt": "2026-07-04T08:15:14.251Z",
+            "updatedAt": "2026-07-04T08:15:27.709Z",
+            "inferredFromFactId": null
+          },
+          {
+            "id": "fca56edb-8b37-4c0c-bb73-03136ac43709",
+            "transactionId": "b95f8823-5fec-4bdd-8a0c-9fbcd3838de5",
+            "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+            "paymentTransactionId": "44b9af38-0112-4776-91b4-6be5317d5d2c",
+            "fiatAmount": "0.000100000000000000",
+            "fiatAssetId": "4657ab13-b6e6-4ba4-9df8-47b351c0041c",
+            "isEstimate": false,
+            "isActive": true,
+            "supersedesCostId": "2548f3ca-782b-49ae-b187-f16d991fc1d8",
+            "supersededAt": null,
+            "costDetails": {
+              "source": "payment_capture",
+              "network": "sapiom",
+              "protocol": "x402",
+              "capturedAmount": "0.0001",
+              "originalAmount": "0.000543000000000000"
+            },
+            "createdAt": "2026-07-04T08:15:27.709Z",
+            "updatedAt": "2026-07-04T08:15:27.709Z",
+            "inferredFromFactId": null
+          }
+        ],
+        "traceId": "435f8dc1-86fc-4f3c-abd9-0f697a0b911c",
+        "apiKeyId": "33b14bf3-e15e-431c-b2c9-a9c5d3eb8425",
+        "createdByActorType": "api_key",
+        "createdByActorId": "33b14bf3-e15e-431c-b2c9-a9c5d3eb8425",
+        "mandateId": null,
+        "facilitatedByServiceAccount": null,
+        "service": {
+          "id": "0fb63c2c-067f-4d39-9ef2-036408fbb822",
+          "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+          "numericId": 2,
+          "globalServiceId": "b813ffc4-8dfa-442c-83c1-c77255da1f61",
+          "name": "sapiom_openrouter",
+          "label": null,
+          "description": null,
+          "metadata": null,
+          "createdAt": "2026-07-04T05:14:31.042Z",
+          "updatedAt": "2026-07-04T05:14:31.042Z",
+          "deletedAt": null
+        },
+        "preparingAt": "2026-07-04T08:15:14.288Z",
+        "deniedAt": null,
+        "cancelledAt": null,
+        "authorizationRequests": [
+          {
+            "id": "0d821990-674b-45de-923b-62de4bcd6653",
+            "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+            "transactionId": "b95f8823-5fec-4bdd-8a0c-9fbcd3838de5",
+            "status": "authorized",
+            "createdAt": "2026-07-04T08:15:14.251Z",
+            "updatedAt": "2026-07-04T08:15:14.324Z",
+            "completedAt": "2026-07-04T08:15:14.409Z",
+            "processingAt": "2026-07-04T08:15:14.328Z",
+            "authorizedAt": "2026-07-04T08:15:14.409Z",
+            "deniedAt": null,
+            "ruleExecutions": [
+              {
+                "id": "494fadd4-f201-40dd-9187-dd30221cf5e3",
+                "ruleId": "5d35cc64-3d49-4069-bb77-52d66ae5b3d5",
+                "rule": {
+                  "id": "5d35cc64-3d49-4069-bb77-52d66ae5b3d5",
+                  "numericId": 1,
+                  "name": "System: Payment Authorization"
+                },
+                "transactionId": "b95f8823-5fec-4bdd-8a0c-9fbcd3838de5",
+                "transactionAuthorizationRequestId": "0d821990-674b-45de-923b-62de4bcd6653",
+                "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+                "status": "completed",
+                "inputData": {
+                  "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+                  "actionName": "generate",
+                  "serviceName": "sapiom_openrouter",
+                  "resourceName": "/v1/chat/completions",
+                  "transactionId": "b95f8823-5fec-4bdd-8a0c-9fbcd3838de5",
+                  "transactionAuthorizationRequestId": "0d821990-674b-45de-923b-62de4bcd6653"
+                },
+                "outputData": {
+                  "reason": "Payment successfully authorized",
+                  "decision": "ALLOWED",
+                  "metadata": {
+                    "ruleType": "payment_authorization",
+                    "networkId": "a2936be7-3d5d-4465-95e6-f4cc719d95ff",
+                    "authorizationDetails": {
+                      "payload": {
+                        "nonce": "3291ed2c-6938-44c1-8167-5e547076ef7c",
+                        "token": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6InNhcGlvbS1wYXltZW50LWtleS12MSJ9.eyJzdWIiOiI0NGI5YWYzOC0wMTEyLTQ3NzYtOTFiNC02YmU1MzE3ZDVkMmMiLCJ0cmFuc2ZlcklkIjoiYTI5MzZiZTctM2Q1ZC00NDY1LTk1ZTYtZjRjYzcxOWQ5NWZmIiwiYWNjb3VudElkIjoiMGY2YTU2YmEtZGViMy00MzA3LTkyYWEtZWY3OTIyOTMwMmZmIiwicGF5VG8iOiIzOTdiOTM5NS1kMzBkLTQyY2MtYWJmOS0wYzU2NjI5ZDFjMmYiLCJhbW91bnQiOiIwLjAwMDU0MzAwMDAwMDAwMDAwMCIsIm5vbmNlIjoiMzI5MWVkMmMtNjkzOC00NGMxLTgxNjctNWU1NDcwNzZlZjdjIiwiaWRlbnRpdHkiOnsidmVyc2lvbiI6MiwidGVuYW50SWQiOiI3MjM0YTdmOS00MDc0LTRhYWQtYjEzZi04NGUwZTI4YjQ2OWEiLCJvcmdhbml6YXRpb25JZCI6ImY0YmEyODViLTA4NTUtNGFlMy05OTBjLWU1YmRlZTI5MWM0NyIsInBheW1lbnRBY2NvdW50SWQiOiIwZjZhNTZiYS1kZWIzLTQzMDctOTJhYS1lZjc5MjI5MzAyZmYifSwiaWF0IjoxNzgzMTUyOTE0fQ.FqXJ-EvXQuOQAFtPwcuuRpt5jOKKKug35hNDMnVBoctQGYmjKKLOYCoD2pmlyL1blEqDchjhj8RngD1uK_JnJnzNo8RNWMSH44tyyCdSZvXyK6ta-1xoxAaLY1MlDdIYnUzm_LmGbpbgAlYlMNsIAmob8qXE9r82CfPi0rdLLdMQ1G-AQuKIMeYGytfiLfuzHshemk5iDKRz6jfxjiNhZzEPRFApSHpCo4KnIaDFszYT96VFvUPm2lh3gsguhc4nzGcI2yXwsYfZm0rUE4ggp0ymIDUdWY4yXiCLvvrVPZmasHRJ6F3u78IFYnkR8iYqz5xt7nevfQfmItSLmLud7Q",
+                        "amount": "0.000543000000000000",
+                        "accountId": "0f6a56ba-deb3-4307-92aa-ef79229302ff",
+                        "authorizationId": "a2936be7-3d5d-4465-95e6-f4cc719d95ff"
+                      },
+                      "accepted": {
+                        "asset": "USD",
+                        "extra": {},
+                        "payTo": "397b9395-d30d-42cc-abf9-0c56629d1c2f",
+                        "amount": "0.000543",
+                        "scheme": "upto",
+                        "network": "sapiom:main",
+                        "maxTimeoutSeconds": 300
+                      },
+                      "resource": {
+                        "url": "http://openrouter.services.sapiom.ai/v1/chat/completions",
+                        "mimeType": "application/json",
+                        "description": "OpenRouter chat completion"
+                      },
+                      "x402Version": 2
+                    },
+                    "paymentTransactionId": "44b9af38-0112-4776-91b4-6be5317d5d2c"
+                  }
+                },
+                "errorMessage": null,
+                "errorDetails": null,
+                "startedAt": "2026-07-04T08:15:14.337Z",
+                "completedAt": "2026-07-04T08:15:14.399Z",
+                "executionTimeMs": 62,
+                "retryCount": 0,
+                "parentExecutionId": null,
+                "createdAt": "2026-07-04T08:15:14.324Z",
+                "updatedAt": "2026-07-04T08:15:14.324Z"
+              }
+            ]
+          },
+          {
+            "id": "44f63454-a92d-4a02-b65d-bda6ce8de999",
+            "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+            "transactionId": "b95f8823-5fec-4bdd-8a0c-9fbcd3838de5",
+            "status": "authorized",
+            "createdAt": "2026-07-04T08:15:12.965Z",
+            "updatedAt": "2026-07-04T08:15:13.021Z",
+            "completedAt": "2026-07-04T08:15:13.030Z",
+            "processingAt": "2026-07-04T08:15:13.023Z",
+            "authorizedAt": "2026-07-04T08:15:13.030Z",
+            "deniedAt": null,
+            "ruleExecutions": []
+          }
+        ]
+      },
+      {
+        "id": "581b9664-9a8c-4aef-9d4c-cbf29198e531",
+        "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+        "serviceName": "sapiom_openrouter",
+        "actionName": "generate",
+        "resourceName": "/v1/chat/completions",
+        "serviceId": "0fb63c2c-067f-4d39-9ef2-036408fbb822",
+        "status": "completed",
+        "requiresPayment": true,
+        "qualifiers": {},
+        "metadata": {
+          "createdByApiKeyId": "33b14bf3-e15e-431c-b2c9-a9c5d3eb8425",
+          "preemptiveAuthorization": true
+        },
+        "createdAt": "2026-07-04T08:15:12.813Z",
+        "updatedAt": "2026-07-04T08:15:15.211Z",
+        "authorizedAt": "2026-07-04T08:15:13.549Z",
+        "completedAt": "2026-07-04T08:15:15.211Z",
+        "outcome": "success",
+        "currentPaymentTransactionId": "10752533-dbae-422f-a7c8-a3453a2db628",
+        "trace": {
+          "id": "2d16789c-9100-46b8-ae5b-910d2fc8c958",
+          "externalId": null
+        },
+        "agentId": "d64a1fb6-c392-4c1c-81f9-b44f371f54c5",
+        "agent": {
+          "id": "d64a1fb6-c392-4c1c-81f9-b44f371f54c5",
+          "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+          "label": "fleet-test",
+          "name": "fleet-test",
+          "description": null,
+          "status": "active",
+          "createdAt": "2026-07-04T08:15:12.569Z",
+          "updatedAt": "2026-07-04T08:15:12.569Z",
+          "numericId": 8
+        },
+        "costs": [
+          {
+            "id": "f42ad967-cfd5-434a-b58a-3c5062a7ff11",
+            "transactionId": "581b9664-9a8c-4aef-9d4c-cbf29198e531",
+            "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+            "paymentTransactionId": "10752533-dbae-422f-a7c8-a3453a2db628",
+            "fiatAmount": "0.000543000000000000",
+            "fiatAssetId": "4657ab13-b6e6-4ba4-9df8-47b351c0041c",
+            "isEstimate": false,
+            "isActive": false,
+            "supersedesCostId": null,
+            "supersededAt": "2026-07-04T08:15:15.138Z",
+            "costDetails": {
+              "source": "payment_transaction",
+              "network": "sapiom",
+              "protocol": "x402",
+              "paymentTransactionId": "10752533-dbae-422f-a7c8-a3453a2db628"
+            },
+            "createdAt": "2026-07-04T08:15:13.443Z",
+            "updatedAt": "2026-07-04T08:15:15.103Z",
+            "inferredFromFactId": null
+          },
+          {
+            "id": "355c5f05-a54a-4159-bfb8-24c8c6ded2f9",
+            "transactionId": "581b9664-9a8c-4aef-9d4c-cbf29198e531",
+            "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+            "paymentTransactionId": "10752533-dbae-422f-a7c8-a3453a2db628",
+            "fiatAmount": "0.000100000000000000",
+            "fiatAssetId": "4657ab13-b6e6-4ba4-9df8-47b351c0041c",
+            "isEstimate": false,
+            "isActive": true,
+            "supersedesCostId": "f42ad967-cfd5-434a-b58a-3c5062a7ff11",
+            "supersededAt": null,
+            "costDetails": {
+              "source": "payment_capture",
+              "network": "sapiom",
+              "protocol": "x402",
+              "capturedAmount": "0.0001",
+              "originalAmount": "0.000543000000000000"
+            },
+            "createdAt": "2026-07-04T08:15:15.103Z",
+            "updatedAt": "2026-07-04T08:15:15.103Z",
+            "inferredFromFactId": null
+          }
+        ],
+        "traceId": "2d16789c-9100-46b8-ae5b-910d2fc8c958",
+        "apiKeyId": "33b14bf3-e15e-431c-b2c9-a9c5d3eb8425",
+        "createdByActorType": "api_key",
+        "createdByActorId": "33b14bf3-e15e-431c-b2c9-a9c5d3eb8425",
+        "mandateId": null,
+        "facilitatedByServiceAccount": null,
+        "service": {
+          "id": "0fb63c2c-067f-4d39-9ef2-036408fbb822",
+          "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+          "numericId": 2,
+          "globalServiceId": "b813ffc4-8dfa-442c-83c1-c77255da1f61",
+          "name": "sapiom_openrouter",
+          "label": null,
+          "description": null,
+          "metadata": null,
+          "createdAt": "2026-07-04T05:14:31.042Z",
+          "updatedAt": "2026-07-04T05:14:31.042Z",
+          "deletedAt": null
+        },
+        "preparingAt": "2026-07-04T08:15:13.481Z",
+        "deniedAt": null,
+        "cancelledAt": null,
+        "authorizationRequests": [
+          {
+            "id": "d0ee71df-626d-4c97-b2df-9b6902edc1bf",
+            "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+            "transactionId": "581b9664-9a8c-4aef-9d4c-cbf29198e531",
+            "status": "authorized",
+            "createdAt": "2026-07-04T08:15:13.443Z",
+            "updatedAt": "2026-07-04T08:15:13.498Z",
+            "completedAt": "2026-07-04T08:15:13.549Z",
+            "processingAt": "2026-07-04T08:15:13.501Z",
+            "authorizedAt": "2026-07-04T08:15:13.549Z",
+            "deniedAt": null,
+            "ruleExecutions": [
+              {
+                "id": "79400e8b-021a-4951-9f99-d68853d8bb11",
+                "ruleId": "5d35cc64-3d49-4069-bb77-52d66ae5b3d5",
+                "rule": {
+                  "id": "5d35cc64-3d49-4069-bb77-52d66ae5b3d5",
+                  "numericId": 1,
+                  "name": "System: Payment Authorization"
+                },
+                "transactionId": "581b9664-9a8c-4aef-9d4c-cbf29198e531",
+                "transactionAuthorizationRequestId": "d0ee71df-626d-4c97-b2df-9b6902edc1bf",
+                "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+                "status": "completed",
+                "inputData": {
+                  "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+                  "actionName": "generate",
+                  "serviceName": "sapiom_openrouter",
+                  "resourceName": "/v1/chat/completions",
+                  "transactionId": "581b9664-9a8c-4aef-9d4c-cbf29198e531",
+                  "transactionAuthorizationRequestId": "d0ee71df-626d-4c97-b2df-9b6902edc1bf"
+                },
+                "outputData": {
+                  "reason": "Payment successfully authorized",
+                  "decision": "ALLOWED",
+                  "metadata": {
+                    "ruleType": "payment_authorization",
+                    "networkId": "da2689a4-8ff7-4633-9bb2-e66b4244f510",
+                    "authorizationDetails": {
+                      "payload": {
+                        "nonce": "ae230ee2-a39f-46c0-ba9f-e5f88cef1758",
+                        "token": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6InNhcGlvbS1wYXltZW50LWtleS12MSJ9.eyJzdWIiOiIxMDc1MjUzMy1kYmFlLTQyMmYtYTdjOC1hMzQ1M2EyZGI2MjgiLCJ0cmFuc2ZlcklkIjoiZGEyNjg5YTQtOGZmNy00NjMzLTliYjItZTY2YjQyNDRmNTEwIiwiYWNjb3VudElkIjoiMGY2YTU2YmEtZGViMy00MzA3LTkyYWEtZWY3OTIyOTMwMmZmIiwicGF5VG8iOiIzOTdiOTM5NS1kMzBkLTQyY2MtYWJmOS0wYzU2NjI5ZDFjMmYiLCJhbW91bnQiOiIwLjAwMDU0MzAwMDAwMDAwMDAwMCIsIm5vbmNlIjoiYWUyMzBlZTItYTM5Zi00NmMwLWJhOWYtZTVmODhjZWYxNzU4IiwiaWRlbnRpdHkiOnsidmVyc2lvbiI6MiwidGVuYW50SWQiOiI3MjM0YTdmOS00MDc0LTRhYWQtYjEzZi04NGUwZTI4YjQ2OWEiLCJvcmdhbml6YXRpb25JZCI6ImY0YmEyODViLTA4NTUtNGFlMy05OTBjLWU1YmRlZTI5MWM0NyIsInBheW1lbnRBY2NvdW50SWQiOiIwZjZhNTZiYS1kZWIzLTQzMDctOTJhYS1lZjc5MjI5MzAyZmYifSwiaWF0IjoxNzgzMTUyOTEzfQ.InInEKpygJlk8AY5YZitBqJOGDBXypmgT_dR2e-d-rLdo16frZU4Nsjcu9hhhykGJPYhKLNvB238NzB2M0QaZCpxbo9dtct-uXC_K3U0Q7ZT7pzfjb0dePjH6Ii40QP-9YSMLUaEM1h1MxyxsEb8uw4H90mx_0DERnvRcc9xMVnqX8unbwgrMo-O1f-daadj_zqGO2XFK36d7v-8xMPnD30FRdPfzHzehex-01vCkM8Y2dUZjkM9VF8J3XIgQCImVMtYrOHxPcctBCLrS0Pmz67dJDwLbaG96_Wyye81qUbKLEO3818_QXy_XEzlY9KqDM-dRoom1xdqY1bGlx8x_A",
+                        "amount": "0.000543000000000000",
+                        "accountId": "0f6a56ba-deb3-4307-92aa-ef79229302ff",
+                        "authorizationId": "da2689a4-8ff7-4633-9bb2-e66b4244f510"
+                      },
+                      "accepted": {
+                        "asset": "USD",
+                        "extra": {},
+                        "payTo": "397b9395-d30d-42cc-abf9-0c56629d1c2f",
+                        "amount": "0.000543",
+                        "scheme": "upto",
+                        "network": "sapiom:main",
+                        "maxTimeoutSeconds": 300
+                      },
+                      "resource": {
+                        "url": "http://openrouter.services.sapiom.ai/v1/chat/completions",
+                        "mimeType": "application/json",
+                        "description": "OpenRouter chat completion"
+                      },
+                      "x402Version": 2
+                    },
+                    "paymentTransactionId": "10752533-dbae-422f-a7c8-a3453a2db628"
+                  }
+                },
+                "errorMessage": null,
+                "errorDetails": null,
+                "startedAt": "2026-07-04T08:15:13.509Z",
+                "completedAt": "2026-07-04T08:15:13.542Z",
+                "executionTimeMs": 33,
+                "retryCount": 0,
+                "parentExecutionId": null,
+                "createdAt": "2026-07-04T08:15:13.498Z",
+                "updatedAt": "2026-07-04T08:15:13.498Z"
+              }
+            ]
+          },
+          {
+            "id": "8c96417a-874b-4677-bbd5-456ab910120d",
+            "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+            "transactionId": "581b9664-9a8c-4aef-9d4c-cbf29198e531",
+            "status": "authorized",
+            "createdAt": "2026-07-04T08:15:12.845Z",
+            "updatedAt": "2026-07-04T08:15:12.864Z",
+            "completedAt": "2026-07-04T08:15:12.878Z",
+            "processingAt": "2026-07-04T08:15:12.868Z",
+            "authorizedAt": "2026-07-04T08:15:12.878Z",
+            "deniedAt": null,
+            "ruleExecutions": []
+          }
+        ]
+      },
+      {
+        "id": "a4099ae6-5253-4f11-bd44-e6290053ff27",
+        "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+        "serviceName": "sapiom_openrouter",
+        "actionName": "generate",
+        "resourceName": "/v1/chat/completions",
+        "serviceId": "0fb63c2c-067f-4d39-9ef2-036408fbb822",
+        "status": "completed",
+        "requiresPayment": true,
+        "qualifiers": {},
+        "metadata": {
+          "createdByApiKeyId": "33b14bf3-e15e-431c-b2c9-a9c5d3eb8425",
+          "preemptiveAuthorization": true
+        },
+        "createdAt": "2026-07-04T08:15:12.740Z",
+        "updatedAt": "2026-07-04T08:15:19.855Z",
+        "authorizedAt": "2026-07-04T08:15:13.733Z",
+        "completedAt": "2026-07-04T08:15:19.855Z",
+        "outcome": "success",
+        "currentPaymentTransactionId": "665093c3-dbf0-46d0-825b-3c0bdd5317dd",
+        "trace": {
+          "id": "2a8accf0-1ca9-4ed2-9910-d88772b4029e",
+          "externalId": null
+        },
+        "agentId": "d64a1fb6-c392-4c1c-81f9-b44f371f54c5",
+        "agent": {
+          "id": "d64a1fb6-c392-4c1c-81f9-b44f371f54c5",
+          "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+          "label": "fleet-test",
+          "name": "fleet-test",
+          "description": null,
+          "status": "active",
+          "createdAt": "2026-07-04T08:15:12.569Z",
+          "updatedAt": "2026-07-04T08:15:12.569Z",
+          "numericId": 8
+        },
+        "costs": [
+          {
+            "id": "c66eba8b-7f55-4509-922f-7be76e399fbf",
+            "transactionId": "a4099ae6-5253-4f11-bd44-e6290053ff27",
+            "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+            "paymentTransactionId": "665093c3-dbf0-46d0-825b-3c0bdd5317dd",
+            "fiatAmount": "0.000100000000000000",
+            "fiatAssetId": "4657ab13-b6e6-4ba4-9df8-47b351c0041c",
+            "isEstimate": false,
+            "isActive": true,
+            "supersedesCostId": "cb27a1fd-adc7-4b31-8e04-d4fc61da1b36",
+            "supersededAt": null,
+            "costDetails": {
+              "source": "payment_capture",
+              "network": "sapiom",
+              "protocol": "x402",
+              "capturedAmount": "0.0001",
+              "originalAmount": "0.000543000000000000"
+            },
+            "createdAt": "2026-07-04T08:15:19.808Z",
+            "updatedAt": "2026-07-04T08:15:19.808Z",
+            "inferredFromFactId": null
+          },
+          {
+            "id": "cb27a1fd-adc7-4b31-8e04-d4fc61da1b36",
+            "transactionId": "a4099ae6-5253-4f11-bd44-e6290053ff27",
+            "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+            "paymentTransactionId": "665093c3-dbf0-46d0-825b-3c0bdd5317dd",
+            "fiatAmount": "0.000543000000000000",
+            "fiatAssetId": "4657ab13-b6e6-4ba4-9df8-47b351c0041c",
+            "isEstimate": false,
+            "isActive": false,
+            "supersedesCostId": null,
+            "supersededAt": "2026-07-04T08:15:19.842Z",
+            "costDetails": {
+              "source": "payment_transaction",
+              "network": "sapiom",
+              "protocol": "x402",
+              "paymentTransactionId": "665093c3-dbf0-46d0-825b-3c0bdd5317dd"
+            },
+            "createdAt": "2026-07-04T08:15:13.636Z",
+            "updatedAt": "2026-07-04T08:15:19.808Z",
+            "inferredFromFactId": null
+          }
+        ],
+        "traceId": "2a8accf0-1ca9-4ed2-9910-d88772b4029e",
+        "apiKeyId": "33b14bf3-e15e-431c-b2c9-a9c5d3eb8425",
+        "createdByActorType": "api_key",
+        "createdByActorId": "33b14bf3-e15e-431c-b2c9-a9c5d3eb8425",
+        "mandateId": null,
+        "facilitatedByServiceAccount": null,
+        "service": {
+          "id": "0fb63c2c-067f-4d39-9ef2-036408fbb822",
+          "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+          "numericId": 2,
+          "globalServiceId": "b813ffc4-8dfa-442c-83c1-c77255da1f61",
+          "name": "sapiom_openrouter",
+          "label": null,
+          "description": null,
+          "metadata": null,
+          "createdAt": "2026-07-04T05:14:31.042Z",
+          "updatedAt": "2026-07-04T05:14:31.042Z",
+          "deletedAt": null
+        },
+        "preparingAt": "2026-07-04T08:15:13.674Z",
+        "deniedAt": null,
+        "cancelledAt": null,
+        "authorizationRequests": [
+          {
+            "id": "22632550-95b3-446a-9065-892037169327",
+            "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+            "transactionId": "a4099ae6-5253-4f11-bd44-e6290053ff27",
+            "status": "authorized",
+            "createdAt": "2026-07-04T08:15:13.636Z",
+            "updatedAt": "2026-07-04T08:15:13.693Z",
+            "completedAt": "2026-07-04T08:15:13.733Z",
+            "processingAt": "2026-07-04T08:15:13.695Z",
+            "authorizedAt": "2026-07-04T08:15:13.733Z",
+            "deniedAt": null,
+            "ruleExecutions": [
+              {
+                "id": "ad0faf89-c9a3-497e-b28f-f84852562a16",
+                "ruleId": "5d35cc64-3d49-4069-bb77-52d66ae5b3d5",
+                "rule": {
+                  "id": "5d35cc64-3d49-4069-bb77-52d66ae5b3d5",
+                  "numericId": 1,
+                  "name": "System: Payment Authorization"
+                },
+                "transactionId": "a4099ae6-5253-4f11-bd44-e6290053ff27",
+                "transactionAuthorizationRequestId": "22632550-95b3-446a-9065-892037169327",
+                "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+                "status": "completed",
+                "inputData": {
+                  "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+                  "actionName": "generate",
+                  "serviceName": "sapiom_openrouter",
+                  "resourceName": "/v1/chat/completions",
+                  "transactionId": "a4099ae6-5253-4f11-bd44-e6290053ff27",
+                  "transactionAuthorizationRequestId": "22632550-95b3-446a-9065-892037169327"
+                },
+                "outputData": {
+                  "reason": "Payment successfully authorized",
+                  "decision": "ALLOWED",
+                  "metadata": {
+                    "ruleType": "payment_authorization",
+                    "networkId": "1583853c-6d70-4a1d-a653-8f90b33433ed",
+                    "authorizationDetails": {
+                      "payload": {
+                        "nonce": "3e02cd50-83dd-4174-87e5-f78ed94c7307",
+                        "token": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6InNhcGlvbS1wYXltZW50LWtleS12MSJ9.eyJzdWIiOiI2NjUwOTNjMy1kYmYwLTQ2ZDAtODI1Yi0zYzBiZGQ1MzE3ZGQiLCJ0cmFuc2ZlcklkIjoiMTU4Mzg1M2MtNmQ3MC00YTFkLWE2NTMtOGY5MGIzMzQzM2VkIiwiYWNjb3VudElkIjoiMGY2YTU2YmEtZGViMy00MzA3LTkyYWEtZWY3OTIyOTMwMmZmIiwicGF5VG8iOiIzOTdiOTM5NS1kMzBkLTQyY2MtYWJmOS0wYzU2NjI5ZDFjMmYiLCJhbW91bnQiOiIwLjAwMDU0MzAwMDAwMDAwMDAwMCIsIm5vbmNlIjoiM2UwMmNkNTAtODNkZC00MTc0LTg3ZTUtZjc4ZWQ5NGM3MzA3IiwiaWRlbnRpdHkiOnsidmVyc2lvbiI6MiwidGVuYW50SWQiOiI3MjM0YTdmOS00MDc0LTRhYWQtYjEzZi04NGUwZTI4YjQ2OWEiLCJvcmdhbml6YXRpb25JZCI6ImY0YmEyODViLTA4NTUtNGFlMy05OTBjLWU1YmRlZTI5MWM0NyIsInBheW1lbnRBY2NvdW50SWQiOiIwZjZhNTZiYS1kZWIzLTQzMDctOTJhYS1lZjc5MjI5MzAyZmYifSwiaWF0IjoxNzgzMTUyOTEzfQ.B6PW8plWDQO7l6lwHQZKrSt4Sb4HuW0ezcze00-h9y0unw3Sfn2sBLJYwvFl_i8b5Y3NoyT_YhqGI7CGDMY4GdYJn406BzZyjr4VYSPuOR5g02J1QeJBfXdp5F8_IPAqm9wqBMSmgGMhUoptvFBAUHrEM2vVGrtbR83__gHJ2eCDZK709VNb6f-G9bfuuR331qXryG_VEIbjOT426zd0iNNHb4ZWAWk4itZWZg3Tg6wD37vFIX5Ld4fdG5OHJZ6E2obGxutNiLvP8j_UAU0NQTd17lTdgGgwUE-sStBul0Oam3_NV1CXHXFJ8z05f5CwECfp6O5z9TJv5NRyEi28pA",
+                        "amount": "0.000543000000000000",
+                        "accountId": "0f6a56ba-deb3-4307-92aa-ef79229302ff",
+                        "authorizationId": "1583853c-6d70-4a1d-a653-8f90b33433ed"
+                      },
+                      "accepted": {
+                        "asset": "USD",
+                        "extra": {},
+                        "payTo": "397b9395-d30d-42cc-abf9-0c56629d1c2f",
+                        "amount": "0.000543",
+                        "scheme": "upto",
+                        "network": "sapiom:main",
+                        "maxTimeoutSeconds": 300
+                      },
+                      "resource": {
+                        "url": "http://openrouter.services.sapiom.ai/v1/chat/completions",
+                        "mimeType": "application/json",
+                        "description": "OpenRouter chat completion"
+                      },
+                      "x402Version": 2
+                    },
+                    "paymentTransactionId": "665093c3-dbf0-46d0-825b-3c0bdd5317dd"
+                  }
+                },
+                "errorMessage": null,
+                "errorDetails": null,
+                "startedAt": "2026-07-04T08:15:13.702Z",
+                "completedAt": "2026-07-04T08:15:13.729Z",
+                "executionTimeMs": 27,
+                "retryCount": 0,
+                "parentExecutionId": null,
+                "createdAt": "2026-07-04T08:15:13.693Z",
+                "updatedAt": "2026-07-04T08:15:13.693Z"
+              }
+            ]
+          },
+          {
+            "id": "0817ea12-7d34-4fdf-a881-5f3bd726af9f",
+            "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+            "transactionId": "a4099ae6-5253-4f11-bd44-e6290053ff27",
+            "status": "authorized",
+            "createdAt": "2026-07-04T08:15:12.786Z",
+            "updatedAt": "2026-07-04T08:15:12.806Z",
+            "completedAt": "2026-07-04T08:15:12.816Z",
+            "processingAt": "2026-07-04T08:15:12.809Z",
+            "authorizedAt": "2026-07-04T08:15:12.816Z",
+            "deniedAt": null,
+            "ruleExecutions": []
+          }
+        ]
+      },
+      {
+        "id": "33b3cf16-31e3-447d-9f03-18322b87b5f7",
+        "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+        "serviceName": "sapiom_openrouter",
+        "actionName": "generate",
+        "resourceName": "/v1/chat/completions",
+        "serviceId": "0fb63c2c-067f-4d39-9ef2-036408fbb822",
+        "status": "completed",
+        "requiresPayment": true,
+        "qualifiers": {},
+        "metadata": {
+          "createdByApiKeyId": "33b14bf3-e15e-431c-b2c9-a9c5d3eb8425",
+          "preemptiveAuthorization": true
+        },
+        "createdAt": "2026-07-04T08:15:12.652Z",
+        "updatedAt": "2026-07-04T08:15:21.609Z",
+        "authorizedAt": "2026-07-04T08:15:13.860Z",
+        "completedAt": "2026-07-04T08:15:21.608Z",
+        "outcome": "success",
+        "currentPaymentTransactionId": "226b92ee-ec93-4df4-99d7-fc0a0a7e3472",
+        "trace": {
+          "id": "85bca132-c691-44ca-a72d-fcbc360bfe86",
+          "externalId": null
+        },
+        "agentId": "d64a1fb6-c392-4c1c-81f9-b44f371f54c5",
+        "agent": {
+          "id": "d64a1fb6-c392-4c1c-81f9-b44f371f54c5",
+          "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+          "label": "fleet-test",
+          "name": "fleet-test",
+          "description": null,
+          "status": "active",
+          "createdAt": "2026-07-04T08:15:12.569Z",
+          "updatedAt": "2026-07-04T08:15:12.569Z",
+          "numericId": 8
+        },
+        "costs": [
+          {
+            "id": "b231ab11-ed98-47fe-8762-e29aff27b501",
+            "transactionId": "33b3cf16-31e3-447d-9f03-18322b87b5f7",
+            "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+            "paymentTransactionId": "226b92ee-ec93-4df4-99d7-fc0a0a7e3472",
+            "fiatAmount": "0.000100000000000000",
+            "fiatAssetId": "4657ab13-b6e6-4ba4-9df8-47b351c0041c",
+            "isEstimate": false,
+            "isActive": true,
+            "supersedesCostId": "c0ba93a7-a473-4bdc-a0be-02c2a4cf4333",
+            "supersededAt": null,
+            "costDetails": {
+              "source": "payment_capture",
+              "network": "sapiom",
+              "protocol": "x402",
+              "capturedAmount": "0.0001",
+              "originalAmount": "0.000543000000000000"
+            },
+            "createdAt": "2026-07-04T08:15:21.596Z",
+            "updatedAt": "2026-07-04T08:15:21.596Z",
+            "inferredFromFactId": null
+          },
+          {
+            "id": "c0ba93a7-a473-4bdc-a0be-02c2a4cf4333",
+            "transactionId": "33b3cf16-31e3-447d-9f03-18322b87b5f7",
+            "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+            "paymentTransactionId": "226b92ee-ec93-4df4-99d7-fc0a0a7e3472",
+            "fiatAmount": "0.000543000000000000",
+            "fiatAssetId": "4657ab13-b6e6-4ba4-9df8-47b351c0041c",
+            "isEstimate": false,
+            "isActive": false,
+            "supersedesCostId": null,
+            "supersededAt": "2026-07-04T08:15:21.619Z",
+            "costDetails": {
+              "source": "payment_transaction",
+              "network": "sapiom",
+              "protocol": "x402",
+              "paymentTransactionId": "226b92ee-ec93-4df4-99d7-fc0a0a7e3472"
+            },
+            "createdAt": "2026-07-04T08:15:13.741Z",
+            "updatedAt": "2026-07-04T08:15:21.596Z",
+            "inferredFromFactId": null
+          }
+        ],
+        "traceId": "85bca132-c691-44ca-a72d-fcbc360bfe86",
+        "apiKeyId": "33b14bf3-e15e-431c-b2c9-a9c5d3eb8425",
+        "createdByActorType": "api_key",
+        "createdByActorId": "33b14bf3-e15e-431c-b2c9-a9c5d3eb8425",
+        "mandateId": null,
+        "facilitatedByServiceAccount": null,
+        "service": {
+          "id": "0fb63c2c-067f-4d39-9ef2-036408fbb822",
+          "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+          "numericId": 2,
+          "globalServiceId": "b813ffc4-8dfa-442c-83c1-c77255da1f61",
+          "name": "sapiom_openrouter",
+          "label": null,
+          "description": null,
+          "metadata": null,
+          "createdAt": "2026-07-04T05:14:31.042Z",
+          "updatedAt": "2026-07-04T05:14:31.042Z",
+          "deletedAt": null
+        },
+        "preparingAt": "2026-07-04T08:15:13.774Z",
+        "deniedAt": null,
+        "cancelledAt": null,
+        "authorizationRequests": [
+          {
+            "id": "0c3a37f4-d10c-4919-973c-361dfd03cd30",
+            "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+            "transactionId": "33b3cf16-31e3-447d-9f03-18322b87b5f7",
+            "status": "authorized",
+            "createdAt": "2026-07-04T08:15:13.741Z",
+            "updatedAt": "2026-07-04T08:15:13.796Z",
+            "completedAt": "2026-07-04T08:15:13.860Z",
+            "processingAt": "2026-07-04T08:15:13.800Z",
+            "authorizedAt": "2026-07-04T08:15:13.860Z",
+            "deniedAt": null,
+            "ruleExecutions": [
+              {
+                "id": "eb05461b-ee8a-4d9b-976a-7edaa6358663",
+                "ruleId": "5d35cc64-3d49-4069-bb77-52d66ae5b3d5",
+                "rule": {
+                  "id": "5d35cc64-3d49-4069-bb77-52d66ae5b3d5",
+                  "numericId": 1,
+                  "name": "System: Payment Authorization"
+                },
+                "transactionId": "33b3cf16-31e3-447d-9f03-18322b87b5f7",
+                "transactionAuthorizationRequestId": "0c3a37f4-d10c-4919-973c-361dfd03cd30",
+                "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+                "status": "completed",
+                "inputData": {
+                  "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+                  "actionName": "generate",
+                  "serviceName": "sapiom_openrouter",
+                  "resourceName": "/v1/chat/completions",
+                  "transactionId": "33b3cf16-31e3-447d-9f03-18322b87b5f7",
+                  "transactionAuthorizationRequestId": "0c3a37f4-d10c-4919-973c-361dfd03cd30"
+                },
+                "outputData": {
+                  "reason": "Payment successfully authorized",
+                  "decision": "ALLOWED",
+                  "metadata": {
+                    "ruleType": "payment_authorization",
+                    "networkId": "12c1d70b-af06-4d95-83bf-06352c6389e4",
+                    "authorizationDetails": {
+                      "payload": {
+                        "nonce": "a1ec970a-b471-49d0-b1b8-1ec7dafdad62",
+                        "token": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6InNhcGlvbS1wYXltZW50LWtleS12MSJ9.eyJzdWIiOiIyMjZiOTJlZS1lYzkzLTRkZjQtOTlkNy1mYzBhMGE3ZTM0NzIiLCJ0cmFuc2ZlcklkIjoiMTJjMWQ3MGItYWYwNi00ZDk1LTgzYmYtMDYzNTJjNjM4OWU0IiwiYWNjb3VudElkIjoiMGY2YTU2YmEtZGViMy00MzA3LTkyYWEtZWY3OTIyOTMwMmZmIiwicGF5VG8iOiIzOTdiOTM5NS1kMzBkLTQyY2MtYWJmOS0wYzU2NjI5ZDFjMmYiLCJhbW91bnQiOiIwLjAwMDU0MzAwMDAwMDAwMDAwMCIsIm5vbmNlIjoiYTFlYzk3MGEtYjQ3MS00OWQwLWIxYjgtMWVjN2RhZmRhZDYyIiwiaWRlbnRpdHkiOnsidmVyc2lvbiI6MiwidGVuYW50SWQiOiI3MjM0YTdmOS00MDc0LTRhYWQtYjEzZi04NGUwZTI4YjQ2OWEiLCJvcmdhbml6YXRpb25JZCI6ImY0YmEyODViLTA4NTUtNGFlMy05OTBjLWU1YmRlZTI5MWM0NyIsInBheW1lbnRBY2NvdW50SWQiOiIwZjZhNTZiYS1kZWIzLTQzMDctOTJhYS1lZjc5MjI5MzAyZmYifSwiaWF0IjoxNzgzMTUyOTEzfQ.wVmj75eO7rL2nbfEMebwuysubuaiCvY_RlyaMVpebzlB8xbtG1kzYPKO9rUkHvZdlL8GI_x1M7pJW8c2NZWViTpTPz55JF9DwPT4ig7dfyIyRwH3siRAJa0xgyNe60rPj9MAA0T_3ovBvSrelYy1HyrdikKz3diCO-6_37xFDfVlwvO5eOZIpugTFVrxdNlpCL-pAV5b38dulourIRl5m4wJ9YVGBkkV9xVHP2bUmZuUcpax2PrT94PPW_CjxKey9CQnFfe7JQUpMFBoexthWqr0KYmFIjD8RB9NoHB6IsouQz8vtJl5ZfgzZms7YkgDBjKQGf4ZYKrEze-wsYeaRQ",
+                        "amount": "0.000543000000000000",
+                        "accountId": "0f6a56ba-deb3-4307-92aa-ef79229302ff",
+                        "authorizationId": "12c1d70b-af06-4d95-83bf-06352c6389e4"
+                      },
+                      "accepted": {
+                        "asset": "USD",
+                        "extra": {},
+                        "payTo": "397b9395-d30d-42cc-abf9-0c56629d1c2f",
+                        "amount": "0.000543",
+                        "scheme": "upto",
+                        "network": "sapiom:main",
+                        "maxTimeoutSeconds": 300
+                      },
+                      "resource": {
+                        "url": "http://openrouter.services.sapiom.ai/v1/chat/completions",
+                        "mimeType": "application/json",
+                        "description": "OpenRouter chat completion"
+                      },
+                      "x402Version": 2
+                    },
+                    "paymentTransactionId": "226b92ee-ec93-4df4-99d7-fc0a0a7e3472"
+                  }
+                },
+                "errorMessage": null,
+                "errorDetails": null,
+                "startedAt": "2026-07-04T08:15:13.810Z",
+                "completedAt": "2026-07-04T08:15:13.852Z",
+                "executionTimeMs": 42,
+                "retryCount": 0,
+                "parentExecutionId": null,
+                "createdAt": "2026-07-04T08:15:13.796Z",
+                "updatedAt": "2026-07-04T08:15:13.796Z"
+              }
+            ]
+          },
+          {
+            "id": "d9007760-8273-421c-b6d3-5a752fd78a40",
+            "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+            "transactionId": "33b3cf16-31e3-447d-9f03-18322b87b5f7",
+            "status": "authorized",
+            "createdAt": "2026-07-04T08:15:12.687Z",
+            "updatedAt": "2026-07-04T08:15:12.727Z",
+            "completedAt": "2026-07-04T08:15:12.741Z",
+            "processingAt": "2026-07-04T08:15:12.731Z",
+            "authorizedAt": "2026-07-04T08:15:12.741Z",
+            "deniedAt": null,
+            "ruleExecutions": []
+          }
+        ]
+      },
+      {
+        "id": "c0b714ee-529a-4d8c-bd3d-72384152441d",
+        "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+        "serviceName": "sapiom_openrouter",
+        "actionName": "generate",
+        "resourceName": "/v1/chat/completions",
+        "serviceId": "0fb63c2c-067f-4d39-9ef2-036408fbb822",
+        "status": "completed",
+        "requiresPayment": true,
+        "qualifiers": {},
+        "metadata": {
+          "createdByApiKeyId": "33b14bf3-e15e-431c-b2c9-a9c5d3eb8425",
+          "preemptiveAuthorization": true
+        },
+        "createdAt": "2026-07-04T08:15:12.577Z",
+        "updatedAt": "2026-07-04T08:15:16.841Z",
+        "authorizedAt": "2026-07-04T08:15:13.704Z",
+        "completedAt": "2026-07-04T08:15:16.840Z",
+        "outcome": "success",
+        "currentPaymentTransactionId": "66926c47-8880-4835-8e55-51b5248043e2",
+        "trace": {
+          "id": "43ab04c8-ba2a-40f4-9d80-ab877e1638a5",
+          "externalId": null
+        },
+        "agentId": "d64a1fb6-c392-4c1c-81f9-b44f371f54c5",
+        "agent": {
+          "id": "d64a1fb6-c392-4c1c-81f9-b44f371f54c5",
+          "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+          "label": "fleet-test",
+          "name": "fleet-test",
+          "description": null,
+          "status": "active",
+          "createdAt": "2026-07-04T08:15:12.569Z",
+          "updatedAt": "2026-07-04T08:15:12.569Z",
+          "numericId": 8
+        },
+        "costs": [
+          {
+            "id": "3c793f6b-11b9-46d2-95ff-c61e7ac53da9",
+            "transactionId": "c0b714ee-529a-4d8c-bd3d-72384152441d",
+            "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+            "paymentTransactionId": "66926c47-8880-4835-8e55-51b5248043e2",
+            "fiatAmount": "0.000100000000000000",
+            "fiatAssetId": "4657ab13-b6e6-4ba4-9df8-47b351c0041c",
+            "isEstimate": false,
+            "isActive": true,
+            "supersedesCostId": "b477aad2-0483-4abb-8d63-7e6f79cb800a",
+            "supersededAt": null,
+            "costDetails": {
+              "source": "payment_capture",
+              "network": "sapiom",
+              "protocol": "x402",
+              "capturedAmount": "0.0001",
+              "originalAmount": "0.000543000000000000"
+            },
+            "createdAt": "2026-07-04T08:15:16.801Z",
+            "updatedAt": "2026-07-04T08:15:16.801Z",
+            "inferredFromFactId": null
+          },
+          {
+            "id": "b477aad2-0483-4abb-8d63-7e6f79cb800a",
+            "transactionId": "c0b714ee-529a-4d8c-bd3d-72384152441d",
+            "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+            "paymentTransactionId": "66926c47-8880-4835-8e55-51b5248043e2",
+            "fiatAmount": "0.000543000000000000",
+            "fiatAssetId": "4657ab13-b6e6-4ba4-9df8-47b351c0041c",
+            "isEstimate": false,
+            "isActive": false,
+            "supersedesCostId": null,
+            "supersededAt": "2026-07-04T08:15:16.856Z",
+            "costDetails": {
+              "source": "payment_transaction",
+              "network": "sapiom",
+              "protocol": "x402",
+              "paymentTransactionId": "66926c47-8880-4835-8e55-51b5248043e2"
+            },
+            "createdAt": "2026-07-04T08:15:13.545Z",
+            "updatedAt": "2026-07-04T08:15:16.801Z",
+            "inferredFromFactId": null
+          }
+        ],
+        "traceId": "43ab04c8-ba2a-40f4-9d80-ab877e1638a5",
+        "apiKeyId": "33b14bf3-e15e-431c-b2c9-a9c5d3eb8425",
+        "createdByActorType": "api_key",
+        "createdByActorId": "33b14bf3-e15e-431c-b2c9-a9c5d3eb8425",
+        "mandateId": null,
+        "facilitatedByServiceAccount": null,
+        "service": {
+          "id": "0fb63c2c-067f-4d39-9ef2-036408fbb822",
+          "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+          "numericId": 2,
+          "globalServiceId": "b813ffc4-8dfa-442c-83c1-c77255da1f61",
+          "name": "sapiom_openrouter",
+          "label": null,
+          "description": null,
+          "metadata": null,
+          "createdAt": "2026-07-04T05:14:31.042Z",
+          "updatedAt": "2026-07-04T05:14:31.042Z",
+          "deletedAt": null
+        },
+        "preparingAt": "2026-07-04T08:15:13.578Z",
+        "deniedAt": null,
+        "cancelledAt": null,
+        "authorizationRequests": [
+          {
+            "id": "e19dc844-e8db-4918-aba9-94dd12f3563f",
+            "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+            "transactionId": "c0b714ee-529a-4d8c-bd3d-72384152441d",
+            "status": "authorized",
+            "createdAt": "2026-07-04T08:15:12.682Z",
+            "updatedAt": "2026-07-04T08:15:12.727Z",
+            "completedAt": "2026-07-04T08:15:12.737Z",
+            "processingAt": "2026-07-04T08:15:12.730Z",
+            "authorizedAt": "2026-07-04T08:15:12.737Z",
+            "deniedAt": null,
+            "ruleExecutions": []
+          },
+          {
+            "id": "84f4674a-9bd5-48b9-a5fa-e36030d2d661",
+            "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+            "transactionId": "c0b714ee-529a-4d8c-bd3d-72384152441d",
+            "status": "authorized",
+            "createdAt": "2026-07-04T08:15:13.545Z",
+            "updatedAt": "2026-07-04T08:15:13.654Z",
+            "completedAt": "2026-07-04T08:15:13.704Z",
+            "processingAt": "2026-07-04T08:15:13.656Z",
+            "authorizedAt": "2026-07-04T08:15:13.704Z",
+            "deniedAt": null,
+            "ruleExecutions": [
+              {
+                "id": "767114a7-daaa-4f1f-8bf6-82142f00f7be",
+                "ruleId": "5d35cc64-3d49-4069-bb77-52d66ae5b3d5",
+                "rule": {
+                  "id": "5d35cc64-3d49-4069-bb77-52d66ae5b3d5",
+                  "numericId": 1,
+                  "name": "System: Payment Authorization"
+                },
+                "transactionId": "c0b714ee-529a-4d8c-bd3d-72384152441d",
+                "transactionAuthorizationRequestId": "84f4674a-9bd5-48b9-a5fa-e36030d2d661",
+                "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+                "status": "completed",
+                "inputData": {
+                  "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+                  "actionName": "generate",
+                  "serviceName": "sapiom_openrouter",
+                  "resourceName": "/v1/chat/completions",
+                  "transactionId": "c0b714ee-529a-4d8c-bd3d-72384152441d",
+                  "transactionAuthorizationRequestId": "84f4674a-9bd5-48b9-a5fa-e36030d2d661"
+                },
+                "outputData": {
+                  "reason": "Payment successfully authorized",
+                  "decision": "ALLOWED",
+                  "metadata": {
+                    "ruleType": "payment_authorization",
+                    "networkId": "3dc51163-5f53-407b-8068-25741e204575",
+                    "authorizationDetails": {
+                      "payload": {
+                        "nonce": "431374bf-7766-4778-bf06-6dbeccdbc5f0",
+                        "token": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6InNhcGlvbS1wYXltZW50LWtleS12MSJ9.eyJzdWIiOiI2NjkyNmM0Ny04ODgwLTQ4MzUtOGU1NS01MWI1MjQ4MDQzZTIiLCJ0cmFuc2ZlcklkIjoiM2RjNTExNjMtNWY1My00MDdiLTgwNjgtMjU3NDFlMjA0NTc1IiwiYWNjb3VudElkIjoiMGY2YTU2YmEtZGViMy00MzA3LTkyYWEtZWY3OTIyOTMwMmZmIiwicGF5VG8iOiIzOTdiOTM5NS1kMzBkLTQyY2MtYWJmOS0wYzU2NjI5ZDFjMmYiLCJhbW91bnQiOiIwLjAwMDU0MzAwMDAwMDAwMDAwMCIsIm5vbmNlIjoiNDMxMzc0YmYtNzc2Ni00Nzc4LWJmMDYtNmRiZWNjZGJjNWYwIiwiaWRlbnRpdHkiOnsidmVyc2lvbiI6MiwidGVuYW50SWQiOiI3MjM0YTdmOS00MDc0LTRhYWQtYjEzZi04NGUwZTI4YjQ2OWEiLCJvcmdhbml6YXRpb25JZCI6ImY0YmEyODViLTA4NTUtNGFlMy05OTBjLWU1YmRlZTI5MWM0NyIsInBheW1lbnRBY2NvdW50SWQiOiIwZjZhNTZiYS1kZWIzLTQzMDctOTJhYS1lZjc5MjI5MzAyZmYifSwiaWF0IjoxNzgzMTUyOTEzfQ.d3kDHqItnWdJF2Kl405QaF3b-wKRih6i_KV2qKErlXYDB7yFoXEwpJCpzfvccCL2NA2xrh1TQFfDw2zTb5e2ijincmHuViQ0TsNTJq-33vAlpZwqw0aeBZihCt1mZ8S-QsqprtC5EcJ50jbl9tDRNTbea-G_kt4IRK20vgEjMO8DcSC66P3jMU06Sg9IopLGTjMqwjXCzFjNh_V3welHtwIuImDy6503SCne3RmuOrmB1jj8n5uKEs8z1LQRIWRmXs2JxGqEutepJpBCTDaNlyvBp0Uf8hoz2sPcqEgNaUKvTNwjxu8R7zc4veMKhFnmFJ1tk5GJakvWIxmInGndbg",
+                        "amount": "0.000543000000000000",
+                        "accountId": "0f6a56ba-deb3-4307-92aa-ef79229302ff",
+                        "authorizationId": "3dc51163-5f53-407b-8068-25741e204575"
+                      },
+                      "accepted": {
+                        "asset": "USD",
+                        "extra": {},
+                        "payTo": "397b9395-d30d-42cc-abf9-0c56629d1c2f",
+                        "amount": "0.000543",
+                        "scheme": "upto",
+                        "network": "sapiom:main",
+                        "maxTimeoutSeconds": 300
+                      },
+                      "resource": {
+                        "url": "http://openrouter.services.sapiom.ai/v1/chat/completions",
+                        "mimeType": "application/json",
+                        "description": "OpenRouter chat completion"
+                      },
+                      "x402Version": 2
+                    },
+                    "paymentTransactionId": "66926c47-8880-4835-8e55-51b5248043e2"
+                  }
+                },
+                "errorMessage": null,
+                "errorDetails": null,
+                "startedAt": "2026-07-04T08:15:13.664Z",
+                "completedAt": "2026-07-04T08:15:13.698Z",
+                "executionTimeMs": 34,
+                "retryCount": 0,
+                "parentExecutionId": null,
+                "createdAt": "2026-07-04T08:15:13.654Z",
+                "updatedAt": "2026-07-04T08:15:13.654Z"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "fb82db75-2ea3-4b0b-b59e-55a62f945cb8",
+        "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+        "serviceName": "sapiom_openrouter",
+        "actionName": "generate",
+        "resourceName": "/v1/chat/completions",
+        "serviceId": "0fb63c2c-067f-4d39-9ef2-036408fbb822",
+        "status": "completed",
+        "requiresPayment": true,
+        "qualifiers": {},
+        "metadata": {
+          "createdByApiKeyId": "33b14bf3-e15e-431c-b2c9-a9c5d3eb8425",
+          "preemptiveAuthorization": true
+        },
+        "createdAt": "2026-07-04T08:14:58.233Z",
+        "updatedAt": "2026-07-04T08:15:02.292Z",
+        "authorizedAt": "2026-07-04T08:14:59.616Z",
+        "completedAt": "2026-07-04T08:15:02.292Z",
+        "outcome": "success",
+        "currentPaymentTransactionId": "1a837279-1baf-4fed-9155-dab2df3e26ae",
+        "trace": {
+          "id": "41b29c46-3752-43c7-a55a-70237c658f15",
+          "externalId": null
+        },
+        "agentId": "ca438376-36d9-400b-ac79-210c46b0e206",
+        "agent": {
+          "id": "ca438376-36d9-400b-ac79-210c46b0e206",
+          "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+          "label": "scale-test",
+          "name": "scale-test",
+          "description": null,
+          "status": "active",
+          "createdAt": "2026-07-04T08:14:44.274Z",
+          "updatedAt": "2026-07-04T08:14:44.274Z",
+          "numericId": 7
+        },
+        "costs": [
+          {
+            "id": "699ae8c1-4604-4f9a-93c0-0dee27a4ff82",
+            "transactionId": "fb82db75-2ea3-4b0b-b59e-55a62f945cb8",
+            "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+            "paymentTransactionId": "1a837279-1baf-4fed-9155-dab2df3e26ae",
+            "fiatAmount": "0.009603000000000000",
+            "fiatAssetId": "4657ab13-b6e6-4ba4-9df8-47b351c0041c",
+            "isEstimate": false,
+            "isActive": false,
+            "supersedesCostId": null,
+            "supersededAt": "2026-07-04T08:15:02.297Z",
+            "costDetails": {
+              "source": "payment_transaction",
+              "network": "sapiom",
+              "protocol": "x402",
+              "paymentTransactionId": "1a837279-1baf-4fed-9155-dab2df3e26ae"
+            },
+            "createdAt": "2026-07-04T08:14:59.485Z",
+            "updatedAt": "2026-07-04T08:15:02.251Z",
+            "inferredFromFactId": null
+          },
+          {
+            "id": "b5144217-6252-45e9-afe2-cc08e2eae303",
+            "transactionId": "fb82db75-2ea3-4b0b-b59e-55a62f945cb8",
+            "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+            "paymentTransactionId": "1a837279-1baf-4fed-9155-dab2df3e26ae",
+            "fiatAmount": "0.000100000000000000",
+            "fiatAssetId": "4657ab13-b6e6-4ba4-9df8-47b351c0041c",
+            "isEstimate": false,
+            "isActive": true,
+            "supersedesCostId": "699ae8c1-4604-4f9a-93c0-0dee27a4ff82",
+            "supersededAt": null,
+            "costDetails": {
+              "source": "payment_capture",
+              "network": "sapiom",
+              "protocol": "x402",
+              "capturedAmount": "0.0001",
+              "originalAmount": "0.009603000000000000"
+            },
+            "createdAt": "2026-07-04T08:15:02.251Z",
+            "updatedAt": "2026-07-04T08:15:02.251Z",
+            "inferredFromFactId": null
+          }
+        ],
+        "traceId": "41b29c46-3752-43c7-a55a-70237c658f15",
+        "apiKeyId": "33b14bf3-e15e-431c-b2c9-a9c5d3eb8425",
+        "createdByActorType": "api_key",
+        "createdByActorId": "33b14bf3-e15e-431c-b2c9-a9c5d3eb8425",
+        "mandateId": null,
+        "facilitatedByServiceAccount": null,
+        "service": {
+          "id": "0fb63c2c-067f-4d39-9ef2-036408fbb822",
+          "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+          "numericId": 2,
+          "globalServiceId": "b813ffc4-8dfa-442c-83c1-c77255da1f61",
+          "name": "sapiom_openrouter",
+          "label": null,
+          "description": null,
+          "metadata": null,
+          "createdAt": "2026-07-04T05:14:31.042Z",
+          "updatedAt": "2026-07-04T05:14:31.042Z",
+          "deletedAt": null
+        },
+        "preparingAt": "2026-07-04T08:14:59.514Z",
+        "deniedAt": null,
+        "cancelledAt": null,
+        "authorizationRequests": [
+          {
+            "id": "d97813d2-4232-45ba-9df1-392061511808",
+            "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+            "transactionId": "fb82db75-2ea3-4b0b-b59e-55a62f945cb8",
+            "status": "authorized",
+            "createdAt": "2026-07-04T08:14:59.485Z",
+            "updatedAt": "2026-07-04T08:14:59.554Z",
+            "completedAt": "2026-07-04T08:14:59.616Z",
+            "processingAt": "2026-07-04T08:14:59.557Z",
+            "authorizedAt": "2026-07-04T08:14:59.616Z",
+            "deniedAt": null,
+            "ruleExecutions": [
+              {
+                "id": "99a371ee-26f3-409d-ad9e-d2f59b442648",
+                "ruleId": "5d35cc64-3d49-4069-bb77-52d66ae5b3d5",
+                "rule": {
+                  "id": "5d35cc64-3d49-4069-bb77-52d66ae5b3d5",
+                  "numericId": 1,
+                  "name": "System: Payment Authorization"
+                },
+                "transactionId": "fb82db75-2ea3-4b0b-b59e-55a62f945cb8",
+                "transactionAuthorizationRequestId": "d97813d2-4232-45ba-9df1-392061511808",
+                "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+                "status": "completed",
+                "inputData": {
+                  "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+                  "actionName": "generate",
+                  "serviceName": "sapiom_openrouter",
+                  "resourceName": "/v1/chat/completions",
+                  "transactionId": "fb82db75-2ea3-4b0b-b59e-55a62f945cb8",
+                  "transactionAuthorizationRequestId": "d97813d2-4232-45ba-9df1-392061511808"
+                },
+                "outputData": {
+                  "reason": "Payment successfully authorized",
+                  "decision": "ALLOWED",
+                  "metadata": {
+                    "ruleType": "payment_authorization",
+                    "networkId": "9dfda282-5bb4-4019-b246-2356b3e688e8",
+                    "authorizationDetails": {
+                      "payload": {
+                        "nonce": "4546c6f1-cdb6-4945-a4ed-e9c15fbd586a",
+                        "token": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6InNhcGlvbS1wYXltZW50LWtleS12MSJ9.eyJzdWIiOiIxYTgzNzI3OS0xYmFmLTRmZWQtOTE1NS1kYWIyZGYzZTI2YWUiLCJ0cmFuc2ZlcklkIjoiOWRmZGEyODItNWJiNC00MDE5LWIyNDYtMjM1NmIzZTY4OGU4IiwiYWNjb3VudElkIjoiMGY2YTU2YmEtZGViMy00MzA3LTkyYWEtZWY3OTIyOTMwMmZmIiwicGF5VG8iOiIzOTdiOTM5NS1kMzBkLTQyY2MtYWJmOS0wYzU2NjI5ZDFjMmYiLCJhbW91bnQiOiIwLjAwOTYwMzAwMDAwMDAwMDAwMCIsIm5vbmNlIjoiNDU0NmM2ZjEtY2RiNi00OTQ1LWE0ZWQtZTljMTVmYmQ1ODZhIiwiaWRlbnRpdHkiOnsidmVyc2lvbiI6MiwidGVuYW50SWQiOiI3MjM0YTdmOS00MDc0LTRhYWQtYjEzZi04NGUwZTI4YjQ2OWEiLCJvcmdhbml6YXRpb25JZCI6ImY0YmEyODViLTA4NTUtNGFlMy05OTBjLWU1YmRlZTI5MWM0NyIsInBheW1lbnRBY2NvdW50SWQiOiIwZjZhNTZiYS1kZWIzLTQzMDctOTJhYS1lZjc5MjI5MzAyZmYifSwiaWF0IjoxNzgzMTUyODk5fQ.wf5UdhUiOtlEaaVybZCaPivXYnCt1cFlX5Y-JYLSXIX_Siy4cyfrYkPwr4gcIokbgekho7vShi71_F5Ng29cySfHywTKFHBStqiUW-4sUIobngJZxghqNGdbuQPrYcWX1UaVHID18GbiDoTnAcirfABtdntaUGDJAGxgI84prHu2nAjQZMFCrUE70T6JhJ1bNtMmVu7rsaKcprNaRJGWMf1dYicaoQzlNZi_PPgI3mcde2IjFVE5C3C3hSR9t3__Re9Xa3BUb5gU4h4QSHk-bbvdMdkXzcsmkJD3iZB_X0-SBkhQIHxLaQ8hkEyEo0lrG6tdv4WboQ1GogA4-uQTYA",
+                        "amount": "0.009603000000000000",
+                        "accountId": "0f6a56ba-deb3-4307-92aa-ef79229302ff",
+                        "authorizationId": "9dfda282-5bb4-4019-b246-2356b3e688e8"
+                      },
+                      "accepted": {
+                        "asset": "USD",
+                        "extra": {},
+                        "payTo": "397b9395-d30d-42cc-abf9-0c56629d1c2f",
+                        "amount": "0.009603",
+                        "scheme": "upto",
+                        "network": "sapiom:main",
+                        "maxTimeoutSeconds": 300
+                      },
+                      "resource": {
+                        "url": "http://openrouter.services.sapiom.ai/v1/chat/completions",
+                        "mimeType": "application/json",
+                        "description": "OpenRouter chat completion"
+                      },
+                      "x402Version": 2
+                    },
+                    "paymentTransactionId": "1a837279-1baf-4fed-9155-dab2df3e26ae"
+                  }
+                },
+                "errorMessage": null,
+                "errorDetails": null,
+                "startedAt": "2026-07-04T08:14:59.566Z",
+                "completedAt": "2026-07-04T08:14:59.608Z",
+                "executionTimeMs": 42,
+                "retryCount": 0,
+                "parentExecutionId": null,
+                "createdAt": "2026-07-04T08:14:59.554Z",
+                "updatedAt": "2026-07-04T08:14:59.554Z"
+              }
+            ]
+          },
+          {
+            "id": "832eee1c-0e4b-4ba1-a4a3-8f155920318b",
+            "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+            "transactionId": "fb82db75-2ea3-4b0b-b59e-55a62f945cb8",
+            "status": "authorized",
+            "createdAt": "2026-07-04T08:14:58.280Z",
+            "updatedAt": "2026-07-04T08:14:58.327Z",
+            "completedAt": "2026-07-04T08:14:58.341Z",
+            "processingAt": "2026-07-04T08:14:58.331Z",
+            "authorizedAt": "2026-07-04T08:14:58.341Z",
+            "deniedAt": null,
+            "ruleExecutions": []
+          }
+        ]
+      },
+      {
+        "id": "cd3f6739-5ad4-4946-bcc8-ad278c00fedc",
+        "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+        "serviceName": "sapiom_openrouter",
+        "actionName": "generate",
+        "resourceName": "/v1/chat/completions",
+        "serviceId": "0fb63c2c-067f-4d39-9ef2-036408fbb822",
+        "status": "completed",
+        "requiresPayment": true,
+        "qualifiers": {},
+        "metadata": {
+          "createdByApiKeyId": "33b14bf3-e15e-431c-b2c9-a9c5d3eb8425",
+          "preemptiveAuthorization": true
+        },
+        "createdAt": "2026-07-04T08:14:51.280Z",
+        "updatedAt": "2026-07-04T08:14:55.219Z",
+        "authorizedAt": "2026-07-04T08:14:52.710Z",
+        "completedAt": "2026-07-04T08:14:55.218Z",
+        "outcome": "success",
+        "currentPaymentTransactionId": "be21c7a2-9874-4170-a45a-e6e62da58ce3",
+        "trace": {
+          "id": "1a60fe4e-61d9-4b3a-a03c-0a79763e3a28",
+          "externalId": null
+        },
+        "agentId": "ca438376-36d9-400b-ac79-210c46b0e206",
+        "agent": {
+          "id": "ca438376-36d9-400b-ac79-210c46b0e206",
+          "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+          "label": "scale-test",
+          "name": "scale-test",
+          "description": null,
+          "status": "active",
+          "createdAt": "2026-07-04T08:14:44.274Z",
+          "updatedAt": "2026-07-04T08:14:44.274Z",
+          "numericId": 7
+        },
+        "costs": [
+          {
+            "id": "d932a72d-afb5-4969-93de-661c2a04e7ac",
+            "transactionId": "cd3f6739-5ad4-4946-bcc8-ad278c00fedc",
+            "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+            "paymentTransactionId": "be21c7a2-9874-4170-a45a-e6e62da58ce3",
+            "fiatAmount": "0.000100000000000000",
+            "fiatAssetId": "4657ab13-b6e6-4ba4-9df8-47b351c0041c",
+            "isEstimate": false,
+            "isActive": true,
+            "supersedesCostId": "c0b07ac3-b0df-453e-8d68-720ef1136b8a",
+            "supersededAt": null,
+            "costDetails": {
+              "source": "payment_capture",
+              "network": "sapiom",
+              "protocol": "x402",
+              "capturedAmount": "0.0001",
+              "originalAmount": "0.004803000000000000"
+            },
+            "createdAt": "2026-07-04T08:14:55.216Z",
+            "updatedAt": "2026-07-04T08:14:55.216Z",
+            "inferredFromFactId": null
+          },
+          {
+            "id": "c0b07ac3-b0df-453e-8d68-720ef1136b8a",
+            "transactionId": "cd3f6739-5ad4-4946-bcc8-ad278c00fedc",
+            "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+            "paymentTransactionId": "be21c7a2-9874-4170-a45a-e6e62da58ce3",
+            "fiatAmount": "0.004803000000000000",
+            "fiatAssetId": "4657ab13-b6e6-4ba4-9df8-47b351c0041c",
+            "isEstimate": false,
+            "isActive": false,
+            "supersedesCostId": null,
+            "supersededAt": "2026-07-04T08:14:55.249Z",
+            "costDetails": {
+              "source": "payment_transaction",
+              "network": "sapiom",
+              "protocol": "x402",
+              "paymentTransactionId": "be21c7a2-9874-4170-a45a-e6e62da58ce3"
+            },
+            "createdAt": "2026-07-04T08:14:52.569Z",
+            "updatedAt": "2026-07-04T08:14:55.216Z",
+            "inferredFromFactId": null
+          }
+        ],
+        "traceId": "1a60fe4e-61d9-4b3a-a03c-0a79763e3a28",
+        "apiKeyId": "33b14bf3-e15e-431c-b2c9-a9c5d3eb8425",
+        "createdByActorType": "api_key",
+        "createdByActorId": "33b14bf3-e15e-431c-b2c9-a9c5d3eb8425",
+        "mandateId": null,
+        "facilitatedByServiceAccount": null,
+        "service": {
+          "id": "0fb63c2c-067f-4d39-9ef2-036408fbb822",
+          "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+          "numericId": 2,
+          "globalServiceId": "b813ffc4-8dfa-442c-83c1-c77255da1f61",
+          "name": "sapiom_openrouter",
+          "label": null,
+          "description": null,
+          "metadata": null,
+          "createdAt": "2026-07-04T05:14:31.042Z",
+          "updatedAt": "2026-07-04T05:14:31.042Z",
+          "deletedAt": null
+        },
+        "preparingAt": "2026-07-04T08:14:52.599Z",
+        "deniedAt": null,
+        "cancelledAt": null,
+        "authorizationRequests": [
+          {
+            "id": "80e51630-a36b-4c47-aa84-52144c640d71",
+            "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+            "transactionId": "cd3f6739-5ad4-4946-bcc8-ad278c00fedc",
+            "status": "authorized",
+            "createdAt": "2026-07-04T08:14:51.308Z",
+            "updatedAt": "2026-07-04T08:14:51.350Z",
+            "completedAt": "2026-07-04T08:14:51.359Z",
+            "processingAt": "2026-07-04T08:14:51.352Z",
+            "authorizedAt": "2026-07-04T08:14:51.359Z",
+            "deniedAt": null,
+            "ruleExecutions": []
+          },
+          {
+            "id": "d5f74ecc-2298-4a1f-8e83-5954f99521b2",
+            "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+            "transactionId": "cd3f6739-5ad4-4946-bcc8-ad278c00fedc",
+            "status": "authorized",
+            "createdAt": "2026-07-04T08:14:52.569Z",
+            "updatedAt": "2026-07-04T08:14:52.662Z",
+            "completedAt": "2026-07-04T08:14:52.710Z",
+            "processingAt": "2026-07-04T08:14:52.664Z",
+            "authorizedAt": "2026-07-04T08:14:52.710Z",
+            "deniedAt": null,
+            "ruleExecutions": [
+              {
+                "id": "c89bf4f6-5c63-4c95-ac1f-fe3a978358af",
+                "ruleId": "5d35cc64-3d49-4069-bb77-52d66ae5b3d5",
+                "rule": {
+                  "id": "5d35cc64-3d49-4069-bb77-52d66ae5b3d5",
+                  "numericId": 1,
+                  "name": "System: Payment Authorization"
+                },
+                "transactionId": "cd3f6739-5ad4-4946-bcc8-ad278c00fedc",
+                "transactionAuthorizationRequestId": "d5f74ecc-2298-4a1f-8e83-5954f99521b2",
+                "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+                "status": "completed",
+                "inputData": {
+                  "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+                  "actionName": "generate",
+                  "serviceName": "sapiom_openrouter",
+                  "resourceName": "/v1/chat/completions",
+                  "transactionId": "cd3f6739-5ad4-4946-bcc8-ad278c00fedc",
+                  "transactionAuthorizationRequestId": "d5f74ecc-2298-4a1f-8e83-5954f99521b2"
+                },
+                "outputData": {
+                  "reason": "Payment successfully authorized",
+                  "decision": "ALLOWED",
+                  "metadata": {
+                    "ruleType": "payment_authorization",
+                    "networkId": "2799e5e5-6470-41e0-8dcd-a224a1535839",
+                    "authorizationDetails": {
+                      "payload": {
+                        "nonce": "4b544ea3-8e3e-4d77-b324-331104125da9",
+                        "token": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6InNhcGlvbS1wYXltZW50LWtleS12MSJ9.eyJzdWIiOiJiZTIxYzdhMi05ODc0LTQxNzAtYTQ1YS1lNmU2MmRhNThjZTMiLCJ0cmFuc2ZlcklkIjoiMjc5OWU1ZTUtNjQ3MC00MWUwLThkY2QtYTIyNGExNTM1ODM5IiwiYWNjb3VudElkIjoiMGY2YTU2YmEtZGViMy00MzA3LTkyYWEtZWY3OTIyOTMwMmZmIiwicGF5VG8iOiIzOTdiOTM5NS1kMzBkLTQyY2MtYWJmOS0wYzU2NjI5ZDFjMmYiLCJhbW91bnQiOiIwLjAwNDgwMzAwMDAwMDAwMDAwMCIsIm5vbmNlIjoiNGI1NDRlYTMtOGUzZS00ZDc3LWIzMjQtMzMxMTA0MTI1ZGE5IiwiaWRlbnRpdHkiOnsidmVyc2lvbiI6MiwidGVuYW50SWQiOiI3MjM0YTdmOS00MDc0LTRhYWQtYjEzZi04NGUwZTI4YjQ2OWEiLCJvcmdhbml6YXRpb25JZCI6ImY0YmEyODViLTA4NTUtNGFlMy05OTBjLWU1YmRlZTI5MWM0NyIsInBheW1lbnRBY2NvdW50SWQiOiIwZjZhNTZiYS1kZWIzLTQzMDctOTJhYS1lZjc5MjI5MzAyZmYifSwiaWF0IjoxNzgzMTUyODkyfQ.e8tIM3gYVZAmBYYtoi7n_Fk-o_ZyP1qTOuwtRdKU-iW-ad7gSaLXGmrWeqSwSk0n2UgWfiMooFKKRknWsX0miDKcC3I8o1H9Jptr24sfMNbZl9JM6pI3yjsAy6Jm7zRxSKewY651OY_6DKsRG95I9m5YDUvKQlXHj7AHXOn8xcYJb16OviUJtaQ2twKrVuSU_dy5_Vs5Os5WiowDMZI6BO7yVWGxFIAL0ZSSbe_t-07TUVHkD-cr-Mt5iTZqbAkjrl9V5_MMysMjoBTcKh2w9WcCa4sv_xq7cioyv2bNpXsYpKcpabIH2Pf44Wt2po0coeOZ67dmu-kfc3Lypn96MA",
+                        "amount": "0.004803000000000000",
+                        "accountId": "0f6a56ba-deb3-4307-92aa-ef79229302ff",
+                        "authorizationId": "2799e5e5-6470-41e0-8dcd-a224a1535839"
+                      },
+                      "accepted": {
+                        "asset": "USD",
+                        "extra": {},
+                        "payTo": "397b9395-d30d-42cc-abf9-0c56629d1c2f",
+                        "amount": "0.004803",
+                        "scheme": "upto",
+                        "network": "sapiom:main",
+                        "maxTimeoutSeconds": 300
+                      },
+                      "resource": {
+                        "url": "http://openrouter.services.sapiom.ai/v1/chat/completions",
+                        "mimeType": "application/json",
+                        "description": "OpenRouter chat completion"
+                      },
+                      "x402Version": 2
+                    },
+                    "paymentTransactionId": "be21c7a2-9874-4170-a45a-e6e62da58ce3"
+                  }
+                },
+                "errorMessage": null,
+                "errorDetails": null,
+                "startedAt": "2026-07-04T08:14:52.672Z",
+                "completedAt": "2026-07-04T08:14:52.703Z",
+                "executionTimeMs": 31,
+                "retryCount": 0,
+                "parentExecutionId": null,
+                "createdAt": "2026-07-04T08:14:52.662Z",
+                "updatedAt": "2026-07-04T08:14:52.662Z"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "8e64e4c1-9d82-4d29-a3eb-2608231f123f",
+        "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+        "serviceName": "sapiom_openrouter",
+        "actionName": "generate",
+        "resourceName": "/v1/chat/completions",
+        "serviceId": "0fb63c2c-067f-4d39-9ef2-036408fbb822",
+        "status": "completed",
+        "requiresPayment": true,
+        "qualifiers": {},
+        "metadata": {
+          "createdByApiKeyId": "33b14bf3-e15e-431c-b2c9-a9c5d3eb8425",
+          "preemptiveAuthorization": true
+        },
+        "createdAt": "2026-07-04T08:14:44.282Z",
+        "updatedAt": "2026-07-04T08:14:48.268Z",
+        "authorizedAt": "2026-07-04T08:14:45.794Z",
+        "completedAt": "2026-07-04T08:14:48.268Z",
+        "outcome": "success",
+        "currentPaymentTransactionId": "d246b2d4-7486-4d9a-8715-50b2d5797f74",
+        "trace": {
+          "id": "859dc98d-925c-4b1b-add0-e3d652c8e853",
+          "externalId": null
+        },
+        "agentId": "ca438376-36d9-400b-ac79-210c46b0e206",
+        "agent": {
+          "id": "ca438376-36d9-400b-ac79-210c46b0e206",
+          "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+          "label": "scale-test",
+          "name": "scale-test",
+          "description": null,
+          "status": "active",
+          "createdAt": "2026-07-04T08:14:44.274Z",
+          "updatedAt": "2026-07-04T08:14:44.274Z",
+          "numericId": 7
+        },
+        "costs": [
+          {
+            "id": "255d4d92-8195-4173-b984-8abc1b377eb7",
+            "transactionId": "8e64e4c1-9d82-4d29-a3eb-2608231f123f",
+            "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+            "paymentTransactionId": "d246b2d4-7486-4d9a-8715-50b2d5797f74",
+            "fiatAmount": "0.001203000000000000",
+            "fiatAssetId": "4657ab13-b6e6-4ba4-9df8-47b351c0041c",
+            "isEstimate": false,
+            "isActive": false,
+            "supersedesCostId": null,
+            "supersededAt": "2026-07-04T08:14:48.219Z",
+            "costDetails": {
+              "source": "payment_transaction",
+              "network": "sapiom",
+              "protocol": "x402",
+              "paymentTransactionId": "d246b2d4-7486-4d9a-8715-50b2d5797f74"
+            },
+            "createdAt": "2026-07-04T08:14:45.648Z",
+            "updatedAt": "2026-07-04T08:14:48.185Z",
+            "inferredFromFactId": null
+          },
+          {
+            "id": "1f0e2daf-fe0f-458e-b7d2-106bf87321f3",
+            "transactionId": "8e64e4c1-9d82-4d29-a3eb-2608231f123f",
+            "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+            "paymentTransactionId": "d246b2d4-7486-4d9a-8715-50b2d5797f74",
+            "fiatAmount": "0.000100000000000000",
+            "fiatAssetId": "4657ab13-b6e6-4ba4-9df8-47b351c0041c",
+            "isEstimate": false,
+            "isActive": true,
+            "supersedesCostId": "255d4d92-8195-4173-b984-8abc1b377eb7",
+            "supersededAt": null,
+            "costDetails": {
+              "source": "payment_capture",
+              "network": "sapiom",
+              "protocol": "x402",
+              "capturedAmount": "0.0001",
+              "originalAmount": "0.001203000000000000"
+            },
+            "createdAt": "2026-07-04T08:14:48.185Z",
+            "updatedAt": "2026-07-04T08:14:48.185Z",
+            "inferredFromFactId": null
+          }
+        ],
+        "traceId": "859dc98d-925c-4b1b-add0-e3d652c8e853",
+        "apiKeyId": "33b14bf3-e15e-431c-b2c9-a9c5d3eb8425",
+        "createdByActorType": "api_key",
+        "createdByActorId": "33b14bf3-e15e-431c-b2c9-a9c5d3eb8425",
+        "mandateId": null,
+        "facilitatedByServiceAccount": null,
+        "service": {
+          "id": "0fb63c2c-067f-4d39-9ef2-036408fbb822",
+          "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+          "numericId": 2,
+          "globalServiceId": "b813ffc4-8dfa-442c-83c1-c77255da1f61",
+          "name": "sapiom_openrouter",
+          "label": null,
+          "description": null,
+          "metadata": null,
+          "createdAt": "2026-07-04T05:14:31.042Z",
+          "updatedAt": "2026-07-04T05:14:31.042Z",
+          "deletedAt": null
+        },
+        "preparingAt": "2026-07-04T08:14:45.689Z",
+        "deniedAt": null,
+        "cancelledAt": null,
+        "authorizationRequests": [
+          {
+            "id": "f98f48f3-0329-4c55-ac02-852801844b61",
+            "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+            "transactionId": "8e64e4c1-9d82-4d29-a3eb-2608231f123f",
+            "status": "authorized",
+            "createdAt": "2026-07-04T08:14:44.358Z",
+            "updatedAt": "2026-07-04T08:14:44.378Z",
+            "completedAt": "2026-07-04T08:14:44.392Z",
+            "processingAt": "2026-07-04T08:14:44.382Z",
+            "authorizedAt": "2026-07-04T08:14:44.392Z",
+            "deniedAt": null,
+            "ruleExecutions": []
+          },
+          {
+            "id": "6ba92630-488e-454b-8a55-5e04f21ba826",
+            "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+            "transactionId": "8e64e4c1-9d82-4d29-a3eb-2608231f123f",
+            "status": "authorized",
+            "createdAt": "2026-07-04T08:14:45.648Z",
+            "updatedAt": "2026-07-04T08:14:45.732Z",
+            "completedAt": "2026-07-04T08:14:45.794Z",
+            "processingAt": "2026-07-04T08:14:45.736Z",
+            "authorizedAt": "2026-07-04T08:14:45.794Z",
+            "deniedAt": null,
+            "ruleExecutions": [
+              {
+                "id": "c94e3526-b27f-4d96-ba73-2529bb47e81c",
+                "ruleId": "5d35cc64-3d49-4069-bb77-52d66ae5b3d5",
+                "rule": {
+                  "id": "5d35cc64-3d49-4069-bb77-52d66ae5b3d5",
+                  "numericId": 1,
+                  "name": "System: Payment Authorization"
+                },
+                "transactionId": "8e64e4c1-9d82-4d29-a3eb-2608231f123f",
+                "transactionAuthorizationRequestId": "6ba92630-488e-454b-8a55-5e04f21ba826",
+                "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+                "status": "completed",
+                "inputData": {
+                  "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+                  "actionName": "generate",
+                  "serviceName": "sapiom_openrouter",
+                  "resourceName": "/v1/chat/completions",
+                  "transactionId": "8e64e4c1-9d82-4d29-a3eb-2608231f123f",
+                  "transactionAuthorizationRequestId": "6ba92630-488e-454b-8a55-5e04f21ba826"
+                },
+                "outputData": {
+                  "reason": "Payment successfully authorized",
+                  "decision": "ALLOWED",
+                  "metadata": {
+                    "ruleType": "payment_authorization",
+                    "networkId": "3e959cb3-8c27-4c4b-9688-42cc283f06b4",
+                    "authorizationDetails": {
+                      "payload": {
+                        "nonce": "e65d5048-7793-4f03-8c7d-ae88e6aa53dc",
+                        "token": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6InNhcGlvbS1wYXltZW50LWtleS12MSJ9.eyJzdWIiOiJkMjQ2YjJkNC03NDg2LTRkOWEtODcxNS01MGIyZDU3OTdmNzQiLCJ0cmFuc2ZlcklkIjoiM2U5NTljYjMtOGMyNy00YzRiLTk2ODgtNDJjYzI4M2YwNmI0IiwiYWNjb3VudElkIjoiMGY2YTU2YmEtZGViMy00MzA3LTkyYWEtZWY3OTIyOTMwMmZmIiwicGF5VG8iOiIzOTdiOTM5NS1kMzBkLTQyY2MtYWJmOS0wYzU2NjI5ZDFjMmYiLCJhbW91bnQiOiIwLjAwMTIwMzAwMDAwMDAwMDAwMCIsIm5vbmNlIjoiZTY1ZDUwNDgtNzc5My00ZjAzLThjN2QtYWU4OGU2YWE1M2RjIiwiaWRlbnRpdHkiOnsidmVyc2lvbiI6MiwidGVuYW50SWQiOiI3MjM0YTdmOS00MDc0LTRhYWQtYjEzZi04NGUwZTI4YjQ2OWEiLCJvcmdhbml6YXRpb25JZCI6ImY0YmEyODViLTA4NTUtNGFlMy05OTBjLWU1YmRlZTI5MWM0NyIsInBheW1lbnRBY2NvdW50SWQiOiIwZjZhNTZiYS1kZWIzLTQzMDctOTJhYS1lZjc5MjI5MzAyZmYifSwiaWF0IjoxNzgzMTUyODg1fQ.LlEGOf3JfK9hg0ztnBtH36SQlPAtgcSLGWRcyyyKo68X3l_i7eNrmL0r7B3_MIkKT-vAI3YYbzmsTKcXi0LPVE_BO4JG04w23D8YyN0SHTmDEL6biYmQYCQPwfHS89Q4Ci-MYmpX1G9Hmjq4aEd8JEJ7f04Eow6Q15kqZgP1MZdav0e575rYTVklNTcvLvvF43ko8W0QDOsEc73n3lCA8wsD7opdQvR5ZGc4NtCWd2F9NBxhJ7lft9XdwVmQhreZayLzg2gIO2TnnSoaCFlek1dW_q3lO8dwRWOOELdCa5b1FhoqtSpP6mQbiKB1TYnkLWwXuxQ7pmZKy7xFsmSnUg",
+                        "amount": "0.001203000000000000",
+                        "accountId": "0f6a56ba-deb3-4307-92aa-ef79229302ff",
+                        "authorizationId": "3e959cb3-8c27-4c4b-9688-42cc283f06b4"
+                      },
+                      "accepted": {
+                        "asset": "USD",
+                        "extra": {},
+                        "payTo": "397b9395-d30d-42cc-abf9-0c56629d1c2f",
+                        "amount": "0.001203",
+                        "scheme": "upto",
+                        "network": "sapiom:main",
+                        "maxTimeoutSeconds": 300
+                      },
+                      "resource": {
+                        "url": "http://openrouter.services.sapiom.ai/v1/chat/completions",
+                        "mimeType": "application/json",
+                        "description": "OpenRouter chat completion"
+                      },
+                      "x402Version": 2
+                    },
+                    "paymentTransactionId": "d246b2d4-7486-4d9a-8715-50b2d5797f74"
+                  }
+                },
+                "errorMessage": null,
+                "errorDetails": null,
+                "startedAt": "2026-07-04T08:14:45.746Z",
+                "completedAt": "2026-07-04T08:14:45.786Z",
+                "executionTimeMs": 40,
+                "retryCount": 0,
+                "parentExecutionId": null,
+                "createdAt": "2026-07-04T08:14:45.732Z",
+                "updatedAt": "2026-07-04T08:14:45.732Z"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "links": {
+      "self": "/transactions?",
+      "next": "/transactions?page%5Bafter%5D=Y3JlYXRlZF9hdHwyMDI2LTA3LTA0VDA4OjE0OjQ0LjI4Mlp8OGU2NGU0YzEtOWQ4Mi00ZDI5LWEzZWItMjYwODIzMWYxMjNm",
+      "prev": null
+    },
+    "meta": {
+      "page": {
+        "limit": 20,
+        "hasNext": true,
+        "hasPrev": false
+      }
+    }
+  }
+}

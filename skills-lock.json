@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "skills": {
+    "use-sapiom": {
+      "source": "sapiom/skills",
+      "sourceType": "github",
+      "skillPath": "skills/use-sapiom/SKILL.md",
+      "computedHash": "558f404be39eb2a75b6e739e49869d1361b032265454efa72c78a5f4df1229f5"
+    }
+  }
+}

@@ -1,0 +1,454 @@
+# Backlog — sapiom-ledger-audit
+
+Ideas to test/build. Written so another model (Sonnet/Haiku) can execute each without prior context.
+MVP frozen for interview 2026-07-08. Priority: P1 pre-interview if time · P2 strong post · P3 someday.
+
+## HOW TO USE THIS BACKLOG
+
+An agent handed this file BUILDS scripts and SELF-TESTS them on fixtures — it CANNOT run anything that spends real money or needs the live API key.
+
+Tags: `[HUMAN-RUN]` = Jay must run it himself (real key, real money). `[HUMAN-UI]` = Jay clicks around in app.sapiom.ai by hand. Everything else (no tag) = the agent can build and fixture-test it cold; Jay runs it against real data after.
+
+Setup, verified API facts, and repo layout live in `PLAN.md` and `README.md` (same directory) — read those before building anything.
+
+## PREREQUISITES
+
+- Env: `export SAPIOM_API_KEY=...` — set in Jay's terminal only; it spends real money, the agent never has it.
+- Python: `~/projects/infer_takehome/.venv/bin/python` (duckdb 1.5.4 installed).
+- Node: `@sapiom/fetch` already `npm install`ed at repo root and in `dryrun/`. ESM (`"type": "module"`).
+- Governance API: `GET https://api.sapiom.ai/v1/...` requires header `User-Agent: curl/8.6.0` (omit it → Cloudflare 1010 block). Pagination: prefer `page[limit]=100` over following `links.next`.
+- Working reference scripts to copy from: `dryrun/hypothesis_test.js`, `dryrun/cap_experiment.js`, `dryrun/extrapolation_experiment.js`. Pipeline order: `generate_spend.js` → `ingest.py` → `audit.py`.
+- Note: `sapiom_scrape/out/*` lives in the SIBLING project `/Users/jay.sharma/projects/job_application/` (NOT this repo) — its recon is already distilled into the API RECON section below, don't try to re-read it.
+
+## OPERATIONS & EDGE CASES (read before any hands-off run)
+
+Money-safety + operational rules for an autonomous run. Rules 1-2 are SAFETY-CRITICAL — an agent + a real wallet with no global cap can drain funds.
+
+⚠️ **1. GLOBAL BUDGET CEILING (safety-critical).** Each script has a local cost guard, but nothing caps CUMULATIVE spend across runs. Wallet ≈ $4.7 total — treat as a HARD ceiling. RULE: before ANY spend script, `GET https://api.sapiom.ai/v1/accounts` (Bearer + `User-Agent: curl/8.6.0`), read `availableBalance`; ABORT the run if `availableBalance` < $0.50. Never assume budget — check it.
+
+⚠️ **2. NEW SPEND SCRIPTS MUST SELF-GUARD (safety-critical).** Any new money-spending script an agent writes MUST include: (a) balance pre-check (rule 1), (b) per-call running cost counter, (c) an abort threshold that stops the run if projected spend exceeds a small cap (e.g. $0.10 unless stated). Copy the guard pattern from `dryrun/extrapolation_experiment.js` / `generate_spend.js`. No unguarded loops that fire paid calls.
+
+**3. Wallet at zero = hard halt.** No auto-topup. If balance is low/zero, STOP and tell Jay to add funds in app.sapiom.ai (dashboard, [HUMAN-UI]). Don't retry paid calls into a $0 wallet.
+
+**4. One API key covers everything.** A single key (`permissions:["*"]`, prefix `sk_live_`) from app.sapiom.ai/settings works for ALL services (search/LLM/etc.) and governance reads. No per-service keys needed. Export as `SAPIOM_API_KEY`. (Earlier confusion about "a different key" was just a fresh key, not a requirement.)
+
+**5. Cloudflare / rate limits under load.** Governance GETs need `User-Agent: curl/8.6.0` (else HTTP 1010). Heavy/fast bursts risk 429/turnstile — pace calls, exponential backoff on 429/403. SDK auto-retries 5xx (not 4xx). Don't hammer.
+
+**6. Key expiry/revocation mid-run.** A 401 mid-run = key revoked/expired → HALT with a clear "re-export SAPIOM_API_KEY" message; do NOT silently skip and continue as if it worked.
+
+**7. `spend.duckdb` is single-account.** It holds ONE account's data. Ingesting a different account's data into the same db mixes state — wipe/rename the db if switching keys/accounts.
+
+**8. Governance experiments need manual setup.** Spending-rule creation is dashboard-only (SDK-confirmed) — the rules-on-hold-vs-settlement and TOCTOU experiments require Jay to create the test rule in app.sapiom.ai FIRST [HUMAN-UI]; scripts only fire calls + observe.
+
+**9. Multi-day data needs real calendar days.** Re-running `generate_spend.js` in the same session just adds same-day rows; genuine multi-day time-series requires running on different real days (no backdating param).
+
+**10. Definition of done (handoff).** A build is done when its acceptance criterion (in its build sheet) passes against real `spend.duckdb`. Overall done = BUILD 0-2 built + run + report/dashboard render correct; BUILD 3 run by Jay; delivery (git init+push, Loom, email) complete [HUMAN-RUN]. `git init` is required before any push (repo is not yet git-initialized).
+
+## SDK CAPABILITIES (from sapiom-js source — resolves several unknowns)
+
+- ⭐ **Trace is SETTABLE**: `@sapiom/fetch` `createFetch({ traceId, traceExternalId, agentName, agentId, serviceName })` — global OR per-request via `(request).__sapiom = { traceExternalId, ... }`. Passing the SAME `traceExternalId` across chained calls makes Sapiom "find-or-create" one trace → you STITCH chains deterministically. Trace-mining + cost-per-task no longer gated on auto-grouping. Parity in @sapiom/axios + @sapiom/node-http.
+- **x402 wire flow (fully typed in SDK)**: pre-auth `POST /transactions` → poll (`/transactions/{id}`, 30s/1s) → on 402 `POST /transactions/{id}/reauthorize` with `{x402}` → retry with header `X-PAYMENT` (x402 v1) or `PAYMENT-SIGNATURE` (v2) → fire-and-forget `POST /transactions/{id}/complete`. Network CAIP-2 `sapiom:main`. Makes the x402 teardown (Jordi) + emulator build cheap — copy the shapes.
+- **Auto-idempotency**: SDK auto-sets `X-Idempotency-Key` (UUID) on every POST/PUT/PATCH. Idempotency is built-in (informs any exactly-once build — don't rebuild it).
+- **`addFacts` costing**: `POST /transactions/{id}/facts` `{source, version, factPhase: request|response|partial|error, facts}` — backend auto-supersedes estimate costs. Newer than manual addCost.
+- **`callSite`**: SDK captures call-stack (depth 3) per transaction — lineage signal.
+- **Staging env: `api.sapiom.dev`** (vs prod `api.sapiom.ai`) — candidate FREE test environment; check if experiments can run there without prod money.
+- **New service hosts**: memory.services.sapiom.ai, neon.services (DB), git.services, vault.services, plus `/v1/capabilities/{name}` generic gateway + `/v1/mcp` remote MCP + `/v1/auth/tokens` identity JWT.
+- Other: `Sapiom-Identity` cross-service JWT, `integration:{name,version}` attribution stamp, per-request `enabled:false` bypass, pre-create txn via `X-Sapiom-Transaction-Id` header, `metadata` free-form bag, flags `preemptiveAuthorization`/`onDemandPayment`.
+
+## EXECUTION ORDER (single queue)
+
+1. **[HUMAN-UI]** Test-mode probe — 30-sec check at app.sapiom.ai/settings: create a key, is there a Live/Test toggle? Could make every experiment below free. (The API-side verdict is already logged under API RECON below — this just closes the one unscraped gap: the settings-page create-key UI.)
+2. **[HUMAN-RUN]** Ship MVP delivery now: `git push` (personal GitHub, topics, pin) → record Loom 2-min → email Jeff + David (Tuesday night, lead with the max_tokens finding as a question). Converts what's already built into "delivered" before piling on more experiments.
+3. Cheap high-value experiments — agent builds + self-tests each script on fixtures first, Jay runs against the real API (~$0.02 each, budget guard on):
+   1. Workflow chaining — fire FIRST, it gates trace-path mining, cost-per-task attribution, and the hold-stacking sub-question.
+   2. Rules-on-hold-vs-settlement — highest single-experiment value.
+   3. Failed-call mid-flight hold release.
+   4. (stretch, P2) Rule race / TOCTOU double-spend, only if budget + time remain.
+4. **[HUMAN-RUN]** Second `generate_spend.js` run (~$0.24) — must happen on a different calendar day than the first run (no backdating param exists; see the fixed note on this item below).
+5. CEO Dashboard build (no new spend, pure viz over data already on disk): the 5-panel demo cut — float meter, capital-efficiency ratio, reconciliation-green, runaway-red, margin strip — plus the WOW hold-lifecycle view (same "make it visible" goal; ship as one artifact or a companion page).
+6. Free SQL findings (zero spend, over existing `spend.duckdb`): settlement latency distribution, x402 overhead tax, isEstimate mislabel, cost-per-successful-outcome, retry-storm detection, estimate-accuracy scorecard, Check-5 runaway detection, bitemporal time-travel/replay, take-rate/margin (one WebSearch for public provider prices), spend-optimization advisor.
+7. Bigger builds:
+   1. Reliability / SLA observability layer (P2, ~2hr, zero spend).
+   2. Trace-path mining + trace→cost-per-task attribution (P1 — ONLY after step 3.1 confirms traceId groups chained calls).
+   3. Governance-as-Code / `sapiomctl` (P1 — ONLY after the landmine pre-check on that item, see below).
+   4. Auto-Cap Tuner (P3, build LAST of these four — it's the Spend-optimization advisor's logic repackaged; don't build both from scratch, see note on that item below).
+   5. (stretch, P2/P3) Budget-enforcing SDK middleware, OTel exporter, local x402 sandbox emulator — in priority order, only if time remains.
+8. Capstone: 9-service data-generation sweep (~$1-2) → Data 1.0 pitch deck (do LAST among builds — after MVP ships + DQX prep).
+9. **[HUMAN-RUN]** Final delivery: PR into sapiom/Showcase (post-interview, if signals good), host dashboard on Sapiom compute, blog/LinkedIn writeup.
+
+---
+
+## TOP BUILD PRIORITIES (curated build sheets — execute top-down)
+
+Interview 2026-07-08. BUILD 0 is a prereq for 2/3/4. BUILDS 1-2 = the demo pair (build before interview). BUILD 3 = [HUMAN-RUN]. 4-5 = depth/post. Each sheet: files · inputs · outputs · acceptance. Ponytail: no frameworks, smallest thing that works.
+
+### BUILD 0 (PREREQ for builds 2,3,4) — Extend ingest.py schema.
+SDK revealed fields the findings need. Add: `transactions.trace_external_id` (from `trace.externalId`), `transactions.outcome`, a payment sub-object (either new table `payments(transaction_id, status, amount, protocol, network, authorized_at, completed_at)` or flatten onto transactions), `costs.fact_phase`, `costs.cost_details`. Keep INSERT OR REPLACE idempotency. Acceptance: re-ingest fixture + (Jay) live data, new columns populate, idempotent. Without this, cost-per-task + precise x402-tax can't compute.
+
+### BUILD 1 ⭐⭐⭐ FLAGSHIP — CEO Dashboard (5-tile visual).
+Files: `export_dashboard.py` (duckdb→dashboard_data.json) + `dashboard.html` (vanilla JS, inline CSS/SVG, no framework, no backend). Inputs: spend.duckdb (transactions/costs/balance_snapshots) + dryrun/extrapolation_result.json + report.md numbers. 5 tiles: (1) Float meter held-vs-settled [extrapolation Exp B; if re-pulled, read `unavailableBalance` field directly]; (2) Capital-efficiency ratio = Σsettled/Σheld; (3) Reconciliation green [report.md check 2, $0.000000]; (4) Runaway red [burstiness from transactions]; (5) Take-rate/margin [needs external provider prices — WebSearch]. Output: dashboard.html renders offline from local JSON. Acceptance: opens with no network, numbers match report.md, runaway agent flagged red. Full panel→data map in the CEO DASHBOARD closed-loop spec section below.
+
+### BUILD 2 ⭐⭐ — Free SQL findings bundle → `findings.py`.
+Input: spend.duckdb only, zero money. One script, each finding → a markdown section in findings.md: settlement latency (authorizedAt→superseding-cost createdAt, p50/p95 per service); x402 overhead tax (use PAYMENT sub-object `authorized_at` if BUILD 0 done, else txn authorized_at); cost-per-task (group `trace_external_id` → cost + wall-time + step count, needs BUILD 0 + trace data); estimate-accuracy scorecard (per service settled/held ratio); runaway detection check-5 (per-agent median inter-call gap + peak calls/min vs peer baseline → flag spend-runaway); callSite lineage (if SDK `callSite` present in fetched data, second attribution axis beyond traceId). Acceptance: all sections run against real spend.duckdb, runaway flagged.
+
+### BUILD 3 ⭐⭐ [HUMAN-RUN] — Chaining experiment (agent builds script, Jay runs ~$0.02).
+Method: one agent, multi-step task search→LLM-summarize→search, SET the SAME `traceExternalId` across all 3 calls via per-request `(request).__sapiom = { traceExternalId }` (SDK-confirmed settable). Poll transactions+accounts during (copy hypothesis_test.js). Dump txns+costs+`trace.externalId`. Measures: stitch-confirmed → HOLD-STACKING (do 3 holds coexist? balance dip = Σholds not max — could 5× the float finding), latency compounding, failure-mid-chain rollback. Output: chaining_result.json + verdict. Feeds BUILD 4.
+
+### BUILD 4 ⭐ — Trace mining (AFTER build 3 runs).
+Group on `trace_external_id`: path-mining (tool sequences, frequent paths via prefix-tree, most-expensive/most-failing path) + cost-per-task rollup. Input: extended spend.duckdb. Output: traces.md (+ optional inline-SVG Sankey). The structured+unstructured DE signal.
+
+### BUILD 5 ⭐ — Advisor + Reliability (free, existing data).
+`advisor.py`: per agent recommended max_tokens = p95(actual tokens)×buffer + cheaper-provider suggestion (the remedy for the float finding). `reliability.py`: success rate + p95 latency (authorized→completed) + error taxonomy per service. Outputs md. NOTE: advisor = the Spend-optimization advisor / Auto-Cap-Tuner core — build once here.
+
+---
+
+## API RECON — mined from captured dashboard traffic (sapiom_scrape/out/api_log.jsonl, 2026-07-04)
+No undocumented PATHS exist, but the dashboard's `include=` graph + query params reveal a richer model than the public docs. High-value leads:
+
+- ⭐ **`unavailableBalance` is a real field** on `GET /v1/accounts` — balance splits 4 ways: `totalBalance / availableBalance / unavailableBalance / pendingCreditBalance`. **`unavailableBalance` = holds/float, exposed directly.** Float dashboard should READ this field, not infer from balance dips. Exact number, cleaner. Re-pull with live in-flight holds to see it move.
+- ⭐ **`include=transaction-metrics`** — sub-resource the dashboard sideloads on `/v1/agents` and `/v1/services`, empty in our fresh account. Likely the time-series/analytics payload. PROBE on live account: `GET /v1/agents/{id}?include=transaction-metrics` and `GET /v1/services/{name}?include=transaction-metrics`. Could be the historical analytics we assumed didn't exist.
+- ⭐ **Rules carry `include=parameters,conditions`** — `GET /v1/spending-rules?include=services,agents,parameters,conditions,transactions`. The actual policy-enforcement schema (empty here). PROBE with one live rule → answers hold-vs-settlement + rule-engine internals.
+- **Undocumented query vocabulary** (use these, cleaner than links.next pagination we fought): `filter[time_period]=7d|all` (probably also 24h/30d/90d), `sort=created_at|-created_at`, `page[limit]=50|100`, `top_agents_limit=N`, `include=<rel,rel>`. Ingest.py could switch to `page[limit]=100`.
+- `/v1/agents/metrics` attributes: totalAgents, activeAgents, totalTransactions, totalCostUsd, avgCostPerAgent, avgCostPerTransaction, topAgents[] (leaderboard, needs live data).
+- `/v1/services/{name}/stats` attributes: hasTransactions, totalSpendUsd, lastTransactionAt, activeAgents, hasRules. NO pricing field → take-rate finding must diff vs external public prices (confirms plan).
+- Confirms: NO traces endpoint (reconstruct from traceId). NO pricing endpoint.
+- Texture: keys can mint keys (`createdByApiKeyId`), RBAC scopes `org.<resource>.<verb>` (write scopes: org/api_keys/users/invites/transactions/tenants), vendors proxied via `{slug}.services.sapiom.ai` (service-mesh).
+
+## Their official docs now local (as a skill)
+`~/projects/sapiom-spend-intel/.agents/skills/use-sapiom/references/*.md` — full service docs: governance, ai-models, search, compute, data, images, audio, messaging, scraping, verify. Read these before designing any service experiment (real request/response shapes, params, pricing).
+- governance.md: spending rules are **DASHBOARD-ONLY** (confirmed via SDK source: no spend-rule types/endpoints in SDK or MCP; docs hint `sapiom_dev_*` MCP support may come later). Creating a rule = manual in app.sapiom.ai [HUMAN-UI]. `limitValue`, filters. Does NOT state whether rules evaluate on hold or settlement → the [P1] rules-on-hold-vs-settlement experiment still needed.
+- Check `verify.md` + `data.md`/`compute.md` for the traces surface (agent-trace mining prereq).
+
+## What we already know (context for any executor)
+
+- **Payment model**: x402 protocol. Every paid call = a transaction with a `costs[]` chain: an initial **hold** (row later marked `supersededAt`) → a **settlement** (live row, `supersededAt IS NULL`). Wallet moves by live row only.
+- **THE finding**: LLM hold is priced at `max_tokens × ~$0.0006/1k` (flat, linear 100→16k tokens, verified). Settlement = actual tokens used. So a big `max_tokens` freezes far more balance than the call costs. Confirmed float is real under concurrency (holds reduce spendable balance in-flight, 4.4× actual, then recover).
+- **APIs**: governance (plain Bearer, needs `User-Agent: curl/8.6.0` to dodge Cloudflare 1010): `GET api.sapiom.ai/v1/{transactions,agents,agents/metrics,spending-rules,accounts}`. Transactions paginate JSON:API via `links.next` (prefix `/v1` — their link omits it). Payment calls via `@sapiom/fetch` `createFetch({apiKey, agentName})`.
+- **Rules**: `POST /v1/spending-rules` — `ruleType:usage_limit`, `measurementType:sum_payment_amount`, rolling window, `groupBy:[agent]`, `agentIds:[...]`. Each authorization records `ruleExecutions`.
+- **Working scripts to copy**: `dryrun/hypothesis_test.js` (balance polling + txn parse), `dryrun/cap_experiment.js` (hold-vs-cap), `dryrun/extrapolation_experiment.js` (scale + concurrency). All handle the curl UA + cost guards.
+- Budget: ~$4.7 wallet left. Keep any single experiment < $0.05, guard before firing.
+
+---
+
+## TIER 1 — experiments that could surface a real bug/insight
+
+### [P1] ⭐ Does test/sandbox mode exist? (could make EVERY experiment free)
+Recon hint: API keys carry `keyPrefix: "sk_live_..."` + `type: "live"` → strongly implies a `"test"` key type (Stripe pattern; CEO Zerbib is ex-Shopify payments, would build test mode reflexively).
+Probe: app.sapiom.ai/settings → is there a test/sandbox key toggle? Mint a key, check its `type`. Try a call with a test key → does it simulate the x402 hold/settle flow WITHOUT moving real wallet balance?
+Outcomes: (a) test mode EXISTS → run ALL risky experiments (rules-on-hold-vs-settlement, TOCTOU race, failure-modes, chaining) on it for FREE + safe — huge unlock, re-run the whole Tier-1 list at zero cost. (b) NO test mode / weak → that's a PRODUCT GAP + a build (local x402 sandbox/emulator so devs test agent-payment flows without losing money — DE/infra tooling you'd own). Either way = win. Cost ~$0 (probe) or minimal.
+**VERDICT (checked local docs + captured traffic 2026-07-04): NO test mode found.** Every API key is `sk_live_` / `type:"live"` (no `test` type anywhere), no `environment`/`livemode` field on accounts/txns/agents, docs mention no payment sandbox (Blaxel "sandbox" = compute, unrelated), key-creation takes only name+description. One gap: POST /v1/api-keys body not captured + settings-page key-creation UI unscraped → 30-sec manual confirm: app.sapiom.ai/settings → create key → any Live/Test toggle? If only name/description → confirmed no test mode. Conclusion: risky experiments must use real money + guards (as we've done); AND the absence is itself a product-gap finding → see sandbox-emulator build below. SDK also revealed a STAGING host `api.sapiom.dev` — check if it's a free test environment (point a key at it, does it move real money?). Possibly the "test mode" answer. **CONFIRMED 2026-07-04 (live checks): `api.sapiom.dev` staging is up but prod key → HTTP 401 (separate auth); `app.sapiom.dev` signup is INVITATION-ONLY. → No dev-accessible test mode: prod is all live keys, staging is invite-walled. External devs cannot test agent-payment flows without spending real prod money. This is now a CONFIRMED product-gap finding (not speculative) — strengthens the [x402 sandbox/emulator] build and the CEO adoption-leak pitch (Zerbib ex-Shopify: test mode = integration table stakes). Interview framing = ask as a genuine question ("is there a sandbox I missed / on the roadmap?"), not a gotcha.**
+
+### [P1] Do spending rules evaluate on HOLD or SETTLEMENT?  ⭐ highest value
+Hypothesis: rules sum `payment_amount`; unclear if that's the hold or the settled cost.
+NOTE [HUMAN-UI]: rule creation is dashboard-only (SDK-confirmed) — Jay must create the test rule in app.sapiom.ai first; the script only fires calls + observes.
+Method: create rule cap $0.01 on a fresh agent (`rule-test`). Fire ONE LLM call, `max_tokens:16000` (hold ≈ $0.0096, settles ≈ $0.0001). Immediately fire a SECOND identical call before settlement.
+- 2nd call BLOCKED → rules evaluate on **holds**. Huge: a lazy `max_tokens` can trip a spend cap at ~1% of real spend → self-inflicted DoS. Finding upgrades from "cost trivia" to "availability bug class."
+- 2nd call ALLOWED → rules evaluate on settlements. Also worth stating (rules lag real exposure).
+Bonus: generates denial + `ruleExecutions` records → feeds denial-analytics idea.
+Cost ~$0.02.
+
+### [P1] What happens to the hold when a call FAILS mid-flight?
+Hypothesis: failed/errored calls should release their hold; if not → leaked capital (orphaned holds).
+Method: fire call with (a) invalid model name, (b) valid model but abort the socket mid-generation. Poll `/v1/transactions` for that agent + `/v1/accounts` for 30s. Does a hold row appear then release? How long? Any hold with no settlement and no release = orphan.
+Outcome: clean release = robust. Stuck hold = classic auditor find (money frozen on failure).
+Cost < $0.005.
+
+### [P2] Rule race / double-spend (TOCTOU)
+Hypothesis: near-exhausted rule + 2 concurrent calls that each fit alone but not together → do both authorize?
+NOTE [HUMAN-UI]: rule creation is dashboard-only (SDK-confirmed) — Jay must create the test rule in app.sapiom.ai first; the script only fires calls + observes.
+Method: rule cap set so remaining budget = ~1.5× one call's hold. Fire 2 calls in parallel (`Promise.all`). Both authorized → race window in governance (check-then-commit not atomic).
+Outcome: both allowed = double-spend race (report privately + politely — big credibility). Blocked correctly = "I tested for it, it's atomic" still strong.
+Cost ~$0.02. Careful: caveats — could just be eventual-consistency, verify by repeating.
+
+### [P2] Denial analytics
+After rules exist (from above), dissect `ruleExecutions` + denied transactions: denial rate per rule/agent, latency of denial, cost of denied work. Nobody surfaces this.
+Cost: free (uses data from rule experiments).
+
+### [P1] ⭐⭐ Workflow chaining — what happens when calls chain into a multi-step task?
+Most realistic agent behavior (real agents chain; single calls are the toy case). One experiment probes 5 unknowns + bridges the float finding and the lineage vertical.
+Method: one agent runs a chained task — search → LLM summarize the result → second search on a follow-up. Optionally register via `/v1/workflows/definitions` (unexplored endpoint) to see if a workflow is a first-class object. During the chain, poll `/v1/transactions` + `/v1/accounts` (copy hypothesis_test.js poller). After: dump all txns + costs + traceIds.
+→ METHOD: SET same `traceExternalId` across chained calls via per-request `__sapiom` (deterministic stitch). See BUILD 3.
+The 5 unknowns:
+1. **Shared traceId?** chained calls thread one trace → cost-per-task attribution FREE (unlocks lineage vertical). Fresh trace each → needs external correlation. Check: group txns by traceId, >1 txn per trace? → UPDATE: SDK confirms you can SET `traceExternalId` per call — so stitching is deterministic, not luck. Experiment now CONFIRMS grouping behavior + measures hold-stacking, rather than gambling on auto-group.
+2. **Workflow = first-class object?** `/v1/workflows/definitions` — parent record w/ rollup cost, or N loose txns? Can you cap a TASK or only calls?
+3. **Do holds STACK across the chain?** ⭐ compounds the float finding. If step-1 hold not released before step-2 fires → a 5-step task holds ALL pre-auths at once → float = Σ holds not max. Chained agent w/ generous caps freezes 5×(the 40×). Check balance dip during chain vs single call.
+4. **Latency compounding** — x402 tax (created→authorized) × N steps. Does payment layer become the bottleneck on long chains?
+5. **Failure mid-chain** — kill step 3: do steps 1-2 settle or whole task roll back? Holds released? Partial-charge on failed task = trust event.
+Feeds: lineage/cost-per-task vertical (#1 trace), float finding (#3 stacking), reliability (#4/#5). Cost ~$0.02.
+
+---
+
+## TIER 2 — cross-service / mechanics (generalize the finding)
+
+### [P2] Hold mechanics for OTHER variable-priced services
+Same dissection as max_tokens, per service knob:
+- **Image gen (FAL)**: $0.004/megapixel — does hold scale with requested resolution/size param?
+- **Compute (Blaxel sandboxes)**: duration-priced — hold on estimated runtime? what's the estimate?
+- **Audio (ElevenLabs)**: per-character? hold vs input text length?
+Method: vary the size knob 3×, dissect hold vs settlement (copy cap_experiment.js structure).
+Payoff: turns one LLM quirk into "**a systematic authorization-hold audit methodology across the platform**." Methodology > finding.
+Cost ~$0.01–0.03 each.
+
+### [P3] Search depth pricing
+Linkup `depth: 'standard'` vs `'deep'` — flat $0.006 or variable? Single vs chained cost row? (Search looked flat single-row in dryrun — confirm deep isn't different.)
+Cost ~$0.02.
+
+### [P3] Multi-provider spread within a capability
+AI Search has 2 providers (Linkup, You.com); Databases has 3. Same query both providers → price + latency delta. Is one systematically cheaper? Arbitrage signal for agents.
+Cost ~$0.02.
+
+---
+
+## TIER 3 — free findings (SQL over existing DuckDB, zero spend)
+
+### [P2] Settlement latency distribution
+`authorizedAt` → superseding-cost `createdAt`, p50/p95/max per service. How long money sits mis-stated on the ledger.
+
+### [P2] x402 overhead tax
+Payment-machinery time (`createdAt`→`authorizedAt`) vs service execution (`authorizedAt`→`completedAt`), per call. % overhead the payment layer adds. Is it fixed or scaling?
+→ use the PAYMENT sub-object `authorized_at` (SDK) for precise payment-machinery latency, not just txn authorized_at (requires BUILD 0 ingest extension).
+
+### [P3] isEstimate mislabel (data-quality finding)
+Both hold and settlement rows carry `isEstimate: false`. Semantically the hold IS an estimate. Their own schema bug — one polite README line or a DQ-check that flags it.
+
+### [P3] Trace anatomy → free cost-per-task
+Do multi-call agent runs share a `traceId`? Group costs by trace → if traces span calls, cost-per-task attribution comes free (the thing their dashboard lacks). Check: any traceId with >1 transaction?
+
+### [P3] Cost per successful outcome
+Spend ÷ count(`outcome='success'`). Failed calls inflate true unit cost above nominal price. Per service.
+
+### [P3] Retry-storm / duplicate detection
+Same agent+service, near-identical timestamps + identical params → wasted duplicate spend.
+
+### [P3] Estimate-accuracy scorecard per service
+For every supersession chain: (settled − hold)/hold. Which services over/under-hold most? Predictability ranking. (LLM = −38% workload-shaped; is any service's hold *exact*?)
+
+---
+
+## STRUCTURED + UNSTRUCTURED — agent-trace mining (they want a DE who does both)
+A trace = execution log: tool sequence + timing + cost (structured) AND inputs/outputs/reasoning per step (unstructured). Richest "analyze both" substrate, and it's THEIR data. Sapiom confirmed to have "a bunch of agent traces."
+
+**ACCESS — RESOLVED (checked official docs 2026-07-04): NO traces API.** Docs are MCP-tool-shaped, zero REST traces endpoint ("trace" in docs = compute job stdout, unrelated). Tenants' traces private (expected). BUT: every txn carries server-assigned `traceId` + caller-`trace.externalId` (null by default; no documented setter — calls do accept custom `headers`, mechanism unknown). → Reconstruct YOUR OWN traces by grouping `/v1/transactions` on `traceId`. Feasibility collapses to ONE unknown: **how does traceId auto-group?** (per-call / per-chained-task / per-burst) — the [P1] workflow-chaining experiment measures exactly this. If chained calls share a traceId → mining works free on real grouping. If fresh traceId per call → need externalId (probe: try a header, inspect @sapiom/fetch opts). RUN CHAINING EXPERIMENT FIRST — it gates both trace ideas.
+
+### [P1] ⭐⭐ Trace-path mining — how is the platform REALLY used (CEO product intelligence)
+What tool SEQUENCES do agents run? Mine frequent paths, Sankey of behavior, longest / most-expensive / most-failing paths.
+Method: group calls by traceId, order by timestamp → path string (e.g. search→llm→search). Frequent-sequence mining (count n-grams / prefix tree). Structured sequence + unstructured step content for labeling. Render Sankey or prefix-tree.
+Payoff: tells CEO how his platform is used at the BEHAVIORAL level (his own dashboard shows spend, never paths). "60% of traces are research→summarize; your most expensive path is X→Y→Z at $N avg." DE-analyzes-both signal: messy execution logs → structured insight.
+
+### [P1] ⭐ Trace → cost-per-task attribution (the gap their dashboard can't fill)
+Roll each trace up: "this research task = 3 searches + 2 LLM calls = $0.42, 8s, 5 steps." Cost per OUTCOME, not per API call (transactions = raw calls, not tasks).
+PREREQ: trace-anatomy probe — confirm multi-call runs share a traceId (the [P1] workflow-chaining experiment above answers this directly).
+Method: group costs by traceId → sum cost + wall-time (min created → max completed) + step count per trace. Rank most expensive tasks. Join trace content to label task type.
+If traceId doesn't auto-group chained calls: modify generate_spend.js so one agent runs a multi-step "task" (search → LLM summarize → search again) passing a shared trace/externalId if the SDK allows; else check if traceId auto-groups a burst.
+Payoff: the cost-per-outcome attribution Realism + their dashboard both lack. Pairs with path-mining. Pure DE — graph rollup, ~2-3hr + trace probe (free if the chaining experiment already confirms grouping).
+Both feed [[the lineage vertical]] and pair with the workflow-chaining experiment (which confirms whether chained calls share a traceId — the enabler for both).
+→ group on `trace_external_id` (not just traceId); generate trace data by setting one traceExternalId across a multi-step task. See BUILD 4.
+
+## NEW VERTICALS (beyond money-correctness)
+
+### [P2] Reliability / SLA observability layer  ⭐ cleanest sibling
+Their dashboard shows spend, zero health. All data already in DuckDB (`outcome`, `status`, `createdAt`/`authorizedAt`/`completedAt`).
+Build: per-service success rate, error taxonomy (denied/cancelled/failed breakdown), latency p50/p95/p99 (execution = authorized→completed), SLA-breach flags. Pure DE — metrics pipeline + percentiles + time-series. New `reliability.py` or a section in audit.py.
+Pitch: "Audited the money; here's the reliability layer beside it." Zero new spend, ~2hr.
+
+ENABLER CONFIRMED: SDK lets you set `traceExternalId` → deterministic chain-stitching; this item is now unblocked (no longer waiting on auto-group discovery).
+(Trace-based lineage / cost-per-task attribution merged into the [P1] entry above under STRUCTURED + UNSTRUCTURED — do not build twice.)
+
+## ENGINEERING BUILDS (build-side — infra other agents use, not read-side analysis)
+
+### [P1] ⭐⭐ Governance-as-Code — declarative control plane for agent spend
+⚠️ **PRE-CHECK before writing any code:** ⚠️ BLOCKER: SDK source confirms NO programmatic rule create (not SDK, not MCP) — governance is dashboard-only today. sapiomctl has no write API to target. Either (a) park this until Sapiom exposes governance via API/MCP, or (b) rescope to a READ-ONLY drift-detector (fetch live rules, diff vs YAML, REPORT drift — no apply). Don't build the apply path.
+
+The pitch nobody else will have: their rules/agents/budgets are configured by clicking the dashboard. Build the IaC layer — GitOps for agent governance. **This is the DQX CI-sync pattern (YAML → diff → reconcile-merge) ported to Sapiom's API.** Same senior muscle, their domain. Real backend software, not scripts.
+
+Why it wins the interview:
+- Declarative reconciler = actual engineering (state diff, dry-run, drift detection), not a report.
+- 1:1 retell of the DQX story (YAML rules → CI diff → Delta merge on rule_id) → interviewer sees transferable pattern instantly.
+- Fills a real gap: no infra-as-code for their governance today.
+- Buildable lazy: YAML + diff + 3-4 API calls.
+
+Architecture:
+```
+spend-policy.yaml            desired state (agents, spending-rules, budgets)
+   │
+sapiomctl plan               fetch live state → diff → print create/update/delete
+   │                          (dry-run, no writes; exit 0 if in sync)
+sapiomctl apply              execute the diff to converge live → desired
+```
+
+Spec:
+- **Desired state** = `spend-policy.yaml`: list of agents (name, description) + spending-rules (name, ruleType, measurementType, limit, window, groupBy, agentIds). One readable file = whole org governance.
+- **Live state**: `GET /v1/agents`, `GET /v1/spending-rules` (Bearer + curl UA).
+- **Diff/reconcile** keyed on `name` (stable id): in-yaml-not-live = CREATE; in-both-but-changed = UPDATE; live-not-in-yaml = DELETE (or flag as "unmanaged" unless `--prune`). Mirrors DQX Delta-merge-on-rule_id.
+- **plan** prints colored diff, writes nothing, exits nonzero if drift (CI-friendly — same as DQX CI gate).
+- **apply**: POST/PATCH/DELETE to converge. Idempotent — apply twice = second is no-op.
+- NOTE: SDK auto-sets X-Idempotency-Key on writes; don't rebuild write-side idempotency, only ingest-side (INSERT OR REPLACE).
+- **FIRST verify** (60s, ~free): does `/v1/spending-rules` support PATCH + DELETE, not just POST? If create-only → reconcile degrades to create + warn-on-drift (still valuable, note the ceiling).
+- Lazy build: single `sapiomctl.js` (~150 ln), no framework, no state file (live API IS the state). Skipped: multi-env, secrets mgmt, plan-file artifact — add when >1 consumer.
+- Loom money-shot: edit yaml (drop a cap 50%), `plan` shows red diff, `apply`, dashboard updates live. GitOps in 20 seconds.
+Effort ~3-4hr. Highest interview leverage of anything in this doc — it's the DQX story made runnable on their stack.
+
+### [P2] Budget-enforcing SDK middleware / circuit-breaker
+Their holds fire AT the limit (reactive). Build a client wrapper around `@sapiom/fetch`: pre-flight budget check (query `/v1/accounts` + in-flight holds), circuit-breaker trips on burn-rate, auto-downgrade `max_tokens` when float tight. **Consumes the max_tokens finding** — turns the discovery into a live guardrail. Engineering: request interceptor, rolling-window state, exponential backoff. Narratively tight (finding → fix in one artifact). ~3hr.
+
+### [P3] OpenTelemetry exporter
+Their data is trapped in the dashboard. Build exporter: transactions → OTel spans (`traceId`→trace, cost→span attribute, lifecycle ts→span timing) → any backend (Grafana/Honeycomb/Jaeger). Agent spend shows up next to app metrics. Engineering: incremental streaming poller (cursor on createdAt), span mapping, OTLP export. Platform-plumbing flavored. ~3-4hr.
+
+### [P3 — lowest priority] Local x402 sandbox / emulator (validated product gap: they have NO test mode)
+Since Sapiom has no test/sandbox mode (verified — see test-mode probe above), devs can't test agent-payment flows without spending real money. Build a faithful local mock of the x402 hold→settle→void lifecycle so agents (and CI) test spend flows offline, free.
+Dual appeal: CEO Zerbib (ex-Shopify payments — knows Stripe test mode = dev-adoption table stakes; "your onboarding leaks devs who won't risk real money experimenting") + Jordi (x402/L402 protocol — the emulator is his domain). DE/infra flavored.
+Scope (ponytail): mock server implementing the documented gateway shapes (search/LLM/etc.) + a hold/settle state machine + fake wallet, so existing scripts point at localhost instead of *.services.sapiom.ai. Skipped: real payment rails, full service parity — mock only what experiments need. Lowest priority — a post-hire / stretch idea, not interview-critical.
+→ mirror exact SDK wire flow: POST /transactions → poll → reauthorize{x402} → header X-PAYMENT(v1)/PAYMENT-SIGNATURE(v2) → complete; two x402 versions (see SDK CAPABILITIES).
+
+## SYSTEM-OF-RECORD FEATURES
+
+### [P3 — build LAST, after the rest] ⭐ Auto-Cap Tuner — the flagship REMEDY (finding → fix, same repo)
+NOTE: same core computation as the [P1] Spend-optimization advisor — build the advisor first; Auto-Cap Tuner = that logic repackaged as a live tuner later. Don't double-build.
+Directly kills the headline finding (max_tokens holds freeze ~40× actual spend). Pure DE: analyze each agent's ACTUAL token usage from settled costs → recommend/set optimal `max_tokens` = p95(actual tokens) × safety buffer → float eliminated.
+Method: over spend.duckdb — per agent/service, distribution of actual output tokens (back out from settled cost ÷ per-token rate), compute p95, emit recommended cap + projected float reduction. Optional: a middleware that dynamically sets max_tokens per call. 
+Why flagship: closes the narrative in ONE artifact — "found the 40× float → built the thing that eliminates it." The remedy a Sapiom DE would genuinely own. Build AFTER shipping MVP + DQX prep; it's the capstone, not the opener.
+Remedy-map framing (pair every finding with its fix — reads senior): max_tokens float→auto-cap tuner; rules-fire-on-hold→hold-aware budget shim; double-count→canonical spend view; hold-stacking→chain-aware reservation; runaway→auto-kill guardrail; no cost-per-task→trace rollup; hold variance→per-service calibration.
+
+### [P1] ⭐ Bitemporal time-travel / replay — as-of-T ledger queries
+Reconstruct wallet + spend state as of ANY past timestamp from the supersession chains. Their dashboard shows current state only; the ledger holds full history nobody exposes.
+Why useful (concrete):
+- **Disputes**: "you overcharged me Tuesday" → replay to Tuesday, show exact held/settled state. Payments platforms live on this.
+- **Debug rule decisions**: why did a rule block an agent last week? Reconstruct the state the rule saw at that instant. Ties to open "rules fire on hold or settlement?" question — need as-of state to prove it.
+- **DE-5894 bug class**: CH's $1.12M bug was point-in-time attribution error (contra-row split across date window). Time-travel is the exact tool that catches it: "does balance at time T reconcile?" Jay has lived why this matters.
+- **Compliance**: "prove your books at Q1 close" — point-in-time correctness = table stakes, not surfaced.
+Method: SQL over costs — for target T, the live cost of each txn = the row where created_at ≤ T AND (superseded_at IS NULL OR superseded_at > T). Sum → wallet-as-of-T. Free.
+Appeal: DE core (as-of-date, `fact_medical_claim_line` verbatim) + protocol correctness (Jordi: "reproduce belief at T"). Caveat: 50 txns/one evening = thin dataset; sell the CAPABILITY + story, not current data.
+
+### [P1] ⭐ Spend-optimization advisor — findings → actionable product
+Turn the findings into a recommender. Analyze an agent's patterns → recommend: optimal max_tokens (cut float, uses THE finding), cheaper provider for same capability (cut cost, uses take-rate finding), tighter cap. Output: "cut float 90%, spend 15%." Consumes float + margin findings → product.
+Method: over spend.duckdb — per agent: hold-utilization ratio → suggest max_tokens = p95(actual tokens)×buffer; per service → flag if a cheaper provider exists (from take-rate data). Free.
+Appeal: CEO (customer value / stickiness) + customer-facing. Closes loop: discovery → guardrail → recommendation.
+
+## AUDIT TOOL FEATURES (build on the pipeline)
+
+- [P1] **Check 5: runaway detection** — per-agent burstiness (median inter-call gap + peak calls/min) vs peer baseline; flag `spend-runaway`. Data already generated. Closes "dashboard says top-spender, audit says incident."
+- [P2] SKETCH — needs a method spec before building: **Hold-utilization KPI** — per agent settled/held ratio. Actionable (tune max_tokens). SQL over chains.
+- [P2] SKETCH — needs a method spec before building: **Burn-rate forecast** — spend velocity → time-to-cap projection.
+- [P3] SKETCH — needs a method spec before building: **Continuous reconciliation monitor** — check 2 over the balance-snapshot series, not point-in-time.
+- [P3] SKETCH — needs a method spec before building: **DQ contracts on event stream** — ingest asserts → standing DQX-style contracts.
+
+## DATA & INFRA
+- [P1] SKETCH — needs a method spec before building: Second `generate_spend.js` run (~$0.24) — produces a multi-day time series ONLY if run on a different real calendar day than the first run (no backdating param exists); rerunning it same-day just adds more single-day volume, not a time series.
+- [P3] SKETCH — needs a method spec before building: Incremental ingest (cursor on createdAt) — answers "at 50M txns?" → see BUILD 0 for the schema extension that must precede this.
+- [P3] SKETCH — needs a method spec before building: Streamlit dashboard — checks + KPIs live view.
+- [P3] SKETCH — needs a method spec before building: `/v1/workflows/definitions` — unexplored endpoint, dissect.
+
+## CEO-GRADE FINDINGS (Zerbib = ex-Shopify payments; thinks take-rate / margin / float / moat)
+
+### [P1] ⭐ Take rate / margin — Sapiom price vs raw provider price
+Compare what Sapiom charges vs the underlying provider's public price:
+- OpenRouter `gpt-4o-mini`: public price ~$0.15/1M input, $0.60/1M output. Our settled call = $0.0001. Compute implied tokens, compare to public rate → is Sapiom marking up, at-cost, or subsidizing?
+- Linkup search: public price ~$5/1000 searches ($0.005) vs Sapiom's $0.006 → ~20% markup? Verify.
+Method: for each service, back out Sapiom's effective unit price from settled costs, diff vs the provider's published rate. Table: service | provider list price | Sapiom price | markup %.
+Payoff: "You take ~X% on LLM, ~Y% on search, 0% on Z — intentional?" Outsider quantifying his own margin/revenue model = irresistible to a payments CEO. Prereq: pull public provider prices (WebSearch). ~$0.02 to confirm live prices.
+
+### [P2] ⭐⭐ Float as a balance-sheet asset (this CEO specifically)
+NO new build — re-lens the existing 40× hold finding in payments-CEO terms Zerbib invented at Shopify. Holds = parked capital = float. At scale, aggregate in-flight holds across all customers = working capital Sapiom controls. Stripe/Shopify monetize float.
+Framing: "Your hold mechanism generates float — right now ~40× realized spend under concurrency. Is that a balance-sheet asset you intend to play, or a customer capital-efficiency cost you're eating? Either way it's currently implicit." 
+Deliverable: one slide/paragraph + the concurrency chart from extrapolation_result.json. Highest CEO-resonance item in the doc.
+
+### [P3] Cheaper-than-direct? (the moat / churn question)
+Same data as take-rate. Would a customer save money bypassing Sapiom and calling the provider directly? Cheaper via Sapiom (bulk/negotiated) → moat. Pricier → churn risk a CFO spots immediately. Answers the CEO's core anxiety: "why use us vs direct?" Frame honestly per service — some cheaper, some premium-for-governance. Free once #1 done.
+
+## LESSONS FROM THE REPO THAT GOT SOMEONE HIRED (sapiom/Showcase — "Realism" by Yash Nadge)
+
+Realism = goal-execution app: type a goal → LLM classifies → creates a Sapiom spending rule → runs agentic job → streams live cost → outputs a bespoke deployed mini-app. 90 files, Next.js, live on Vercel, Loom in README. Soundbite: "$30, 2 days, one person." Wow mechanic: ONE pipeline → 3 visually unrelated apps (finance terminal / music magazine / utility tool) via a design-personality classifier. Got hired on product-taste + making Sapiom's spend primitive first-class UI (live SpendMeter, itemized Receipt).
+
+**What Realism SKIPPED = our whitespace (own it explicitly):**
+- No x402 hold/settle/void lifecycle — every call is synchronous post-then-record. NO reconciliation of authorized-vs-captured. ← our entire finding.
+- No historical spend analysis — only instantaneous running total + flat receipt. No trend/anomaly/forecast/audit.
+- One-dimensional governance — single flat cap per job. No tiered rules, no per-service breakdown viz.
+- No tests, squashed git history (single commit).
+
+**Lessons to apply:**
+1. Lead with a quotable one-liner + hard number. Ours: "$0.27, one evening — found your x402 holds freeze 40× actual spend." Match "$30, 2 days."
+2. **Make the primitive VISIBLE, don't bury in a report.** They made spend a UI component. We must make hold→settle→release + the audit findings VISUAL (timeline/ledger view), not markdown. ← biggest gap to close for CEO-cool.
+3. 2-3 contrasting demo scenarios, not one happy path. Show catching: stuck hold, double-live-charge, budget breach, runaway. Distinct failure modes = memorable.
+4. Live URL + Loom + a "Sapiom services used" table (checkable proof of real integration).
+5. Differentiate on the seam they skipped: settlement lifecycle + historical analysis + proactive flags (before budget blown, not after).
+6. Cheap edge: even a thin test suite + real (non-squashed) git history beats their repo.
+
+### [P1] ⭐ WOW UPGRADE — visual hold-lifecycle view (makes it CEO-cool)
+Turn the finding from report → seen. Single static HTML page (NO Next.js — ponytail): reads the balance-poller + transaction data, renders money moving held → settled/released in real time; the 40× float divergence animates as concurrent agents fire; runaway agent flags red. This is Realism's lesson #2 applied to our differentiated content. Lazy build: one HTML + a bit of JS charting off existing extrapolation_result.json / live poll (~2-3hr). Skipped: framework, backend, auth — it's a viewer, add none.
+
+## CEO DASHBOARD — closed-loop build spec (agent can build HTML from existing data)
+
+Goal: single static `dashboard.html` (ponytail — NO framework, NO backend; inline JS reads local JSON the pipeline already produced + a small exported DuckDB dump). For CEO Zerbib: shows correctness + economics + risk, NOT activity (his own dashboard already has txns/spend/denials KPIs, time-series, top agents/services — DO NOT duplicate those).
+
+### Data artifacts already on disk (every panel traces to one — closed loop)
+- `spend.duckdb` — tables `transactions` (50 rows: agent_name, service_name, outcome, status, created_at, authorized_at, completed_at), `costs` (fiat_amount, is_active, superseded_at, supersedes_cost_id, transaction_id), `balance_snapshots`. Builder: export needed aggregates to `dashboard_data.json` via a small `export_dashboard.py` (duckdb → json), so the HTML has no DB dependency.
+- `dryrun/cap_experiment_result.json` — max_tokens 100/400/900 → holds 0.000243/0.000543, final flat $0.0001.
+- `dryrun/extrapolation_result.json` — Exp A caps 2000/8000/16000 → holds 0.001203/0.004803/0.009603 (hold = $0.0006/1k, linear). Exp B: 10 concurrent calls, balance_series showing dip $4.767518→$4.763074 (holds froze 4.4× settled) then recover.
+- `report.md` — 4 audit checks: reconcile diff $0.000000; naive-sum overstates +2.35%; revision −38.2%; chain integrity 0/0/0.
+
+### Panels → data source → compute → render (the closed loop)
+
+**HERO ROW**
+1. **Float meter (held vs settled)** ⭐ — SOURCE: extrapolation_result.json Exp B. COMPUTE: peak held = 10×0.000543≈$0.0054 vs settled $0.001 → 4.4×; label the dip/recover from balance_series. RENDER: gauge or two-bar (held tall, settled short) + "4.4× capital frozen under 10-way concurrency." Build-story tie: this IS the concurrency experiment, visualized.
+2. **Take-rate / margin strip** — SOURCE: costs table (Sapiom price per service) + public provider prices (WebSearch: OpenRouter gpt-4o-mini $0.15/$0.60 per 1M; Linkup ~$0.005/search). COMPUTE: markup % = (sapiom−provider)/provider per service. RENDER: table service | list | Sapiom | markup%. (See CEO-GRADE FINDING #1.)
+3. **Capital-efficiency ratio** — SOURCE: costs table. COMPUTE: Σ live settled ÷ Σ initial holds across all chains = settled/held headline %. RENDER: one big number.
+
+**TRUST & CORRECTNESS ROW**
+4. **Reconciliation health** — SOURCE: report.md check 2 + check 1. RENDER: green ✅ "$0.000000 — ties out" + "naive sum overstates +2.35%" subtitle. Tie: audit.py output.
+5. **Runaway caught** — SOURCE: transactions table, agent spend-runaway (25 calls @0.3s). COMPUTE: per-agent median inter-call gap + peak calls/min (BACKLOG check-5). RENDER: agent list, runaway row red-flagged, "caught before top-spender ranking would."
+6. **Trust-failure risk** — SOURCE: report.md check 4 (chain integrity 0/0/0) + concept. RENDER: counters orphan holds / double-live rows = "$ at risk from mis-summing," currently clean.
+
+**ECONOMICS ROW**
+7. **GMV by service** — SOURCE: costs+transactions, Σ live by service_name. RENDER: bar, concentration.
+8. **Cost per successful outcome** — SOURCE: Σ live ÷ count(outcome='success') per service. RENDER: table vs nominal price.
+9. **Reliability strip** — SOURCE: transactions lifecycle ts. COMPUTE: success rate + p95 (authorized→completed) per service. RENDER: SLA row.
+
+**FLOAT-AT-SCALE CALLOUT**
+10. **Extrapolation tile** — SOURCE: Exp B 4.4× × linear-hold model. COMPUTE: project "at 100 concurrent agents, cap 16k → ~$Xk frozen." RENDER: callout. Zerbib's ex-Shopify float lens.
+
+### The demo cut (build these 5, not 10): panels 1, 3, 4, 5, 2
+Float meter · efficiency ratio · reconciliation-green · runaway-red · margin. Five tiles = whole story: "audited your money's correctness AND unit economics, from outside, in a weekend."
+
+### Build approach (ponytail)
+`export_dashboard.py` (duckdb → dashboard_data.json, ~40 ln) + `dashboard.html` (inline CSS + vanilla JS, read dashboard_data.json + the two experiment JSONs, render tiles; charts = inline SVG or a single vendored chart lib as one <script>, no npm). Skipped: framework, backend, live-refresh — it's a viewer over frozen experiment data. Add live-poll only if demoing live. One test: assert export produces non-empty numbers matching report.md (reconcile diff==0, markup computed).
+
+### Closed-loop narrative (build story ↔ panel story)
+Each panel is a filmed experiment result, not a mockup: dry-run proved chains exist → cap_experiment proved holds price on max_tokens → extrapolation proved linear + float-real → generate_spend produced the fleet + runaway → ingest/audit proved reconciliation. Dashboard = those five experiments made visible. That's the demo script AND the README arc AND the Loom order.
+
+## TWO-AUDIENCE FRAMING (one project, two pitches — don't build twice)
+
+Same artifact (spend-intel + x402 hold finding), same Loom, two 30-sec intros:
+- **Jordi (Founding Eng, invented L402→x402)**: protocol teardown. "Your x402 pre-auth holds price on max_tokens not usage — linear to 16k, freeze ~40× actual spend under concurrency. Hold amount vs settlement amount diverge; rules may evaluate on the inflated hold. Intended pre-auth padding or worth tightening?" Native language: pre-auth vs settlement, macaroon holds, 402 semantics. Invite him to reason together (podcast host). See memory sapiom-people.
+- **Zerbib (CEO, ex-Shopify payments)**: business skin, SAME finding. "Customers freeze ~40× the capital they spend; your budget rules may block agents at 1% of real limit. Found in a weekend on $0.27. Gift + question, never gotcha." Drama + one number + vision ("dashboard shows what happened; moat is what's about to go wrong").
+- CEO hero-demo (if live): fire concurrent agents → balance drops by holds in real time → guardrail catches runaway before their dashboard flags it. Visceral proof of Sapiom's reason-to-exist, built on their platform.
+
+## [P3 — 2nd-last priority, capstone at the very end] "DATA 1.0" PITCH — the future of Sapiom's data platform
+The DE-charter capstone: a maturity story grounded in REAL data Jay generated. One artifact (doc/deck) that says "I see your entire data future." Do at the END, after MVP ships + DQX prep + the interesting experiments. Second-last (only the service-sweep prereq and final delivery come around it).
+
+Maturity narrative (3 stages):
+- **Data 0 (their now)**: transactional Postgres, dashboard reads live state, no history, metrics on-the-fly. Reactive, current-state-only.
+- **Data 1.0 (the pitch)**: analytical foundation — BQ lakehouse + dbt medallion, ledger modeled (append-only + derive-current, NOT MERGE — scale-correct), DQ contracts, canonical semantic layer (one definition of spend), cost-per-task lineage, reconciliation as standing service. The system-of-record.
+- **Data 2.0 (horizon)**: intelligent — anomaly, forecast, auto-cap optimization, ML on traces, data-as-a-product (customer analytics, benchmarks).
+
+What it needs (only #1 is new work; rest assembles from what we have):
+1. **PREREQ — 9-service data-generation sweep (~$1-2):** touched only 2 of 9 services. Fire ONE call each to capture every data SHAPE for a real inventory: Linkup/You.com (search results+sources), OpenRouter (text), Fal.ai (IMAGE binary MBs), ElevenLabs (AUDIO binary), Blaxel (compute stdout/stderr+artifacts), Anchor Browser (scraped HTML/DOM), data/Postgres (structured rows), SMS Verify (OTP/status events), QStash (scheduling/webhook events). Read skill refs for each service's request shape first. Also independently feeds per-service hold mechanics, take-rate, benchmarking.
+2. **Data catalog artifact** — table: data type | source | structure | example | volume-at-scale | what it unlocks. Built from #1's real samples. Spine of the pitch.
+3. **Reference architecture** — the BQ+dbt layered design (Cloud SQL hot path → Datastream CDC → Pub/Sub+Dataflow → BigQuery lakehouse → dbt medallion staging→marts → BQ materialized views/BI Engine serving; payloads→GCS pointers). Append-derive at scale (MERGE doesn't scale in BQ). See scale-thesis.
+4. **Experiments become the evidence** — float, reconciliation, hold mechanics, cost-per-task = "here's what's already extractable from a trickle; imagine it modeled at petabyte scale."
+5. **Package** — deck: inventory (what) → architecture (how) → roadmap 0→1.0→2.0 (vision) → findings (proof). One artifact = "I see your entire data future."
+Appeal: THE DE-charter proof; pairs with the petabyte scale-thesis; maps to Jay's CH stack (medallion, SCD2/append-derive claims ledger, DQX, reconciliation at scale).
+
+## SHOWCASE & DELIVERY
+- [P1] Git push (personal GitHub), topics, pin.
+- [P1] Loom 2-min: dashboard → runaway → `audit.py` live → penny-exact + max_tokens finding.
+- [P1] Email Jeff + David (Tue night) — lead with max_tokens finding as a question.
+- [P2] PR into sapiom/Showcase (post-interview if signals good).
+- [P3] Host dashboard on Sapiom compute ("built on Sapiom, hosted on Sapiom").
+- [P3] Blog/LinkedIn — the audit methodology as public artifact.
+
+---
+
+## Interview honesty rules (carry into every finding)
+- State sample size + conditions. "n=11, one model, one evening" not "the platform does X."
+- Mechanism (confirmed) vs magnitude (workload-shaped) — keep separate.
+- Any suspected bug (race, orphan hold) → frame as "I tested for X; here's what I saw; worth confirming at scale," and report privately/politely, never as a gotcha.
