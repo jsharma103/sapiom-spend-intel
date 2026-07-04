@@ -36,9 +36,15 @@ by a final capture, and only the live row is real money. Filter for that, and th
 to the penny: $0.000000 diff against the account balance.
 
 Put those two together and you get the headline number: **capture ratio is 18%** — for every
-dollar authorized, eighteen cents actually settles. Run that at $1M/day of agent-scale volume and
-you're looking at roughly $4.6M of customer capital frozen at any moment, not spent, just parked —
-a real balance-sheet cost, not a rounding error.
+dollar authorized, eighteen cents actually settles. Now the honest float question: how much
+customer capital is that *actually* freezing at any instant? Not a naive ratio-times-volume number
+— that has no time dimension and silently assumes holds sit for days. The right tool is Little's
+Law: frozen capital = arrival rate × hold lifetime × hold size. At $1M/day of agent-scale volume,
+with holds measured to clear in **5.3–12 seconds**, the instantaneously-frozen figure is only
+**≈$61–$138** — small, because your holds clear fast. The lever that would blow that up isn't
+volume, it's *hold lifetime*: if settlement slowed from seconds to days, the same ratio would park
+millions. That's the balance-sheet metric worth watching, and the two levers to control it are
+settle-faster and right-size `max_tokens`.
 
 Third: one test agent fired ten calls in under a second. A peer-relative velocity check — no fixed
 threshold, just "is this agent firing anomalously fast relative to its own peers" — flagged it
@@ -76,7 +82,7 @@ love to compare notes on how the SDK resolves that today.
 | "reconciles penny-exact" | **Reconciliation** hero | `$0.000000` badge `TIES OUT` |
 | "naive-sum trap, +10%" | **Reconciliation** hero subline | "naive sum overstates +10% — must filter, not sum, chains" |
 | "capture ratio is 18%: freeze $5 to settle $1" | **Capture Ratio** hero | `18.0%`, subline `authorize $1.00 → capture $0.18` |
-| "$1M/day → $4.6M frozen" scale hook | **Capture Ratio** hero, amber scale-note line | "at $1M/day TPV → $4.57M customer capital frozen daily" |
+| "$1M/day → ≈$61–$138 instantaneously frozen" (Little's Law) scale hook | **Capture Ratio** hero, amber scale-note line | "instantaneously frozen ≈ $61–$138 at $1M/day TPV (Little's Law; holds clear in 5.3–12.0s) — lever = hold-lifetime & max_tokens right-sizing" (corrected from the earlier, wrong "$4.57M frozen daily" — see `dryrun/float_model.md`) |
 | "one test agent fired 10 calls in under a second" | **Velocity Checks** tile | `fleet-test` row, red-flagged, `0.08s` median gap vs peers' `~8s` |
 | max_tokens hold-sizing / 79% remedy | *not on dashboard* — pull up `advisor.md` directly | per-agent recommendation table + the fleet-wide "+79.0%" line |
 | unit-economics side question, if asked | **Take Rate** tile | Linkup settles at exact list price (0% markup) + blended take rate **7.9% / 789 bps** across 4 HIGH-confidence rows (`take_rate.md`) |
@@ -95,7 +101,7 @@ love to compare notes on how the SDK resolves that today.
 | Naive-sum overstatement | +10.03% (~+10%) | `report.md` Check 1 |
 | Capture ratio | 18.0% (17.95%) | derived from `costs` table (Sigma settled / Sigma held across supersession chains); computed identically to `report.md` Check 1's naive/live split — see `export_dashboard.py:hero_capture_ratio` |
 | Scale hook: $1M/day → ~938,000x today's pace | 938,367x | computed from `report.md`'s period + live-spend (daily-rate extrapolation); `export_dashboard.py:hero_tpv` |
-| Scale hook: $1M/day → $4.57M/day frozen | $4,569,828 | computed from the capture ratio above; `export_dashboard.py:hero_capture_ratio` |
+| Scale hook: $1M/day → ≈$61–$138 instantaneously frozen (Little's Law) | $61.28 (p50, 5.295s) – $138.44 (p95, 11.961s) | `frozen$ = $1M/day × hold_lifetime_sec / 86400`, hold lifetime = `findings.md` §1 auth→capture latency; `export_dashboard.py:hero_capture_ratio` (`instantaneous_frozen_p50/p95_usd`). **Corrects** the earlier "$4.57M/day frozen" figure, which was a per-day flow mislabeled as an instantaneous stock (implied a ~4.57-day hold lifetime vs. the measured 5.3–12.0s) — full derivation in `dryrun/float_model.md` |
 | Scale hook: $1M/day → ~$100K/day phantom spend | $100,327 | computed from the +10.03% overstatement above; `export_dashboard.py:hero_reconciliation` |
 | Auth→capture latency (openrouter) | p50 5.29s / p95 11.96s | `findings.md` section 1 |
 | Velocity flag | `fleet-test`, 10 calls, 0.08s median gap vs ~8.4s peer median | `findings.md` section 5 |

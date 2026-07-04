@@ -1,5 +1,5 @@
 window.DASHBOARD_DATA = {
-  "generated_at": "2026-07-04T17:08:23.125875+00:00",
+  "generated_at": "2026-07-04T18:02:11.779363+00:00",
   "header": {
     "n_txns": 81,
     "n_agents": 16,
@@ -24,9 +24,13 @@ window.DASHBOARD_DATA = {
     "sum_settled_usd": 0.004998,
     "n_chains": 27,
     "subline": "authorize $1.00 \u2192 capture $0.18",
-    "scale_note": "at $1M/day TPV \u2192 $4.57M customer capital frozen daily",
-    "frozen_at_scale_usd": 4569827.931172469,
-    "method_note": "Sigma settled (0.004998) / Sigma held (0.027838) dollar-weighted across all 27 supersession chains (hold \u2192 final capture)."
+    "scale_note": "instantaneously frozen \u2248 $61\u2013$138 at $1M/day TPV (Little's Law; holds clear in 5.3\u201312.0s) \u2014 lever = hold-lifetime & max_tokens right-sizing",
+    "instantaneous_frozen_p50_usd": 61.284722222222214,
+    "instantaneous_frozen_p95_usd": 138.4375,
+    "hold_lifetime_p50_s": 5.295,
+    "hold_lifetime_p95_s": 11.961,
+    "naive_flow_at_scale_usd": 4569827.931172469,
+    "method_note": "Sigma settled (0.004998) / Sigma held (0.027838) dollar-weighted across all 27 supersession chains (hold \u2192 final capture). Little's Law: frozen$ = held$/day \u00d7 (hold_lifetime_sec / 86400) \u2014 at $1M/day TPV, p50 (5.29s) \u2192 $61.28, p95 (11.96s) \u2192 $138.44. Full derivation + sensitivity: dryrun/float_model.md. (Superseded framing: naively scaling the capture ratio gives $4,569,828 \u2014 a per-day FLOW, not an instantaneous stock; it implicitly assumes a ~4.57-day hold lifetime vs. the measured 5.3-12.0s, ~33,000x off. See float_model.md \u00a74d.)"
   },
   "hero_reconciliation": {
     "diff_usd": 0.0,

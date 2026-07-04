@@ -136,7 +136,7 @@ def hero_tpv(header: dict) -> dict:
 # Hero 2 — Capture ratio (Sigma settled / Sigma held, across chains)
 # ---------------------------------------------------------------------------
 
-def hero_capture_ratio(con) -> dict:
+def hero_capture_ratio(con, hold_lifetime_p50_s=None, hold_lifetime_p95_s=None) -> dict:
     row = con.execute("""
         WITH multi AS (
             SELECT transaction_id FROM costs GROUP BY transaction_id HAVING COUNT(*) > 1
@@ -158,9 +158,41 @@ def hero_capture_ratio(con) -> dict:
     sum_held, sum_settled = float(sum_held), float(sum_settled)
     ratio = (sum_settled / sum_held) if sum_held else None
     ratio_pct = ratio * 100 if ratio is not None else None
-
-    frozen_at_scale_usd = (SCALE_TARGET_DAILY_TPV / ratio - SCALE_TARGET_DAILY_TPV) if ratio else None
     capture_per_dollar = ratio if ratio is not None else None
+
+    # NAIVE per-day FLOW figure — kept for traceability only, NEVER displayed as a
+    # "frozen" stock. This is a pure ratio effect (frozen$ = TPV/ratio - TPV): it has
+    # no time/duration term, so it silently assumes hold lifetime scales with volume.
+    # Forced into Little's-Law terms, it implies a ~4.57-DAY average hold lifetime —
+    # the measured reality is 5.3-12.0 SECONDS (~33,000x shorter). See
+    # dryrun/float_model.md §1 and §4d for the full derivation of why this number is
+    # NOT a valid "frozen daily" claim (that was the dashboard bug this replaces).
+    naive_flow_at_scale_usd = (SCALE_TARGET_DAILY_TPV / ratio - SCALE_TARGET_DAILY_TPV) if ratio else None
+
+    # Little's Law (L = lambda * W), the rigorous instantaneous-frozen-capital model:
+    # frozen$ = held_dollar_volume_per_day * (avg_hold_lifetime_sec / 86400). Every
+    # input is measured or explicitly flagged as an assumption — see
+    # dryrun/float_model.md §3/§4c. Hold lifetime = auth->capture latency for the
+    # chained (LLM) service, findings.md §1 / tile_auth_to_capture (n=31,
+    # sapiom_openrouter, p50=5.295s, p95=11.961s).
+    instantaneous_frozen_p50_usd = (
+        SCALE_TARGET_DAILY_TPV * (hold_lifetime_p50_s / 86400)
+        if hold_lifetime_p50_s is not None else None
+    )
+    instantaneous_frozen_p95_usd = (
+        SCALE_TARGET_DAILY_TPV * (hold_lifetime_p95_s / 86400)
+        if hold_lifetime_p95_s is not None else None
+    )
+
+    if instantaneous_frozen_p50_usd is not None and instantaneous_frozen_p95_usd is not None:
+        scale_note = (
+            f"instantaneously frozen ≈ ${instantaneous_frozen_p50_usd:,.0f}"
+            f"–${instantaneous_frozen_p95_usd:,.0f} at $1M/day TPV (Little's Law; holds "
+            f"clear in {hold_lifetime_p50_s:.1f}–{hold_lifetime_p95_s:.1f}s) — lever = "
+            "hold-lifetime & max_tokens right-sizing"
+        )
+    else:
+        scale_note = "n/a (hold-lifetime data unavailable)"
 
     return {
         "ratio_pct": ratio_pct,
@@ -171,12 +203,25 @@ def hero_capture_ratio(con) -> dict:
             f"authorize $1.00 → capture ${capture_per_dollar:.2f}"
             if capture_per_dollar is not None else "n/a"
         ),
-        "scale_note": (
-            f"at $1M/day TPV → ${frozen_at_scale_usd/1_000_000:.2f}M customer capital frozen daily"
-            if frozen_at_scale_usd is not None else "n/a"
-        ),
-        "frozen_at_scale_usd": frozen_at_scale_usd,
+        "scale_note": scale_note,
+        "instantaneous_frozen_p50_usd": instantaneous_frozen_p50_usd,
+        "instantaneous_frozen_p95_usd": instantaneous_frozen_p95_usd,
+        "hold_lifetime_p50_s": hold_lifetime_p50_s,
+        "hold_lifetime_p95_s": hold_lifetime_p95_s,
+        # Retained only as an audit trail of the superseded/incorrect framing — see
+        # method_note. NOT rendered anywhere as a "frozen" figure.
+        "naive_flow_at_scale_usd": naive_flow_at_scale_usd,
         "method_note": (
+            f"Sigma settled ({sum_settled:.6f}) / Sigma held ({sum_held:.6f}) dollar-weighted "
+            f"across all {n_chains} supersession chains (hold → final capture). Little's Law: "
+            "frozen$ = held$/day × (hold_lifetime_sec / 86400) — at $1M/day TPV, p50 "
+            f"({hold_lifetime_p50_s:.2f}s) → ${instantaneous_frozen_p50_usd:,.2f}, p95 "
+            f"({hold_lifetime_p95_s:.2f}s) → ${instantaneous_frozen_p95_usd:,.2f}. Full "
+            "derivation + sensitivity: dryrun/float_model.md. (Superseded framing: naively "
+            f"scaling the capture ratio gives ${naive_flow_at_scale_usd:,.0f} — a per-day FLOW, "
+            "not an instantaneous stock; it implicitly assumes a ~4.57-day hold lifetime vs. "
+            "the measured 5.3-12.0s, ~33,000x off. See float_model.md §4d.)"
+            if hold_lifetime_p50_s is not None and hold_lifetime_p95_s is not None else
             f"Sigma settled ({sum_settled:.6f}) / Sigma held ({sum_held:.6f}) dollar-weighted "
             f"across all {n_chains} supersession chains (hold → final capture)."
         ),
@@ -634,9 +679,19 @@ def main():
     con = duckdb.connect(args.db, read_only=True)
 
     header = audit.header_stats(con)
-    capture_ratio = hero_capture_ratio(con)
-    reconciliation = hero_reconciliation(con, Decimal(args.initial_balance))
     auth_to_capture = tile_auth_to_capture(con)
+    capture_ratio = hero_capture_ratio(
+        con,
+        hold_lifetime_p50_s=(
+            auth_to_capture["headline_p50_ms"] / 1000
+            if auth_to_capture["headline_p50_ms"] is not None else None
+        ),
+        hold_lifetime_p95_s=(
+            auth_to_capture["headline_p95_ms"] / 1000
+            if auth_to_capture["headline_p95_ms"] is not None else None
+        ),
+    )
+    reconciliation = hero_reconciliation(con, Decimal(args.initial_balance))
 
     data = {
         "generated_at": None,
