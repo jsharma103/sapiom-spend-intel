@@ -1,0 +1,3261 @@
+{
+  "round": "slowB50",
+  "concurrent_calls": 50,
+  "max_tokens": 4000,
+  "started_at": "2026-07-04T17:48:15.168Z",
+  "accounts_before": {
+    "availableBalance": 4.623135,
+    "unavailableBalance": 0.098793,
+    "totalBalance": 4.721928
+  },
+  "agent": {
+    "id": "a658cbfc-7a71-4f3f-b2c4-798d8254eb13",
+    "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+    "label": "Race Latency Test Agent (slowB50)",
+    "name": "race-lat-agent-slowB50",
+    "description": "Throwaway agent created for the TOCTOU-latency concurrency experiment (dryrun/toctou_latency_experiment.md). Never used for real traffic. Safe to ignore.",
+    "status": "active",
+    "createdAt": "2026-07-04T17:48:15.291Z",
+    "updatedAt": "2026-07-04T17:48:15.291Z",
+    "numericId": 21
+  },
+  "baseline_outcome": {
+    "label": "baseline",
+    "httpStatus": 200,
+    "body": {
+      "id": "gen-1783187297-b3DeMXnqEJ4zQvMJEJxP",
+      "object": "chat.completion",
+      "created": 1783187297,
+      "model": "openai/gpt-4o-mini",
+      "provider": "Azure",
+      "system_fingerprint": "fp_965c8b9ecf",
+      "service_tier": null,
+      "choices": [
+        {
+          "index": 0,
+          "logprobs": null,
+          "finish_reason": "stop",
+          "native_finish_reason": "stop",
+          "message": {
+            "role": "assistant",
+            "content": "test",
+            "refusal": null,
+            "reasoning": null
+          }
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 16,
+        "completion_tokens": 2,
+        "total_tokens": 18,
+        "cost": 0.0000036,
+        "is_byok": false,
+        "prompt_tokens_details": {
+          "cached_tokens": 0,
+          "cache_write_tokens": 0,
+          "audio_tokens": 0,
+          "video_tokens": 0
+        },
+        "cost_details": {
+          "upstream_inference_cost": 0.0000036,
+          "upstream_inference_prompt_cost": 0.0000024,
+          "upstream_inference_completions_cost": 0.0000012
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0,
+          "image_tokens": 0,
+          "audio_tokens": 0
+        }
+      }
+    },
+    "errorMsg": null,
+    "elapsedMs": 3728,
+    "startedAt": 1783187295315
+  },
+  "baseline_hold": 0.002403,
+  "baseline_settle": 0.0001,
+  "baseline_elapsed_ms": 3728,
+  "baseline_txn": {
+    "id": "b1729127-d098-4c0a-9f3f-f36e906b998c",
+    "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+    "serviceName": "sapiom_openrouter",
+    "actionName": "generate",
+    "resourceName": "/v1/chat/completions",
+    "serviceId": "0fb63c2c-067f-4d39-9ef2-036408fbb822",
+    "status": "completed",
+    "requiresPayment": true,
+    "qualifiers": {},
+    "metadata": {
+      "createdByApiKeyId": "bfb69755-474f-41c3-bc82-22ca4aa97eec",
+      "preemptiveAuthorization": true
+    },
+    "createdAt": "2026-07-04T17:48:15.389Z",
+    "updatedAt": "2026-07-04T17:48:19.063Z",
+    "authorizedAt": "2026-07-04T17:48:16.884Z",
+    "completedAt": "2026-07-04T17:48:19.064Z",
+    "outcome": "success",
+    "currentPaymentTransactionId": "d64124a4-58db-4a40-b505-f7ed90c3ebf0",
+    "trace": {
+      "id": "75816caa-f3d4-4ee6-b678-54e6b3c1bd1b",
+      "externalId": null
+    },
+    "agentId": "a658cbfc-7a71-4f3f-b2c4-798d8254eb13",
+    "agent": {
+      "id": "a658cbfc-7a71-4f3f-b2c4-798d8254eb13",
+      "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+      "label": "Race Latency Test Agent (slowB50)",
+      "name": "race-lat-agent-slowB50",
+      "description": "Throwaway agent created for the TOCTOU-latency concurrency experiment (dryrun/toctou_latency_experiment.md). Never used for real traffic. Safe to ignore.",
+      "status": "active",
+      "createdAt": "2026-07-04T17:48:15.291Z",
+      "updatedAt": "2026-07-04T17:48:15.291Z",
+      "numericId": 21
+    },
+    "costs": [
+      {
+        "id": "f124509c-2b3b-45be-8cda-e76afe16bb4e",
+        "transactionId": "b1729127-d098-4c0a-9f3f-f36e906b998c",
+        "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+        "paymentTransactionId": "d64124a4-58db-4a40-b505-f7ed90c3ebf0",
+        "fiatAmount": "0.002403000000000000",
+        "fiatAssetId": "4657ab13-b6e6-4ba4-9df8-47b351c0041c",
+        "isEstimate": false,
+        "isActive": false,
+        "supersedesCostId": null,
+        "supersededAt": "2026-07-04T17:48:19.041Z",
+        "costDetails": {
+          "source": "payment_transaction",
+          "network": "sapiom",
+          "protocol": "x402",
+          "paymentTransactionId": "d64124a4-58db-4a40-b505-f7ed90c3ebf0"
+        },
+        "createdAt": "2026-07-04T17:48:16.735Z",
+        "updatedAt": "2026-07-04T17:48:19.019Z",
+        "inferredFromFactId": null
+      },
+      {
+        "id": "89c887c3-581b-4d4a-a442-ce8c6247ebc0",
+        "transactionId": "b1729127-d098-4c0a-9f3f-f36e906b998c",
+        "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+        "paymentTransactionId": "d64124a4-58db-4a40-b505-f7ed90c3ebf0",
+        "fiatAmount": "0.000100000000000000",
+        "fiatAssetId": "4657ab13-b6e6-4ba4-9df8-47b351c0041c",
+        "isEstimate": false,
+        "isActive": true,
+        "supersedesCostId": "f124509c-2b3b-45be-8cda-e76afe16bb4e",
+        "supersededAt": null,
+        "costDetails": {
+          "source": "payment_capture",
+          "network": "sapiom",
+          "protocol": "x402",
+          "capturedAmount": "0.0001",
+          "originalAmount": "0.002403000000000000"
+        },
+        "createdAt": "2026-07-04T17:48:19.019Z",
+        "updatedAt": "2026-07-04T17:48:19.019Z",
+        "inferredFromFactId": null
+      }
+    ],
+    "traceId": "75816caa-f3d4-4ee6-b678-54e6b3c1bd1b",
+    "apiKeyId": "bfb69755-474f-41c3-bc82-22ca4aa97eec",
+    "createdByActorType": "api_key",
+    "createdByActorId": "bfb69755-474f-41c3-bc82-22ca4aa97eec",
+    "mandateId": null,
+    "facilitatedByServiceAccount": null,
+    "service": {
+      "id": "0fb63c2c-067f-4d39-9ef2-036408fbb822",
+      "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+      "numericId": 2,
+      "globalServiceId": "b813ffc4-8dfa-442c-83c1-c77255da1f61",
+      "name": "sapiom_openrouter",
+      "label": null,
+      "description": null,
+      "metadata": null,
+      "createdAt": "2026-07-04T05:14:31.042Z",
+      "updatedAt": "2026-07-04T05:14:31.042Z",
+      "deletedAt": null
+    },
+    "preparingAt": "2026-07-04T17:48:16.765Z",
+    "deniedAt": null,
+    "cancelledAt": null,
+    "authorizationRequests": [
+      {
+        "id": "fb4a7a73-1892-4663-9959-61076c563007",
+        "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+        "transactionId": "b1729127-d098-4c0a-9f3f-f36e906b998c",
+        "status": "authorized",
+        "createdAt": "2026-07-04T17:48:16.735Z",
+        "updatedAt": "2026-07-04T17:48:16.815Z",
+        "completedAt": "2026-07-04T17:48:16.884Z",
+        "processingAt": "2026-07-04T17:48:16.819Z",
+        "authorizedAt": "2026-07-04T17:48:16.884Z",
+        "deniedAt": null,
+        "ruleExecutions": [
+          {
+            "id": "56215ad0-c978-4736-9914-561325632ae5",
+            "ruleId": "5d35cc64-3d49-4069-bb77-52d66ae5b3d5",
+            "rule": {
+              "id": "5d35cc64-3d49-4069-bb77-52d66ae5b3d5",
+              "numericId": 1,
+              "name": "System: Payment Authorization"
+            },
+            "transactionId": "b1729127-d098-4c0a-9f3f-f36e906b998c",
+            "transactionAuthorizationRequestId": "fb4a7a73-1892-4663-9959-61076c563007",
+            "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+            "status": "completed",
+            "inputData": {
+              "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+              "actionName": "generate",
+              "serviceName": "sapiom_openrouter",
+              "resourceName": "/v1/chat/completions",
+              "transactionId": "b1729127-d098-4c0a-9f3f-f36e906b998c",
+              "transactionAuthorizationRequestId": "fb4a7a73-1892-4663-9959-61076c563007"
+            },
+            "outputData": {
+              "reason": "Payment successfully authorized",
+              "decision": "ALLOWED",
+              "metadata": {
+                "ruleType": "payment_authorization",
+                "networkId": "7275e608-6c1d-4841-9e47-21ddb804b6e7",
+                "authorizationDetails": {
+                  "payload": {
+                    "nonce": "a533076a-63e8-46de-980e-a260580dacbc",
+                    "token": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6InNhcGlvbS1wYXltZW50LWtleS12MSJ9.eyJzdWIiOiJkNjQxMjRhNC01OGRiLTRhNDAtYjUwNS1mN2VkOTBjM2ViZjAiLCJ0cmFuc2ZlcklkIjoiNzI3NWU2MDgtNmMxZC00ODQxLTllNDctMjFkZGI4MDRiNmU3IiwiYWNjb3VudElkIjoiMGY2YTU2YmEtZGViMy00MzA3LTkyYWEtZWY3OTIyOTMwMmZmIiwicGF5VG8iOiIzOTdiOTM5NS1kMzBkLTQyY2MtYWJmOS0wYzU2NjI5ZDFjMmYiLCJhbW91bnQiOiIwLjAwMjQwMzAwMDAwMDAwMDAwMCIsIm5vbmNlIjoiYTUzMzA3NmEtNjNlOC00NmRlLTk4MGUtYTI2MDU4MGRhY2JjIiwiaWRlbnRpdHkiOnsidmVyc2lvbiI6MiwidGVuYW50SWQiOiI3MjM0YTdmOS00MDc0LTRhYWQtYjEzZi04NGUwZTI4YjQ2OWEiLCJvcmdhbml6YXRpb25JZCI6ImY0YmEyODViLTA4NTUtNGFlMy05OTBjLWU1YmRlZTI5MWM0NyIsInBheW1lbnRBY2NvdW50SWQiOiIwZjZhNTZiYS1kZWIzLTQzMDctOTJhYS1lZjc5MjI5MzAyZmYifSwiaWF0IjoxNzgzMTg3Mjk2fQ.kb1rVD3NxTZ1ENk0iD_9YqpxSCPo4uML33nQyVeJmo5iyj8LkyeyZlfGXrJezmDdRy6lMNaIryeJhlo-sKZb13Xnx2bymA2XFPCB0W6FzsL2XvnKqVNh4Ztfa6FzFBDoQplY6pmlRIUP1TQgw2l150mYTxbhM0Ymxwj0kWQHFaLkT3cAC5HE52h9fqbRnmIAKb8l5xrN6haj3JSLIIO4td2hHuUrBoQ9oqrmXQQOwXTklJYVppw5meTEG8n_onKJRcF9JPR_U-4uyaX3_YCPemtwsyhUSLzJCMpDR_ZlZYDM1ZlvlWZmKxwdidzugiAWycPzABt0zbSXMZ1czS439w",
+                    "amount": "0.002403000000000000",
+                    "accountId": "0f6a56ba-deb3-4307-92aa-ef79229302ff",
+                    "authorizationId": "7275e608-6c1d-4841-9e47-21ddb804b6e7"
+                  },
+                  "accepted": {
+                    "asset": "USD",
+                    "extra": {},
+                    "payTo": "397b9395-d30d-42cc-abf9-0c56629d1c2f",
+                    "amount": "0.002403",
+                    "scheme": "upto",
+                    "network": "sapiom:main",
+                    "maxTimeoutSeconds": 300
+                  },
+                  "resource": {
+                    "url": "http://openrouter.services.sapiom.ai/v1/chat/completions",
+                    "mimeType": "application/json",
+                    "description": "OpenRouter chat completion"
+                  },
+                  "x402Version": 2
+                },
+                "paymentTransactionId": "d64124a4-58db-4a40-b505-f7ed90c3ebf0"
+              }
+            },
+            "errorMessage": null,
+            "errorDetails": null,
+            "startedAt": "2026-07-04T17:48:16.829Z",
+            "completedAt": "2026-07-04T17:48:16.875Z",
+            "executionTimeMs": 46,
+            "retryCount": 0,
+            "parentExecutionId": null,
+            "createdAt": "2026-07-04T17:48:16.815Z",
+            "updatedAt": "2026-07-04T17:48:16.815Z"
+          }
+        ]
+      },
+      {
+        "id": "be597b07-5f4a-4976-8f41-e59468be9189",
+        "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+        "transactionId": "b1729127-d098-4c0a-9f3f-f36e906b998c",
+        "status": "authorized",
+        "createdAt": "2026-07-04T17:48:15.421Z",
+        "updatedAt": "2026-07-04T17:48:15.479Z",
+        "completedAt": "2026-07-04T17:48:15.494Z",
+        "processingAt": "2026-07-04T17:48:15.484Z",
+        "authorizedAt": "2026-07-04T17:48:15.494Z",
+        "deniedAt": null,
+        "ruleExecutions": []
+      }
+    ]
+  },
+  "peak_hold_dollars_projected": 0.12015,
+  "rule": {
+    "id": "c7c0b61e-12ff-4982-9dad-ae12d41d7824",
+    "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+    "numericId": 9,
+    "formattedId": "RL-009",
+    "name": "race-lat-rule-slowB50",
+    "ruleType": "usage_limit",
+    "resolutionStrategy": "automatic",
+    "status": "active",
+    "version": 1,
+    "metadata": null,
+    "createdAt": "2026-07-04T17:48:31.383Z",
+    "updatedAt": "2026-07-04T17:48:31.383Z",
+    "lastEditedBy": {
+      "apiKeyId": "bfb69755-474f-41c3-bc82-22ca4aa97eec"
+    },
+    "deletedAt": null,
+    "conditions": [],
+    "parameters": [
+      {
+        "id": "f8455645-5d36-4335-8d67-9c4237be7fe5",
+        "ruleId": "c7c0b61e-12ff-4982-9dad-ae12d41d7824",
+        "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+        "parameterName": null,
+        "limitValue": "0.003605",
+        "measurementType": "sum_transaction_costs",
+        "intervalValue": 1,
+        "intervalUnit": "days",
+        "isRolling": true,
+        "groupBy": null,
+        "measurementScope": "rule",
+        "includeEstimates": true,
+        "description": null,
+        "createdAt": "2026-07-04T17:48:31.383Z",
+        "updatedAt": "2026-07-04T17:48:31.383Z"
+      }
+    ],
+    "agentRules": [
+      {
+        "id": "f3aaec6f-e477-47fe-b9e5-24bdbc4188f9",
+        "agentId": "a658cbfc-7a71-4f3f-b2c4-798d8254eb13",
+        "ruleId": "c7c0b61e-12ff-4982-9dad-ae12d41d7824",
+        "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+        "createdAt": "2026-07-04T17:48:31.383Z",
+        "updatedAt": "2026-07-04T17:48:31.383Z"
+      }
+    ]
+  },
+  "rule_limit_value": 0.0036045,
+  "accounts_mid": {
+    "availableBalance": 4.623035,
+    "unavailableBalance": 0.098793,
+    "totalBalance": 4.721828
+  },
+  "race_avg_elapsed_ms": 8922.48,
+  "race_outcomes": [
+    {
+      "label": "race0",
+      "httpStatus": 402,
+      "body": {
+        "x402Version": 2,
+        "error": "Payment required",
+        "resource": {
+          "url": "http://openrouter.services.sapiom.ai/v1/chat/completions",
+          "description": "OpenRouter chat completion",
+          "mimeType": "application/json"
+        },
+        "accepts": [
+          {
+            "scheme": "upto",
+            "network": "sapiom:main",
+            "amount": "0.002403",
+            "asset": "USD",
+            "payTo": "397b9395-d30d-42cc-abf9-0c56629d1c2f",
+            "maxTimeoutSeconds": 300,
+            "extra": {}
+          }
+        ]
+      },
+      "errorMsg": null,
+      "elapsedMs": 7151,
+      "startedAt": 1783187311449
+    },
+    {
+      "label": "race1",
+      "httpStatus": 200,
+      "body": {
+        "id": "gen-1783187318-KOsh7VHVbP3PHR1XO7GT",
+        "object": "chat.completion",
+        "created": 1783187318,
+        "model": "openai/gpt-4o-mini",
+        "provider": "Azure",
+        "system_fingerprint": "fp_965c8b9ecf",
+        "service_tier": null,
+        "choices": [
+          {
+            "index": 0,
+            "logprobs": null,
+            "finish_reason": "stop",
+            "native_finish_reason": "stop",
+            "message": {
+              "role": "assistant",
+              "content": "test",
+              "refusal": null,
+              "reasoning": null
+            }
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 16,
+          "completion_tokens": 2,
+          "total_tokens": 18,
+          "cost": 0.0000036,
+          "is_byok": false,
+          "prompt_tokens_details": {
+            "cached_tokens": 0,
+            "cache_write_tokens": 0,
+            "audio_tokens": 0,
+            "video_tokens": 0
+          },
+          "cost_details": {
+            "upstream_inference_cost": 0.0000036,
+            "upstream_inference_prompt_cost": 0.0000024,
+            "upstream_inference_completions_cost": 0.0000012
+          },
+          "completion_tokens_details": {
+            "reasoning_tokens": 0,
+            "image_tokens": 0,
+            "audio_tokens": 0
+          }
+        }
+      },
+      "errorMsg": null,
+      "elapsedMs": 7546,
+      "startedAt": 1783187311449
+    },
+    {
+      "label": "race2",
+      "httpStatus": 402,
+      "body": {
+        "x402Version": 2,
+        "error": "Payment required",
+        "resource": {
+          "url": "http://openrouter.services.sapiom.ai/v1/chat/completions",
+          "description": "OpenRouter chat completion",
+          "mimeType": "application/json"
+        },
+        "accepts": [
+          {
+            "scheme": "upto",
+            "network": "sapiom:main",
+            "amount": "0.002403",
+            "asset": "USD",
+            "payTo": "397b9395-d30d-42cc-abf9-0c56629d1c2f",
+            "maxTimeoutSeconds": 300,
+            "extra": {}
+          }
+        ]
+      },
+      "errorMsg": null,
+      "elapsedMs": 8899,
+      "startedAt": 1783187311449
+    },
+    {
+      "label": "race3",
+      "httpStatus": 402,
+      "body": {
+        "x402Version": 2,
+        "error": "Payment required",
+        "resource": {
+          "url": "http://openrouter.services.sapiom.ai/v1/chat/completions",
+          "description": "OpenRouter chat completion",
+          "mimeType": "application/json"
+        },
+        "accepts": [
+          {
+            "scheme": "upto",
+            "network": "sapiom:main",
+            "amount": "0.002403",
+            "asset": "USD",
+            "payTo": "397b9395-d30d-42cc-abf9-0c56629d1c2f",
+            "maxTimeoutSeconds": 300,
+            "extra": {}
+          }
+        ]
+      },
+      "errorMsg": null,
+      "elapsedMs": 7964,
+      "startedAt": 1783187311449
+    },
+    {
+      "label": "race4",
+      "httpStatus": 402,
+      "body": {
+        "x402Version": 2,
+        "error": "Payment required",
+        "resource": {
+          "url": "http://openrouter.services.sapiom.ai/v1/chat/completions",
+          "description": "OpenRouter chat completion",
+          "mimeType": "application/json"
+        },
+        "accepts": [
+          {
+            "scheme": "upto",
+            "network": "sapiom:main",
+            "amount": "0.002403",
+            "asset": "USD",
+            "payTo": "397b9395-d30d-42cc-abf9-0c56629d1c2f",
+            "maxTimeoutSeconds": 300,
+            "extra": {}
+          }
+        ]
+      },
+      "errorMsg": null,
+      "elapsedMs": 7757,
+      "startedAt": 1783187311449
+    },
+    {
+      "label": "race5",
+      "httpStatus": 402,
+      "body": {
+        "x402Version": 2,
+        "error": "Payment required",
+        "resource": {
+          "url": "http://openrouter.services.sapiom.ai/v1/chat/completions",
+          "description": "OpenRouter chat completion",
+          "mimeType": "application/json"
+        },
+        "accepts": [
+          {
+            "scheme": "upto",
+            "network": "sapiom:main",
+            "amount": "0.002403",
+            "asset": "USD",
+            "payTo": "397b9395-d30d-42cc-abf9-0c56629d1c2f",
+            "maxTimeoutSeconds": 300,
+            "extra": {}
+          }
+        ]
+      },
+      "errorMsg": null,
+      "elapsedMs": 8887,
+      "startedAt": 1783187311449
+    },
+    {
+      "label": "race6",
+      "httpStatus": 402,
+      "body": {
+        "x402Version": 2,
+        "error": "Payment required",
+        "resource": {
+          "url": "http://openrouter.services.sapiom.ai/v1/chat/completions",
+          "description": "OpenRouter chat completion",
+          "mimeType": "application/json"
+        },
+        "accepts": [
+          {
+            "scheme": "upto",
+            "network": "sapiom:main",
+            "amount": "0.002403",
+            "asset": "USD",
+            "payTo": "397b9395-d30d-42cc-abf9-0c56629d1c2f",
+            "maxTimeoutSeconds": 300,
+            "extra": {}
+          }
+        ]
+      },
+      "errorMsg": null,
+      "elapsedMs": 8895,
+      "startedAt": 1783187311449
+    },
+    {
+      "label": "race7",
+      "httpStatus": 402,
+      "body": {
+        "x402Version": 2,
+        "error": "Payment required",
+        "resource": {
+          "url": "http://openrouter.services.sapiom.ai/v1/chat/completions",
+          "description": "OpenRouter chat completion",
+          "mimeType": "application/json"
+        },
+        "accepts": [
+          {
+            "scheme": "upto",
+            "network": "sapiom:main",
+            "amount": "0.002403",
+            "asset": "USD",
+            "payTo": "397b9395-d30d-42cc-abf9-0c56629d1c2f",
+            "maxTimeoutSeconds": 300,
+            "extra": {}
+          }
+        ]
+      },
+      "errorMsg": null,
+      "elapsedMs": 8892,
+      "startedAt": 1783187311449
+    },
+    {
+      "label": "race8",
+      "httpStatus": 402,
+      "body": {
+        "x402Version": 2,
+        "error": "Payment required",
+        "resource": {
+          "url": "http://openrouter.services.sapiom.ai/v1/chat/completions",
+          "description": "OpenRouter chat completion",
+          "mimeType": "application/json"
+        },
+        "accepts": [
+          {
+            "scheme": "upto",
+            "network": "sapiom:main",
+            "amount": "0.002403",
+            "asset": "USD",
+            "payTo": "397b9395-d30d-42cc-abf9-0c56629d1c2f",
+            "maxTimeoutSeconds": 300,
+            "extra": {}
+          }
+        ]
+      },
+      "errorMsg": null,
+      "elapsedMs": 8894,
+      "startedAt": 1783187311449
+    },
+    {
+      "label": "race9",
+      "httpStatus": 402,
+      "body": {
+        "x402Version": 2,
+        "error": "Payment required",
+        "resource": {
+          "url": "http://openrouter.services.sapiom.ai/v1/chat/completions",
+          "description": "OpenRouter chat completion",
+          "mimeType": "application/json"
+        },
+        "accepts": [
+          {
+            "scheme": "upto",
+            "network": "sapiom:main",
+            "amount": "0.002403",
+            "asset": "USD",
+            "payTo": "397b9395-d30d-42cc-abf9-0c56629d1c2f",
+            "maxTimeoutSeconds": 300,
+            "extra": {}
+          }
+        ]
+      },
+      "errorMsg": null,
+      "elapsedMs": 8891,
+      "startedAt": 1783187311450
+    },
+    {
+      "label": "race10",
+      "httpStatus": 402,
+      "body": {
+        "x402Version": 2,
+        "error": "Payment required",
+        "resource": {
+          "url": "http://openrouter.services.sapiom.ai/v1/chat/completions",
+          "description": "OpenRouter chat completion",
+          "mimeType": "application/json"
+        },
+        "accepts": [
+          {
+            "scheme": "upto",
+            "network": "sapiom:main",
+            "amount": "0.002403",
+            "asset": "USD",
+            "payTo": "397b9395-d30d-42cc-abf9-0c56629d1c2f",
+            "maxTimeoutSeconds": 300,
+            "extra": {}
+          }
+        ]
+      },
+      "errorMsg": null,
+      "elapsedMs": 9058,
+      "startedAt": 1783187311450
+    },
+    {
+      "label": "race11",
+      "httpStatus": 402,
+      "body": {
+        "x402Version": 2,
+        "error": "Payment required",
+        "resource": {
+          "url": "http://openrouter.services.sapiom.ai/v1/chat/completions",
+          "description": "OpenRouter chat completion",
+          "mimeType": "application/json"
+        },
+        "accepts": [
+          {
+            "scheme": "upto",
+            "network": "sapiom:main",
+            "amount": "0.002403",
+            "asset": "USD",
+            "payTo": "397b9395-d30d-42cc-abf9-0c56629d1c2f",
+            "maxTimeoutSeconds": 300,
+            "extra": {}
+          }
+        ]
+      },
+      "errorMsg": null,
+      "elapsedMs": 8885,
+      "startedAt": 1783187311450
+    },
+    {
+      "label": "race12",
+      "httpStatus": 402,
+      "body": {
+        "x402Version": 2,
+        "error": "Payment required",
+        "resource": {
+          "url": "http://openrouter.services.sapiom.ai/v1/chat/completions",
+          "description": "OpenRouter chat completion",
+          "mimeType": "application/json"
+        },
+        "accepts": [
+          {
+            "scheme": "upto",
+            "network": "sapiom:main",
+            "amount": "0.002403",
+            "asset": "USD",
+            "payTo": "397b9395-d30d-42cc-abf9-0c56629d1c2f",
+            "maxTimeoutSeconds": 300,
+            "extra": {}
+          }
+        ]
+      },
+      "errorMsg": null,
+      "elapsedMs": 8905,
+      "startedAt": 1783187311450
+    },
+    {
+      "label": "race13",
+      "httpStatus": 402,
+      "body": {
+        "x402Version": 2,
+        "error": "Payment required",
+        "resource": {
+          "url": "http://openrouter.services.sapiom.ai/v1/chat/completions",
+          "description": "OpenRouter chat completion",
+          "mimeType": "application/json"
+        },
+        "accepts": [
+          {
+            "scheme": "upto",
+            "network": "sapiom:main",
+            "amount": "0.002403",
+            "asset": "USD",
+            "payTo": "397b9395-d30d-42cc-abf9-0c56629d1c2f",
+            "maxTimeoutSeconds": 300,
+            "extra": {}
+          }
+        ]
+      },
+      "errorMsg": null,
+      "elapsedMs": 8899,
+      "startedAt": 1783187311450
+    },
+    {
+      "label": "race14",
+      "httpStatus": 402,
+      "body": {
+        "x402Version": 2,
+        "error": "Payment required",
+        "resource": {
+          "url": "http://openrouter.services.sapiom.ai/v1/chat/completions",
+          "description": "OpenRouter chat completion",
+          "mimeType": "application/json"
+        },
+        "accepts": [
+          {
+            "scheme": "upto",
+            "network": "sapiom:main",
+            "amount": "0.002403",
+            "asset": "USD",
+            "payTo": "397b9395-d30d-42cc-abf9-0c56629d1c2f",
+            "maxTimeoutSeconds": 300,
+            "extra": {}
+          }
+        ]
+      },
+      "errorMsg": null,
+      "elapsedMs": 8905,
+      "startedAt": 1783187311450
+    },
+    {
+      "label": "race15",
+      "httpStatus": 402,
+      "body": {
+        "x402Version": 2,
+        "error": "Payment required",
+        "resource": {
+          "url": "http://openrouter.services.sapiom.ai/v1/chat/completions",
+          "description": "OpenRouter chat completion",
+          "mimeType": "application/json"
+        },
+        "accepts": [
+          {
+            "scheme": "upto",
+            "network": "sapiom:main",
+            "amount": "0.002403",
+            "asset": "USD",
+            "payTo": "397b9395-d30d-42cc-abf9-0c56629d1c2f",
+            "maxTimeoutSeconds": 300,
+            "extra": {}
+          }
+        ]
+      },
+      "errorMsg": null,
+      "elapsedMs": 8601,
+      "startedAt": 1783187311450
+    },
+    {
+      "label": "race16",
+      "httpStatus": 402,
+      "body": {
+        "x402Version": 2,
+        "error": "Payment required",
+        "resource": {
+          "url": "http://openrouter.services.sapiom.ai/v1/chat/completions",
+          "description": "OpenRouter chat completion",
+          "mimeType": "application/json"
+        },
+        "accepts": [
+          {
+            "scheme": "upto",
+            "network": "sapiom:main",
+            "amount": "0.002403",
+            "asset": "USD",
+            "payTo": "397b9395-d30d-42cc-abf9-0c56629d1c2f",
+            "maxTimeoutSeconds": 300,
+            "extra": {}
+          }
+        ]
+      },
+      "errorMsg": null,
+      "elapsedMs": 8906,
+      "startedAt": 1783187311450
+    },
+    {
+      "label": "race17",
+      "httpStatus": 402,
+      "body": {
+        "x402Version": 2,
+        "error": "Payment required",
+        "resource": {
+          "url": "http://openrouter.services.sapiom.ai/v1/chat/completions",
+          "description": "OpenRouter chat completion",
+          "mimeType": "application/json"
+        },
+        "accepts": [
+          {
+            "scheme": "upto",
+            "network": "sapiom:main",
+            "amount": "0.002403",
+            "asset": "USD",
+            "payTo": "397b9395-d30d-42cc-abf9-0c56629d1c2f",
+            "maxTimeoutSeconds": 300,
+            "extra": {}
+          }
+        ]
+      },
+      "errorMsg": null,
+      "elapsedMs": 9251,
+      "startedAt": 1783187311450
+    },
+    {
+      "label": "race18",
+      "httpStatus": 402,
+      "body": {
+        "x402Version": 2,
+        "error": "Payment required",
+        "resource": {
+          "url": "http://openrouter.services.sapiom.ai/v1/chat/completions",
+          "description": "OpenRouter chat completion",
+          "mimeType": "application/json"
+        },
+        "accepts": [
+          {
+            "scheme": "upto",
+            "network": "sapiom:main",
+            "amount": "0.002403",
+            "asset": "USD",
+            "payTo": "397b9395-d30d-42cc-abf9-0c56629d1c2f",
+            "maxTimeoutSeconds": 300,
+            "extra": {}
+          }
+        ]
+      },
+      "errorMsg": null,
+      "elapsedMs": 8787,
+      "startedAt": 1783187311450
+    },
+    {
+      "label": "race19",
+      "httpStatus": 402,
+      "body": {
+        "x402Version": 2,
+        "error": "Payment required",
+        "resource": {
+          "url": "http://openrouter.services.sapiom.ai/v1/chat/completions",
+          "description": "OpenRouter chat completion",
+          "mimeType": "application/json"
+        },
+        "accepts": [
+          {
+            "scheme": "upto",
+            "network": "sapiom:main",
+            "amount": "0.002403",
+            "asset": "USD",
+            "payTo": "397b9395-d30d-42cc-abf9-0c56629d1c2f",
+            "maxTimeoutSeconds": 300,
+            "extra": {}
+          }
+        ]
+      },
+      "errorMsg": null,
+      "elapsedMs": 8891,
+      "startedAt": 1783187311450
+    },
+    {
+      "label": "race20",
+      "httpStatus": 402,
+      "body": {
+        "x402Version": 2,
+        "error": "Payment required",
+        "resource": {
+          "url": "http://openrouter.services.sapiom.ai/v1/chat/completions",
+          "description": "OpenRouter chat completion",
+          "mimeType": "application/json"
+        },
+        "accepts": [
+          {
+            "scheme": "upto",
+            "network": "sapiom:main",
+            "amount": "0.002403",
+            "asset": "USD",
+            "payTo": "397b9395-d30d-42cc-abf9-0c56629d1c2f",
+            "maxTimeoutSeconds": 300,
+            "extra": {}
+          }
+        ]
+      },
+      "errorMsg": null,
+      "elapsedMs": 8875,
+      "startedAt": 1783187311450
+    },
+    {
+      "label": "race21",
+      "httpStatus": 402,
+      "body": {
+        "x402Version": 2,
+        "error": "Payment required",
+        "resource": {
+          "url": "http://openrouter.services.sapiom.ai/v1/chat/completions",
+          "description": "OpenRouter chat completion",
+          "mimeType": "application/json"
+        },
+        "accepts": [
+          {
+            "scheme": "upto",
+            "network": "sapiom:main",
+            "amount": "0.002403",
+            "asset": "USD",
+            "payTo": "397b9395-d30d-42cc-abf9-0c56629d1c2f",
+            "maxTimeoutSeconds": 300,
+            "extra": {}
+          }
+        ]
+      },
+      "errorMsg": null,
+      "elapsedMs": 9394,
+      "startedAt": 1783187311450
+    },
+    {
+      "label": "race22",
+      "httpStatus": 402,
+      "body": {
+        "x402Version": 2,
+        "error": "Payment required",
+        "resource": {
+          "url": "http://openrouter.services.sapiom.ai/v1/chat/completions",
+          "description": "OpenRouter chat completion",
+          "mimeType": "application/json"
+        },
+        "accepts": [
+          {
+            "scheme": "upto",
+            "network": "sapiom:main",
+            "amount": "0.002403",
+            "asset": "USD",
+            "payTo": "397b9395-d30d-42cc-abf9-0c56629d1c2f",
+            "maxTimeoutSeconds": 300,
+            "extra": {}
+          }
+        ]
+      },
+      "errorMsg": null,
+      "elapsedMs": 7347,
+      "startedAt": 1783187311450
+    },
+    {
+      "label": "race23",
+      "httpStatus": 402,
+      "body": {
+        "x402Version": 2,
+        "error": "Payment required",
+        "resource": {
+          "url": "http://openrouter.services.sapiom.ai/v1/chat/completions",
+          "description": "OpenRouter chat completion",
+          "mimeType": "application/json"
+        },
+        "accepts": [
+          {
+            "scheme": "upto",
+            "network": "sapiom:main",
+            "amount": "0.002403",
+            "asset": "USD",
+            "payTo": "397b9395-d30d-42cc-abf9-0c56629d1c2f",
+            "maxTimeoutSeconds": 300,
+            "extra": {}
+          }
+        ]
+      },
+      "errorMsg": null,
+      "elapsedMs": 8908,
+      "startedAt": 1783187311450
+    },
+    {
+      "label": "race24",
+      "httpStatus": 402,
+      "body": {
+        "x402Version": 2,
+        "error": "Payment required",
+        "resource": {
+          "url": "http://openrouter.services.sapiom.ai/v1/chat/completions",
+          "description": "OpenRouter chat completion",
+          "mimeType": "application/json"
+        },
+        "accepts": [
+          {
+            "scheme": "upto",
+            "network": "sapiom:main",
+            "amount": "0.002403",
+            "asset": "USD",
+            "payTo": "397b9395-d30d-42cc-abf9-0c56629d1c2f",
+            "maxTimeoutSeconds": 300,
+            "extra": {}
+          }
+        ]
+      },
+      "errorMsg": null,
+      "elapsedMs": 8875,
+      "startedAt": 1783187311450
+    },
+    {
+      "label": "race25",
+      "httpStatus": 402,
+      "body": {
+        "x402Version": 2,
+        "error": "Payment required",
+        "resource": {
+          "url": "http://openrouter.services.sapiom.ai/v1/chat/completions",
+          "description": "OpenRouter chat completion",
+          "mimeType": "application/json"
+        },
+        "accepts": [
+          {
+            "scheme": "upto",
+            "network": "sapiom:main",
+            "amount": "0.002403",
+            "asset": "USD",
+            "payTo": "397b9395-d30d-42cc-abf9-0c56629d1c2f",
+            "maxTimeoutSeconds": 300,
+            "extra": {}
+          }
+        ]
+      },
+      "errorMsg": null,
+      "elapsedMs": 7523,
+      "startedAt": 1783187311450
+    },
+    {
+      "label": "race26",
+      "httpStatus": 402,
+      "body": {
+        "x402Version": 2,
+        "error": "Payment required",
+        "resource": {
+          "url": "http://openrouter.services.sapiom.ai/v1/chat/completions",
+          "description": "OpenRouter chat completion",
+          "mimeType": "application/json"
+        },
+        "accepts": [
+          {
+            "scheme": "upto",
+            "network": "sapiom:main",
+            "amount": "0.002403",
+            "asset": "USD",
+            "payTo": "397b9395-d30d-42cc-abf9-0c56629d1c2f",
+            "maxTimeoutSeconds": 300,
+            "extra": {}
+          }
+        ]
+      },
+      "errorMsg": null,
+      "elapsedMs": 8911,
+      "startedAt": 1783187311450
+    },
+    {
+      "label": "race27",
+      "httpStatus": 402,
+      "body": {
+        "x402Version": 2,
+        "error": "Payment required",
+        "resource": {
+          "url": "http://openrouter.services.sapiom.ai/v1/chat/completions",
+          "description": "OpenRouter chat completion",
+          "mimeType": "application/json"
+        },
+        "accepts": [
+          {
+            "scheme": "upto",
+            "network": "sapiom:main",
+            "amount": "0.002403",
+            "asset": "USD",
+            "payTo": "397b9395-d30d-42cc-abf9-0c56629d1c2f",
+            "maxTimeoutSeconds": 300,
+            "extra": {}
+          }
+        ]
+      },
+      "errorMsg": null,
+      "elapsedMs": 8910,
+      "startedAt": 1783187311450
+    },
+    {
+      "label": "race28",
+      "httpStatus": 402,
+      "body": {
+        "x402Version": 2,
+        "error": "Payment required",
+        "resource": {
+          "url": "http://openrouter.services.sapiom.ai/v1/chat/completions",
+          "description": "OpenRouter chat completion",
+          "mimeType": "application/json"
+        },
+        "accepts": [
+          {
+            "scheme": "upto",
+            "network": "sapiom:main",
+            "amount": "0.002403",
+            "asset": "USD",
+            "payTo": "397b9395-d30d-42cc-abf9-0c56629d1c2f",
+            "maxTimeoutSeconds": 300,
+            "extra": {}
+          }
+        ]
+      },
+      "errorMsg": null,
+      "elapsedMs": 8379,
+      "startedAt": 1783187311450
+    },
+    {
+      "label": "race29",
+      "httpStatus": 402,
+      "body": {
+        "x402Version": 2,
+        "error": "Payment required",
+        "resource": {
+          "url": "http://openrouter.services.sapiom.ai/v1/chat/completions",
+          "description": "OpenRouter chat completion",
+          "mimeType": "application/json"
+        },
+        "accepts": [
+          {
+            "scheme": "upto",
+            "network": "sapiom:main",
+            "amount": "0.002403",
+            "asset": "USD",
+            "payTo": "397b9395-d30d-42cc-abf9-0c56629d1c2f",
+            "maxTimeoutSeconds": 300,
+            "extra": {}
+          }
+        ]
+      },
+      "errorMsg": null,
+      "elapsedMs": 8899,
+      "startedAt": 1783187311450
+    },
+    {
+      "label": "race30",
+      "httpStatus": 402,
+      "body": {
+        "x402Version": 2,
+        "error": "Payment required",
+        "resource": {
+          "url": "http://openrouter.services.sapiom.ai/v1/chat/completions",
+          "description": "OpenRouter chat completion",
+          "mimeType": "application/json"
+        },
+        "accepts": [
+          {
+            "scheme": "upto",
+            "network": "sapiom:main",
+            "amount": "0.002403",
+            "asset": "USD",
+            "payTo": "397b9395-d30d-42cc-abf9-0c56629d1c2f",
+            "maxTimeoutSeconds": 300,
+            "extra": {}
+          }
+        ]
+      },
+      "errorMsg": null,
+      "elapsedMs": 8906,
+      "startedAt": 1783187311450
+    },
+    {
+      "label": "race31",
+      "httpStatus": 402,
+      "body": {
+        "x402Version": 2,
+        "error": "Payment required",
+        "resource": {
+          "url": "http://openrouter.services.sapiom.ai/v1/chat/completions",
+          "description": "OpenRouter chat completion",
+          "mimeType": "application/json"
+        },
+        "accepts": [
+          {
+            "scheme": "upto",
+            "network": "sapiom:main",
+            "amount": "0.002403",
+            "asset": "USD",
+            "payTo": "397b9395-d30d-42cc-abf9-0c56629d1c2f",
+            "maxTimeoutSeconds": 300,
+            "extra": {}
+          }
+        ]
+      },
+      "errorMsg": null,
+      "elapsedMs": 9355,
+      "startedAt": 1783187311450
+    },
+    {
+      "label": "race32",
+      "httpStatus": 402,
+      "body": {
+        "x402Version": 2,
+        "error": "Payment required",
+        "resource": {
+          "url": "http://openrouter.services.sapiom.ai/v1/chat/completions",
+          "description": "OpenRouter chat completion",
+          "mimeType": "application/json"
+        },
+        "accepts": [
+          {
+            "scheme": "upto",
+            "network": "sapiom:main",
+            "amount": "0.002403",
+            "asset": "USD",
+            "payTo": "397b9395-d30d-42cc-abf9-0c56629d1c2f",
+            "maxTimeoutSeconds": 300,
+            "extra": {}
+          }
+        ]
+      },
+      "errorMsg": null,
+      "elapsedMs": 8906,
+      "startedAt": 1783187311450
+    },
+    {
+      "label": "race33",
+      "httpStatus": 402,
+      "body": {
+        "x402Version": 2,
+        "error": "Payment required",
+        "resource": {
+          "url": "http://openrouter.services.sapiom.ai/v1/chat/completions",
+          "description": "OpenRouter chat completion",
+          "mimeType": "application/json"
+        },
+        "accepts": [
+          {
+            "scheme": "upto",
+            "network": "sapiom:main",
+            "amount": "0.002403",
+            "asset": "USD",
+            "payTo": "397b9395-d30d-42cc-abf9-0c56629d1c2f",
+            "maxTimeoutSeconds": 300,
+            "extra": {}
+          }
+        ]
+      },
+      "errorMsg": null,
+      "elapsedMs": 8910,
+      "startedAt": 1783187311450
+    },
+    {
+      "label": "race34",
+      "httpStatus": 402,
+      "body": {
+        "x402Version": 2,
+        "error": "Payment required",
+        "resource": {
+          "url": "http://openrouter.services.sapiom.ai/v1/chat/completions",
+          "description": "OpenRouter chat completion",
+          "mimeType": "application/json"
+        },
+        "accepts": [
+          {
+            "scheme": "upto",
+            "network": "sapiom:main",
+            "amount": "0.002403",
+            "asset": "USD",
+            "payTo": "397b9395-d30d-42cc-abf9-0c56629d1c2f",
+            "maxTimeoutSeconds": 300,
+            "extra": {}
+          }
+        ]
+      },
+      "errorMsg": null,
+      "elapsedMs": 9252,
+      "startedAt": 1783187311450
+    },
+    {
+      "label": "race35",
+      "httpStatus": 402,
+      "body": {
+        "x402Version": 2,
+        "error": "Payment required",
+        "resource": {
+          "url": "http://openrouter.services.sapiom.ai/v1/chat/completions",
+          "description": "OpenRouter chat completion",
+          "mimeType": "application/json"
+        },
+        "accepts": [
+          {
+            "scheme": "upto",
+            "network": "sapiom:main",
+            "amount": "0.002403",
+            "asset": "USD",
+            "payTo": "397b9395-d30d-42cc-abf9-0c56629d1c2f",
+            "maxTimeoutSeconds": 300,
+            "extra": {}
+          }
+        ]
+      },
+      "errorMsg": null,
+      "elapsedMs": 9313,
+      "startedAt": 1783187311450
+    },
+    {
+      "label": "race36",
+      "httpStatus": 402,
+      "body": {
+        "x402Version": 2,
+        "error": "Payment required",
+        "resource": {
+          "url": "http://openrouter.services.sapiom.ai/v1/chat/completions",
+          "description": "OpenRouter chat completion",
+          "mimeType": "application/json"
+        },
+        "accepts": [
+          {
+            "scheme": "upto",
+            "network": "sapiom:main",
+            "amount": "0.002403",
+            "asset": "USD",
+            "payTo": "397b9395-d30d-42cc-abf9-0c56629d1c2f",
+            "maxTimeoutSeconds": 300,
+            "extra": {}
+          }
+        ]
+      },
+      "errorMsg": null,
+      "elapsedMs": 9138,
+      "startedAt": 1783187311450
+    },
+    {
+      "label": "race37",
+      "httpStatus": 402,
+      "body": {
+        "x402Version": 2,
+        "error": "Payment required",
+        "resource": {
+          "url": "http://openrouter.services.sapiom.ai/v1/chat/completions",
+          "description": "OpenRouter chat completion",
+          "mimeType": "application/json"
+        },
+        "accepts": [
+          {
+            "scheme": "upto",
+            "network": "sapiom:main",
+            "amount": "0.002403",
+            "asset": "USD",
+            "payTo": "397b9395-d30d-42cc-abf9-0c56629d1c2f",
+            "maxTimeoutSeconds": 300,
+            "extra": {}
+          }
+        ]
+      },
+      "errorMsg": null,
+      "elapsedMs": 8906,
+      "startedAt": 1783187311450
+    },
+    {
+      "label": "race38",
+      "httpStatus": 402,
+      "body": {
+        "x402Version": 2,
+        "error": "Payment required",
+        "resource": {
+          "url": "http://openrouter.services.sapiom.ai/v1/chat/completions",
+          "description": "OpenRouter chat completion",
+          "mimeType": "application/json"
+        },
+        "accepts": [
+          {
+            "scheme": "upto",
+            "network": "sapiom:main",
+            "amount": "0.002403",
+            "asset": "USD",
+            "payTo": "397b9395-d30d-42cc-abf9-0c56629d1c2f",
+            "maxTimeoutSeconds": 300,
+            "extra": {}
+          }
+        ]
+      },
+      "errorMsg": null,
+      "elapsedMs": 9355,
+      "startedAt": 1783187311450
+    },
+    {
+      "label": "race39",
+      "httpStatus": 402,
+      "body": {
+        "x402Version": 2,
+        "error": "Payment required",
+        "resource": {
+          "url": "http://openrouter.services.sapiom.ai/v1/chat/completions",
+          "description": "OpenRouter chat completion",
+          "mimeType": "application/json"
+        },
+        "accepts": [
+          {
+            "scheme": "upto",
+            "network": "sapiom:main",
+            "amount": "0.002403",
+            "asset": "USD",
+            "payTo": "397b9395-d30d-42cc-abf9-0c56629d1c2f",
+            "maxTimeoutSeconds": 300,
+            "extra": {}
+          }
+        ]
+      },
+      "errorMsg": null,
+      "elapsedMs": 8880,
+      "startedAt": 1783187311450
+    },
+    {
+      "label": "race40",
+      "httpStatus": 402,
+      "body": {
+        "x402Version": 2,
+        "error": "Payment required",
+        "resource": {
+          "url": "http://openrouter.services.sapiom.ai/v1/chat/completions",
+          "description": "OpenRouter chat completion",
+          "mimeType": "application/json"
+        },
+        "accepts": [
+          {
+            "scheme": "upto",
+            "network": "sapiom:main",
+            "amount": "0.002403",
+            "asset": "USD",
+            "payTo": "397b9395-d30d-42cc-abf9-0c56629d1c2f",
+            "maxTimeoutSeconds": 300,
+            "extra": {}
+          }
+        ]
+      },
+      "errorMsg": null,
+      "elapsedMs": 9058,
+      "startedAt": 1783187311450
+    },
+    {
+      "label": "race41",
+      "httpStatus": 402,
+      "body": {
+        "x402Version": 2,
+        "error": "Payment required",
+        "resource": {
+          "url": "http://openrouter.services.sapiom.ai/v1/chat/completions",
+          "description": "OpenRouter chat completion",
+          "mimeType": "application/json"
+        },
+        "accepts": [
+          {
+            "scheme": "upto",
+            "network": "sapiom:main",
+            "amount": "0.002403",
+            "asset": "USD",
+            "payTo": "397b9395-d30d-42cc-abf9-0c56629d1c2f",
+            "maxTimeoutSeconds": 300,
+            "extra": {}
+          }
+        ]
+      },
+      "errorMsg": null,
+      "elapsedMs": 8907,
+      "startedAt": 1783187311450
+    },
+    {
+      "label": "race42",
+      "httpStatus": 402,
+      "body": {
+        "x402Version": 2,
+        "error": "Payment required",
+        "resource": {
+          "url": "http://openrouter.services.sapiom.ai/v1/chat/completions",
+          "description": "OpenRouter chat completion",
+          "mimeType": "application/json"
+        },
+        "accepts": [
+          {
+            "scheme": "upto",
+            "network": "sapiom:main",
+            "amount": "0.002403",
+            "asset": "USD",
+            "payTo": "397b9395-d30d-42cc-abf9-0c56629d1c2f",
+            "maxTimeoutSeconds": 300,
+            "extra": {}
+          }
+        ]
+      },
+      "errorMsg": null,
+      "elapsedMs": 9005,
+      "startedAt": 1783187311450
+    },
+    {
+      "label": "race43",
+      "httpStatus": 402,
+      "body": {
+        "x402Version": 2,
+        "error": "Payment required",
+        "resource": {
+          "url": "http://openrouter.services.sapiom.ai/v1/chat/completions",
+          "description": "OpenRouter chat completion",
+          "mimeType": "application/json"
+        },
+        "accepts": [
+          {
+            "scheme": "upto",
+            "network": "sapiom:main",
+            "amount": "0.002403",
+            "asset": "USD",
+            "payTo": "397b9395-d30d-42cc-abf9-0c56629d1c2f",
+            "maxTimeoutSeconds": 300,
+            "extra": {}
+          }
+        ]
+      },
+      "errorMsg": null,
+      "elapsedMs": 10446,
+      "startedAt": 1783187311450
+    },
+    {
+      "label": "race44",
+      "httpStatus": 402,
+      "body": {
+        "x402Version": 2,
+        "error": "Payment required",
+        "resource": {
+          "url": "http://openrouter.services.sapiom.ai/v1/chat/completions",
+          "description": "OpenRouter chat completion",
+          "mimeType": "application/json"
+        },
+        "accepts": [
+          {
+            "scheme": "upto",
+            "network": "sapiom:main",
+            "amount": "0.002403",
+            "asset": "USD",
+            "payTo": "397b9395-d30d-42cc-abf9-0c56629d1c2f",
+            "maxTimeoutSeconds": 300,
+            "extra": {}
+          }
+        ]
+      },
+      "errorMsg": null,
+      "elapsedMs": 9394,
+      "startedAt": 1783187311450
+    },
+    {
+      "label": "race45",
+      "httpStatus": 402,
+      "body": {
+        "x402Version": 2,
+        "error": "Payment required",
+        "resource": {
+          "url": "http://openrouter.services.sapiom.ai/v1/chat/completions",
+          "description": "OpenRouter chat completion",
+          "mimeType": "application/json"
+        },
+        "accepts": [
+          {
+            "scheme": "upto",
+            "network": "sapiom:main",
+            "amount": "0.002403",
+            "asset": "USD",
+            "payTo": "397b9395-d30d-42cc-abf9-0c56629d1c2f",
+            "maxTimeoutSeconds": 300,
+            "extra": {}
+          }
+        ]
+      },
+      "errorMsg": null,
+      "elapsedMs": 9004,
+      "startedAt": 1783187311450
+    },
+    {
+      "label": "race46",
+      "httpStatus": 402,
+      "body": {
+        "x402Version": 2,
+        "error": "Payment required",
+        "resource": {
+          "url": "http://openrouter.services.sapiom.ai/v1/chat/completions",
+          "description": "OpenRouter chat completion",
+          "mimeType": "application/json"
+        },
+        "accepts": [
+          {
+            "scheme": "upto",
+            "network": "sapiom:main",
+            "amount": "0.002403",
+            "asset": "USD",
+            "payTo": "397b9395-d30d-42cc-abf9-0c56629d1c2f",
+            "maxTimeoutSeconds": 300,
+            "extra": {}
+          }
+        ]
+      },
+      "errorMsg": null,
+      "elapsedMs": 9433,
+      "startedAt": 1783187311450
+    },
+    {
+      "label": "race47",
+      "httpStatus": 200,
+      "body": {
+        "id": "gen-1783187320-9uUdyv4ilLihmbu8vTpr",
+        "object": "chat.completion",
+        "created": 1783187320,
+        "model": "openai/gpt-4o-mini",
+        "provider": "OpenAI",
+        "system_fingerprint": "fp_3be5422b9d",
+        "service_tier": null,
+        "choices": [
+          {
+            "index": 0,
+            "logprobs": null,
+            "finish_reason": "stop",
+            "native_finish_reason": "stop",
+            "message": {
+              "role": "assistant",
+              "content": "test",
+              "refusal": null,
+              "reasoning": null
+            }
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 16,
+          "completion_tokens": 1,
+          "total_tokens": 17,
+          "cost": 0.000003,
+          "is_byok": false,
+          "prompt_tokens_details": {
+            "cached_tokens": 0,
+            "cache_write_tokens": 0,
+            "audio_tokens": 0,
+            "video_tokens": 0
+          },
+          "cost_details": {
+            "upstream_inference_cost": 0.000003,
+            "upstream_inference_prompt_cost": 0.0000024,
+            "upstream_inference_completions_cost": 6e-7
+          },
+          "completion_tokens_details": {
+            "reasoning_tokens": 0,
+            "image_tokens": 0,
+            "audio_tokens": 0
+          }
+        }
+      },
+      "errorMsg": null,
+      "elapsedMs": 9691,
+      "startedAt": 1783187311451
+    },
+    {
+      "label": "race48",
+      "httpStatus": 402,
+      "body": {
+        "x402Version": 2,
+        "error": "Payment required",
+        "resource": {
+          "url": "http://openrouter.services.sapiom.ai/v1/chat/completions",
+          "description": "OpenRouter chat completion",
+          "mimeType": "application/json"
+        },
+        "accepts": [
+          {
+            "scheme": "upto",
+            "network": "sapiom:main",
+            "amount": "0.002403",
+            "asset": "USD",
+            "payTo": "397b9395-d30d-42cc-abf9-0c56629d1c2f",
+            "maxTimeoutSeconds": 300,
+            "extra": {}
+          }
+        ]
+      },
+      "errorMsg": null,
+      "elapsedMs": 9293,
+      "startedAt": 1783187311451
+    },
+    {
+      "label": "race49",
+      "httpStatus": 200,
+      "body": {
+        "id": "gen-1783187322-JfmI6NKxDa1fKQy4tiW2",
+        "object": "chat.completion",
+        "created": 1783187322,
+        "model": "openai/gpt-4o-mini",
+        "provider": "Azure",
+        "system_fingerprint": "fp_965c8b9ecf",
+        "service_tier": null,
+        "choices": [
+          {
+            "index": 0,
+            "logprobs": null,
+            "finish_reason": "stop",
+            "native_finish_reason": "stop",
+            "message": {
+              "role": "assistant",
+              "content": "Test.",
+              "refusal": null,
+              "reasoning": null
+            }
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 16,
+          "completion_tokens": 3,
+          "total_tokens": 19,
+          "cost": 0.0000042,
+          "is_byok": false,
+          "prompt_tokens_details": {
+            "cached_tokens": 0,
+            "cache_write_tokens": 0,
+            "audio_tokens": 0,
+            "video_tokens": 0
+          },
+          "cost_details": {
+            "upstream_inference_cost": 0.0000042,
+            "upstream_inference_prompt_cost": 0.0000024,
+            "upstream_inference_completions_cost": 0.0000018
+          },
+          "completion_tokens_details": {
+            "reasoning_tokens": 0,
+            "image_tokens": 0,
+            "audio_tokens": 0
+          }
+        }
+      },
+      "errorMsg": null,
+      "elapsedMs": 12087,
+      "startedAt": 1783187311451
+    }
+  ],
+  "race_transactions": [
+    {
+      "id": "77f3dbbd-eed7-4799-86bd-bf81f4a93f7d",
+      "createdAt": "2026-07-04T17:48:35.057Z",
+      "overallStatus": "completed",
+      "hold": 0.002403,
+      "settle": 0.0001,
+      "all_rule_decisions": [
+        {
+          "decision": "ALLOWED",
+          "reason": "All limits within acceptable range",
+          "completedAt": "2026-07-04T17:48:42.005Z"
+        },
+        {
+          "decision": "ALLOWED",
+          "reason": "All limits within acceptable range",
+          "completedAt": "2026-07-04T17:48:35.163Z"
+        }
+      ],
+      "final_decision": "ALLOWED",
+      "final_decision_completed_at": "2026-07-04T17:48:42.005Z"
+    },
+    {
+      "id": "ee579f2c-6610-4c60-b018-8ff2d1f4988f",
+      "createdAt": "2026-07-04T17:48:34.964Z",
+      "overallStatus": "denied",
+      "hold": 0.002403,
+      "settle": 0.002403,
+      "all_rule_decisions": [
+        {
+          "decision": "ALLOWED",
+          "reason": "All limits within acceptable range",
+          "completedAt": "2026-07-04T17:48:35.089Z"
+        },
+        {
+          "decision": "DENIED",
+          "reason": "Total transaction costs including this transaction (0.01 USD) would exceed limit of 0.00 USD in 1 days",
+          "violations": [
+            {
+              "limitValue": 0.003605,
+              "currentValue": 0.007409,
+              "parameterName": null,
+              "measurementType": "sum_transaction_costs"
+            }
+          ],
+          "completedAt": "2026-07-04T17:48:39.519Z"
+        }
+      ],
+      "final_decision": "DENIED",
+      "final_decision_completed_at": "2026-07-04T17:48:39.519Z"
+    },
+    {
+      "id": "41c4e4e2-7c2c-4100-8448-6226c25e413e",
+      "createdAt": "2026-07-04T17:48:34.899Z",
+      "overallStatus": "completed",
+      "hold": 0.002403,
+      "settle": 0.0001,
+      "all_rule_decisions": [
+        {
+          "decision": "ALLOWED",
+          "reason": "All limits within acceptable range",
+          "completedAt": "2026-07-04T17:48:34.979Z"
+        },
+        {
+          "decision": "ALLOWED",
+          "reason": "All limits within acceptable range",
+          "completedAt": "2026-07-04T17:48:39.081Z"
+        }
+      ],
+      "final_decision": "ALLOWED",
+      "final_decision_completed_at": "2026-07-04T17:48:39.081Z"
+    },
+    {
+      "id": "22152ac0-b009-4892-bab5-bc3180fe1fde",
+      "createdAt": "2026-07-04T17:48:34.829Z",
+      "overallStatus": "denied",
+      "hold": 0.002403,
+      "settle": 0.002403,
+      "all_rule_decisions": [
+        {
+          "decision": "DENIED",
+          "reason": "Total transaction costs including this transaction (0.01 USD) would exceed limit of 0.00 USD in 1 days",
+          "violations": [
+            {
+              "limitValue": 0.003605,
+              "currentValue": 0.007409,
+              "parameterName": null,
+              "measurementType": "sum_transaction_costs"
+            }
+          ],
+          "completedAt": "2026-07-04T17:48:40.297Z"
+        },
+        {
+          "decision": "ALLOWED",
+          "reason": "All limits within acceptable range",
+          "completedAt": "2026-07-04T17:48:34.940Z"
+        }
+      ],
+      "final_decision": "DENIED",
+      "final_decision_completed_at": "2026-07-04T17:48:40.297Z"
+    },
+    {
+      "id": "f91e1842-bb11-49f5-900b-c7b83fdd8902",
+      "createdAt": "2026-07-04T17:48:34.741Z",
+      "overallStatus": "denied",
+      "hold": 0.002403,
+      "settle": 0.002403,
+      "all_rule_decisions": [
+        {
+          "decision": "DENIED",
+          "reason": "Total transaction costs including this transaction (0.01 USD) would exceed limit of 0.00 USD in 1 days",
+          "violations": [
+            {
+              "limitValue": 0.003605,
+              "currentValue": 0.007209,
+              "parameterName": null,
+              "measurementType": "sum_transaction_costs"
+            }
+          ],
+          "completedAt": "2026-07-04T17:48:38.681Z"
+        },
+        {
+          "decision": "ALLOWED",
+          "reason": "All limits within acceptable range",
+          "completedAt": "2026-07-04T17:48:34.821Z"
+        }
+      ],
+      "final_decision": "DENIED",
+      "final_decision_completed_at": "2026-07-04T17:48:38.681Z"
+    },
+    {
+      "id": "27ea72b1-51ac-4e46-96c5-98be7948b000",
+      "createdAt": "2026-07-04T17:48:34.673Z",
+      "overallStatus": "denied",
+      "hold": 0.002403,
+      "settle": 0.002403,
+      "all_rule_decisions": [
+        {
+          "decision": "DENIED",
+          "reason": "Total transaction costs including this transaction (0.01 USD) would exceed limit of 0.00 USD in 1 days",
+          "violations": [
+            {
+              "limitValue": 0.003605,
+              "currentValue": 0.007409,
+              "parameterName": null,
+              "measurementType": "sum_transaction_costs"
+            }
+          ],
+          "completedAt": "2026-07-04T17:48:40.163Z"
+        },
+        {
+          "decision": "ALLOWED",
+          "reason": "All limits within acceptable range",
+          "completedAt": "2026-07-04T17:48:34.766Z"
+        }
+      ],
+      "final_decision": "DENIED",
+      "final_decision_completed_at": "2026-07-04T17:48:40.163Z"
+    },
+    {
+      "id": "8ee15dd2-c0ce-4137-8baa-13acb4c9912b",
+      "createdAt": "2026-07-04T17:48:34.605Z",
+      "overallStatus": "denied",
+      "hold": 0.002403,
+      "settle": 0.002403,
+      "all_rule_decisions": [
+        {
+          "decision": "DENIED",
+          "reason": "Total transaction costs including this transaction (0.01 USD) would exceed limit of 0.00 USD in 1 days",
+          "violations": [
+            {
+              "limitValue": 0.003605,
+              "currentValue": 0.007409,
+              "parameterName": null,
+              "measurementType": "sum_transaction_costs"
+            }
+          ],
+          "completedAt": "2026-07-04T17:48:40.444Z"
+        },
+        {
+          "decision": "ALLOWED",
+          "reason": "All limits within acceptable range",
+          "completedAt": "2026-07-04T17:48:34.707Z"
+        }
+      ],
+      "final_decision": "DENIED",
+      "final_decision_completed_at": "2026-07-04T17:48:40.444Z"
+    },
+    {
+      "id": "fe86dd8d-8e59-4259-a8e0-e097ac612285",
+      "createdAt": "2026-07-04T17:48:34.536Z",
+      "overallStatus": "denied",
+      "hold": 0.002403,
+      "settle": 0.002403,
+      "all_rule_decisions": [
+        {
+          "decision": "DENIED",
+          "reason": "Total transaction costs including this transaction (0.01 USD) would exceed limit of 0.00 USD in 1 days",
+          "violations": [
+            {
+              "limitValue": 0.003605,
+              "currentValue": 0.007209,
+              "parameterName": null,
+              "measurementType": "sum_transaction_costs"
+            }
+          ],
+          "completedAt": "2026-07-04T17:48:38.795Z"
+        },
+        {
+          "decision": "ALLOWED",
+          "reason": "All limits within acceptable range",
+          "completedAt": "2026-07-04T17:48:34.655Z"
+        }
+      ],
+      "final_decision": "DENIED",
+      "final_decision_completed_at": "2026-07-04T17:48:38.795Z"
+    },
+    {
+      "id": "90f85f9e-c117-48de-b565-82b68eaa84c2",
+      "createdAt": "2026-07-04T17:48:34.458Z",
+      "overallStatus": "denied",
+      "hold": 0.002403,
+      "settle": 0.002403,
+      "all_rule_decisions": [
+        {
+          "decision": "ALLOWED",
+          "reason": "All limits within acceptable range",
+          "completedAt": "2026-07-04T17:48:34.563Z"
+        },
+        {
+          "decision": "DENIED",
+          "reason": "Total transaction costs including this transaction (0.01 USD) would exceed limit of 0.00 USD in 1 days",
+          "violations": [
+            {
+              "limitValue": 0.003605,
+              "currentValue": 0.007209,
+              "parameterName": null,
+              "measurementType": "sum_transaction_costs"
+            }
+          ],
+          "completedAt": "2026-07-04T17:48:38.031Z"
+        }
+      ],
+      "final_decision": "DENIED",
+      "final_decision_completed_at": "2026-07-04T17:48:38.031Z"
+    },
+    {
+      "id": "1dde383c-a53c-409d-9808-4ce70781fc56",
+      "createdAt": "2026-07-04T17:48:34.390Z",
+      "overallStatus": "denied",
+      "hold": 0.002403,
+      "settle": 0.002403,
+      "all_rule_decisions": [
+        {
+          "decision": "ALLOWED",
+          "reason": "All limits within acceptable range",
+          "completedAt": "2026-07-04T17:48:34.532Z"
+        },
+        {
+          "decision": "DENIED",
+          "reason": "Total transaction costs including this transaction (0.01 USD) would exceed limit of 0.00 USD in 1 days",
+          "violations": [
+            {
+              "limitValue": 0.003605,
+              "currentValue": 0.007209,
+              "parameterName": null,
+              "measurementType": "sum_transaction_costs"
+            }
+          ],
+          "completedAt": "2026-07-04T17:48:38.976Z"
+        }
+      ],
+      "final_decision": "DENIED",
+      "final_decision_completed_at": "2026-07-04T17:48:38.976Z"
+    },
+    {
+      "id": "40d628ff-c886-4b9d-b668-b98ff6b2d34f",
+      "createdAt": "2026-07-04T17:48:34.324Z",
+      "overallStatus": "denied",
+      "hold": 0.002403,
+      "settle": 0.002403,
+      "all_rule_decisions": [
+        {
+          "decision": "ALLOWED",
+          "reason": "All limits within acceptable range",
+          "completedAt": "2026-07-04T17:48:34.499Z"
+        },
+        {
+          "decision": "DENIED",
+          "reason": "Total transaction costs including this transaction (0.01 USD) would exceed limit of 0.00 USD in 1 days",
+          "violations": [
+            {
+              "limitValue": 0.003605,
+              "currentValue": 0.007209,
+              "parameterName": null,
+              "measurementType": "sum_transaction_costs"
+            }
+          ],
+          "completedAt": "2026-07-04T17:48:36.231Z"
+        }
+      ],
+      "final_decision": "DENIED",
+      "final_decision_completed_at": "2026-07-04T17:48:36.231Z"
+    },
+    {
+      "id": "005bc242-1e6f-4643-acc0-1739ea348f63",
+      "createdAt": "2026-07-04T17:48:34.258Z",
+      "overallStatus": "denied",
+      "hold": 0.002403,
+      "settle": 0.002403,
+      "all_rule_decisions": [
+        {
+          "decision": "DENIED",
+          "reason": "Total transaction costs including this transaction (0.01 USD) would exceed limit of 0.00 USD in 1 days",
+          "violations": [
+            {
+              "limitValue": 0.003605,
+              "currentValue": 0.007409,
+              "parameterName": null,
+              "measurementType": "sum_transaction_costs"
+            }
+          ],
+          "completedAt": "2026-07-04T17:48:39.909Z"
+        },
+        {
+          "decision": "ALLOWED",
+          "reason": "All limits within acceptable range",
+          "completedAt": "2026-07-04T17:48:34.442Z"
+        }
+      ],
+      "final_decision": "DENIED",
+      "final_decision_completed_at": "2026-07-04T17:48:39.909Z"
+    },
+    {
+      "id": "27c996bb-b3b9-4fa9-8c0e-1cb6aca29107",
+      "createdAt": "2026-07-04T17:48:34.175Z",
+      "overallStatus": "denied",
+      "hold": 0.002403,
+      "settle": 0.002403,
+      "all_rule_decisions": [
+        {
+          "decision": "DENIED",
+          "reason": "Total transaction costs including this transaction (0.01 USD) would exceed limit of 0.00 USD in 1 days",
+          "violations": [
+            {
+              "limitValue": 0.003605,
+              "currentValue": 0.007209,
+              "parameterName": null,
+              "measurementType": "sum_transaction_costs"
+            }
+          ],
+          "completedAt": "2026-07-04T17:48:37.522Z"
+        },
+        {
+          "decision": "ALLOWED",
+          "reason": "All limits within acceptable range",
+          "completedAt": "2026-07-04T17:48:34.321Z"
+        }
+      ],
+      "final_decision": "DENIED",
+      "final_decision_completed_at": "2026-07-04T17:48:37.522Z"
+    },
+    {
+      "id": "9fbfa164-c4ce-4970-b8c4-d08cb1908533",
+      "createdAt": "2026-07-04T17:48:34.098Z",
+      "overallStatus": "denied",
+      "hold": 0.002403,
+      "settle": 0.002403,
+      "all_rule_decisions": [
+        {
+          "decision": "DENIED",
+          "reason": "Total transaction costs including this transaction (0.01 USD) would exceed limit of 0.00 USD in 1 days",
+          "violations": [
+            {
+              "limitValue": 0.003605,
+              "currentValue": 0.007409,
+              "parameterName": null,
+              "measurementType": "sum_transaction_costs"
+            }
+          ],
+          "completedAt": "2026-07-04T17:48:39.220Z"
+        },
+        {
+          "decision": "ALLOWED",
+          "reason": "All limits within acceptable range",
+          "completedAt": "2026-07-04T17:48:34.197Z"
+        }
+      ],
+      "final_decision": "DENIED",
+      "final_decision_completed_at": "2026-07-04T17:48:39.220Z"
+    },
+    {
+      "id": "a3841a2a-5562-4d85-b5f0-0d852beae27c",
+      "createdAt": "2026-07-04T17:48:34.031Z",
+      "overallStatus": "denied",
+      "hold": 0.002403,
+      "settle": 0.002403,
+      "all_rule_decisions": [
+        {
+          "decision": "ALLOWED",
+          "reason": "All limits within acceptable range",
+          "completedAt": "2026-07-04T17:48:34.130Z"
+        },
+        {
+          "decision": "DENIED",
+          "reason": "Total transaction costs including this transaction (0.01 USD) would exceed limit of 0.00 USD in 1 days",
+          "violations": [
+            {
+              "limitValue": 0.003605,
+              "currentValue": 0.007409,
+              "parameterName": null,
+              "measurementType": "sum_transaction_costs"
+            }
+          ],
+          "completedAt": "2026-07-04T17:48:39.856Z"
+        }
+      ],
+      "final_decision": "DENIED",
+      "final_decision_completed_at": "2026-07-04T17:48:39.856Z"
+    },
+    {
+      "id": "3b4ccc41-f3db-43f3-9207-0cf8af647a35",
+      "createdAt": "2026-07-04T17:48:33.965Z",
+      "overallStatus": "denied",
+      "hold": 0.002403,
+      "settle": 0.002403,
+      "all_rule_decisions": [
+        {
+          "decision": "ALLOWED",
+          "reason": "All limits within acceptable range",
+          "completedAt": "2026-07-04T17:48:34.069Z"
+        },
+        {
+          "decision": "DENIED",
+          "reason": "Total transaction costs including this transaction (0.01 USD) would exceed limit of 0.00 USD in 1 days",
+          "violations": [
+            {
+              "limitValue": 0.003605,
+              "currentValue": 0.007409,
+              "parameterName": null,
+              "measurementType": "sum_transaction_costs"
+            }
+          ],
+          "completedAt": "2026-07-04T17:48:39.435Z"
+        }
+      ],
+      "final_decision": "DENIED",
+      "final_decision_completed_at": "2026-07-04T17:48:39.435Z"
+    },
+    {
+      "id": "edfa9b0c-648c-4e9b-acb1-16fd5f04c466",
+      "createdAt": "2026-07-04T17:48:33.899Z",
+      "overallStatus": "denied",
+      "hold": 0.002403,
+      "settle": 0.002403,
+      "all_rule_decisions": [
+        {
+          "decision": "DENIED",
+          "reason": "Total transaction costs including this transaction (0.01 USD) would exceed limit of 0.00 USD in 1 days",
+          "violations": [
+            {
+              "limitValue": 0.003605,
+              "currentValue": 0.007209,
+              "parameterName": null,
+              "measurementType": "sum_transaction_costs"
+            }
+          ],
+          "completedAt": "2026-07-04T17:48:38.412Z"
+        },
+        {
+          "decision": "ALLOWED",
+          "reason": "All limits within acceptable range",
+          "completedAt": "2026-07-04T17:48:34.006Z"
+        }
+      ],
+      "final_decision": "DENIED",
+      "final_decision_completed_at": "2026-07-04T17:48:38.412Z"
+    },
+    {
+      "id": "ca4611eb-e35b-4524-8e53-bb62938b73fd",
+      "createdAt": "2026-07-04T17:48:33.835Z",
+      "overallStatus": "denied",
+      "hold": 0.002403,
+      "settle": 0.002403,
+      "all_rule_decisions": [
+        {
+          "decision": "ALLOWED",
+          "reason": "All limits within acceptable range",
+          "completedAt": "2026-07-04T17:48:33.947Z"
+        },
+        {
+          "decision": "DENIED",
+          "reason": "Total transaction costs including this transaction (0.01 USD) would exceed limit of 0.00 USD in 1 days",
+          "violations": [
+            {
+              "limitValue": 0.003605,
+              "currentValue": 0.007209,
+              "parameterName": null,
+              "measurementType": "sum_transaction_costs"
+            }
+          ],
+          "completedAt": "2026-07-04T17:48:38.108Z"
+        }
+      ],
+      "final_decision": "DENIED",
+      "final_decision_completed_at": "2026-07-04T17:48:38.108Z"
+    },
+    {
+      "id": "d44677eb-f562-49d2-beac-75c122e89163",
+      "createdAt": "2026-07-04T17:48:33.768Z",
+      "overallStatus": "denied",
+      "hold": 0.002403,
+      "settle": 0.002403,
+      "all_rule_decisions": [
+        {
+          "decision": "ALLOWED",
+          "reason": "All limits within acceptable range",
+          "completedAt": "2026-07-04T17:48:33.867Z"
+        },
+        {
+          "decision": "DENIED",
+          "reason": "Total transaction costs including this transaction (0.01 USD) would exceed limit of 0.00 USD in 1 days",
+          "violations": [
+            {
+              "limitValue": 0.003605,
+              "currentValue": 0.007409,
+              "parameterName": null,
+              "measurementType": "sum_transaction_costs"
+            }
+          ],
+          "completedAt": "2026-07-04T17:48:40.021Z"
+        }
+      ],
+      "final_decision": "DENIED",
+      "final_decision_completed_at": "2026-07-04T17:48:40.021Z"
+    },
+    {
+      "id": "d0166a78-280b-487b-b525-a896e217c1a1",
+      "createdAt": "2026-07-04T17:48:33.699Z",
+      "overallStatus": "denied",
+      "hold": 0.002403,
+      "settle": 0.002403,
+      "all_rule_decisions": [
+        {
+          "decision": "DENIED",
+          "reason": "Total transaction costs including this transaction (0.01 USD) would exceed limit of 0.00 USD in 1 days",
+          "violations": [
+            {
+              "limitValue": 0.003605,
+              "currentValue": 0.007209,
+              "parameterName": null,
+              "measurementType": "sum_transaction_costs"
+            }
+          ],
+          "completedAt": "2026-07-04T17:48:37.961Z"
+        },
+        {
+          "decision": "ALLOWED",
+          "reason": "All limits within acceptable range",
+          "completedAt": "2026-07-04T17:48:33.800Z"
+        }
+      ],
+      "final_decision": "DENIED",
+      "final_decision_completed_at": "2026-07-04T17:48:37.961Z"
+    },
+    {
+      "id": "28384451-6e4e-467a-9cf1-c060265505f5",
+      "createdAt": "2026-07-04T17:48:33.630Z",
+      "overallStatus": "denied",
+      "hold": 0.002403,
+      "settle": 0.002403,
+      "all_rule_decisions": [
+        {
+          "decision": "ALLOWED",
+          "reason": "All limits within acceptable range",
+          "completedAt": "2026-07-04T17:48:33.751Z"
+        },
+        {
+          "decision": "DENIED",
+          "reason": "Total transaction costs including this transaction (0.01 USD) would exceed limit of 0.00 USD in 1 days",
+          "violations": [
+            {
+              "limitValue": 0.003605,
+              "currentValue": 0.007209,
+              "parameterName": null,
+              "measurementType": "sum_transaction_costs"
+            }
+          ],
+          "completedAt": "2026-07-04T17:48:37.141Z"
+        }
+      ],
+      "final_decision": "DENIED",
+      "final_decision_completed_at": "2026-07-04T17:48:37.141Z"
+    },
+    {
+      "id": "ed0aec0b-b9a3-44a0-894b-164307b26542",
+      "createdAt": "2026-07-04T17:48:33.554Z",
+      "overallStatus": "denied",
+      "hold": 0.002403,
+      "settle": 0.002403,
+      "all_rule_decisions": [
+        {
+          "decision": "DENIED",
+          "reason": "Total transaction costs including this transaction (0.01 USD) would exceed limit of 0.00 USD in 1 days",
+          "violations": [
+            {
+              "limitValue": 0.003605,
+              "currentValue": 0.007209,
+              "parameterName": null,
+              "measurementType": "sum_transaction_costs"
+            }
+          ],
+          "completedAt": "2026-07-04T17:48:35.958Z"
+        },
+        {
+          "decision": "ALLOWED",
+          "reason": "All limits within acceptable range",
+          "completedAt": "2026-07-04T17:48:33.665Z"
+        }
+      ],
+      "final_decision": "DENIED",
+      "final_decision_completed_at": "2026-07-04T17:48:35.958Z"
+    },
+    {
+      "id": "2e3103eb-9330-4486-a407-e85e4d0d56c8",
+      "createdAt": "2026-07-04T17:48:33.479Z",
+      "overallStatus": "denied",
+      "hold": 0.002403,
+      "settle": 0.002403,
+      "all_rule_decisions": [
+        {
+          "decision": "DENIED",
+          "reason": "Total transaction costs including this transaction (0.01 USD) would exceed limit of 0.00 USD in 1 days",
+          "violations": [
+            {
+              "limitValue": 0.003605,
+              "currentValue": 0.007209,
+              "parameterName": null,
+              "measurementType": "sum_transaction_costs"
+            }
+          ],
+          "completedAt": "2026-07-04T17:48:38.596Z"
+        },
+        {
+          "decision": "ALLOWED",
+          "reason": "All limits within acceptable range",
+          "completedAt": "2026-07-04T17:48:33.596Z"
+        }
+      ],
+      "final_decision": "DENIED",
+      "final_decision_completed_at": "2026-07-04T17:48:38.596Z"
+    },
+    {
+      "id": "937590ac-9f06-44c5-b4f2-99f658867fc3",
+      "createdAt": "2026-07-04T17:48:33.410Z",
+      "overallStatus": "denied",
+      "hold": 0.002403,
+      "settle": 0.002403,
+      "all_rule_decisions": [
+        {
+          "decision": "ALLOWED",
+          "reason": "All limits within acceptable range",
+          "completedAt": "2026-07-04T17:48:33.578Z"
+        },
+        {
+          "decision": "DENIED",
+          "reason": "Total transaction costs including this transaction (0.01 USD) would exceed limit of 0.00 USD in 1 days",
+          "violations": [
+            {
+              "limitValue": 0.003605,
+              "currentValue": 0.007209,
+              "parameterName": null,
+              "measurementType": "sum_transaction_costs"
+            }
+          ],
+          "completedAt": "2026-07-04T17:48:37.843Z"
+        }
+      ],
+      "final_decision": "DENIED",
+      "final_decision_completed_at": "2026-07-04T17:48:37.843Z"
+    },
+    {
+      "id": "814cbf1d-da11-4813-9394-5ff792a04d8d",
+      "createdAt": "2026-07-04T17:48:33.339Z",
+      "overallStatus": "denied",
+      "hold": 0.002403,
+      "settle": 0.002403,
+      "all_rule_decisions": [
+        {
+          "decision": "ALLOWED",
+          "reason": "All limits within acceptable range",
+          "completedAt": "2026-07-04T17:48:33.539Z"
+        },
+        {
+          "decision": "DENIED",
+          "reason": "Total transaction costs including this transaction (0.01 USD) would exceed limit of 0.00 USD in 1 days",
+          "violations": [
+            {
+              "limitValue": 0.003605,
+              "currentValue": 0.007209,
+              "parameterName": null,
+              "measurementType": "sum_transaction_costs"
+            }
+          ],
+          "completedAt": "2026-07-04T17:48:35.641Z"
+        }
+      ],
+      "final_decision": "DENIED",
+      "final_decision_completed_at": "2026-07-04T17:48:35.641Z"
+    },
+    {
+      "id": "005f6ddc-e2f4-4461-aabf-54f49813b277",
+      "createdAt": "2026-07-04T17:48:33.271Z",
+      "overallStatus": "denied",
+      "hold": 0.002403,
+      "settle": 0.002403,
+      "all_rule_decisions": [
+        {
+          "decision": "ALLOWED",
+          "reason": "All limits within acceptable range",
+          "completedAt": "2026-07-04T17:48:33.422Z"
+        },
+        {
+          "decision": "DENIED",
+          "reason": "Total transaction costs including this transaction (0.01 USD) would exceed limit of 0.00 USD in 1 days",
+          "violations": [
+            {
+              "limitValue": 0.003605,
+              "currentValue": 0.007209,
+              "parameterName": null,
+              "measurementType": "sum_transaction_costs"
+            }
+          ],
+          "completedAt": "2026-07-04T17:48:37.234Z"
+        }
+      ],
+      "final_decision": "DENIED",
+      "final_decision_completed_at": "2026-07-04T17:48:37.234Z"
+    },
+    {
+      "id": "ca75592c-ca3e-4028-97ca-db1704acad9d",
+      "createdAt": "2026-07-04T17:48:33.197Z",
+      "overallStatus": "denied",
+      "hold": 0.002403,
+      "settle": 0.002403,
+      "all_rule_decisions": [
+        {
+          "decision": "DENIED",
+          "reason": "Total transaction costs including this transaction (0.01 USD) would exceed limit of 0.00 USD in 1 days",
+          "violations": [
+            {
+              "limitValue": 0.003605,
+              "currentValue": 0.007209,
+              "parameterName": null,
+              "measurementType": "sum_transaction_costs"
+            }
+          ],
+          "completedAt": "2026-07-04T17:48:38.204Z"
+        },
+        {
+          "decision": "ALLOWED",
+          "reason": "All limits within acceptable range",
+          "completedAt": "2026-07-04T17:48:33.304Z"
+        }
+      ],
+      "final_decision": "DENIED",
+      "final_decision_completed_at": "2026-07-04T17:48:38.204Z"
+    },
+    {
+      "id": "54412d08-6571-4602-a000-ce0f1fe89d1d",
+      "createdAt": "2026-07-04T17:48:33.118Z",
+      "overallStatus": "denied",
+      "hold": 0.002403,
+      "settle": 0.002403,
+      "all_rule_decisions": [
+        {
+          "decision": "DENIED",
+          "reason": "Total transaction costs including this transaction (0.01 USD) would exceed limit of 0.00 USD in 1 days",
+          "violations": [
+            {
+              "limitValue": 0.003605,
+              "currentValue": 0.007209,
+              "parameterName": null,
+              "measurementType": "sum_transaction_costs"
+            }
+          ],
+          "completedAt": "2026-07-04T17:48:35.527Z"
+        },
+        {
+          "decision": "ALLOWED",
+          "reason": "All limits within acceptable range",
+          "completedAt": "2026-07-04T17:48:33.238Z"
+        }
+      ],
+      "final_decision": "DENIED",
+      "final_decision_completed_at": "2026-07-04T17:48:35.527Z"
+    },
+    {
+      "id": "8ba82891-632d-40eb-894d-d0ce3c5e9034",
+      "createdAt": "2026-07-04T17:48:33.054Z",
+      "overallStatus": "denied",
+      "hold": 0.002403,
+      "settle": 0.002403,
+      "all_rule_decisions": [
+        {
+          "decision": "ALLOWED",
+          "reason": "All limits within acceptable range",
+          "completedAt": "2026-07-04T17:48:33.138Z"
+        },
+        {
+          "decision": "DENIED",
+          "reason": "Total transaction costs including this transaction (0.01 USD) would exceed limit of 0.00 USD in 1 days",
+          "violations": [
+            {
+              "limitValue": 0.003605,
+              "currentValue": 0.007409,
+              "parameterName": null,
+              "measurementType": "sum_transaction_costs"
+            }
+          ],
+          "completedAt": "2026-07-04T17:48:40.244Z"
+        }
+      ],
+      "final_decision": "DENIED",
+      "final_decision_completed_at": "2026-07-04T17:48:40.244Z"
+    },
+    {
+      "id": "d92bfc7e-1a16-43e1-8a3e-55606622bc1e",
+      "createdAt": "2026-07-04T17:48:32.972Z",
+      "overallStatus": "denied",
+      "hold": 0.002403,
+      "settle": 0.002403,
+      "all_rule_decisions": [
+        {
+          "decision": "ALLOWED",
+          "reason": "All limits within acceptable range",
+          "completedAt": "2026-07-04T17:48:33.078Z"
+        },
+        {
+          "decision": "DENIED",
+          "reason": "Total transaction costs including this transaction (0.01 USD) would exceed limit of 0.00 USD in 1 days",
+          "violations": [
+            {
+              "limitValue": 0.003605,
+              "currentValue": 0.007209,
+              "parameterName": null,
+              "measurementType": "sum_transaction_costs"
+            }
+          ],
+          "completedAt": "2026-07-04T17:48:37.433Z"
+        }
+      ],
+      "final_decision": "DENIED",
+      "final_decision_completed_at": "2026-07-04T17:48:37.433Z"
+    },
+    {
+      "id": "53450a46-69ae-471b-b13f-15e3c5a85bfe",
+      "createdAt": "2026-07-04T17:48:32.891Z",
+      "overallStatus": "denied",
+      "hold": 0.002403,
+      "settle": 0.002403,
+      "all_rule_decisions": [
+        {
+          "decision": "DENIED",
+          "reason": "Total transaction costs including this transaction (0.01 USD) would exceed limit of 0.00 USD in 1 days",
+          "violations": [
+            {
+              "limitValue": 0.003605,
+              "currentValue": 0.007209,
+              "parameterName": null,
+              "measurementType": "sum_transaction_costs"
+            }
+          ],
+          "completedAt": "2026-07-04T17:48:38.333Z"
+        },
+        {
+          "decision": "ALLOWED",
+          "reason": "All limits within acceptable range",
+          "completedAt": "2026-07-04T17:48:32.981Z"
+        }
+      ],
+      "final_decision": "DENIED",
+      "final_decision_completed_at": "2026-07-04T17:48:38.333Z"
+    },
+    {
+      "id": "c99efd37-43fb-430e-8150-2538bdef5b89",
+      "createdAt": "2026-07-04T17:48:32.826Z",
+      "overallStatus": "denied",
+      "hold": 0.002403,
+      "settle": 0.002403,
+      "all_rule_decisions": [
+        {
+          "decision": "ALLOWED",
+          "reason": "All limits within acceptable range",
+          "completedAt": "2026-07-04T17:48:32.909Z"
+        },
+        {
+          "decision": "DENIED",
+          "reason": "Total transaction costs including this transaction (0.01 USD) would exceed limit of 0.00 USD in 1 days",
+          "violations": [
+            {
+              "limitValue": 0.003605,
+              "currentValue": 0.009612,
+              "parameterName": null,
+              "measurementType": "sum_transaction_costs"
+            }
+          ],
+          "completedAt": "2026-07-04T17:48:36.150Z"
+        }
+      ],
+      "final_decision": "DENIED",
+      "final_decision_completed_at": "2026-07-04T17:48:36.150Z"
+    },
+    {
+      "id": "f64babd9-f552-4b93-bddf-eeb77da26ede",
+      "createdAt": "2026-07-04T17:48:32.760Z",
+      "overallStatus": "denied",
+      "hold": 0.002403,
+      "settle": 0.002403,
+      "all_rule_decisions": [
+        {
+          "decision": "DENIED",
+          "reason": "Total transaction costs including this transaction (0.01 USD) would exceed limit of 0.00 USD in 1 days",
+          "violations": [
+            {
+              "limitValue": 0.003605,
+              "currentValue": 0.007409,
+              "parameterName": null,
+              "measurementType": "sum_transaction_costs"
+            }
+          ],
+          "completedAt": "2026-07-04T17:48:39.302Z"
+        },
+        {
+          "decision": "ALLOWED",
+          "reason": "All limits within acceptable range",
+          "completedAt": "2026-07-04T17:48:32.860Z"
+        }
+      ],
+      "final_decision": "DENIED",
+      "final_decision_completed_at": "2026-07-04T17:48:39.302Z"
+    },
+    {
+      "id": "96ba2309-ae93-4c71-a904-f46ba800998e",
+      "createdAt": "2026-07-04T17:48:32.692Z",
+      "overallStatus": "denied",
+      "hold": 0.002403,
+      "settle": 0.002403,
+      "all_rule_decisions": [
+        {
+          "decision": "DENIED",
+          "reason": "Total transaction costs including this transaction (0.01 USD) would exceed limit of 0.00 USD in 1 days",
+          "violations": [
+            {
+              "limitValue": 0.003605,
+              "currentValue": 0.007209,
+              "parameterName": null,
+              "measurementType": "sum_transaction_costs"
+            }
+          ],
+          "completedAt": "2026-07-04T17:48:37.636Z"
+        },
+        {
+          "decision": "ALLOWED",
+          "reason": "All limits within acceptable range",
+          "completedAt": "2026-07-04T17:48:32.807Z"
+        }
+      ],
+      "final_decision": "DENIED",
+      "final_decision_completed_at": "2026-07-04T17:48:37.636Z"
+    },
+    {
+      "id": "a4f7e4f7-4a34-4bcf-bb78-74a942599dbe",
+      "createdAt": "2026-07-04T17:48:32.628Z",
+      "overallStatus": "denied",
+      "hold": 0.002403,
+      "settle": 0.002403,
+      "all_rule_decisions": [
+        {
+          "decision": "ALLOWED",
+          "reason": "All limits within acceptable range",
+          "completedAt": "2026-07-04T17:48:32.708Z"
+        },
+        {
+          "decision": "DENIED",
+          "reason": "Total transaction costs including this transaction (0.01 USD) would exceed limit of 0.00 USD in 1 days",
+          "violations": [
+            {
+              "limitValue": 0.003605,
+              "currentValue": 0.007209,
+              "parameterName": null,
+              "measurementType": "sum_transaction_costs"
+            }
+          ],
+          "completedAt": "2026-07-04T17:48:36.022Z"
+        }
+      ],
+      "final_decision": "DENIED",
+      "final_decision_completed_at": "2026-07-04T17:48:36.022Z"
+    },
+    {
+      "id": "e89f4a47-7e71-40d8-9381-634e52ebc35f",
+      "createdAt": "2026-07-04T17:48:32.543Z",
+      "overallStatus": "denied",
+      "hold": 0.002403,
+      "settle": 0.002403,
+      "all_rule_decisions": [
+        {
+          "decision": "DENIED",
+          "reason": "Total transaction costs including this transaction (0.01 USD) would exceed limit of 0.00 USD in 1 days",
+          "violations": [
+            {
+              "limitValue": 0.003605,
+              "currentValue": 0.007209,
+              "parameterName": null,
+              "measurementType": "sum_transaction_costs"
+            }
+          ],
+          "completedAt": "2026-07-04T17:48:37.749Z"
+        },
+        {
+          "decision": "ALLOWED",
+          "reason": "All limits within acceptable range",
+          "completedAt": "2026-07-04T17:48:32.659Z"
+        }
+      ],
+      "final_decision": "DENIED",
+      "final_decision_completed_at": "2026-07-04T17:48:37.749Z"
+    },
+    {
+      "id": "6c77298d-5fca-41df-9e5a-468f31bf53b6",
+      "createdAt": "2026-07-04T17:48:32.472Z",
+      "overallStatus": "denied",
+      "hold": 0.002403,
+      "settle": 0.002403,
+      "all_rule_decisions": [
+        {
+          "decision": "ALLOWED",
+          "reason": "All limits within acceptable range",
+          "completedAt": "2026-07-04T17:48:32.599Z"
+        },
+        {
+          "decision": "DENIED",
+          "reason": "Total transaction costs including this transaction (0.01 USD) would exceed limit of 0.00 USD in 1 days",
+          "violations": [
+            {
+              "limitValue": 0.003605,
+              "currentValue": 0.007209,
+              "parameterName": null,
+              "measurementType": "sum_transaction_costs"
+            }
+          ],
+          "completedAt": "2026-07-04T17:48:36.956Z"
+        }
+      ],
+      "final_decision": "DENIED",
+      "final_decision_completed_at": "2026-07-04T17:48:36.956Z"
+    },
+    {
+      "id": "29046bb1-cb09-4766-81ce-e983a9c5367b",
+      "createdAt": "2026-07-04T17:48:32.406Z",
+      "overallStatus": "denied",
+      "hold": 0.002403,
+      "settle": 0.002403,
+      "all_rule_decisions": [
+        {
+          "decision": "DENIED",
+          "reason": "Total transaction costs including this transaction (0.01 USD) would exceed limit of 0.00 USD in 1 days",
+          "violations": [
+            {
+              "limitValue": 0.003605,
+              "currentValue": 0.007209,
+              "parameterName": null,
+              "measurementType": "sum_transaction_costs"
+            }
+          ],
+          "completedAt": "2026-07-04T17:48:37.350Z"
+        },
+        {
+          "decision": "ALLOWED",
+          "reason": "All limits within acceptable range",
+          "completedAt": "2026-07-04T17:48:32.576Z"
+        }
+      ],
+      "final_decision": "DENIED",
+      "final_decision_completed_at": "2026-07-04T17:48:37.350Z"
+    },
+    {
+      "id": "1fd1c501-e9c3-4e23-b519-5b951be74a2c",
+      "createdAt": "2026-07-04T17:48:32.334Z",
+      "overallStatus": "denied",
+      "hold": 0.002403,
+      "settle": 0.002403,
+      "all_rule_decisions": [
+        {
+          "decision": "ALLOWED",
+          "reason": "All limits within acceptable range",
+          "completedAt": "2026-07-04T17:48:32.473Z"
+        },
+        {
+          "decision": "DENIED",
+          "reason": "Total transaction costs including this transaction (0.01 USD) would exceed limit of 0.00 USD in 1 days",
+          "violations": [
+            {
+              "limitValue": 0.003605,
+              "currentValue": 0.007209,
+              "parameterName": null,
+              "measurementType": "sum_transaction_costs"
+            }
+          ],
+          "completedAt": "2026-07-04T17:48:36.296Z"
+        }
+      ],
+      "final_decision": "DENIED",
+      "final_decision_completed_at": "2026-07-04T17:48:36.296Z"
+    },
+    {
+      "id": "8869a59d-e299-49d0-8f1b-196543491762",
+      "createdAt": "2026-07-04T17:48:32.263Z",
+      "overallStatus": "denied",
+      "hold": 0.002403,
+      "settle": 0.002403,
+      "all_rule_decisions": [
+        {
+          "decision": "DENIED",
+          "reason": "Total transaction costs including this transaction (0.01 USD) would exceed limit of 0.00 USD in 1 days",
+          "violations": [
+            {
+              "limitValue": 0.003605,
+              "currentValue": 0.007209,
+              "parameterName": null,
+              "measurementType": "sum_transaction_costs"
+            }
+          ],
+          "completedAt": "2026-07-04T17:48:38.892Z"
+        },
+        {
+          "decision": "ALLOWED",
+          "reason": "All limits within acceptable range",
+          "completedAt": "2026-07-04T17:48:32.479Z"
+        }
+      ],
+      "final_decision": "DENIED",
+      "final_decision_completed_at": "2026-07-04T17:48:38.892Z"
+    },
+    {
+      "id": "bed4bc0e-79c8-4681-912b-b88d43e02851",
+      "createdAt": "2026-07-04T17:48:32.178Z",
+      "overallStatus": "denied",
+      "hold": 0.002403,
+      "settle": 0.002403,
+      "all_rule_decisions": [
+        {
+          "decision": "ALLOWED",
+          "reason": "All limits within acceptable range",
+          "completedAt": "2026-07-04T17:48:32.297Z"
+        },
+        {
+          "decision": "DENIED",
+          "reason": "Total transaction costs including this transaction (0.01 USD) would exceed limit of 0.00 USD in 1 days",
+          "violations": [
+            {
+              "limitValue": 0.003605,
+              "currentValue": 0.007209,
+              "parameterName": null,
+              "measurementType": "sum_transaction_costs"
+            }
+          ],
+          "completedAt": "2026-07-04T17:48:36.847Z"
+        }
+      ],
+      "final_decision": "DENIED",
+      "final_decision_completed_at": "2026-07-04T17:48:36.847Z"
+    },
+    {
+      "id": "ded813a2-88f8-4415-88a5-5d3b0249ce17",
+      "createdAt": "2026-07-04T17:48:32.111Z",
+      "overallStatus": "denied",
+      "hold": 0.002403,
+      "settle": 0.002403,
+      "all_rule_decisions": [
+        {
+          "decision": "DENIED",
+          "reason": "Total transaction costs including this transaction (0.01 USD) would exceed limit of 0.00 USD in 1 days",
+          "violations": [
+            {
+              "limitValue": 0.003605,
+              "currentValue": 0.007209,
+              "parameterName": null,
+              "measurementType": "sum_transaction_costs"
+            }
+          ],
+          "completedAt": "2026-07-04T17:48:36.686Z"
+        },
+        {
+          "decision": "ALLOWED",
+          "reason": "All limits within acceptable range",
+          "completedAt": "2026-07-04T17:48:32.193Z"
+        }
+      ],
+      "final_decision": "DENIED",
+      "final_decision_completed_at": "2026-07-04T17:48:36.686Z"
+    },
+    {
+      "id": "64a26cd5-8bed-4228-b6d1-3823ef3f84d0",
+      "createdAt": "2026-07-04T17:48:32.044Z",
+      "overallStatus": "denied",
+      "hold": 0.002403,
+      "settle": 0.002403,
+      "all_rule_decisions": [
+        {
+          "decision": "ALLOWED",
+          "reason": "All limits within acceptable range",
+          "completedAt": "2026-07-04T17:48:32.153Z"
+        },
+        {
+          "decision": "DENIED",
+          "reason": "Total transaction costs including this transaction (0.01 USD) would exceed limit of 0.00 USD in 1 days",
+          "violations": [
+            {
+              "limitValue": 0.003605,
+              "currentValue": 0.007209,
+              "parameterName": null,
+              "measurementType": "sum_transaction_costs"
+            }
+          ],
+          "completedAt": "2026-07-04T17:48:37.032Z"
+        }
+      ],
+      "final_decision": "DENIED",
+      "final_decision_completed_at": "2026-07-04T17:48:37.032Z"
+    },
+    {
+      "id": "1e24c856-8f01-4a22-ac43-cc11153b47fe",
+      "createdAt": "2026-07-04T17:48:31.966Z",
+      "overallStatus": "denied",
+      "hold": 0.002403,
+      "settle": 0.002403,
+      "all_rule_decisions": [
+        {
+          "decision": "DENIED",
+          "reason": "Total transaction costs including this transaction (0.01 USD) would exceed limit of 0.00 USD in 1 days",
+          "violations": [
+            {
+              "limitValue": 0.003605,
+              "currentValue": 0.007209,
+              "parameterName": null,
+              "measurementType": "sum_transaction_costs"
+            }
+          ],
+          "completedAt": "2026-07-04T17:48:38.501Z"
+        },
+        {
+          "decision": "ALLOWED",
+          "reason": "All limits within acceptable range",
+          "completedAt": "2026-07-04T17:48:32.074Z"
+        }
+      ],
+      "final_decision": "DENIED",
+      "final_decision_completed_at": "2026-07-04T17:48:38.501Z"
+    },
+    {
+      "id": "500a7c08-c7e4-4150-855a-73da15721aa5",
+      "createdAt": "2026-07-04T17:48:31.892Z",
+      "overallStatus": "denied",
+      "hold": 0.002403,
+      "settle": 0.002403,
+      "all_rule_decisions": [
+        {
+          "decision": "DENIED",
+          "reason": "Total transaction costs including this transaction (0.01 USD) would exceed limit of 0.00 USD in 1 days",
+          "violations": [
+            {
+              "limitValue": 0.003605,
+              "currentValue": 0.007209,
+              "parameterName": null,
+              "measurementType": "sum_transaction_costs"
+            }
+          ],
+          "completedAt": "2026-07-04T17:48:36.554Z"
+        },
+        {
+          "decision": "ALLOWED",
+          "reason": "All limits within acceptable range",
+          "completedAt": "2026-07-04T17:48:31.982Z"
+        }
+      ],
+      "final_decision": "DENIED",
+      "final_decision_completed_at": "2026-07-04T17:48:36.554Z"
+    },
+    {
+      "id": "bcf250c8-038e-409c-8437-bff8d53fcef2",
+      "createdAt": "2026-07-04T17:48:31.826Z",
+      "overallStatus": "denied",
+      "hold": 0.002403,
+      "settle": 0.002403,
+      "all_rule_decisions": [
+        {
+          "decision": "DENIED",
+          "reason": "Total transaction costs including this transaction (0.01 USD) would exceed limit of 0.00 USD in 1 days",
+          "violations": [
+            {
+              "limitValue": 0.003605,
+              "currentValue": 0.007209,
+              "parameterName": null,
+              "measurementType": "sum_transaction_costs"
+            }
+          ],
+          "completedAt": "2026-07-04T17:48:35.737Z"
+        },
+        {
+          "decision": "ALLOWED",
+          "reason": "All limits within acceptable range",
+          "completedAt": "2026-07-04T17:48:31.929Z"
+        }
+      ],
+      "final_decision": "DENIED",
+      "final_decision_completed_at": "2026-07-04T17:48:35.737Z"
+    },
+    {
+      "id": "4f21fead-e8ab-40c0-9870-d2daee7dccff",
+      "createdAt": "2026-07-04T17:48:31.762Z",
+      "overallStatus": "denied",
+      "hold": 0.002403,
+      "settle": 0.002403,
+      "all_rule_decisions": [
+        {
+          "decision": "DENIED",
+          "reason": "Total transaction costs including this transaction (0.01 USD) would exceed limit of 0.00 USD in 1 days",
+          "violations": [
+            {
+              "limitValue": 0.003605,
+              "currentValue": 0.007209,
+              "parameterName": null,
+              "measurementType": "sum_transaction_costs"
+            }
+          ],
+          "completedAt": "2026-07-04T17:48:35.871Z"
+        },
+        {
+          "decision": "ALLOWED",
+          "reason": "All limits within acceptable range",
+          "completedAt": "2026-07-04T17:48:31.849Z"
+        }
+      ],
+      "final_decision": "DENIED",
+      "final_decision_completed_at": "2026-07-04T17:48:35.871Z"
+    },
+    {
+      "id": "184ea12c-c64c-4ef4-9fcf-39891ff3f443",
+      "createdAt": "2026-07-04T17:48:31.689Z",
+      "overallStatus": "denied",
+      "hold": 0.002403,
+      "settle": 0.002403,
+      "all_rule_decisions": [
+        {
+          "decision": "DENIED",
+          "reason": "Total transaction costs including this transaction (0.01 USD) would exceed limit of 0.00 USD in 1 days",
+          "violations": [
+            {
+              "limitValue": 0.003605,
+              "currentValue": 0.007209,
+              "parameterName": null,
+              "measurementType": "sum_transaction_costs"
+            }
+          ],
+          "completedAt": "2026-07-04T17:48:36.753Z"
+        },
+        {
+          "decision": "ALLOWED",
+          "reason": "All limits within acceptable range",
+          "completedAt": "2026-07-04T17:48:31.790Z"
+        }
+      ],
+      "final_decision": "DENIED",
+      "final_decision_completed_at": "2026-07-04T17:48:36.753Z"
+    },
+    {
+      "id": "35385ed9-5a61-459b-bf2d-2a286d1a6f1b",
+      "createdAt": "2026-07-04T17:48:31.620Z",
+      "overallStatus": "completed",
+      "hold": 0.002403,
+      "settle": 0.0001,
+      "all_rule_decisions": [
+        {
+          "decision": "ALLOWED",
+          "reason": "All limits within acceptable range",
+          "completedAt": "2026-07-04T17:48:35.369Z"
+        },
+        {
+          "decision": "ALLOWED",
+          "reason": "All limits within acceptable range",
+          "completedAt": "2026-07-04T17:48:31.711Z"
+        }
+      ],
+      "final_decision": "ALLOWED",
+      "final_decision_completed_at": "2026-07-04T17:48:35.369Z"
+    },
+    {
+      "id": "9c89ecee-d82d-4528-a14a-0f1c66be14ef",
+      "createdAt": "2026-07-04T17:48:31.492Z",
+      "overallStatus": "denied",
+      "hold": 0.002403,
+      "settle": 0.002403,
+      "all_rule_decisions": [
+        {
+          "decision": "DENIED",
+          "reason": "Total transaction costs including this transaction (0.01 USD) would exceed limit of 0.00 USD in 1 days",
+          "violations": [
+            {
+              "limitValue": 0.003605,
+              "currentValue": 0.007209,
+              "parameterName": null,
+              "measurementType": "sum_transaction_costs"
+            }
+          ],
+          "completedAt": "2026-07-04T17:48:35.434Z"
+        },
+        {
+          "decision": "ALLOWED",
+          "reason": "All limits within acceptable range",
+          "completedAt": "2026-07-04T17:48:31.658Z"
+        }
+      ],
+      "final_decision": "DENIED",
+      "final_decision_completed_at": "2026-07-04T17:48:35.434Z"
+    }
+  ],
+  "allowed_count": 3,
+  "denied_count": 47,
+  "unknown_count": 0,
+  "http_allowed_count": 3,
+  "http_denied_count": 47,
+  "dollars_authorized_through": 0.007209,
+  "limit_dollars": 0.0036045,
+  "leak_factor": 3,
+  "rule_paused_confirmation": {
+    "id": "c7c0b61e-12ff-4982-9dad-ae12d41d7824",
+    "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+    "numericId": 9,
+    "formattedId": "RL-009",
+    "name": "race-lat-rule-slowB50",
+    "ruleType": "usage_limit",
+    "resolutionStrategy": "automatic",
+    "status": "paused",
+    "version": 2,
+    "metadata": null,
+    "createdAt": "2026-07-04T17:48:31.383Z",
+    "updatedAt": "2026-07-04T17:48:55.845Z",
+    "lastEditedBy": {
+      "apiKeyId": "bfb69755-474f-41c3-bc82-22ca4aa97eec"
+    },
+    "deletedAt": null,
+    "conditions": [],
+    "parameters": [
+      {
+        "id": "f8455645-5d36-4335-8d67-9c4237be7fe5",
+        "ruleId": "c7c0b61e-12ff-4982-9dad-ae12d41d7824",
+        "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+        "parameterName": null,
+        "limitValue": "0.003605000000000000",
+        "measurementType": "sum_transaction_costs",
+        "intervalValue": 1,
+        "intervalUnit": "days",
+        "isRolling": true,
+        "groupBy": null,
+        "measurementScope": "rule",
+        "includeEstimates": true,
+        "description": null,
+        "createdAt": "2026-07-04T17:48:31.383Z",
+        "updatedAt": "2026-07-04T17:48:31.383Z"
+      }
+    ],
+    "agentRules": [
+      {
+        "id": "f3aaec6f-e477-47fe-b9e5-24bdbc4188f9",
+        "agentId": "a658cbfc-7a71-4f3f-b2c4-798d8254eb13",
+        "agent": {
+          "id": "a658cbfc-7a71-4f3f-b2c4-798d8254eb13",
+          "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+          "numericId": 21,
+          "label": "Race Latency Test Agent (slowB50)",
+          "name": "race-lat-agent-slowB50",
+          "description": "Throwaway agent created for the TOCTOU-latency concurrency experiment (dryrun/toctou_latency_experiment.md). Never used for real traffic. Safe to ignore.",
+          "status": "active",
+          "createdAt": "2026-07-04T17:48:15.291Z",
+          "updatedAt": "2026-07-04T17:48:15.291Z"
+        },
+        "ruleId": "c7c0b61e-12ff-4982-9dad-ae12d41d7824",
+        "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+        "createdAt": "2026-07-04T17:48:31.383Z",
+        "updatedAt": "2026-07-04T17:48:31.383Z"
+      }
+    ]
+  },
+  "accounts_after": {
+    "availableBalance": 4.509794,
+    "unavailableBalance": 0.211734,
+    "totalBalance": 4.721528
+  },
+  "finished_at": "2026-07-04T17:48:55.928Z"
+}

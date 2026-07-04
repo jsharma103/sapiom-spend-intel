@@ -1,0 +1,253 @@
+{
+  "fetched_at": "2026-07-04T17:14:15.624Z",
+  "agent_name": "holdtest-agent-hvs",
+  "model": "openai/gpt-4o-mini",
+  "max_tokens": 4000,
+  "prompt": "In exactly one sentence, define \"settlement\" in payments.",
+  "http_status": 200,
+  "hold": 0.002403,
+  "settle": 0.0001,
+  "transaction_id": "69529e6f-d95b-4a36-ae4d-5965f74c5919",
+  "raw_transaction": {
+    "id": "69529e6f-d95b-4a36-ae4d-5965f74c5919",
+    "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+    "serviceName": "sapiom_openrouter",
+    "actionName": "generate",
+    "resourceName": "/v1/chat/completions",
+    "serviceId": "0fb63c2c-067f-4d39-9ef2-036408fbb822",
+    "status": "completed",
+    "requiresPayment": true,
+    "qualifiers": {},
+    "metadata": {
+      "createdByApiKeyId": "bfb69755-474f-41c3-bc82-22ca4aa97eec",
+      "preemptiveAuthorization": true
+    },
+    "createdAt": "2026-07-04T17:14:03.554Z",
+    "updatedAt": "2026-07-04T17:14:07.229Z",
+    "authorizedAt": "2026-07-04T17:14:05.008Z",
+    "completedAt": "2026-07-04T17:14:07.230Z",
+    "outcome": "success",
+    "currentPaymentTransactionId": "b3151b9c-a178-409b-9da1-65ff64446e77",
+    "trace": {
+      "id": "ff3a039e-4fed-4365-a681-1093bab51187",
+      "externalId": null
+    },
+    "agentId": "42979481-f64d-4f16-a50d-a12c94838519",
+    "agent": {
+      "id": "42979481-f64d-4f16-a50d-a12c94838519",
+      "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+      "label": "Hold vs Settlement Test Agent",
+      "name": "holdtest-agent-hvs",
+      "description": "Dedicated throwaway agent for the hold-vs-settlement governance experiment. Never used for real production calls. Safe test residue.",
+      "status": "active",
+      "createdAt": "2026-07-04T17:13:33.020Z",
+      "updatedAt": "2026-07-04T17:13:33.020Z",
+      "numericId": 18
+    },
+    "costs": [
+      {
+        "id": "a5f9cc5d-1659-4b6b-a2cc-141520b8cd52",
+        "transactionId": "69529e6f-d95b-4a36-ae4d-5965f74c5919",
+        "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+        "paymentTransactionId": "b3151b9c-a178-409b-9da1-65ff64446e77",
+        "fiatAmount": "0.000100000000000000",
+        "fiatAssetId": "4657ab13-b6e6-4ba4-9df8-47b351c0041c",
+        "isEstimate": false,
+        "isActive": true,
+        "supersedesCostId": "89919bb4-0ec9-479a-a3e1-b586feb2343a",
+        "supersededAt": null,
+        "costDetails": {
+          "source": "payment_capture",
+          "network": "sapiom",
+          "protocol": "x402",
+          "capturedAmount": "0.0001",
+          "originalAmount": "0.002403000000000000"
+        },
+        "createdAt": "2026-07-04T17:14:07.212Z",
+        "updatedAt": "2026-07-04T17:14:07.212Z",
+        "inferredFromFactId": null
+      },
+      {
+        "id": "89919bb4-0ec9-479a-a3e1-b586feb2343a",
+        "transactionId": "69529e6f-d95b-4a36-ae4d-5965f74c5919",
+        "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+        "paymentTransactionId": "b3151b9c-a178-409b-9da1-65ff64446e77",
+        "fiatAmount": "0.002403000000000000",
+        "fiatAssetId": "4657ab13-b6e6-4ba4-9df8-47b351c0041c",
+        "isEstimate": false,
+        "isActive": false,
+        "supersedesCostId": null,
+        "supersededAt": "2026-07-04T17:14:07.237Z",
+        "costDetails": {
+          "source": "payment_transaction",
+          "network": "sapiom",
+          "protocol": "x402",
+          "paymentTransactionId": "b3151b9c-a178-409b-9da1-65ff64446e77"
+        },
+        "createdAt": "2026-07-04T17:14:04.870Z",
+        "updatedAt": "2026-07-04T17:14:07.212Z",
+        "inferredFromFactId": null
+      }
+    ],
+    "traceId": "ff3a039e-4fed-4365-a681-1093bab51187",
+    "apiKeyId": "bfb69755-474f-41c3-bc82-22ca4aa97eec",
+    "createdByActorType": "api_key",
+    "createdByActorId": "bfb69755-474f-41c3-bc82-22ca4aa97eec",
+    "mandateId": null,
+    "facilitatedByServiceAccount": null,
+    "service": {
+      "id": "0fb63c2c-067f-4d39-9ef2-036408fbb822",
+      "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+      "numericId": 2,
+      "globalServiceId": "b813ffc4-8dfa-442c-83c1-c77255da1f61",
+      "name": "sapiom_openrouter",
+      "label": null,
+      "description": null,
+      "metadata": null,
+      "createdAt": "2026-07-04T05:14:31.042Z",
+      "updatedAt": "2026-07-04T05:14:31.042Z",
+      "deletedAt": null
+    },
+    "preparingAt": "2026-07-04T17:14:04.903Z",
+    "deniedAt": null,
+    "cancelledAt": null,
+    "authorizationRequests": [
+      {
+        "id": "60335aa4-5f6e-4f00-b4e9-b05755ca4f7d",
+        "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+        "transactionId": "69529e6f-d95b-4a36-ae4d-5965f74c5919",
+        "status": "authorized",
+        "createdAt": "2026-07-04T17:14:03.616Z",
+        "updatedAt": "2026-07-04T17:14:03.677Z",
+        "completedAt": "2026-07-04T17:14:03.687Z",
+        "processingAt": "2026-07-04T17:14:03.680Z",
+        "authorizedAt": "2026-07-04T17:14:03.687Z",
+        "deniedAt": null,
+        "ruleExecutions": []
+      },
+      {
+        "id": "e6aaeb74-7b52-40ea-9c44-ed5455684338",
+        "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+        "transactionId": "69529e6f-d95b-4a36-ae4d-5965f74c5919",
+        "status": "authorized",
+        "createdAt": "2026-07-04T17:14:04.870Z",
+        "updatedAt": "2026-07-04T17:14:04.957Z",
+        "completedAt": "2026-07-04T17:14:05.008Z",
+        "processingAt": "2026-07-04T17:14:04.960Z",
+        "authorizedAt": "2026-07-04T17:14:05.008Z",
+        "deniedAt": null,
+        "ruleExecutions": [
+          {
+            "id": "6ba1172f-6bc8-401a-854d-6b8e0786c607",
+            "ruleId": "5d35cc64-3d49-4069-bb77-52d66ae5b3d5",
+            "rule": {
+              "id": "5d35cc64-3d49-4069-bb77-52d66ae5b3d5",
+              "numericId": 1,
+              "name": "System: Payment Authorization"
+            },
+            "transactionId": "69529e6f-d95b-4a36-ae4d-5965f74c5919",
+            "transactionAuthorizationRequestId": "e6aaeb74-7b52-40ea-9c44-ed5455684338",
+            "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+            "status": "completed",
+            "inputData": {
+              "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+              "actionName": "generate",
+              "serviceName": "sapiom_openrouter",
+              "resourceName": "/v1/chat/completions",
+              "transactionId": "69529e6f-d95b-4a36-ae4d-5965f74c5919",
+              "transactionAuthorizationRequestId": "e6aaeb74-7b52-40ea-9c44-ed5455684338"
+            },
+            "outputData": {
+              "reason": "Payment successfully authorized",
+              "decision": "ALLOWED",
+              "metadata": {
+                "ruleType": "payment_authorization",
+                "networkId": "22105987-75ce-42f7-8507-7cc60d844bea",
+                "authorizationDetails": {
+                  "payload": {
+                    "nonce": "eaf7ceb8-38ce-4e33-929a-1038713f7c1b",
+                    "token": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6InNhcGlvbS1wYXltZW50LWtleS12MSJ9.eyJzdWIiOiJiMzE1MWI5Yy1hMTc4LTQwOWItOWRhMS02NWZmNjQ0NDZlNzciLCJ0cmFuc2ZlcklkIjoiMjIxMDU5ODctNzVjZS00MmY3LTg1MDctN2NjNjBkODQ0YmVhIiwiYWNjb3VudElkIjoiMGY2YTU2YmEtZGViMy00MzA3LTkyYWEtZWY3OTIyOTMwMmZmIiwicGF5VG8iOiIzOTdiOTM5NS1kMzBkLTQyY2MtYWJmOS0wYzU2NjI5ZDFjMmYiLCJhbW91bnQiOiIwLjAwMjQwMzAwMDAwMDAwMDAwMCIsIm5vbmNlIjoiZWFmN2NlYjgtMzhjZS00ZTMzLTkyOWEtMTAzODcxM2Y3YzFiIiwiaWRlbnRpdHkiOnsidmVyc2lvbiI6MiwidGVuYW50SWQiOiI3MjM0YTdmOS00MDc0LTRhYWQtYjEzZi04NGUwZTI4YjQ2OWEiLCJvcmdhbml6YXRpb25JZCI6ImY0YmEyODViLTA4NTUtNGFlMy05OTBjLWU1YmRlZTI5MWM0NyIsInBheW1lbnRBY2NvdW50SWQiOiIwZjZhNTZiYS1kZWIzLTQzMDctOTJhYS1lZjc5MjI5MzAyZmYifSwiaWF0IjoxNzgzMTg1MjQ0fQ.hehK0-m5hz3WNxJIEkqsS_gW2Hb97d_wJIZ98FDhMApEFgjI-1m7V8dYN-jTHg0mMJQQX7zuxGnDUSvTT2FhZs66et6V6GhQKvpkbk-yK24Fl5HlmtkwEfOusUBcoHupX-pjWR8bV6W2rjPpQkQN9mVFWpGPhWrTD-Hja7CQSLHc3ifQ65FoLI8Feukh66jHo11McPOvam5_ishvylb1zRtquv_VON-jyiY7WM4e7cBAN4gG0lmeNww0K_u4k-Zt7XzqK6y5qtF_DxgfDLjcZ5NdI7uvx3EyYFn4yY47v5P1qbRl6dO7BpNhIpcRgwHASY6IIP8UDkWA0JDL3cxT7A",
+                    "amount": "0.002403000000000000",
+                    "accountId": "0f6a56ba-deb3-4307-92aa-ef79229302ff",
+                    "authorizationId": "22105987-75ce-42f7-8507-7cc60d844bea"
+                  },
+                  "accepted": {
+                    "asset": "USD",
+                    "extra": {},
+                    "payTo": "397b9395-d30d-42cc-abf9-0c56629d1c2f",
+                    "amount": "0.002403",
+                    "scheme": "upto",
+                    "network": "sapiom:main",
+                    "maxTimeoutSeconds": 300
+                  },
+                  "resource": {
+                    "url": "http://openrouter.services.sapiom.ai/v1/chat/completions",
+                    "mimeType": "application/json",
+                    "description": "OpenRouter chat completion"
+                  },
+                  "x402Version": 2
+                },
+                "paymentTransactionId": "b3151b9c-a178-409b-9da1-65ff64446e77"
+              }
+            },
+            "errorMessage": null,
+            "errorDetails": null,
+            "startedAt": "2026-07-04T17:14:04.970Z",
+            "completedAt": "2026-07-04T17:14:05.003Z",
+            "executionTimeMs": 33,
+            "retryCount": 0,
+            "parentExecutionId": null,
+            "createdAt": "2026-07-04T17:14:04.957Z",
+            "updatedAt": "2026-07-04T17:14:04.957Z"
+          }
+        ]
+      }
+    ]
+  },
+  "raw_llm_response_body": {
+    "id": "gen-1783185246-7iolPeZ7pXzaqjFJwNnR",
+    "object": "chat.completion",
+    "created": 1783185246,
+    "model": "openai/gpt-4o-mini",
+    "provider": "OpenAI",
+    "system_fingerprint": "fp_88876bec1e",
+    "service_tier": null,
+    "choices": [
+      {
+        "index": 0,
+        "logprobs": null,
+        "finish_reason": "stop",
+        "native_finish_reason": "stop",
+        "message": {
+          "role": "assistant",
+          "content": "A settlement in payments refers to the process of completing a financial transaction by transferring funds between parties, ensuring that the payer's account is debited and the payee's account is credited.",
+          "refusal": null,
+          "reasoning": null
+        }
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 20,
+      "completion_tokens": 37,
+      "total_tokens": 57,
+      "cost": 0.0000252,
+      "is_byok": false,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "cache_write_tokens": 0,
+        "audio_tokens": 0,
+        "video_tokens": 0
+      },
+      "cost_details": {
+        "upstream_inference_cost": 0.0000252,
+        "upstream_inference_prompt_cost": 0.000003,
+        "upstream_inference_completions_cost": 0.0000222
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "image_tokens": 0,
+        "audio_tokens": 0
+      }
+    }
+  }
+}

@@ -1,0 +1,203 @@
+{
+  "fetched_at": "2026-07-04T17:15:13.998Z",
+  "agent_name": "holdtest-agent-hvs",
+  "model": "openai/gpt-4o-mini",
+  "max_tokens": 4000,
+  "prompt": "In exactly one sentence, define \"settlement\" in payments.",
+  "http_status": null,
+  "error_message": "Authorization denied for /v1/chat/completions: No reason provided",
+  "newest_txn_for_agent": {
+    "id": "ae314161-e47f-42f4-bdc7-0d3cecc12047",
+    "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+    "serviceName": "sapiom_openrouter",
+    "actionName": "generate",
+    "resourceName": "/v1/chat/completions",
+    "serviceId": "0fb63c2c-067f-4d39-9ef2-036408fbb822",
+    "status": "denied",
+    "requiresPayment": false,
+    "qualifiers": {},
+    "metadata": {
+      "createdByApiKeyId": "bfb69755-474f-41c3-bc82-22ca4aa97eec",
+      "preemptiveAuthorization": true
+    },
+    "createdAt": "2026-07-04T17:15:04.573Z",
+    "updatedAt": "2026-07-04T17:15:05.017Z",
+    "authorizedAt": null,
+    "completedAt": null,
+    "outcome": null,
+    "currentPaymentTransactionId": null,
+    "trace": {
+      "id": "3ef331a1-5390-4f63-a709-b19944c39887",
+      "externalId": null
+    },
+    "agentId": "42979481-f64d-4f16-a50d-a12c94838519",
+    "agent": {
+      "id": "42979481-f64d-4f16-a50d-a12c94838519",
+      "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+      "label": "Hold vs Settlement Test Agent",
+      "name": "holdtest-agent-hvs",
+      "description": "Dedicated throwaway agent for the hold-vs-settlement governance experiment. Never used for real production calls. Safe test residue.",
+      "status": "active",
+      "createdAt": "2026-07-04T17:13:33.020Z",
+      "updatedAt": "2026-07-04T17:13:33.020Z",
+      "numericId": 18
+    },
+    "costs": [],
+    "traceId": "3ef331a1-5390-4f63-a709-b19944c39887",
+    "apiKeyId": "bfb69755-474f-41c3-bc82-22ca4aa97eec",
+    "createdByActorType": "api_key",
+    "createdByActorId": "bfb69755-474f-41c3-bc82-22ca4aa97eec",
+    "mandateId": null,
+    "facilitatedByServiceAccount": null,
+    "service": {
+      "id": "0fb63c2c-067f-4d39-9ef2-036408fbb822",
+      "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+      "numericId": 2,
+      "globalServiceId": "b813ffc4-8dfa-442c-83c1-c77255da1f61",
+      "name": "sapiom_openrouter",
+      "label": null,
+      "description": null,
+      "metadata": null,
+      "createdAt": "2026-07-04T05:14:31.042Z",
+      "updatedAt": "2026-07-04T05:14:31.042Z",
+      "deletedAt": null
+    },
+    "preparingAt": "2026-07-04T17:15:04.620Z",
+    "deniedAt": "2026-07-04T17:15:05.017Z",
+    "cancelledAt": null,
+    "authorizationRequests": [
+      {
+        "id": "feae3d34-d876-40f8-be9c-65842bae71e0",
+        "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+        "transactionId": "ae314161-e47f-42f4-bdc7-0d3cecc12047",
+        "status": "denied",
+        "createdAt": "2026-07-04T17:15:04.618Z",
+        "updatedAt": "2026-07-04T17:15:05.012Z",
+        "completedAt": "2026-07-04T17:15:05.017Z",
+        "processingAt": "2026-07-04T17:15:04.642Z",
+        "authorizedAt": null,
+        "deniedAt": "2026-07-04T17:15:05.017Z",
+        "ruleExecutions": [
+          {
+            "id": "4ff20be9-56b7-468d-a29e-68dc19050f95",
+            "ruleId": "3f3c05dd-11a5-468b-90dc-25cf6ff12f54",
+            "rule": {
+              "id": "3f3c05dd-11a5-468b-90dc-25cf6ff12f54",
+              "numericId": 4,
+              "name": "holdtest-rule-hvs"
+            },
+            "transactionId": "ae314161-e47f-42f4-bdc7-0d3cecc12047",
+            "transactionAuthorizationRequestId": "feae3d34-d876-40f8-be9c-65842bae71e0",
+            "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+            "status": "denied",
+            "inputData": {
+              "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+              "actionName": "generate",
+              "serviceName": "sapiom_openrouter",
+              "resourceName": "/v1/chat/completions",
+              "transactionId": "ae314161-e47f-42f4-bdc7-0d3cecc12047",
+              "transactionAuthorizationRequestId": "feae3d34-d876-40f8-be9c-65842bae71e0"
+            },
+            "outputData": {
+              "reason": "Total transaction costs including this transaction (0.28 USD) would exceed limit of 0.00 USD in 1 days",
+              "decision": "DENIED",
+              "metadata": {
+                "ruleType": "usage_limit",
+                "violations": [
+                  {
+                    "limitValue": 0.001,
+                    "currentValue": 0.277572,
+                    "parameterName": null,
+                    "measurementType": "sum_transaction_costs"
+                  }
+                ],
+                "parametersChecked": 1
+              }
+            },
+            "errorMessage": null,
+            "errorDetails": null,
+            "startedAt": "2026-07-04T17:15:04.680Z",
+            "completedAt": "2026-07-04T17:15:04.920Z",
+            "executionTimeMs": 240,
+            "retryCount": 0,
+            "parentExecutionId": null,
+            "createdAt": "2026-07-04T17:15:04.638Z",
+            "updatedAt": "2026-07-04T17:15:04.678Z"
+          }
+        ]
+      }
+    ]
+  },
+  "hold": null,
+  "settle": null,
+  "raw_llm_response_body": null,
+  "rule_state_after": {
+    "data": {
+      "type": "rules",
+      "id": "3f3c05dd-11a5-468b-90dc-25cf6ff12f54",
+      "attributes": {
+        "numericId": 4,
+        "formattedId": "RL-004",
+        "name": "holdtest-rule-hvs",
+        "ruleType": "usage_limit",
+        "resolutionStrategy": "automatic",
+        "status": "active",
+        "version": 1,
+        "metadata": null,
+        "createdAt": "2026-07-04T17:14:25.133Z",
+        "updatedAt": "2026-07-04T17:14:25.133Z"
+      },
+      "relationships": {
+        "agents": {
+          "data": [
+            {
+              "type": "agents",
+              "id": "42979481-f64d-4f16-a50d-a12c94838519"
+            }
+          ]
+        },
+        "parameters": {
+          "data": [
+            {
+              "type": "rule-parameters",
+              "id": "bb46c963-4af4-4702-b028-3d558f17d188"
+            }
+          ]
+        }
+      }
+    },
+    "included": [
+      {
+        "type": "agents",
+        "id": "42979481-f64d-4f16-a50d-a12c94838519",
+        "attributes": {
+          "id": "42979481-f64d-4f16-a50d-a12c94838519",
+          "numericId": 18,
+          "formattedId": "AG-018",
+          "name": "holdtest-agent-hvs",
+          "label": "Hold vs Settlement Test Agent"
+        }
+      },
+      {
+        "type": "rule-parameters",
+        "id": "bb46c963-4af4-4702-b028-3d558f17d188",
+        "attributes": {
+          "id": "bb46c963-4af4-4702-b028-3d558f17d188",
+          "parameterName": null,
+          "limitValue": "0.001000000000000000",
+          "measurementType": "sum_transaction_costs",
+          "intervalValue": 1,
+          "intervalUnit": "days",
+          "isRolling": true,
+          "groupBy": null,
+          "measurementScope": "all",
+          "includeEstimates": true,
+          "description": null,
+          "createdAt": "2026-07-04T17:14:25.133Z",
+          "updatedAt": "2026-07-04T17:14:25.133Z"
+        }
+      }
+    ]
+  },
+  "all_agent_txns_count": 2
+}

@@ -27,9 +27,12 @@ Both were fixed same-session (see `RUN_LOG.md` item 1). Neither call ever reache
 where a vendor could bill for partial work, so "0 bps loss rate" here is really "0 failures
 that got far enough to cost anything" — it does **not** prove Sapiom would eat the cost of
 a failure that happens *after* a hold is placed (e.g., vendor times out mid-generation).
-That scenario isn't present in this n=81 sample and is worth testing deliberately (see
-BACKLOG.md item 3.3, "Failed-call mid-flight hold release" — a [HUMAN-RUN] experiment, not
-run here per the zero-spend rule for this build).
+That scenario wasn't present in this n=81 sample, but has since been directly observed:
+`dryrun/hold_linearity_extension.md`'s 128k-token call errored (502) after its $0.076803
+hold was authorized, and the full hold was captured (not refunded) — confirmed via an exact
+$0.076803 balance drop. So the two-case answer is now complete: **fails before the hold =
+$0 (this section, n=2); fails after the hold = the full hold is billed (n=1, see
+`findings.md` §9).** Lifecycle position, not failure type, decides whether you pay.
 
 ## Reproducing these numbers
 

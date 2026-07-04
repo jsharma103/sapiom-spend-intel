@@ -1,0 +1,2057 @@
+{
+  "experiment": "hold_vs_settlement_governance_test",
+  "date": "2026-07-04",
+  "agent_created": {
+    "id": "42979481-f64d-4f16-a50d-a12c94838519",
+    "name": "holdtest-agent-hvs",
+    "numericId": 18,
+    "formattedId": "AG-018"
+  },
+  "rules_created": [
+    {
+      "formattedId": "RL-004",
+      "id": "3f3c05dd-11a5-468b-90dc-25cf6ff12f54",
+      "name": "holdtest-rule-hvs",
+      "limitValue": "0.001",
+      "measurementScope": "all",
+      "note": "CONTAMINATED test: measurementScope=all sums costs TENANT-WIDE, not agent-scoped. Denied due to pre-existing tenant spend (~$0.2776), not informative for hold-vs-settlement. Paused immediately after discovery.",
+      "final_status": "paused"
+    },
+    {
+      "formattedId": "RL-005",
+      "id": "9c8c39ef-e4c4-47e1-9827-4f18a35fe04f",
+      "name": "holdtest-rule-hvs-2",
+      "limitValue": "0.001",
+      "measurementScope": "rule",
+      "note": "PRIMARY TEST rule. Correctly agent-isolated. This is the rule that answered the hold-vs-settlement question.",
+      "final_status": "paused"
+    },
+    {
+      "formattedId": "RL-006",
+      "id": "e2c8139f-aef0-4986-b920-37f47ce47d18",
+      "name": "holdtest-rule-hvs-toctou",
+      "limitValue": "0.003",
+      "measurementScope": "rule",
+      "note": "TOCTOU test rule: limit set to allow exactly 1 call's hold (~$0.0024) but not 2 (~$0.0048).",
+      "final_status": "paused"
+    }
+  ],
+  "baseline_call_no_rule_active": {
+    "fetched_at": "2026-07-04T17:14:15.624Z",
+    "agent_name": "holdtest-agent-hvs",
+    "model": "openai/gpt-4o-mini",
+    "max_tokens": 4000,
+    "prompt": "In exactly one sentence, define \"settlement\" in payments.",
+    "http_status": 200,
+    "hold": 0.002403,
+    "settle": 0.0001,
+    "transaction_id": "69529e6f-d95b-4a36-ae4d-5965f74c5919",
+    "raw_transaction": {
+      "id": "69529e6f-d95b-4a36-ae4d-5965f74c5919",
+      "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+      "serviceName": "sapiom_openrouter",
+      "actionName": "generate",
+      "resourceName": "/v1/chat/completions",
+      "serviceId": "0fb63c2c-067f-4d39-9ef2-036408fbb822",
+      "status": "completed",
+      "requiresPayment": true,
+      "qualifiers": {},
+      "metadata": {
+        "createdByApiKeyId": "bfb69755-474f-41c3-bc82-22ca4aa97eec",
+        "preemptiveAuthorization": true
+      },
+      "createdAt": "2026-07-04T17:14:03.554Z",
+      "updatedAt": "2026-07-04T17:14:07.229Z",
+      "authorizedAt": "2026-07-04T17:14:05.008Z",
+      "completedAt": "2026-07-04T17:14:07.230Z",
+      "outcome": "success",
+      "currentPaymentTransactionId": "b3151b9c-a178-409b-9da1-65ff64446e77",
+      "trace": {
+        "id": "ff3a039e-4fed-4365-a681-1093bab51187",
+        "externalId": null
+      },
+      "agentId": "42979481-f64d-4f16-a50d-a12c94838519",
+      "agent": {
+        "id": "42979481-f64d-4f16-a50d-a12c94838519",
+        "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+        "label": "Hold vs Settlement Test Agent",
+        "name": "holdtest-agent-hvs",
+        "description": "Dedicated throwaway agent for the hold-vs-settlement governance experiment. Never used for real production calls. Safe test residue.",
+        "status": "active",
+        "createdAt": "2026-07-04T17:13:33.020Z",
+        "updatedAt": "2026-07-04T17:13:33.020Z",
+        "numericId": 18
+      },
+      "costs": [
+        {
+          "id": "a5f9cc5d-1659-4b6b-a2cc-141520b8cd52",
+          "transactionId": "69529e6f-d95b-4a36-ae4d-5965f74c5919",
+          "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+          "paymentTransactionId": "b3151b9c-a178-409b-9da1-65ff64446e77",
+          "fiatAmount": "0.000100000000000000",
+          "fiatAssetId": "4657ab13-b6e6-4ba4-9df8-47b351c0041c",
+          "isEstimate": false,
+          "isActive": true,
+          "supersedesCostId": "89919bb4-0ec9-479a-a3e1-b586feb2343a",
+          "supersededAt": null,
+          "costDetails": {
+            "source": "payment_capture",
+            "network": "sapiom",
+            "protocol": "x402",
+            "capturedAmount": "0.0001",
+            "originalAmount": "0.002403000000000000"
+          },
+          "createdAt": "2026-07-04T17:14:07.212Z",
+          "updatedAt": "2026-07-04T17:14:07.212Z",
+          "inferredFromFactId": null
+        },
+        {
+          "id": "89919bb4-0ec9-479a-a3e1-b586feb2343a",
+          "transactionId": "69529e6f-d95b-4a36-ae4d-5965f74c5919",
+          "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+          "paymentTransactionId": "b3151b9c-a178-409b-9da1-65ff64446e77",
+          "fiatAmount": "0.002403000000000000",
+          "fiatAssetId": "4657ab13-b6e6-4ba4-9df8-47b351c0041c",
+          "isEstimate": false,
+          "isActive": false,
+          "supersedesCostId": null,
+          "supersededAt": "2026-07-04T17:14:07.237Z",
+          "costDetails": {
+            "source": "payment_transaction",
+            "network": "sapiom",
+            "protocol": "x402",
+            "paymentTransactionId": "b3151b9c-a178-409b-9da1-65ff64446e77"
+          },
+          "createdAt": "2026-07-04T17:14:04.870Z",
+          "updatedAt": "2026-07-04T17:14:07.212Z",
+          "inferredFromFactId": null
+        }
+      ],
+      "traceId": "ff3a039e-4fed-4365-a681-1093bab51187",
+      "apiKeyId": "bfb69755-474f-41c3-bc82-22ca4aa97eec",
+      "createdByActorType": "api_key",
+      "createdByActorId": "bfb69755-474f-41c3-bc82-22ca4aa97eec",
+      "mandateId": null,
+      "facilitatedByServiceAccount": null,
+      "service": {
+        "id": "0fb63c2c-067f-4d39-9ef2-036408fbb822",
+        "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+        "numericId": 2,
+        "globalServiceId": "b813ffc4-8dfa-442c-83c1-c77255da1f61",
+        "name": "sapiom_openrouter",
+        "label": null,
+        "description": null,
+        "metadata": null,
+        "createdAt": "2026-07-04T05:14:31.042Z",
+        "updatedAt": "2026-07-04T05:14:31.042Z",
+        "deletedAt": null
+      },
+      "preparingAt": "2026-07-04T17:14:04.903Z",
+      "deniedAt": null,
+      "cancelledAt": null,
+      "authorizationRequests": [
+        {
+          "id": "60335aa4-5f6e-4f00-b4e9-b05755ca4f7d",
+          "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+          "transactionId": "69529e6f-d95b-4a36-ae4d-5965f74c5919",
+          "status": "authorized",
+          "createdAt": "2026-07-04T17:14:03.616Z",
+          "updatedAt": "2026-07-04T17:14:03.677Z",
+          "completedAt": "2026-07-04T17:14:03.687Z",
+          "processingAt": "2026-07-04T17:14:03.680Z",
+          "authorizedAt": "2026-07-04T17:14:03.687Z",
+          "deniedAt": null,
+          "ruleExecutions": []
+        },
+        {
+          "id": "e6aaeb74-7b52-40ea-9c44-ed5455684338",
+          "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+          "transactionId": "69529e6f-d95b-4a36-ae4d-5965f74c5919",
+          "status": "authorized",
+          "createdAt": "2026-07-04T17:14:04.870Z",
+          "updatedAt": "2026-07-04T17:14:04.957Z",
+          "completedAt": "2026-07-04T17:14:05.008Z",
+          "processingAt": "2026-07-04T17:14:04.960Z",
+          "authorizedAt": "2026-07-04T17:14:05.008Z",
+          "deniedAt": null,
+          "ruleExecutions": [
+            {
+              "id": "6ba1172f-6bc8-401a-854d-6b8e0786c607",
+              "ruleId": "5d35cc64-3d49-4069-bb77-52d66ae5b3d5",
+              "rule": {
+                "id": "5d35cc64-3d49-4069-bb77-52d66ae5b3d5",
+                "numericId": 1,
+                "name": "System: Payment Authorization"
+              },
+              "transactionId": "69529e6f-d95b-4a36-ae4d-5965f74c5919",
+              "transactionAuthorizationRequestId": "e6aaeb74-7b52-40ea-9c44-ed5455684338",
+              "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+              "status": "completed",
+              "inputData": {
+                "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+                "actionName": "generate",
+                "serviceName": "sapiom_openrouter",
+                "resourceName": "/v1/chat/completions",
+                "transactionId": "69529e6f-d95b-4a36-ae4d-5965f74c5919",
+                "transactionAuthorizationRequestId": "e6aaeb74-7b52-40ea-9c44-ed5455684338"
+              },
+              "outputData": {
+                "reason": "Payment successfully authorized",
+                "decision": "ALLOWED",
+                "metadata": {
+                  "ruleType": "payment_authorization",
+                  "networkId": "22105987-75ce-42f7-8507-7cc60d844bea",
+                  "authorizationDetails": {
+                    "payload": {
+                      "nonce": "eaf7ceb8-38ce-4e33-929a-1038713f7c1b",
+                      "token": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6InNhcGlvbS1wYXltZW50LWtleS12MSJ9.eyJzdWIiOiJiMzE1MWI5Yy1hMTc4LTQwOWItOWRhMS02NWZmNjQ0NDZlNzciLCJ0cmFuc2ZlcklkIjoiMjIxMDU5ODctNzVjZS00MmY3LTg1MDctN2NjNjBkODQ0YmVhIiwiYWNjb3VudElkIjoiMGY2YTU2YmEtZGViMy00MzA3LTkyYWEtZWY3OTIyOTMwMmZmIiwicGF5VG8iOiIzOTdiOTM5NS1kMzBkLTQyY2MtYWJmOS0wYzU2NjI5ZDFjMmYiLCJhbW91bnQiOiIwLjAwMjQwMzAwMDAwMDAwMDAwMCIsIm5vbmNlIjoiZWFmN2NlYjgtMzhjZS00ZTMzLTkyOWEtMTAzODcxM2Y3YzFiIiwiaWRlbnRpdHkiOnsidmVyc2lvbiI6MiwidGVuYW50SWQiOiI3MjM0YTdmOS00MDc0LTRhYWQtYjEzZi04NGUwZTI4YjQ2OWEiLCJvcmdhbml6YXRpb25JZCI6ImY0YmEyODViLTA4NTUtNGFlMy05OTBjLWU1YmRlZTI5MWM0NyIsInBheW1lbnRBY2NvdW50SWQiOiIwZjZhNTZiYS1kZWIzLTQzMDctOTJhYS1lZjc5MjI5MzAyZmYifSwiaWF0IjoxNzgzMTg1MjQ0fQ.hehK0-m5hz3WNxJIEkqsS_gW2Hb97d_wJIZ98FDhMApEFgjI-1m7V8dYN-jTHg0mMJQQX7zuxGnDUSvTT2FhZs66et6V6GhQKvpkbk-yK24Fl5HlmtkwEfOusUBcoHupX-pjWR8bV6W2rjPpQkQN9mVFWpGPhWrTD-Hja7CQSLHc3ifQ65FoLI8Feukh66jHo11McPOvam5_ishvylb1zRtquv_VON-jyiY7WM4e7cBAN4gG0lmeNww0K_u4k-Zt7XzqK6y5qtF_DxgfDLjcZ5NdI7uvx3EyYFn4yY47v5P1qbRl6dO7BpNhIpcRgwHASY6IIP8UDkWA0JDL3cxT7A",
+                      "amount": "0.002403000000000000",
+                      "accountId": "0f6a56ba-deb3-4307-92aa-ef79229302ff",
+                      "authorizationId": "22105987-75ce-42f7-8507-7cc60d844bea"
+                    },
+                    "accepted": {
+                      "asset": "USD",
+                      "extra": {},
+                      "payTo": "397b9395-d30d-42cc-abf9-0c56629d1c2f",
+                      "amount": "0.002403",
+                      "scheme": "upto",
+                      "network": "sapiom:main",
+                      "maxTimeoutSeconds": 300
+                    },
+                    "resource": {
+                      "url": "http://openrouter.services.sapiom.ai/v1/chat/completions",
+                      "mimeType": "application/json",
+                      "description": "OpenRouter chat completion"
+                    },
+                    "x402Version": 2
+                  },
+                  "paymentTransactionId": "b3151b9c-a178-409b-9da1-65ff64446e77"
+                }
+              },
+              "errorMessage": null,
+              "errorDetails": null,
+              "startedAt": "2026-07-04T17:14:04.970Z",
+              "completedAt": "2026-07-04T17:14:05.003Z",
+              "executionTimeMs": 33,
+              "retryCount": 0,
+              "parentExecutionId": null,
+              "createdAt": "2026-07-04T17:14:04.957Z",
+              "updatedAt": "2026-07-04T17:14:04.957Z"
+            }
+          ]
+        }
+      ]
+    },
+    "raw_llm_response_body": {
+      "id": "gen-1783185246-7iolPeZ7pXzaqjFJwNnR",
+      "object": "chat.completion",
+      "created": 1783185246,
+      "model": "openai/gpt-4o-mini",
+      "provider": "OpenAI",
+      "system_fingerprint": "fp_88876bec1e",
+      "service_tier": null,
+      "choices": [
+        {
+          "index": 0,
+          "logprobs": null,
+          "finish_reason": "stop",
+          "native_finish_reason": "stop",
+          "message": {
+            "role": "assistant",
+            "content": "A settlement in payments refers to the process of completing a financial transaction by transferring funds between parties, ensuring that the payer's account is debited and the payee's account is credited.",
+            "refusal": null,
+            "reasoning": null
+          }
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 20,
+        "completion_tokens": 37,
+        "total_tokens": 57,
+        "cost": 2.52e-05,
+        "is_byok": false,
+        "prompt_tokens_details": {
+          "cached_tokens": 0,
+          "cache_write_tokens": 0,
+          "audio_tokens": 0,
+          "video_tokens": 0
+        },
+        "cost_details": {
+          "upstream_inference_cost": 2.52e-05,
+          "upstream_inference_prompt_cost": 3e-06,
+          "upstream_inference_completions_cost": 2.22e-05
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0,
+          "image_tokens": 0,
+          "audio_tokens": 0
+        }
+      }
+    }
+  },
+  "gated_call_attempt_1_contaminated_tenant_wide_rule": {
+    "fetched_at": "2026-07-04T17:15:13.998Z",
+    "agent_name": "holdtest-agent-hvs",
+    "model": "openai/gpt-4o-mini",
+    "max_tokens": 4000,
+    "prompt": "In exactly one sentence, define \"settlement\" in payments.",
+    "http_status": null,
+    "error_message": "Authorization denied for /v1/chat/completions: No reason provided",
+    "newest_txn_for_agent": {
+      "id": "ae314161-e47f-42f4-bdc7-0d3cecc12047",
+      "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+      "serviceName": "sapiom_openrouter",
+      "actionName": "generate",
+      "resourceName": "/v1/chat/completions",
+      "serviceId": "0fb63c2c-067f-4d39-9ef2-036408fbb822",
+      "status": "denied",
+      "requiresPayment": false,
+      "qualifiers": {},
+      "metadata": {
+        "createdByApiKeyId": "bfb69755-474f-41c3-bc82-22ca4aa97eec",
+        "preemptiveAuthorization": true
+      },
+      "createdAt": "2026-07-04T17:15:04.573Z",
+      "updatedAt": "2026-07-04T17:15:05.017Z",
+      "authorizedAt": null,
+      "completedAt": null,
+      "outcome": null,
+      "currentPaymentTransactionId": null,
+      "trace": {
+        "id": "3ef331a1-5390-4f63-a709-b19944c39887",
+        "externalId": null
+      },
+      "agentId": "42979481-f64d-4f16-a50d-a12c94838519",
+      "agent": {
+        "id": "42979481-f64d-4f16-a50d-a12c94838519",
+        "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+        "label": "Hold vs Settlement Test Agent",
+        "name": "holdtest-agent-hvs",
+        "description": "Dedicated throwaway agent for the hold-vs-settlement governance experiment. Never used for real production calls. Safe test residue.",
+        "status": "active",
+        "createdAt": "2026-07-04T17:13:33.020Z",
+        "updatedAt": "2026-07-04T17:13:33.020Z",
+        "numericId": 18
+      },
+      "costs": [],
+      "traceId": "3ef331a1-5390-4f63-a709-b19944c39887",
+      "apiKeyId": "bfb69755-474f-41c3-bc82-22ca4aa97eec",
+      "createdByActorType": "api_key",
+      "createdByActorId": "bfb69755-474f-41c3-bc82-22ca4aa97eec",
+      "mandateId": null,
+      "facilitatedByServiceAccount": null,
+      "service": {
+        "id": "0fb63c2c-067f-4d39-9ef2-036408fbb822",
+        "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+        "numericId": 2,
+        "globalServiceId": "b813ffc4-8dfa-442c-83c1-c77255da1f61",
+        "name": "sapiom_openrouter",
+        "label": null,
+        "description": null,
+        "metadata": null,
+        "createdAt": "2026-07-04T05:14:31.042Z",
+        "updatedAt": "2026-07-04T05:14:31.042Z",
+        "deletedAt": null
+      },
+      "preparingAt": "2026-07-04T17:15:04.620Z",
+      "deniedAt": "2026-07-04T17:15:05.017Z",
+      "cancelledAt": null,
+      "authorizationRequests": [
+        {
+          "id": "feae3d34-d876-40f8-be9c-65842bae71e0",
+          "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+          "transactionId": "ae314161-e47f-42f4-bdc7-0d3cecc12047",
+          "status": "denied",
+          "createdAt": "2026-07-04T17:15:04.618Z",
+          "updatedAt": "2026-07-04T17:15:05.012Z",
+          "completedAt": "2026-07-04T17:15:05.017Z",
+          "processingAt": "2026-07-04T17:15:04.642Z",
+          "authorizedAt": null,
+          "deniedAt": "2026-07-04T17:15:05.017Z",
+          "ruleExecutions": [
+            {
+              "id": "4ff20be9-56b7-468d-a29e-68dc19050f95",
+              "ruleId": "3f3c05dd-11a5-468b-90dc-25cf6ff12f54",
+              "rule": {
+                "id": "3f3c05dd-11a5-468b-90dc-25cf6ff12f54",
+                "numericId": 4,
+                "name": "holdtest-rule-hvs"
+              },
+              "transactionId": "ae314161-e47f-42f4-bdc7-0d3cecc12047",
+              "transactionAuthorizationRequestId": "feae3d34-d876-40f8-be9c-65842bae71e0",
+              "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+              "status": "denied",
+              "inputData": {
+                "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+                "actionName": "generate",
+                "serviceName": "sapiom_openrouter",
+                "resourceName": "/v1/chat/completions",
+                "transactionId": "ae314161-e47f-42f4-bdc7-0d3cecc12047",
+                "transactionAuthorizationRequestId": "feae3d34-d876-40f8-be9c-65842bae71e0"
+              },
+              "outputData": {
+                "reason": "Total transaction costs including this transaction (0.28 USD) would exceed limit of 0.00 USD in 1 days",
+                "decision": "DENIED",
+                "metadata": {
+                  "ruleType": "usage_limit",
+                  "violations": [
+                    {
+                      "limitValue": 0.001,
+                      "currentValue": 0.277572,
+                      "parameterName": null,
+                      "measurementType": "sum_transaction_costs"
+                    }
+                  ],
+                  "parametersChecked": 1
+                }
+              },
+              "errorMessage": null,
+              "errorDetails": null,
+              "startedAt": "2026-07-04T17:15:04.680Z",
+              "completedAt": "2026-07-04T17:15:04.920Z",
+              "executionTimeMs": 240,
+              "retryCount": 0,
+              "parentExecutionId": null,
+              "createdAt": "2026-07-04T17:15:04.638Z",
+              "updatedAt": "2026-07-04T17:15:04.678Z"
+            }
+          ]
+        }
+      ]
+    },
+    "hold": null,
+    "settle": null,
+    "raw_llm_response_body": null,
+    "rule_state_after": {
+      "data": {
+        "type": "rules",
+        "id": "3f3c05dd-11a5-468b-90dc-25cf6ff12f54",
+        "attributes": {
+          "numericId": 4,
+          "formattedId": "RL-004",
+          "name": "holdtest-rule-hvs",
+          "ruleType": "usage_limit",
+          "resolutionStrategy": "automatic",
+          "status": "active",
+          "version": 1,
+          "metadata": null,
+          "createdAt": "2026-07-04T17:14:25.133Z",
+          "updatedAt": "2026-07-04T17:14:25.133Z"
+        },
+        "relationships": {
+          "agents": {
+            "data": [
+              {
+                "type": "agents",
+                "id": "42979481-f64d-4f16-a50d-a12c94838519"
+              }
+            ]
+          },
+          "parameters": {
+            "data": [
+              {
+                "type": "rule-parameters",
+                "id": "bb46c963-4af4-4702-b028-3d558f17d188"
+              }
+            ]
+          }
+        }
+      },
+      "included": [
+        {
+          "type": "agents",
+          "id": "42979481-f64d-4f16-a50d-a12c94838519",
+          "attributes": {
+            "id": "42979481-f64d-4f16-a50d-a12c94838519",
+            "numericId": 18,
+            "formattedId": "AG-018",
+            "name": "holdtest-agent-hvs",
+            "label": "Hold vs Settlement Test Agent"
+          }
+        },
+        {
+          "type": "rule-parameters",
+          "id": "bb46c963-4af4-4702-b028-3d558f17d188",
+          "attributes": {
+            "id": "bb46c963-4af4-4702-b028-3d558f17d188",
+            "parameterName": null,
+            "limitValue": "0.001000000000000000",
+            "measurementType": "sum_transaction_costs",
+            "intervalValue": 1,
+            "intervalUnit": "days",
+            "isRolling": true,
+            "groupBy": null,
+            "measurementScope": "all",
+            "includeEstimates": true,
+            "description": null,
+            "createdAt": "2026-07-04T17:14:25.133Z",
+            "updatedAt": "2026-07-04T17:14:25.133Z"
+          }
+        }
+      ]
+    },
+    "all_agent_txns_count": 2
+  },
+  "gated_call_attempt_2_properly_scoped_rule": {
+    "fetched_at": "2026-07-04T17:17:01.957Z",
+    "agent_name": "holdtest-agent-hvs",
+    "model": "openai/gpt-4o-mini",
+    "max_tokens": 4000,
+    "prompt": "In exactly one sentence, define \"settlement\" in payments.",
+    "http_status": 402,
+    "error_message": null,
+    "newest_txn_for_agent": {
+      "id": "0a2336ff-07e6-4bec-9f24-3204bc61d76b",
+      "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+      "serviceName": "sapiom_openrouter",
+      "actionName": "generate",
+      "resourceName": "/v1/chat/completions",
+      "serviceId": "0fb63c2c-067f-4d39-9ef2-036408fbb822",
+      "status": "denied",
+      "requiresPayment": true,
+      "qualifiers": {},
+      "metadata": {
+        "createdByApiKeyId": "bfb69755-474f-41c3-bc82-22ca4aa97eec",
+        "preemptiveAuthorization": true
+      },
+      "createdAt": "2026-07-04T17:16:51.313Z",
+      "updatedAt": "2026-07-04T17:16:52.770Z",
+      "authorizedAt": null,
+      "completedAt": null,
+      "outcome": null,
+      "currentPaymentTransactionId": "eaaccdd7-5aca-467a-bf74-235ae266708a",
+      "trace": {
+        "id": "79da771d-1b22-4ca2-8c2a-c29f940e1b87",
+        "externalId": null
+      },
+      "agentId": "42979481-f64d-4f16-a50d-a12c94838519",
+      "agent": {
+        "id": "42979481-f64d-4f16-a50d-a12c94838519",
+        "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+        "label": "Hold vs Settlement Test Agent",
+        "name": "holdtest-agent-hvs",
+        "description": "Dedicated throwaway agent for the hold-vs-settlement governance experiment. Never used for real production calls. Safe test residue.",
+        "status": "active",
+        "createdAt": "2026-07-04T17:13:33.020Z",
+        "updatedAt": "2026-07-04T17:13:33.020Z",
+        "numericId": 18
+      },
+      "costs": [
+        {
+          "id": "44ebbb25-516f-439d-ad30-e0df5e466e76",
+          "transactionId": "0a2336ff-07e6-4bec-9f24-3204bc61d76b",
+          "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+          "paymentTransactionId": "eaaccdd7-5aca-467a-bf74-235ae266708a",
+          "fiatAmount": "0.002403000000000000",
+          "fiatAssetId": "4657ab13-b6e6-4ba4-9df8-47b351c0041c",
+          "isEstimate": false,
+          "isActive": true,
+          "supersedesCostId": null,
+          "supersededAt": null,
+          "costDetails": {
+            "source": "payment_transaction",
+            "network": "sapiom",
+            "protocol": "x402",
+            "paymentTransactionId": "eaaccdd7-5aca-467a-bf74-235ae266708a"
+          },
+          "createdAt": "2026-07-04T17:16:52.583Z",
+          "updatedAt": "2026-07-04T17:16:52.583Z",
+          "inferredFromFactId": null
+        }
+      ],
+      "traceId": "79da771d-1b22-4ca2-8c2a-c29f940e1b87",
+      "apiKeyId": "bfb69755-474f-41c3-bc82-22ca4aa97eec",
+      "createdByActorType": "api_key",
+      "createdByActorId": "bfb69755-474f-41c3-bc82-22ca4aa97eec",
+      "mandateId": null,
+      "facilitatedByServiceAccount": null,
+      "service": {
+        "id": "0fb63c2c-067f-4d39-9ef2-036408fbb822",
+        "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+        "numericId": 2,
+        "globalServiceId": "b813ffc4-8dfa-442c-83c1-c77255da1f61",
+        "name": "sapiom_openrouter",
+        "label": null,
+        "description": null,
+        "metadata": null,
+        "createdAt": "2026-07-04T05:14:31.042Z",
+        "updatedAt": "2026-07-04T05:14:31.042Z",
+        "deletedAt": null
+      },
+      "preparingAt": "2026-07-04T17:16:52.616Z",
+      "deniedAt": "2026-07-04T17:16:52.770Z",
+      "cancelledAt": null,
+      "authorizationRequests": [
+        {
+          "id": "469b0b8d-bcbd-47bd-ba75-5f032081fe82",
+          "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+          "transactionId": "0a2336ff-07e6-4bec-9f24-3204bc61d76b",
+          "status": "denied",
+          "createdAt": "2026-07-04T17:16:52.583Z",
+          "updatedAt": "2026-07-04T17:16:52.762Z",
+          "completedAt": "2026-07-04T17:16:52.770Z",
+          "processingAt": "2026-07-04T17:16:52.674Z",
+          "authorizedAt": null,
+          "deniedAt": "2026-07-04T17:16:52.770Z",
+          "ruleExecutions": [
+            {
+              "id": "98bbd6c6-e2a3-4a57-8e4e-4f0fb5adcaca",
+              "ruleId": "9c8c39ef-e4c4-47e1-9827-4f18a35fe04f",
+              "rule": {
+                "id": "9c8c39ef-e4c4-47e1-9827-4f18a35fe04f",
+                "numericId": 5,
+                "name": "holdtest-rule-hvs-2"
+              },
+              "transactionId": "0a2336ff-07e6-4bec-9f24-3204bc61d76b",
+              "transactionAuthorizationRequestId": "469b0b8d-bcbd-47bd-ba75-5f032081fe82",
+              "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+              "status": "denied",
+              "inputData": {
+                "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+                "actionName": "generate",
+                "serviceName": "sapiom_openrouter",
+                "resourceName": "/v1/chat/completions",
+                "transactionId": "0a2336ff-07e6-4bec-9f24-3204bc61d76b",
+                "transactionAuthorizationRequestId": "469b0b8d-bcbd-47bd-ba75-5f032081fe82"
+              },
+              "outputData": {
+                "reason": "Total transaction costs including this transaction (0.00 USD) would exceed limit of 0.00 USD in 1 days",
+                "decision": "DENIED",
+                "metadata": {
+                  "ruleType": "usage_limit",
+                  "violations": [
+                    {
+                      "limitValue": 0.001,
+                      "currentValue": 0.002403,
+                      "parameterName": null,
+                      "measurementType": "sum_transaction_costs"
+                    }
+                  ],
+                  "parametersChecked": 1
+                }
+              },
+              "errorMessage": null,
+              "errorDetails": null,
+              "startedAt": "2026-07-04T17:16:52.732Z",
+              "completedAt": "2026-07-04T17:16:52.754Z",
+              "executionTimeMs": 22,
+              "retryCount": 0,
+              "parentExecutionId": null,
+              "createdAt": "2026-07-04T17:16:52.671Z",
+              "updatedAt": "2026-07-04T17:16:52.730Z"
+            },
+            {
+              "id": "d82557c6-fc96-44b2-b813-9307236ae4ae",
+              "ruleId": "5d35cc64-3d49-4069-bb77-52d66ae5b3d5",
+              "rule": {
+                "id": "5d35cc64-3d49-4069-bb77-52d66ae5b3d5",
+                "numericId": 1,
+                "name": "System: Payment Authorization"
+              },
+              "transactionId": "0a2336ff-07e6-4bec-9f24-3204bc61d76b",
+              "transactionAuthorizationRequestId": "469b0b8d-bcbd-47bd-ba75-5f032081fe82",
+              "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+              "status": "completed",
+              "inputData": {
+                "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+                "actionName": "generate",
+                "serviceName": "sapiom_openrouter",
+                "resourceName": "/v1/chat/completions",
+                "transactionId": "0a2336ff-07e6-4bec-9f24-3204bc61d76b",
+                "transactionAuthorizationRequestId": "469b0b8d-bcbd-47bd-ba75-5f032081fe82"
+              },
+              "outputData": {
+                "reason": "Payment successfully authorized",
+                "decision": "ALLOWED",
+                "metadata": {
+                  "ruleType": "payment_authorization",
+                  "networkId": "56cccc96-7b61-4895-b9ac-d70c53e88841",
+                  "authorizationDetails": {
+                    "payload": {
+                      "nonce": "8a87096a-6a44-4380-9b50-31ccc08a788e",
+                      "token": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6InNhcGlvbS1wYXltZW50LWtleS12MSJ9.eyJzdWIiOiJlYWFjY2RkNy01YWNhLTQ2N2EtYmY3NC0yMzVhZTI2NjcwOGEiLCJ0cmFuc2ZlcklkIjoiNTZjY2NjOTYtN2I2MS00ODk1LWI5YWMtZDcwYzUzZTg4ODQxIiwiYWNjb3VudElkIjoiMGY2YTU2YmEtZGViMy00MzA3LTkyYWEtZWY3OTIyOTMwMmZmIiwicGF5VG8iOiIzOTdiOTM5NS1kMzBkLTQyY2MtYWJmOS0wYzU2NjI5ZDFjMmYiLCJhbW91bnQiOiIwLjAwMjQwMzAwMDAwMDAwMDAwMCIsIm5vbmNlIjoiOGE4NzA5NmEtNmE0NC00MzgwLTliNTAtMzFjY2MwOGE3ODhlIiwiaWRlbnRpdHkiOnsidmVyc2lvbiI6MiwidGVuYW50SWQiOiI3MjM0YTdmOS00MDc0LTRhYWQtYjEzZi04NGUwZTI4YjQ2OWEiLCJvcmdhbml6YXRpb25JZCI6ImY0YmEyODViLTA4NTUtNGFlMy05OTBjLWU1YmRlZTI5MWM0NyIsInBheW1lbnRBY2NvdW50SWQiOiIwZjZhNTZiYS1kZWIzLTQzMDctOTJhYS1lZjc5MjI5MzAyZmYifSwiaWF0IjoxNzgzMTg1NDEyfQ.mtsZv4c6jYGBzWy6eNERXSzybJxnG5aj9oPyRvEfg6PbjHxD7fBAiNUudHUGABpCAwq5gyMSH1PMaJj-wAdbuIzbaMO-4eJOpxDdIqmx_suXTnd9OPVovVJ4DviVWCpPuWaOKyDGpFhg9XbyMiD0g7LaojEvzmejl1-e3PQd_AkdT6ffCGdd_3bd1Gb3kOKPyUv6ximtvgLYBKobeQ4CiZsqYlNGphFT6USFOVyGpvM8oSJpdc0Ds7QkcYbgeIKNtHH_bqtKSVv9GgPgh-fdd-y4k7PHPiinqZhMZzSVTayx5HuqHOD2UMjqPtuhbBupS_gfwYR-6WFNABH53gWrPg",
+                      "amount": "0.002403000000000000",
+                      "accountId": "0f6a56ba-deb3-4307-92aa-ef79229302ff",
+                      "authorizationId": "56cccc96-7b61-4895-b9ac-d70c53e88841"
+                    },
+                    "accepted": {
+                      "asset": "USD",
+                      "extra": {},
+                      "payTo": "397b9395-d30d-42cc-abf9-0c56629d1c2f",
+                      "amount": "0.002403",
+                      "scheme": "upto",
+                      "network": "sapiom:main",
+                      "maxTimeoutSeconds": 300
+                    },
+                    "resource": {
+                      "url": "http://openrouter.services.sapiom.ai/v1/chat/completions",
+                      "mimeType": "application/json",
+                      "description": "OpenRouter chat completion"
+                    },
+                    "x402Version": 2
+                  },
+                  "paymentTransactionId": "eaaccdd7-5aca-467a-bf74-235ae266708a"
+                }
+              },
+              "errorMessage": null,
+              "errorDetails": null,
+              "startedAt": "2026-07-04T17:16:52.730Z",
+              "completedAt": "2026-07-04T17:16:52.755Z",
+              "executionTimeMs": 25,
+              "retryCount": 0,
+              "parentExecutionId": null,
+              "createdAt": "2026-07-04T17:16:52.671Z",
+              "updatedAt": "2026-07-04T17:16:52.729Z"
+            }
+          ]
+        },
+        {
+          "id": "a6d0d189-9c9b-4dab-b80a-3725cf924369",
+          "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+          "transactionId": "0a2336ff-07e6-4bec-9f24-3204bc61d76b",
+          "status": "authorized",
+          "createdAt": "2026-07-04T17:16:51.345Z",
+          "updatedAt": "2026-07-04T17:16:51.468Z",
+          "completedAt": "2026-07-04T17:16:51.476Z",
+          "processingAt": "2026-07-04T17:16:51.412Z",
+          "authorizedAt": "2026-07-04T17:16:51.476Z",
+          "deniedAt": null,
+          "ruleExecutions": [
+            {
+              "id": "5360ce32-8072-411e-83e6-cf8d5420d025",
+              "ruleId": "9c8c39ef-e4c4-47e1-9827-4f18a35fe04f",
+              "rule": {
+                "id": "9c8c39ef-e4c4-47e1-9827-4f18a35fe04f",
+                "numericId": 5,
+                "name": "holdtest-rule-hvs-2"
+              },
+              "transactionId": "0a2336ff-07e6-4bec-9f24-3204bc61d76b",
+              "transactionAuthorizationRequestId": "a6d0d189-9c9b-4dab-b80a-3725cf924369",
+              "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+              "status": "completed",
+              "inputData": {
+                "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+                "actionName": "generate",
+                "serviceName": "sapiom_openrouter",
+                "resourceName": "/v1/chat/completions",
+                "transactionId": "0a2336ff-07e6-4bec-9f24-3204bc61d76b",
+                "transactionAuthorizationRequestId": "a6d0d189-9c9b-4dab-b80a-3725cf924369"
+              },
+              "outputData": {
+                "reason": "All limits within acceptable range",
+                "decision": "ALLOWED",
+                "metadata": {
+                  "ruleType": "usage_limit",
+                  "parametersChecked": 1
+                }
+              },
+              "errorMessage": null,
+              "errorDetails": null,
+              "startedAt": "2026-07-04T17:16:51.440Z",
+              "completedAt": "2026-07-04T17:16:51.450Z",
+              "executionTimeMs": 10,
+              "retryCount": 0,
+              "parentExecutionId": null,
+              "createdAt": "2026-07-04T17:16:51.409Z",
+              "updatedAt": "2026-07-04T17:16:51.438Z"
+            }
+          ]
+        }
+      ]
+    },
+    "hold": 0.002403,
+    "settle": 0.002403,
+    "raw_llm_response_body": {
+      "x402Version": 2,
+      "error": "Payment required",
+      "resource": {
+        "url": "http://openrouter.services.sapiom.ai/v1/chat/completions",
+        "description": "OpenRouter chat completion",
+        "mimeType": "application/json"
+      },
+      "accepts": [
+        {
+          "scheme": "upto",
+          "network": "sapiom:main",
+          "amount": "0.002403",
+          "asset": "USD",
+          "payTo": "397b9395-d30d-42cc-abf9-0c56629d1c2f",
+          "maxTimeoutSeconds": 300,
+          "extra": {}
+        }
+      ]
+    },
+    "rule_state_after": {
+      "data": {
+        "type": "rules",
+        "id": "9c8c39ef-e4c4-47e1-9827-4f18a35fe04f",
+        "attributes": {
+          "numericId": 5,
+          "formattedId": "RL-005",
+          "name": "holdtest-rule-hvs-2",
+          "ruleType": "usage_limit",
+          "resolutionStrategy": "automatic",
+          "status": "active",
+          "version": 1,
+          "metadata": null,
+          "createdAt": "2026-07-04T17:16:31.028Z",
+          "updatedAt": "2026-07-04T17:16:31.028Z"
+        },
+        "relationships": {
+          "agents": {
+            "data": [
+              {
+                "type": "agents",
+                "id": "42979481-f64d-4f16-a50d-a12c94838519"
+              }
+            ]
+          },
+          "parameters": {
+            "data": [
+              {
+                "type": "rule-parameters",
+                "id": "a83b5d9f-1d60-4c91-a715-5bde5cc974e3"
+              }
+            ]
+          }
+        }
+      },
+      "included": [
+        {
+          "type": "agents",
+          "id": "42979481-f64d-4f16-a50d-a12c94838519",
+          "attributes": {
+            "id": "42979481-f64d-4f16-a50d-a12c94838519",
+            "numericId": 18,
+            "formattedId": "AG-018",
+            "name": "holdtest-agent-hvs",
+            "label": "Hold vs Settlement Test Agent"
+          }
+        },
+        {
+          "type": "rule-parameters",
+          "id": "a83b5d9f-1d60-4c91-a715-5bde5cc974e3",
+          "attributes": {
+            "id": "a83b5d9f-1d60-4c91-a715-5bde5cc974e3",
+            "parameterName": null,
+            "limitValue": "0.001000000000000000",
+            "measurementType": "sum_transaction_costs",
+            "intervalValue": 1,
+            "intervalUnit": "days",
+            "isRolling": true,
+            "groupBy": null,
+            "measurementScope": "rule",
+            "includeEstimates": true,
+            "description": null,
+            "createdAt": "2026-07-04T17:16:31.028Z",
+            "updatedAt": "2026-07-04T17:16:31.028Z"
+          }
+        }
+      ]
+    },
+    "all_agent_txns_count": 3
+  },
+  "toctou_concurrent_3_calls": {
+    "fetched_at": "2026-07-04T17:20:37.890Z",
+    "rule_id": "e2c8139f-aef0-4986-b920-37f47ce47d18",
+    "agent_name": "holdtest-agent-hvs",
+    "concurrent_calls": 3,
+    "outcomes": [
+      {
+        "label": 0,
+        "httpStatus": 402,
+        "body": {
+          "x402Version": 2,
+          "error": "Payment required",
+          "resource": {
+            "url": "http://openrouter.services.sapiom.ai/v1/chat/completions",
+            "description": "OpenRouter chat completion",
+            "mimeType": "application/json"
+          },
+          "accepts": [
+            {
+              "scheme": "upto",
+              "network": "sapiom:main",
+              "amount": "0.002403",
+              "asset": "USD",
+              "payTo": "397b9395-d30d-42cc-abf9-0c56629d1c2f",
+              "maxTimeoutSeconds": 300,
+              "extra": {}
+            }
+          ]
+        },
+        "errorMsg": null,
+        "elapsedMs": 1823
+      },
+      {
+        "label": 1,
+        "httpStatus": 402,
+        "body": {
+          "x402Version": 2,
+          "error": "Payment required",
+          "resource": {
+            "url": "http://openrouter.services.sapiom.ai/v1/chat/completions",
+            "description": "OpenRouter chat completion",
+            "mimeType": "application/json"
+          },
+          "accepts": [
+            {
+              "scheme": "upto",
+              "network": "sapiom:main",
+              "amount": "0.002403",
+              "asset": "USD",
+              "payTo": "397b9395-d30d-42cc-abf9-0c56629d1c2f",
+              "maxTimeoutSeconds": 300,
+              "extra": {}
+            }
+          ]
+        },
+        "errorMsg": null,
+        "elapsedMs": 2824
+      },
+      {
+        "label": 2,
+        "httpStatus": 402,
+        "body": {
+          "x402Version": 2,
+          "error": "Payment required",
+          "resource": {
+            "url": "http://openrouter.services.sapiom.ai/v1/chat/completions",
+            "description": "OpenRouter chat completion",
+            "mimeType": "application/json"
+          },
+          "accepts": [
+            {
+              "scheme": "upto",
+              "network": "sapiom:main",
+              "amount": "0.002403",
+              "asset": "USD",
+              "payTo": "397b9395-d30d-42cc-abf9-0c56629d1c2f",
+              "maxTimeoutSeconds": 300,
+              "extra": {}
+            }
+          ]
+        },
+        "errorMsg": null,
+        "elapsedMs": 2918
+      }
+    ],
+    "newest_transactions_summary": [
+      {
+        "id": "b5e63316-8c2c-4f37-aa98-231bdc31f50b",
+        "status": "denied",
+        "createdAt": "2026-07-04T17:20:25.193Z",
+        "costs": [
+          {
+            "fiatAmount": "0.002403000000000000",
+            "isActive": true,
+            "supersededAt": null
+          }
+        ]
+      },
+      {
+        "id": "11ce9867-f351-4f9f-8e74-1a59abe04d01",
+        "status": "denied",
+        "createdAt": "2026-07-04T17:20:25.046Z",
+        "costs": [
+          {
+            "fiatAmount": "0.002403000000000000",
+            "isActive": true,
+            "supersededAt": null
+          }
+        ]
+      },
+      {
+        "id": "5a7f5516-cd6b-4f3d-949b-c91d240134b8",
+        "status": "denied",
+        "createdAt": "2026-07-04T17:20:24.978Z",
+        "costs": [
+          {
+            "fiatAmount": "0.002403000000000000",
+            "isActive": true,
+            "supersededAt": null
+          }
+        ]
+      }
+    ],
+    "newest_transactions_raw": [
+      {
+        "id": "b5e63316-8c2c-4f37-aa98-231bdc31f50b",
+        "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+        "serviceName": "sapiom_openrouter",
+        "actionName": "generate",
+        "resourceName": "/v1/chat/completions",
+        "serviceId": "0fb63c2c-067f-4d39-9ef2-036408fbb822",
+        "status": "denied",
+        "requiresPayment": true,
+        "qualifiers": {},
+        "metadata": {
+          "createdByApiKeyId": "bfb69755-474f-41c3-bc82-22ca4aa97eec",
+          "preemptiveAuthorization": true
+        },
+        "createdAt": "2026-07-04T17:20:25.193Z",
+        "updatedAt": "2026-07-04T17:20:26.757Z",
+        "authorizedAt": null,
+        "completedAt": null,
+        "outcome": null,
+        "currentPaymentTransactionId": "5f894f40-7d0a-4372-a2bb-ec95bc83fe7b",
+        "trace": {
+          "id": "292ba4eb-e263-4332-b855-ad6a601ce9b1",
+          "externalId": null
+        },
+        "agentId": "42979481-f64d-4f16-a50d-a12c94838519",
+        "agent": {
+          "id": "42979481-f64d-4f16-a50d-a12c94838519",
+          "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+          "label": "Hold vs Settlement Test Agent",
+          "name": "holdtest-agent-hvs",
+          "description": "Dedicated throwaway agent for the hold-vs-settlement governance experiment. Never used for real production calls. Safe test residue.",
+          "status": "active",
+          "createdAt": "2026-07-04T17:13:33.020Z",
+          "updatedAt": "2026-07-04T17:13:33.020Z",
+          "numericId": 18
+        },
+        "costs": [
+          {
+            "id": "b8c8c8cc-e2ee-40e6-887e-2f980b4c0bc5",
+            "transactionId": "b5e63316-8c2c-4f37-aa98-231bdc31f50b",
+            "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+            "paymentTransactionId": "5f894f40-7d0a-4372-a2bb-ec95bc83fe7b",
+            "fiatAmount": "0.002403000000000000",
+            "fiatAssetId": "4657ab13-b6e6-4ba4-9df8-47b351c0041c",
+            "isEstimate": false,
+            "isActive": true,
+            "supersedesCostId": null,
+            "supersededAt": null,
+            "costDetails": {
+              "source": "payment_transaction",
+              "network": "sapiom",
+              "protocol": "x402",
+              "paymentTransactionId": "5f894f40-7d0a-4372-a2bb-ec95bc83fe7b"
+            },
+            "createdAt": "2026-07-04T17:20:26.551Z",
+            "updatedAt": "2026-07-04T17:20:26.551Z",
+            "inferredFromFactId": null
+          }
+        ],
+        "traceId": "292ba4eb-e263-4332-b855-ad6a601ce9b1",
+        "apiKeyId": "bfb69755-474f-41c3-bc82-22ca4aa97eec",
+        "createdByActorType": "api_key",
+        "createdByActorId": "bfb69755-474f-41c3-bc82-22ca4aa97eec",
+        "mandateId": null,
+        "facilitatedByServiceAccount": null,
+        "service": {
+          "id": "0fb63c2c-067f-4d39-9ef2-036408fbb822",
+          "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+          "numericId": 2,
+          "globalServiceId": "b813ffc4-8dfa-442c-83c1-c77255da1f61",
+          "name": "sapiom_openrouter",
+          "label": null,
+          "description": null,
+          "metadata": null,
+          "createdAt": "2026-07-04T05:14:31.042Z",
+          "updatedAt": "2026-07-04T05:14:31.042Z",
+          "deletedAt": null
+        },
+        "preparingAt": "2026-07-04T17:20:26.588Z",
+        "deniedAt": "2026-07-04T17:20:26.757Z",
+        "cancelledAt": null,
+        "authorizationRequests": [
+          {
+            "id": "0cfad5c1-68c1-480b-9529-6cbfa24c55e4",
+            "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+            "transactionId": "b5e63316-8c2c-4f37-aa98-231bdc31f50b",
+            "status": "denied",
+            "createdAt": "2026-07-04T17:20:26.551Z",
+            "updatedAt": "2026-07-04T17:20:26.752Z",
+            "completedAt": "2026-07-04T17:20:26.757Z",
+            "processingAt": "2026-07-04T17:20:26.655Z",
+            "authorizedAt": null,
+            "deniedAt": "2026-07-04T17:20:26.757Z",
+            "ruleExecutions": [
+              {
+                "id": "0e904a06-d3a2-4c2c-8ef6-38132d981e2a",
+                "ruleId": "e2c8139f-aef0-4986-b920-37f47ce47d18",
+                "rule": {
+                  "id": "e2c8139f-aef0-4986-b920-37f47ce47d18",
+                  "numericId": 6,
+                  "name": "holdtest-rule-hvs-toctou"
+                },
+                "transactionId": "b5e63316-8c2c-4f37-aa98-231bdc31f50b",
+                "transactionAuthorizationRequestId": "0cfad5c1-68c1-480b-9529-6cbfa24c55e4",
+                "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+                "status": "completed",
+                "inputData": {
+                  "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+                  "actionName": "generate",
+                  "serviceName": "sapiom_openrouter",
+                  "resourceName": "/v1/chat/completions",
+                  "transactionId": "b5e63316-8c2c-4f37-aa98-231bdc31f50b",
+                  "transactionAuthorizationRequestId": "0cfad5c1-68c1-480b-9529-6cbfa24c55e4"
+                },
+                "outputData": {
+                  "reason": "All limits within acceptable range",
+                  "decision": "ALLOWED",
+                  "metadata": {
+                    "ruleType": "usage_limit",
+                    "parametersChecked": 1
+                  }
+                },
+                "errorMessage": null,
+                "errorDetails": null,
+                "startedAt": "2026-07-04T17:20:26.715Z",
+                "completedAt": "2026-07-04T17:20:26.721Z",
+                "executionTimeMs": 6,
+                "retryCount": 0,
+                "parentExecutionId": null,
+                "createdAt": "2026-07-04T17:20:26.652Z",
+                "updatedAt": "2026-07-04T17:20:26.713Z"
+              },
+              {
+                "id": "c476778b-7a25-4430-a693-ef6a9ec6e829",
+                "ruleId": "5d35cc64-3d49-4069-bb77-52d66ae5b3d5",
+                "rule": {
+                  "id": "5d35cc64-3d49-4069-bb77-52d66ae5b3d5",
+                  "numericId": 1,
+                  "name": "System: Payment Authorization"
+                },
+                "transactionId": "b5e63316-8c2c-4f37-aa98-231bdc31f50b",
+                "transactionAuthorizationRequestId": "0cfad5c1-68c1-480b-9529-6cbfa24c55e4",
+                "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+                "status": "completed",
+                "inputData": {
+                  "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+                  "actionName": "generate",
+                  "serviceName": "sapiom_openrouter",
+                  "resourceName": "/v1/chat/completions",
+                  "transactionId": "b5e63316-8c2c-4f37-aa98-231bdc31f50b",
+                  "transactionAuthorizationRequestId": "0cfad5c1-68c1-480b-9529-6cbfa24c55e4"
+                },
+                "outputData": {
+                  "reason": "Payment successfully authorized",
+                  "decision": "ALLOWED",
+                  "metadata": {
+                    "ruleType": "payment_authorization",
+                    "networkId": "966acec9-2d4a-43b9-8e6b-27b9bee59e3c",
+                    "authorizationDetails": {
+                      "payload": {
+                        "nonce": "c2883853-692c-49ff-8ced-0502253bb8df",
+                        "token": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6InNhcGlvbS1wYXltZW50LWtleS12MSJ9.eyJzdWIiOiI1Zjg5NGY0MC03ZDBhLTQzNzItYTJiYi1lYzk1YmM4M2ZlN2IiLCJ0cmFuc2ZlcklkIjoiOTY2YWNlYzktMmQ0YS00M2I5LThlNmItMjdiOWJlZTU5ZTNjIiwiYWNjb3VudElkIjoiMGY2YTU2YmEtZGViMy00MzA3LTkyYWEtZWY3OTIyOTMwMmZmIiwicGF5VG8iOiIzOTdiOTM5NS1kMzBkLTQyY2MtYWJmOS0wYzU2NjI5ZDFjMmYiLCJhbW91bnQiOiIwLjAwMjQwMzAwMDAwMDAwMDAwMCIsIm5vbmNlIjoiYzI4ODM4NTMtNjkyYy00OWZmLThjZWQtMDUwMjI1M2JiOGRmIiwiaWRlbnRpdHkiOnsidmVyc2lvbiI6MiwidGVuYW50SWQiOiI3MjM0YTdmOS00MDc0LTRhYWQtYjEzZi04NGUwZTI4YjQ2OWEiLCJvcmdhbml6YXRpb25JZCI6ImY0YmEyODViLTA4NTUtNGFlMy05OTBjLWU1YmRlZTI5MWM0NyIsInBheW1lbnRBY2NvdW50SWQiOiIwZjZhNTZiYS1kZWIzLTQzMDctOTJhYS1lZjc5MjI5MzAyZmYifSwiaWF0IjoxNzgzMTg1NjI2fQ.aPAqmI0mHXQBUun56RIgXUUvtm4DT91-Nm6oQPkIOm37dlQPFYyuTYOEuORNNZJIBVylXdp7CEbCuxRS2WIi63Ywm5Lz219F7vD2V4M4Q--nWTRjYKgzz6VXMJzgaGiDnXLMVMliUWQVNaVyXxalZRFrupatZupWRE3T_ctfFE74hrR3jPZQDczEh8dpQ65xjYKqY3v_YMD3E2cR9jm9wSt8a1jpypZfiPs-3xg_KPoOV5g2qMdmurYmgva_C4Cx5Jvi8K2x9zVLreGKkfscNxjuyja4dHPbfJfvBzcUx1j6rvZn5udsCdtbvZvS8ey8mKyXw8RcJ9hxTzhbzPgHUQ",
+                        "amount": "0.002403000000000000",
+                        "accountId": "0f6a56ba-deb3-4307-92aa-ef79229302ff",
+                        "authorizationId": "966acec9-2d4a-43b9-8e6b-27b9bee59e3c"
+                      },
+                      "accepted": {
+                        "asset": "USD",
+                        "extra": {},
+                        "payTo": "397b9395-d30d-42cc-abf9-0c56629d1c2f",
+                        "amount": "0.002403",
+                        "scheme": "upto",
+                        "network": "sapiom:main",
+                        "maxTimeoutSeconds": 300
+                      },
+                      "resource": {
+                        "url": "http://openrouter.services.sapiom.ai/v1/chat/completions",
+                        "mimeType": "application/json",
+                        "description": "OpenRouter chat completion"
+                      },
+                      "x402Version": 2
+                    },
+                    "paymentTransactionId": "5f894f40-7d0a-4372-a2bb-ec95bc83fe7b"
+                  }
+                },
+                "errorMessage": null,
+                "errorDetails": null,
+                "startedAt": "2026-07-04T17:20:26.715Z",
+                "completedAt": "2026-07-04T17:20:26.776Z",
+                "executionTimeMs": 61,
+                "retryCount": 0,
+                "parentExecutionId": null,
+                "createdAt": "2026-07-04T17:20:26.652Z",
+                "updatedAt": "2026-07-04T17:20:26.712Z"
+              },
+              {
+                "id": "48844b7f-9b47-4e16-ba99-1f6d3414603d",
+                "ruleId": "9c8c39ef-e4c4-47e1-9827-4f18a35fe04f",
+                "rule": {
+                  "id": "9c8c39ef-e4c4-47e1-9827-4f18a35fe04f",
+                  "numericId": 5,
+                  "name": "holdtest-rule-hvs-2"
+                },
+                "transactionId": "b5e63316-8c2c-4f37-aa98-231bdc31f50b",
+                "transactionAuthorizationRequestId": "0cfad5c1-68c1-480b-9529-6cbfa24c55e4",
+                "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+                "status": "denied",
+                "inputData": {
+                  "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+                  "actionName": "generate",
+                  "serviceName": "sapiom_openrouter",
+                  "resourceName": "/v1/chat/completions",
+                  "transactionId": "b5e63316-8c2c-4f37-aa98-231bdc31f50b",
+                  "transactionAuthorizationRequestId": "0cfad5c1-68c1-480b-9529-6cbfa24c55e4"
+                },
+                "outputData": {
+                  "reason": "Total transaction costs including this transaction (0.00 USD) would exceed limit of 0.00 USD in 1 days",
+                  "decision": "DENIED",
+                  "metadata": {
+                    "ruleType": "usage_limit",
+                    "violations": [
+                      {
+                        "limitValue": 0.001,
+                        "currentValue": 0.002403,
+                        "parameterName": null,
+                        "measurementType": "sum_transaction_costs"
+                      }
+                    ],
+                    "parametersChecked": 1
+                  }
+                },
+                "errorMessage": null,
+                "errorDetails": null,
+                "startedAt": "2026-07-04T17:20:26.716Z",
+                "completedAt": "2026-07-04T17:20:26.723Z",
+                "executionTimeMs": 7,
+                "retryCount": 0,
+                "parentExecutionId": null,
+                "createdAt": "2026-07-04T17:20:26.652Z",
+                "updatedAt": "2026-07-04T17:20:26.714Z"
+              }
+            ]
+          },
+          {
+            "id": "07638005-3df9-4203-be72-c20d2b0ac206",
+            "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+            "transactionId": "b5e63316-8c2c-4f37-aa98-231bdc31f50b",
+            "status": "authorized",
+            "createdAt": "2026-07-04T17:20:25.247Z",
+            "updatedAt": "2026-07-04T17:20:25.327Z",
+            "completedAt": "2026-07-04T17:20:25.332Z",
+            "processingAt": "2026-07-04T17:20:25.271Z",
+            "authorizedAt": "2026-07-04T17:20:25.332Z",
+            "deniedAt": null,
+            "ruleExecutions": [
+              {
+                "id": "4c753b21-0392-4d2c-8c70-cfc40bb8f33e",
+                "ruleId": "9c8c39ef-e4c4-47e1-9827-4f18a35fe04f",
+                "rule": {
+                  "id": "9c8c39ef-e4c4-47e1-9827-4f18a35fe04f",
+                  "numericId": 5,
+                  "name": "holdtest-rule-hvs-2"
+                },
+                "transactionId": "b5e63316-8c2c-4f37-aa98-231bdc31f50b",
+                "transactionAuthorizationRequestId": "07638005-3df9-4203-be72-c20d2b0ac206",
+                "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+                "status": "completed",
+                "inputData": {
+                  "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+                  "actionName": "generate",
+                  "serviceName": "sapiom_openrouter",
+                  "resourceName": "/v1/chat/completions",
+                  "transactionId": "b5e63316-8c2c-4f37-aa98-231bdc31f50b",
+                  "transactionAuthorizationRequestId": "07638005-3df9-4203-be72-c20d2b0ac206"
+                },
+                "outputData": {
+                  "reason": "All limits within acceptable range",
+                  "decision": "ALLOWED",
+                  "metadata": {
+                    "ruleType": "usage_limit",
+                    "parametersChecked": 1
+                  }
+                },
+                "errorMessage": null,
+                "errorDetails": null,
+                "startedAt": "2026-07-04T17:20:25.308Z",
+                "completedAt": "2026-07-04T17:20:25.315Z",
+                "executionTimeMs": 7,
+                "retryCount": 0,
+                "parentExecutionId": null,
+                "createdAt": "2026-07-04T17:20:25.267Z",
+                "updatedAt": "2026-07-04T17:20:25.306Z"
+              },
+              {
+                "id": "c404062d-88b2-4c2f-8417-7f72f463551c",
+                "ruleId": "e2c8139f-aef0-4986-b920-37f47ce47d18",
+                "rule": {
+                  "id": "e2c8139f-aef0-4986-b920-37f47ce47d18",
+                  "numericId": 6,
+                  "name": "holdtest-rule-hvs-toctou"
+                },
+                "transactionId": "b5e63316-8c2c-4f37-aa98-231bdc31f50b",
+                "transactionAuthorizationRequestId": "07638005-3df9-4203-be72-c20d2b0ac206",
+                "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+                "status": "completed",
+                "inputData": {
+                  "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+                  "actionName": "generate",
+                  "serviceName": "sapiom_openrouter",
+                  "resourceName": "/v1/chat/completions",
+                  "transactionId": "b5e63316-8c2c-4f37-aa98-231bdc31f50b",
+                  "transactionAuthorizationRequestId": "07638005-3df9-4203-be72-c20d2b0ac206"
+                },
+                "outputData": {
+                  "reason": "All limits within acceptable range",
+                  "decision": "ALLOWED",
+                  "metadata": {
+                    "ruleType": "usage_limit",
+                    "parametersChecked": 1
+                  }
+                },
+                "errorMessage": null,
+                "errorDetails": null,
+                "startedAt": "2026-07-04T17:20:25.308Z",
+                "completedAt": "2026-07-04T17:20:25.315Z",
+                "executionTimeMs": 7,
+                "retryCount": 0,
+                "parentExecutionId": null,
+                "createdAt": "2026-07-04T17:20:25.267Z",
+                "updatedAt": "2026-07-04T17:20:25.306Z"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "11ce9867-f351-4f9f-8e74-1a59abe04d01",
+        "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+        "serviceName": "sapiom_openrouter",
+        "actionName": "generate",
+        "resourceName": "/v1/chat/completions",
+        "serviceId": "0fb63c2c-067f-4d39-9ef2-036408fbb822",
+        "status": "denied",
+        "requiresPayment": true,
+        "qualifiers": {},
+        "metadata": {
+          "createdByApiKeyId": "bfb69755-474f-41c3-bc82-22ca4aa97eec",
+          "preemptiveAuthorization": true
+        },
+        "createdAt": "2026-07-04T17:20:25.046Z",
+        "updatedAt": "2026-07-04T17:20:26.659Z",
+        "authorizedAt": null,
+        "completedAt": null,
+        "outcome": null,
+        "currentPaymentTransactionId": "afc52430-d6a0-4e70-84fd-17118a7b3472",
+        "trace": {
+          "id": "e6643a13-53a0-4d0b-9f11-a7cbdf0e264d",
+          "externalId": null
+        },
+        "agentId": "42979481-f64d-4f16-a50d-a12c94838519",
+        "agent": {
+          "id": "42979481-f64d-4f16-a50d-a12c94838519",
+          "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+          "label": "Hold vs Settlement Test Agent",
+          "name": "holdtest-agent-hvs",
+          "description": "Dedicated throwaway agent for the hold-vs-settlement governance experiment. Never used for real production calls. Safe test residue.",
+          "status": "active",
+          "createdAt": "2026-07-04T17:13:33.020Z",
+          "updatedAt": "2026-07-04T17:13:33.020Z",
+          "numericId": 18
+        },
+        "costs": [
+          {
+            "id": "9ce4854f-10ac-4000-903e-b0e81a4e27da",
+            "transactionId": "11ce9867-f351-4f9f-8e74-1a59abe04d01",
+            "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+            "paymentTransactionId": "afc52430-d6a0-4e70-84fd-17118a7b3472",
+            "fiatAmount": "0.002403000000000000",
+            "fiatAssetId": "4657ab13-b6e6-4ba4-9df8-47b351c0041c",
+            "isEstimate": false,
+            "isActive": true,
+            "supersedesCostId": null,
+            "supersededAt": null,
+            "costDetails": {
+              "source": "payment_transaction",
+              "network": "sapiom",
+              "protocol": "x402",
+              "paymentTransactionId": "afc52430-d6a0-4e70-84fd-17118a7b3472"
+            },
+            "createdAt": "2026-07-04T17:20:26.448Z",
+            "updatedAt": "2026-07-04T17:20:26.448Z",
+            "inferredFromFactId": null
+          }
+        ],
+        "traceId": "e6643a13-53a0-4d0b-9f11-a7cbdf0e264d",
+        "apiKeyId": "bfb69755-474f-41c3-bc82-22ca4aa97eec",
+        "createdByActorType": "api_key",
+        "createdByActorId": "bfb69755-474f-41c3-bc82-22ca4aa97eec",
+        "mandateId": null,
+        "facilitatedByServiceAccount": null,
+        "service": {
+          "id": "0fb63c2c-067f-4d39-9ef2-036408fbb822",
+          "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+          "numericId": 2,
+          "globalServiceId": "b813ffc4-8dfa-442c-83c1-c77255da1f61",
+          "name": "sapiom_openrouter",
+          "label": null,
+          "description": null,
+          "metadata": null,
+          "createdAt": "2026-07-04T05:14:31.042Z",
+          "updatedAt": "2026-07-04T05:14:31.042Z",
+          "deletedAt": null
+        },
+        "preparingAt": "2026-07-04T17:20:26.489Z",
+        "deniedAt": "2026-07-04T17:20:26.659Z",
+        "cancelledAt": null,
+        "authorizationRequests": [
+          {
+            "id": "faf71067-cf4a-40ce-913a-a96e0c549839",
+            "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+            "transactionId": "11ce9867-f351-4f9f-8e74-1a59abe04d01",
+            "status": "denied",
+            "createdAt": "2026-07-04T17:20:26.448Z",
+            "updatedAt": "2026-07-04T17:20:26.651Z",
+            "completedAt": "2026-07-04T17:20:26.659Z",
+            "processingAt": "2026-07-04T17:20:26.539Z",
+            "authorizedAt": null,
+            "deniedAt": "2026-07-04T17:20:26.659Z",
+            "ruleExecutions": [
+              {
+                "id": "0238be94-fe98-45ec-ae90-42e35fa49849",
+                "ruleId": "9c8c39ef-e4c4-47e1-9827-4f18a35fe04f",
+                "rule": {
+                  "id": "9c8c39ef-e4c4-47e1-9827-4f18a35fe04f",
+                  "numericId": 5,
+                  "name": "holdtest-rule-hvs-2"
+                },
+                "transactionId": "11ce9867-f351-4f9f-8e74-1a59abe04d01",
+                "transactionAuthorizationRequestId": "faf71067-cf4a-40ce-913a-a96e0c549839",
+                "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+                "status": "denied",
+                "inputData": {
+                  "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+                  "actionName": "generate",
+                  "serviceName": "sapiom_openrouter",
+                  "resourceName": "/v1/chat/completions",
+                  "transactionId": "11ce9867-f351-4f9f-8e74-1a59abe04d01",
+                  "transactionAuthorizationRequestId": "faf71067-cf4a-40ce-913a-a96e0c549839"
+                },
+                "outputData": {
+                  "reason": "Total transaction costs including this transaction (0.00 USD) would exceed limit of 0.00 USD in 1 days",
+                  "decision": "DENIED",
+                  "metadata": {
+                    "ruleType": "usage_limit",
+                    "violations": [
+                      {
+                        "limitValue": 0.001,
+                        "currentValue": 0.004806,
+                        "parameterName": null,
+                        "measurementType": "sum_transaction_costs"
+                      }
+                    ],
+                    "parametersChecked": 1
+                  }
+                },
+                "errorMessage": null,
+                "errorDetails": null,
+                "startedAt": "2026-07-04T17:20:26.595Z",
+                "completedAt": "2026-07-04T17:20:26.603Z",
+                "executionTimeMs": 8,
+                "retryCount": 0,
+                "parentExecutionId": null,
+                "createdAt": "2026-07-04T17:20:26.534Z",
+                "updatedAt": "2026-07-04T17:20:26.593Z"
+              },
+              {
+                "id": "ed299430-c1dd-4828-a07d-619aac72aca9",
+                "ruleId": "e2c8139f-aef0-4986-b920-37f47ce47d18",
+                "rule": {
+                  "id": "e2c8139f-aef0-4986-b920-37f47ce47d18",
+                  "numericId": 6,
+                  "name": "holdtest-rule-hvs-toctou"
+                },
+                "transactionId": "11ce9867-f351-4f9f-8e74-1a59abe04d01",
+                "transactionAuthorizationRequestId": "faf71067-cf4a-40ce-913a-a96e0c549839",
+                "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+                "status": "denied",
+                "inputData": {
+                  "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+                  "actionName": "generate",
+                  "serviceName": "sapiom_openrouter",
+                  "resourceName": "/v1/chat/completions",
+                  "transactionId": "11ce9867-f351-4f9f-8e74-1a59abe04d01",
+                  "transactionAuthorizationRequestId": "faf71067-cf4a-40ce-913a-a96e0c549839"
+                },
+                "outputData": {
+                  "reason": "Total transaction costs including this transaction (0.00 USD) would exceed limit of 0.00 USD in 1 days",
+                  "decision": "DENIED",
+                  "metadata": {
+                    "ruleType": "usage_limit",
+                    "violations": [
+                      {
+                        "limitValue": 0.003,
+                        "currentValue": 0.004806,
+                        "parameterName": null,
+                        "measurementType": "sum_transaction_costs"
+                      }
+                    ],
+                    "parametersChecked": 1
+                  }
+                },
+                "errorMessage": null,
+                "errorDetails": null,
+                "startedAt": "2026-07-04T17:20:26.596Z",
+                "completedAt": "2026-07-04T17:20:26.606Z",
+                "executionTimeMs": 10,
+                "retryCount": 0,
+                "parentExecutionId": null,
+                "createdAt": "2026-07-04T17:20:26.534Z",
+                "updatedAt": "2026-07-04T17:20:26.593Z"
+              },
+              {
+                "id": "48cd7e93-ec1b-4e6b-a190-a0e1fe2cf343",
+                "ruleId": "5d35cc64-3d49-4069-bb77-52d66ae5b3d5",
+                "rule": {
+                  "id": "5d35cc64-3d49-4069-bb77-52d66ae5b3d5",
+                  "numericId": 1,
+                  "name": "System: Payment Authorization"
+                },
+                "transactionId": "11ce9867-f351-4f9f-8e74-1a59abe04d01",
+                "transactionAuthorizationRequestId": "faf71067-cf4a-40ce-913a-a96e0c549839",
+                "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+                "status": "completed",
+                "inputData": {
+                  "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+                  "actionName": "generate",
+                  "serviceName": "sapiom_openrouter",
+                  "resourceName": "/v1/chat/completions",
+                  "transactionId": "11ce9867-f351-4f9f-8e74-1a59abe04d01",
+                  "transactionAuthorizationRequestId": "faf71067-cf4a-40ce-913a-a96e0c549839"
+                },
+                "outputData": {
+                  "reason": "Payment successfully authorized",
+                  "decision": "ALLOWED",
+                  "metadata": {
+                    "ruleType": "payment_authorization",
+                    "networkId": "ef6ac6b2-eee0-4199-b5f6-1ab8d981684d",
+                    "authorizationDetails": {
+                      "payload": {
+                        "nonce": "1028ce1a-80c6-4c71-bd27-cd7305797483",
+                        "token": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6InNhcGlvbS1wYXltZW50LWtleS12MSJ9.eyJzdWIiOiJhZmM1MjQzMC1kNmEwLTRlNzAtODRmZC0xNzExOGE3YjM0NzIiLCJ0cmFuc2ZlcklkIjoiZWY2YWM2YjItZWVlMC00MTk5LWI1ZjYtMWFiOGQ5ODE2ODRkIiwiYWNjb3VudElkIjoiMGY2YTU2YmEtZGViMy00MzA3LTkyYWEtZWY3OTIyOTMwMmZmIiwicGF5VG8iOiIzOTdiOTM5NS1kMzBkLTQyY2MtYWJmOS0wYzU2NjI5ZDFjMmYiLCJhbW91bnQiOiIwLjAwMjQwMzAwMDAwMDAwMDAwMCIsIm5vbmNlIjoiMTAyOGNlMWEtODBjNi00YzcxLWJkMjctY2Q3MzA1Nzk3NDgzIiwiaWRlbnRpdHkiOnsidmVyc2lvbiI6MiwidGVuYW50SWQiOiI3MjM0YTdmOS00MDc0LTRhYWQtYjEzZi04NGUwZTI4YjQ2OWEiLCJvcmdhbml6YXRpb25JZCI6ImY0YmEyODViLTA4NTUtNGFlMy05OTBjLWU1YmRlZTI5MWM0NyIsInBheW1lbnRBY2NvdW50SWQiOiIwZjZhNTZiYS1kZWIzLTQzMDctOTJhYS1lZjc5MjI5MzAyZmYifSwiaWF0IjoxNzgzMTg1NjI2fQ.KnFS5p2gkplHshOPp7k-nnmn9cV6aOnUo79rdbV1vinp9pOS7Jp513JPISdR-8ebwPAw5P5hReM5PKrjog-gt5B-pb5Mok4tH7bNqq38AL9c6i39RzTebxKMTSLEkRb95QnnsNrNn_SQ12SuLpDoLIqyYvbLGvDgqcOcaNQG5jHdbfaHYjpIC4NE9hVZV3CmHQC7E76GYuh0yZKvIy-We0SfyERqmqjpEk_G_d0KZJsIbret1eH1mGirzmBnOgpKGl8hkkL0YCT05kM9gHJRMxMJJ2soixRhnoR3L59r3UcSkHJYblVJiVh4-l0EJ8Yujpbnq6BjkAu6B1QXNQzrug",
+                        "amount": "0.002403000000000000",
+                        "accountId": "0f6a56ba-deb3-4307-92aa-ef79229302ff",
+                        "authorizationId": "ef6ac6b2-eee0-4199-b5f6-1ab8d981684d"
+                      },
+                      "accepted": {
+                        "asset": "USD",
+                        "extra": {},
+                        "payTo": "397b9395-d30d-42cc-abf9-0c56629d1c2f",
+                        "amount": "0.002403",
+                        "scheme": "upto",
+                        "network": "sapiom:main",
+                        "maxTimeoutSeconds": 300
+                      },
+                      "resource": {
+                        "url": "http://openrouter.services.sapiom.ai/v1/chat/completions",
+                        "mimeType": "application/json",
+                        "description": "OpenRouter chat completion"
+                      },
+                      "x402Version": 2
+                    },
+                    "paymentTransactionId": "afc52430-d6a0-4e70-84fd-17118a7b3472"
+                  }
+                },
+                "errorMessage": null,
+                "errorDetails": null,
+                "startedAt": "2026-07-04T17:20:26.595Z",
+                "completedAt": "2026-07-04T17:20:26.638Z",
+                "executionTimeMs": 43,
+                "retryCount": 0,
+                "parentExecutionId": null,
+                "createdAt": "2026-07-04T17:20:26.534Z",
+                "updatedAt": "2026-07-04T17:20:26.593Z"
+              }
+            ]
+          },
+          {
+            "id": "e0cb2556-fc25-441f-88f3-b9cf9a0d63b7",
+            "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+            "transactionId": "11ce9867-f351-4f9f-8e74-1a59abe04d01",
+            "status": "authorized",
+            "createdAt": "2026-07-04T17:20:25.092Z",
+            "updatedAt": "2026-07-04T17:20:25.201Z",
+            "completedAt": "2026-07-04T17:20:25.206Z",
+            "processingAt": "2026-07-04T17:20:25.146Z",
+            "authorizedAt": "2026-07-04T17:20:25.206Z",
+            "deniedAt": null,
+            "ruleExecutions": [
+              {
+                "id": "94c780fc-48e8-4b02-971c-3d6950da515e",
+                "ruleId": "e2c8139f-aef0-4986-b920-37f47ce47d18",
+                "rule": {
+                  "id": "e2c8139f-aef0-4986-b920-37f47ce47d18",
+                  "numericId": 6,
+                  "name": "holdtest-rule-hvs-toctou"
+                },
+                "transactionId": "11ce9867-f351-4f9f-8e74-1a59abe04d01",
+                "transactionAuthorizationRequestId": "e0cb2556-fc25-441f-88f3-b9cf9a0d63b7",
+                "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+                "status": "completed",
+                "inputData": {
+                  "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+                  "actionName": "generate",
+                  "serviceName": "sapiom_openrouter",
+                  "resourceName": "/v1/chat/completions",
+                  "transactionId": "11ce9867-f351-4f9f-8e74-1a59abe04d01",
+                  "transactionAuthorizationRequestId": "e0cb2556-fc25-441f-88f3-b9cf9a0d63b7"
+                },
+                "outputData": {
+                  "reason": "All limits within acceptable range",
+                  "decision": "ALLOWED",
+                  "metadata": {
+                    "ruleType": "usage_limit",
+                    "parametersChecked": 1
+                  }
+                },
+                "errorMessage": null,
+                "errorDetails": null,
+                "startedAt": "2026-07-04T17:20:25.188Z",
+                "completedAt": "2026-07-04T17:20:25.195Z",
+                "executionTimeMs": 7,
+                "retryCount": 0,
+                "parentExecutionId": null,
+                "createdAt": "2026-07-04T17:20:25.143Z",
+                "updatedAt": "2026-07-04T17:20:25.186Z"
+              },
+              {
+                "id": "54e18bb3-f774-4e42-b9ac-c46476fadb7d",
+                "ruleId": "9c8c39ef-e4c4-47e1-9827-4f18a35fe04f",
+                "rule": {
+                  "id": "9c8c39ef-e4c4-47e1-9827-4f18a35fe04f",
+                  "numericId": 5,
+                  "name": "holdtest-rule-hvs-2"
+                },
+                "transactionId": "11ce9867-f351-4f9f-8e74-1a59abe04d01",
+                "transactionAuthorizationRequestId": "e0cb2556-fc25-441f-88f3-b9cf9a0d63b7",
+                "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+                "status": "completed",
+                "inputData": {
+                  "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+                  "actionName": "generate",
+                  "serviceName": "sapiom_openrouter",
+                  "resourceName": "/v1/chat/completions",
+                  "transactionId": "11ce9867-f351-4f9f-8e74-1a59abe04d01",
+                  "transactionAuthorizationRequestId": "e0cb2556-fc25-441f-88f3-b9cf9a0d63b7"
+                },
+                "outputData": {
+                  "reason": "All limits within acceptable range",
+                  "decision": "ALLOWED",
+                  "metadata": {
+                    "ruleType": "usage_limit",
+                    "parametersChecked": 1
+                  }
+                },
+                "errorMessage": null,
+                "errorDetails": null,
+                "startedAt": "2026-07-04T17:20:25.188Z",
+                "completedAt": "2026-07-04T17:20:25.196Z",
+                "executionTimeMs": 8,
+                "retryCount": 0,
+                "parentExecutionId": null,
+                "createdAt": "2026-07-04T17:20:25.143Z",
+                "updatedAt": "2026-07-04T17:20:25.186Z"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "5a7f5516-cd6b-4f3d-949b-c91d240134b8",
+        "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+        "serviceName": "sapiom_openrouter",
+        "actionName": "generate",
+        "resourceName": "/v1/chat/completions",
+        "serviceId": "0fb63c2c-067f-4d39-9ef2-036408fbb822",
+        "status": "denied",
+        "requiresPayment": true,
+        "qualifiers": {},
+        "metadata": {
+          "createdByApiKeyId": "bfb69755-474f-41c3-bc82-22ca4aa97eec",
+          "preemptiveAuthorization": true
+        },
+        "createdAt": "2026-07-04T17:20:24.978Z",
+        "updatedAt": "2026-07-04T17:20:26.540Z",
+        "authorizedAt": null,
+        "completedAt": null,
+        "outcome": null,
+        "currentPaymentTransactionId": "c6bb0815-1cd2-4a37-9ece-6ab5e83b1872",
+        "trace": {
+          "id": "315abdaf-bca6-4612-bb8c-6db6b8a0d2d2",
+          "externalId": null
+        },
+        "agentId": "42979481-f64d-4f16-a50d-a12c94838519",
+        "agent": {
+          "id": "42979481-f64d-4f16-a50d-a12c94838519",
+          "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+          "label": "Hold vs Settlement Test Agent",
+          "name": "holdtest-agent-hvs",
+          "description": "Dedicated throwaway agent for the hold-vs-settlement governance experiment. Never used for real production calls. Safe test residue.",
+          "status": "active",
+          "createdAt": "2026-07-04T17:13:33.020Z",
+          "updatedAt": "2026-07-04T17:13:33.020Z",
+          "numericId": 18
+        },
+        "costs": [
+          {
+            "id": "550bfec3-0a01-4ba0-8d15-b6fcb7d977e4",
+            "transactionId": "5a7f5516-cd6b-4f3d-949b-c91d240134b8",
+            "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+            "paymentTransactionId": "c6bb0815-1cd2-4a37-9ece-6ab5e83b1872",
+            "fiatAmount": "0.002403000000000000",
+            "fiatAssetId": "4657ab13-b6e6-4ba4-9df8-47b351c0041c",
+            "isEstimate": false,
+            "isActive": true,
+            "supersedesCostId": null,
+            "supersededAt": null,
+            "costDetails": {
+              "source": "payment_transaction",
+              "network": "sapiom",
+              "protocol": "x402",
+              "paymentTransactionId": "c6bb0815-1cd2-4a37-9ece-6ab5e83b1872"
+            },
+            "createdAt": "2026-07-04T17:20:26.352Z",
+            "updatedAt": "2026-07-04T17:20:26.352Z",
+            "inferredFromFactId": null
+          }
+        ],
+        "traceId": "315abdaf-bca6-4612-bb8c-6db6b8a0d2d2",
+        "apiKeyId": "bfb69755-474f-41c3-bc82-22ca4aa97eec",
+        "createdByActorType": "api_key",
+        "createdByActorId": "bfb69755-474f-41c3-bc82-22ca4aa97eec",
+        "mandateId": null,
+        "facilitatedByServiceAccount": null,
+        "service": {
+          "id": "0fb63c2c-067f-4d39-9ef2-036408fbb822",
+          "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+          "numericId": 2,
+          "globalServiceId": "b813ffc4-8dfa-442c-83c1-c77255da1f61",
+          "name": "sapiom_openrouter",
+          "label": null,
+          "description": null,
+          "metadata": null,
+          "createdAt": "2026-07-04T05:14:31.042Z",
+          "updatedAt": "2026-07-04T05:14:31.042Z",
+          "deletedAt": null
+        },
+        "preparingAt": "2026-07-04T17:20:26.392Z",
+        "deniedAt": "2026-07-04T17:20:26.540Z",
+        "cancelledAt": null,
+        "authorizationRequests": [
+          {
+            "id": "84501b16-f1a9-452f-8513-a661f3781cf2",
+            "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+            "transactionId": "5a7f5516-cd6b-4f3d-949b-c91d240134b8",
+            "status": "denied",
+            "createdAt": "2026-07-04T17:20:26.352Z",
+            "updatedAt": "2026-07-04T17:20:26.535Z",
+            "completedAt": "2026-07-04T17:20:26.540Z",
+            "processingAt": "2026-07-04T17:20:26.423Z",
+            "authorizedAt": null,
+            "deniedAt": "2026-07-04T17:20:26.540Z",
+            "ruleExecutions": [
+              {
+                "id": "b3d5a3b2-0117-4bd5-bb20-5e4e3ba2bf5e",
+                "ruleId": "5d35cc64-3d49-4069-bb77-52d66ae5b3d5",
+                "rule": {
+                  "id": "5d35cc64-3d49-4069-bb77-52d66ae5b3d5",
+                  "numericId": 1,
+                  "name": "System: Payment Authorization"
+                },
+                "transactionId": "5a7f5516-cd6b-4f3d-949b-c91d240134b8",
+                "transactionAuthorizationRequestId": "84501b16-f1a9-452f-8513-a661f3781cf2",
+                "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+                "status": "completed",
+                "inputData": {
+                  "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+                  "actionName": "generate",
+                  "serviceName": "sapiom_openrouter",
+                  "resourceName": "/v1/chat/completions",
+                  "transactionId": "5a7f5516-cd6b-4f3d-949b-c91d240134b8",
+                  "transactionAuthorizationRequestId": "84501b16-f1a9-452f-8513-a661f3781cf2"
+                },
+                "outputData": {
+                  "reason": "Payment successfully authorized",
+                  "decision": "ALLOWED",
+                  "metadata": {
+                    "ruleType": "payment_authorization",
+                    "networkId": "5f465730-243e-4b64-8a7a-b299b9599e2a",
+                    "authorizationDetails": {
+                      "payload": {
+                        "nonce": "d28fe653-a8e2-414d-93f1-27808bb1ccc3",
+                        "token": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6InNhcGlvbS1wYXltZW50LWtleS12MSJ9.eyJzdWIiOiJjNmJiMDgxNS0xY2QyLTRhMzctOWVjZS02YWI1ZTgzYjE4NzIiLCJ0cmFuc2ZlcklkIjoiNWY0NjU3MzAtMjQzZS00YjY0LThhN2EtYjI5OWI5NTk5ZTJhIiwiYWNjb3VudElkIjoiMGY2YTU2YmEtZGViMy00MzA3LTkyYWEtZWY3OTIyOTMwMmZmIiwicGF5VG8iOiIzOTdiOTM5NS1kMzBkLTQyY2MtYWJmOS0wYzU2NjI5ZDFjMmYiLCJhbW91bnQiOiIwLjAwMjQwMzAwMDAwMDAwMDAwMCIsIm5vbmNlIjoiZDI4ZmU2NTMtYThlMi00MTRkLTkzZjEtMjc4MDhiYjFjY2MzIiwiaWRlbnRpdHkiOnsidmVyc2lvbiI6MiwidGVuYW50SWQiOiI3MjM0YTdmOS00MDc0LTRhYWQtYjEzZi04NGUwZTI4YjQ2OWEiLCJvcmdhbml6YXRpb25JZCI6ImY0YmEyODViLTA4NTUtNGFlMy05OTBjLWU1YmRlZTI5MWM0NyIsInBheW1lbnRBY2NvdW50SWQiOiIwZjZhNTZiYS1kZWIzLTQzMDctOTJhYS1lZjc5MjI5MzAyZmYifSwiaWF0IjoxNzgzMTg1NjI2fQ.S8Er9A5Ku1r0lhOIecz8ivqKRrBvlkeydrgV9FXrPw1DHTKBSkuJv9tKczRgeGWMLyBPJxQw0HplP1f_dExPnYJ06t9jeuVvqyV2Ae4wEiHd5m6PlOD-i9w-yBt2I1-AA7ByVSbXM8QAY7xk_Oeyqyfi8LCeOTNcEvRxKnbMKYqKUubEe4uIAj14FL2kFg5o_J8r23_mLRmsSvvY9Ynv1iHFnfgMNn7gTS_HN0ExVOcj1Y0JYHBtLAgAl8q_2ojTTxM7MDol7y7gYuZDvyv6H8wDJc52bykyGXHE8ut6en12wQMu_3j746KpPjsklGIs31bxMhKCVCqnCYVQ6g0zLg",
+                        "amount": "0.002403000000000000",
+                        "accountId": "0f6a56ba-deb3-4307-92aa-ef79229302ff",
+                        "authorizationId": "5f465730-243e-4b64-8a7a-b299b9599e2a"
+                      },
+                      "accepted": {
+                        "asset": "USD",
+                        "extra": {},
+                        "payTo": "397b9395-d30d-42cc-abf9-0c56629d1c2f",
+                        "amount": "0.002403",
+                        "scheme": "upto",
+                        "network": "sapiom:main",
+                        "maxTimeoutSeconds": 300
+                      },
+                      "resource": {
+                        "url": "http://openrouter.services.sapiom.ai/v1/chat/completions",
+                        "mimeType": "application/json",
+                        "description": "OpenRouter chat completion"
+                      },
+                      "x402Version": 2
+                    },
+                    "paymentTransactionId": "c6bb0815-1cd2-4a37-9ece-6ab5e83b1872"
+                  }
+                },
+                "errorMessage": null,
+                "errorDetails": null,
+                "startedAt": "2026-07-04T17:20:26.479Z",
+                "completedAt": "2026-07-04T17:20:26.506Z",
+                "executionTimeMs": 27,
+                "retryCount": 0,
+                "parentExecutionId": null,
+                "createdAt": "2026-07-04T17:20:26.420Z",
+                "updatedAt": "2026-07-04T17:20:26.478Z"
+              },
+              {
+                "id": "8c8ed072-acb9-4439-a2a2-2c66988e24a9",
+                "ruleId": "9c8c39ef-e4c4-47e1-9827-4f18a35fe04f",
+                "rule": {
+                  "id": "9c8c39ef-e4c4-47e1-9827-4f18a35fe04f",
+                  "numericId": 5,
+                  "name": "holdtest-rule-hvs-2"
+                },
+                "transactionId": "5a7f5516-cd6b-4f3d-949b-c91d240134b8",
+                "transactionAuthorizationRequestId": "84501b16-f1a9-452f-8513-a661f3781cf2",
+                "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+                "status": "denied",
+                "inputData": {
+                  "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+                  "actionName": "generate",
+                  "serviceName": "sapiom_openrouter",
+                  "resourceName": "/v1/chat/completions",
+                  "transactionId": "5a7f5516-cd6b-4f3d-949b-c91d240134b8",
+                  "transactionAuthorizationRequestId": "84501b16-f1a9-452f-8513-a661f3781cf2"
+                },
+                "outputData": {
+                  "reason": "Total transaction costs including this transaction (0.00 USD) would exceed limit of 0.00 USD in 1 days",
+                  "decision": "DENIED",
+                  "metadata": {
+                    "ruleType": "usage_limit",
+                    "violations": [
+                      {
+                        "limitValue": 0.001,
+                        "currentValue": 0.002403,
+                        "parameterName": null,
+                        "measurementType": "sum_transaction_costs"
+                      }
+                    ],
+                    "parametersChecked": 1
+                  }
+                },
+                "errorMessage": null,
+                "errorDetails": null,
+                "startedAt": "2026-07-04T17:20:26.480Z",
+                "completedAt": "2026-07-04T17:20:26.486Z",
+                "executionTimeMs": 6,
+                "retryCount": 0,
+                "parentExecutionId": null,
+                "createdAt": "2026-07-04T17:20:26.420Z",
+                "updatedAt": "2026-07-04T17:20:26.478Z"
+              },
+              {
+                "id": "ef333694-b669-4f17-b11d-279ec48236f2",
+                "ruleId": "e2c8139f-aef0-4986-b920-37f47ce47d18",
+                "rule": {
+                  "id": "e2c8139f-aef0-4986-b920-37f47ce47d18",
+                  "numericId": 6,
+                  "name": "holdtest-rule-hvs-toctou"
+                },
+                "transactionId": "5a7f5516-cd6b-4f3d-949b-c91d240134b8",
+                "transactionAuthorizationRequestId": "84501b16-f1a9-452f-8513-a661f3781cf2",
+                "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+                "status": "completed",
+                "inputData": {
+                  "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+                  "actionName": "generate",
+                  "serviceName": "sapiom_openrouter",
+                  "resourceName": "/v1/chat/completions",
+                  "transactionId": "5a7f5516-cd6b-4f3d-949b-c91d240134b8",
+                  "transactionAuthorizationRequestId": "84501b16-f1a9-452f-8513-a661f3781cf2"
+                },
+                "outputData": {
+                  "reason": "All limits within acceptable range",
+                  "decision": "ALLOWED",
+                  "metadata": {
+                    "ruleType": "usage_limit",
+                    "parametersChecked": 1
+                  }
+                },
+                "errorMessage": null,
+                "errorDetails": null,
+                "startedAt": "2026-07-04T17:20:26.480Z",
+                "completedAt": "2026-07-04T17:20:26.489Z",
+                "executionTimeMs": 9,
+                "retryCount": 0,
+                "parentExecutionId": null,
+                "createdAt": "2026-07-04T17:20:26.420Z",
+                "updatedAt": "2026-07-04T17:20:26.477Z"
+              }
+            ]
+          },
+          {
+            "id": "2dc86e62-81bb-4894-b699-858001de4db2",
+            "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+            "transactionId": "5a7f5516-cd6b-4f3d-949b-c91d240134b8",
+            "status": "authorized",
+            "createdAt": "2026-07-04T17:20:25.032Z",
+            "updatedAt": "2026-07-04T17:20:25.184Z",
+            "completedAt": "2026-07-04T17:20:25.189Z",
+            "processingAt": "2026-07-04T17:20:25.096Z",
+            "authorizedAt": "2026-07-04T17:20:25.189Z",
+            "deniedAt": null,
+            "ruleExecutions": [
+              {
+                "id": "bc419e38-5476-46bc-9194-613556e0868b",
+                "ruleId": "9c8c39ef-e4c4-47e1-9827-4f18a35fe04f",
+                "rule": {
+                  "id": "9c8c39ef-e4c4-47e1-9827-4f18a35fe04f",
+                  "numericId": 5,
+                  "name": "holdtest-rule-hvs-2"
+                },
+                "transactionId": "5a7f5516-cd6b-4f3d-949b-c91d240134b8",
+                "transactionAuthorizationRequestId": "2dc86e62-81bb-4894-b699-858001de4db2",
+                "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+                "status": "completed",
+                "inputData": {
+                  "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+                  "actionName": "generate",
+                  "serviceName": "sapiom_openrouter",
+                  "resourceName": "/v1/chat/completions",
+                  "transactionId": "5a7f5516-cd6b-4f3d-949b-c91d240134b8",
+                  "transactionAuthorizationRequestId": "2dc86e62-81bb-4894-b699-858001de4db2"
+                },
+                "outputData": {
+                  "reason": "All limits within acceptable range",
+                  "decision": "ALLOWED",
+                  "metadata": {
+                    "ruleType": "usage_limit",
+                    "parametersChecked": 1
+                  }
+                },
+                "errorMessage": null,
+                "errorDetails": null,
+                "startedAt": "2026-07-04T17:20:25.146Z",
+                "completedAt": "2026-07-04T17:20:25.155Z",
+                "executionTimeMs": 9,
+                "retryCount": 0,
+                "parentExecutionId": null,
+                "createdAt": "2026-07-04T17:20:25.092Z",
+                "updatedAt": "2026-07-04T17:20:25.143Z"
+              },
+              {
+                "id": "3355f121-c267-4d5c-8900-780ec5dafed4",
+                "ruleId": "e2c8139f-aef0-4986-b920-37f47ce47d18",
+                "rule": {
+                  "id": "e2c8139f-aef0-4986-b920-37f47ce47d18",
+                  "numericId": 6,
+                  "name": "holdtest-rule-hvs-toctou"
+                },
+                "transactionId": "5a7f5516-cd6b-4f3d-949b-c91d240134b8",
+                "transactionAuthorizationRequestId": "2dc86e62-81bb-4894-b699-858001de4db2",
+                "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+                "status": "completed",
+                "inputData": {
+                  "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+                  "actionName": "generate",
+                  "serviceName": "sapiom_openrouter",
+                  "resourceName": "/v1/chat/completions",
+                  "transactionId": "5a7f5516-cd6b-4f3d-949b-c91d240134b8",
+                  "transactionAuthorizationRequestId": "2dc86e62-81bb-4894-b699-858001de4db2"
+                },
+                "outputData": {
+                  "reason": "All limits within acceptable range",
+                  "decision": "ALLOWED",
+                  "metadata": {
+                    "ruleType": "usage_limit",
+                    "parametersChecked": 1
+                  }
+                },
+                "errorMessage": null,
+                "errorDetails": null,
+                "startedAt": "2026-07-04T17:20:25.146Z",
+                "completedAt": "2026-07-04T17:20:25.156Z",
+                "executionTimeMs": 10,
+                "retryCount": 0,
+                "parentExecutionId": null,
+                "createdAt": "2026-07-04T17:20:25.092Z",
+                "updatedAt": "2026-07-04T17:20:25.144Z"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "accounts_after": {
+      "data": [
+        {
+          "id": "3476b284-c756-4d2e-8927-ec7c83d47e60",
+          "publicId": "0f6a56ba-deb3-4307-92aa-ef79229302ff",
+          "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+          "assetId": "4657ab13-b6e6-4ba4-9df8-47b351c0041c",
+          "isDefault": true,
+          "totalBalance": "4.722428000000000000",
+          "availableBalance": "4.712816000000000000",
+          "unavailableBalance": "0.009612000000000000",
+          "pendingCreditBalance": "0.000000000000000000",
+          "status": "ACTIVE",
+          "createdAt": "2026-07-04T04:01:31.382Z",
+          "updatedAt": "2026-07-04T17:20:28.514Z",
+          "deletedAt": null,
+          "creditLimitId": null,
+          "tenant": {
+            "id": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+            "organizationId": "f4ba285b-0855-4ae3-990c-e5bdee291c47",
+            "name": "Jsharma3962's Organization Workspace",
+            "type": "internal",
+            "externalCustomerId": null,
+            "externalId": null,
+            "createdAt": "2026-07-04T04:01:31.382Z",
+            "updatedAt": "2026-07-04T04:01:31.382Z",
+            "suspendedAt": null,
+            "deletedAt": null,
+            "fundingLedgerAccountId": null
+          },
+          "asset": {
+            "id": "4657ab13-b6e6-4ba4-9df8-47b351c0041c",
+            "name": "USD",
+            "symbol": "USD",
+            "network": "fiat",
+            "type": "FIAT",
+            "decimals": 6,
+            "createdAt": "2025-11-14T01:59:05.889Z",
+            "updatedAt": "2025-11-14T01:59:05.889Z",
+            "deletedAt": null
+          },
+          "billingProfileId": null
+        }
+      ],
+      "nextCursor": null
+    },
+    "approved_count": 0,
+    "denied_or_error_count": 3
+  },
+  "final_state_at_report_time": {
+    "accounts": {
+      "availableBalance": "4.712816000000000000",
+      "unavailableBalance": "0.009612000000000000",
+      "totalBalance": "4.722428000000000000",
+      "note": "totalBalance unchanged from pre-baseline-settlement value ($4.722428) throughout the whole experiment -- confirms no capture beyond the $0.0001 baseline settlement. unavailableBalance ($0.009612 = 4 x $0.002403 holds from the denied gated + 3 TOCTOU calls) had not yet auto-released as of report time, ~9.5 min after the oldest of the 4 holds was placed -- confirmed via a live cross-check of /v1/transactions across ALL agents that no other concurrent process contributed to this balance (only holdtest-agent-hvs's 4 denied transactions have non-superseded/active cost rows in this window)."
+    },
+    "rules_final_status": {
+      "RL-001": "paused (pre-existing)",
+      "RL-002": "paused (pre-existing probe)",
+      "RL-003": "paused (pre-existing probe)",
+      "RL-004": "paused (this run)",
+      "RL-005": "paused (this run)",
+      "RL-006": "paused (this run)"
+    }
+  }
+}

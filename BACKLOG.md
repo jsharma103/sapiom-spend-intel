@@ -38,7 +38,7 @@ Money-safety + operational rules for an autonomous run. Rules 1-2 are SAFETY-CRI
 
 **7. `spend.duckdb` is single-account.** It holds ONE account's data. Ingesting a different account's data into the same db mixes state — wipe/rename the db if switching keys/accounts.
 
-**8. Governance experiments need manual setup.** Spending-rule creation is dashboard-only (SDK-confirmed) — the rules-on-hold-vs-settlement and TOCTOU experiments require Jay to create the test rule in app.sapiom.ai FIRST [HUMAN-UI]; scripts only fire calls + observe.
+**8. Governance experiments need manual setup.** Spending-rule creation is dashboard-only (SDK-confirmed) [SUPERSEDED — REST create works, see UNDOCUMENTED API SURFACE / governance_api_probe.md] — the rules-on-hold-vs-settlement and TOCTOU experiments require Jay to create the test rule in app.sapiom.ai FIRST [HUMAN-UI]; scripts only fire calls + observe.
 
 **9. Multi-day data needs real calendar days.** Re-running `generate_spend.js` in the same session just adds same-day rows; genuine multi-day time-series requires running on different real days (no backdating param).
 
@@ -57,13 +57,13 @@ Money-safety + operational rules for an autonomous run. Rules 1-2 are SAFETY-CRI
 
 ## EXECUTION ORDER (single queue)
 
-0. ⭐ **BUILDs 6 → 7 → 8 → 9 → 10 → 11 → 12 (ONLY after 9-11 complete — touches same dashboard files)** (Dashboard v2 → NARRATIVE.md → README v2 → take-rate → loss-rate → auth-rate → dashboard v3) — HIGHEST PRIORITY, do before everything below. All free, zero API spend; do NOT run spend scripts. Sheets under TOP BUILD PRIORITIES. Commit after each build; push allowed (repo public at github.com/jsharma103/sapiom-spend-intel — verify `gh auth status` active account = jsharma103 first, else commit only).
+0. ⭐ **BUILDs 6 → 7 → 8 → 9 → 10 → 11 → 12 → 13 optional (ONLY after 9-11 complete — touches same dashboard files)** (Dashboard v2 → NARRATIVE.md → README v2 → take-rate → loss-rate → auth-rate → dashboard v3; 13 optional = trace DAG viz) — HIGHEST PRIORITY, do before everything below. All free, zero API spend; do NOT run spend scripts. Sheets under TOP BUILD PRIORITIES. Commit after each build; push allowed (repo public at github.com/jsharma103/sapiom-spend-intel — verify `gh auth status` active account = jsharma103 first, else commit only).
 1. **[HUMAN-UI]** Test-mode probe — 30-sec check at app.sapiom.ai/settings: create a key, is there a Live/Test toggle? Could make every experiment below free. (The API-side verdict is already logged under API RECON below — this just closes the one unscraped gap: the settings-page create-key UI.)
 2. **[HUMAN-RUN]** Ship MVP delivery now: `git push` (personal GitHub, topics, pin) → record Loom 2-min → email Jeff + David (Tuesday night, lead with the max_tokens finding as a question). Converts what's already built into "delivered" before piling on more experiments.
 3. Cheap high-value experiments — agent builds + self-tests each script on fixtures first, Jay runs against the real API (~$0.02 each, budget guard on):
    1. Workflow chaining — fire FIRST, it gates trace-path mining, cost-per-task attribution, and the hold-stacking sub-question.
    2. Rules-on-hold-vs-settlement — highest single-experiment value.
-   3. Failed-call mid-flight hold release.
+   3. Failed-call mid-flight hold release. (See INTERVIEW QUESTION BANK Jordi #13 — the recoverable-edge question that explains why this test matters.)
    4. (stretch, P2) Rule race / TOCTOU double-spend, only if budget + time remain.
 4. **[HUMAN-RUN]** Second `generate_spend.js` run (~$0.24) — must happen on a different calendar day than the first run (no backdating param exists; see the fixed note on this item below).
 5. CEO Dashboard build (no new spend, pure viz over data already on disk): the 5-panel demo cut — float meter, capital-efficiency ratio, reconciliation-green, runaway-red, margin strip — plus the WOW hold-lifecycle view (same "make it visible" goal; ship as one artifact or a companion page).
@@ -110,7 +110,7 @@ Layout:
   1. **TPV** (Total Payment Volume) = sum of live (non-superseded) costs. Subline: "N transactions · N agents · live spend".
   2. **CAPTURE RATIO** = settled/held, dollar-weighted across supersession chains (currently 18.0%). Subline: "authorize $1.00 → capture $0.18".
   3. **RECONCILIATION** = $0.000000 TIES OUT. Subline: "naive sum overstates +10% — supersession chains must be filtered, not summed".
-- Under EACH hero: one scale-hook line in accent color extrapolating to $1M/day TPV (e.g. for capture ratio: "at $1M/day TPV → $X.XM customer capital frozen daily" — COMPUTE the overhang multiple from data, don't hardcode).
+- Under EACH hero: one scale-hook line in accent color extrapolating to $1M/day TPV (e.g. for capture ratio: the instantaneously-frozen-capital figure via Little's Law — "instantaneously frozen ≈ $Y at $1M/day TPV (holds clear in ~Ws)" — COMPUTE from data, don't hardcode. NOTE: an earlier draft of this spec proposed "$X.XM customer capital frozen daily" by naively scaling the capture ratio — that framing was WRONG (a per-day flow mislabeled as an instantaneous stock; see the correction note under INTERVIEW QUESTION BANK and `dryrun/float_model.md`). Do not reintroduce it.)
 - Second row — 3 smaller tiles: (4) **AUTH→CAPTURE TIME** — settlement latency p50/p95 (data already in findings.py output). (5) **VELOCITY CHECKS** — renamed runaway-detection tile; keep flagged-agent table, max 5 rows; caption: "agent runaway = card-testing analog". (6) **TAKE RATE** — per-service markup table (Linkup +20%, etc. from service_sweep). Neutral header: "margin observability per service".
 - Any tile body >40 words: move method detail into `title=` tooltips or a single footnote line. Regenerate timestamp at build time.
 Acceptance: renders via file://; numbers match findings.md/report.md exactly; total visible words < half of v1; hero numbers readable across a room.
@@ -164,6 +164,12 @@ Acceptance: everything above the fold readable in 20 seconds.
 **Acceptance:** two clearly labeled sections; all Section-2 numbers reproducible from existing data files; greyed placeholders visually distinct (no fake numbers); dashboard stays fully self-contained (relative script src, no CDN/fetch); still renders via file://; word budget — tile bodies ≤ 25 words.
 **Ops:** free, zero API spend. Commit; push allowed (verify gh auth active account = jsharma103 first).
 
+### BUILD 13 ⭐ — TRACE DAG (dependency-graph finding + viz)
+**The finding (write this into the sheet as context):** Sapiom traces are FLAT grouping IDs — traceId/traceExternalId groups a task's calls, but there is NO parent-child / span hierarchy (contrast: OTel spans). The ledger answers "what did task X cost" but NOT "what caused what." Agent workflows are DAGs; edges can only be INFERRED from timestamps + callSite — heuristic, not protocol truth. Interview framing: for Jordi (protocol) = "should x402 metadata carry a parentSpanId? how should cost attribute across workflow edges?"; for CEO = per-workflow cost attribution is what customer CFOs will demand; flat traces cap the observability product.
+**Goal:** small DAG visualization per trace — infer edges (time-order + callSite within each trace), render inline SVG per multi-call trace, either as a dashboard Section-2 addition or standalone `traces.html`. MUST be labeled clearly: "edges inferred from timing — not protocol-recorded". Self-contained (no CDN, no fetch), data from spend.duckdb/traces.md — free, zero API spend.
+**Acceptance:** at least the chained-task trace (BUILD 3) renders as a DAG; inferred-label visible; works from file://.
+**Ops:** free, zero API spend. Standalone or dashboard addition.
+
 **OPERATIONS addendum for BUILDs 9–11:** ZERO API spend — no spend scripts; BUILD 9 uses web research + existing JSON only. After each build: commit; push allowed (verify `gh auth status` active account = jsharma103 first — else commit only). Order: 9 → 10 → 11.
 
 ---
@@ -180,9 +186,17 @@ No undocumented PATHS exist, but the dashboard's `include=` graph + query params
 - Confirms: NO traces endpoint (reconstruct from traceId). NO pricing endpoint.
 - Texture: keys can mint keys (`createdByApiKeyId`), RBAC scopes `org.<resource>.<verb>` (write scopes: org/api_keys/users/invites/transactions/tenants), vendors proxied via `{slug}.services.sapiom.ai` (service-mesh).
 
+## UNDOCUMENTED API SURFACE (verified 2026-07-04)
+
+**Live REST governance endpoints** (via dryrun/governance_api_probe.md):
+- POST /v1/spending-rules → 201; POST /v1/agents → 201. Both work with the transaction Bearer key + User-Agent: curl/8.6.0. NOT in SDK (@sapiom/core, @sapiom/fetch have no governance code), NOT in REST docs (docs.sapiom.ai shows governance only via MCP tools). MCP endpoint itself = https://api.sapiom.ai/v1/mcp (same host as REST).
+- Rule schema: required name + ruleType (enum incl. usage_limit); parameters[]{limitValue, measurementType (e.g. sum_transaction_costs), intervalValue, intervalUnit}; agentIds[] for scoping. Full recipe in dryrun/governance_api_probe.md.
+- NO hard-delete: DELETE /v1/spending-rules/{id} → 404, PATCH → 404. Only PUT works, requires `version` (optimistic concurrency), supports only status: active|paused. Governance objects effectively append-only / soft-delete-only.
+- Interview value: (a) undocumented-but-live REST governance = either pre-GA or oversight — good question for the founding engineer; (b) append-only governance state = same bitemporal/SCD2 pattern as the spend ledger (consistency worth noting).
+
 ## Their official docs now local (as a skill)
 `~/projects/sapiom-spend-intel/.agents/skills/use-sapiom/references/*.md` — full service docs: governance, ai-models, search, compute, data, images, audio, messaging, scraping, verify. Read these before designing any service experiment (real request/response shapes, params, pricing).
-- governance.md: spending rules are **DASHBOARD-ONLY** (confirmed via SDK source: no spend-rule types/endpoints in SDK or MCP; docs hint `sapiom_dev_*` MCP support may come later). Creating a rule = manual in app.sapiom.ai [HUMAN-UI]. `limitValue`, filters. Does NOT state whether rules evaluate on hold or settlement → the [P1] rules-on-hold-vs-settlement experiment still needed.
+- governance.md: spending rules are **DASHBOARD-ONLY** [SUPERSEDED — REST create works, see UNDOCUMENTED API SURFACE / governance_api_probe.md] (confirmed via SDK source: no spend-rule types/endpoints in SDK or MCP; docs hint `sapiom_dev_*` MCP support may come later). Creating a rule = manual in app.sapiom.ai [HUMAN-UI]. `limitValue`, filters. Does NOT state whether rules evaluate on hold or settlement → the [P1] rules-on-hold-vs-settlement experiment still needed.
 - Check `verify.md` + `data.md`/`compute.md` for the traces surface (agent-trace mining prereq).
 
 ## What we already know (context for any executor)
@@ -291,6 +305,74 @@ For every supersession chain: (settled − hold)/hold. Which services over/under
 
 ---
 
+## RESILIENCE / RECOVERY EXPERIMENTS (break-it-and-watch-it-heal)
+
+Frame: these test Ilan Zerbib's stated principle that failures must be "bounded, visible, and recoverable" — each experiment breaks something and observes whether money/state recovers. Cross-link to Jordi Q#13 and BUILD 3.3.
+
+⚠️ **MONEY-SAFETY reminder.** These spend real money and/or create real spending rules. Every run: pre-check `GET /v1/accounts` (Bearer + `User-Agent: curl/8.6.0`), abort if `availableBalance < $2.75` or `< $0.50`; per-run cost cap; pause/cleanup any rule created; inline `set -a && source .env && set +a && <cmd>` (fresh shell each call). Never scope a rule to a real agent or create an unscoped/all-agents rule.
+
+### [PRIORITY: high, the headline] ⭐ R1 — Orphan hold (THE recoverable-edge)
+
+**Goal:** does a placed hold get released when execution dies mid-flight? (The scary failure never seen naturally — our 2 observed failures died BEFORE the hold was placed; this forces a failure AFTER.)
+
+**Method:** fire an LLM call with a large max_tokens (big hold placed), then abort/kill the connection mid-execution (client-side abort after the x402 hold is confirmed but before completion). Inspect the transaction's cost rows afterward: is there a live (supersededAt IS NULL, isEstimate=true) hold left dangling? Does it get reaped on a timer (poll the same txn over a few minutes)? Or a supersession/refund chain releasing it?
+
+**Recovery = frozen funds released** (hold superseded/refunded) within some bound; failure = orphan live hold hangs forever.
+
+**Cost/Risk:** LOW if max_tokens kept modest; the hold may briefly freeze real balance — keep small, verify release. Ties to BUILD 3.3 + Jordi Q#13.
+
+**ANSWERED (2026-07-04).** The lifecycle-position story is now complete across three independent observations:
+
+1. **Pre-hold failure → $0.** The 2 organically-observed failures (`sapiom_fal` 404, blaxel DNS) died before a hold was ever priced — zero cost rows, nothing to release (`loss_rate.md`).
+2. **Denied-at-auth hold → released, but slowly.** The hold-vs-settlement experiment's denied-call holds ($0.002403 each — gated RL-005 call + 3 TOCTOU calls, $0.009612 total) had **not** auto-released ~10 min later, past the x402 `maxTimeoutSeconds:300` (5 min) marker — `totalBalance` stayed unchanged throughout (frozen, not lost); release appears to run on a backend sweep/cron cadence, not instantly at timeout. No void/release endpoint exists to force it (confirmed: no `DELETE`/`PATCH` route on `/v1/agents` or the rule/txn objects). See `dryrun/hold_vs_settlement_experiment.md` (Cleanup section).
+3. **Post-hold execution failure → the full hold is CAPTURED, not released.** `dryrun/hold_linearity_extension.md`'s 128k-token call errored with a `502 Bad Gateway` *after* its $0.076803 hold was authorized — and that hold was billed as the final settled cost in full, confirmed by an exact $0.076803 balance drop (not a transient dip that reverted). This is R1's original scenario (a hold that survives a mid-EXECUTION death) and it does **not** recover — the opposite of "clean reject" behavior. N=1, one clean observation.
+
+**R1 verdict: NOT uniformly recoverable.** A hold on a call denied-before-execution eventually releases (slowly, on a sweep cadence). A hold on a call that fails *during* execution, after authorization, is captured outright — the worst-case failure mode Zerbib's "bounded/visible/recoverable" framing would flag as unrecovered. **Remaining open item (narrower, not R1 itself):** what IS the backend sweep cadence for released holds on denied auths? (Distinct question from the captured-hold-on-failed-execution finding above, which is now closed.)
+
+### [PRIORITY: medium, cap tightly] ⭐ R2 — Concurrent overspend (money-safety headline)
+
+**Goal:** if combined HOLDS from parallel calls exceed the wallet, does the platform oversell (wallet negative) or reject the excess?
+
+**Method:** given holds stack (~4.4x settled under 10-way concurrency, verified), fire N parallel calls whose summed holds exceed availableBalance. Watch: do all authorize, or do some get rejected once holds exhaust balance? Does availableBalance ever go negative?
+
+**Recovery = wallet never negative, excess cleanly rejected.**
+
+**Cost/Risk:** MEDIUM — actual settlement should be small (tiny actual tokens) but this deliberately stresses the wallet; HARD cap, do only after R1 confirms holds release cleanly, and only if balance safely above floor. Abort if availableBalance < $2.75 or < $0.50.
+
+### [PRIORITY: high, cheap+clean] ⭐ R3 — Idempotency replay
+
+**Goal:** replay the same request twice — charged once or double?
+
+**Method:** the SDK auto-sets X-Idempotency-Key. Fire a call, capture the key + body, then replay the identical request (same idempotency key) via raw HTTP. Compare: one settlement or two? Same transaction id returned?
+
+**Recovery = dedupe** (one charge, same txn id).
+
+**Cost/Risk:** LOW — at most one real charge. Clean finding either way.
+
+### [PRIORITY: high, likely $0] ⭐ R4 — Abandoned x402 handshake
+
+**Goal:** start the payment flow, get the hold, never send the signature — does the pending hold expire/release or lock funds forever?
+
+**Method:** drive the x402 wire flow manually (POST /transactions → poll → reauthorize gets the x402 challenge/hold) then STOP — never send X-PAYMENT/PAYMENT-SIGNATURE. Poll the transaction + availableBalance over several minutes: does the pending authorization expire (hold TTL) and free the funds?
+
+**Recovery = pending hold expires and releases within a TTL.**
+
+**Cost/Risk:** LOW — handshake never completes so likely $0 settled; only tests whether the interim hold frees.
+
+### [PRIORITY: low, do LAST, small] ⭐ R5 — Wallet-boundary drain
+
+**Goal:** at near-zero balance, does a call reject cleanly or leave a partial/stuck state?
+
+**Method:** with balance drained close to a small threshold (do NOT actually empty the real wallet below the $0.50 floor — simulate the boundary with a tightly-scoped per-agent spending rule instead, using the REST governance API, so we hit a *rule* limit not a real empty wallet), fire a call that would exceed the remaining allowance. Observe reject vs partial charge.
+
+**Recovery = clean reject, no partial/stuck charge.**
+
+**Cost/Risk:** HIGH conceptually but de-risked by using a rule-based boundary instead of draining the real wallet. Do last.
+
+**Interview story note:** "All tie to one interview story: 'I tried to break your ledger five ways — here's what recovered and what didn't.' Maps to Zerbib's bounded/visible/recoverable. R1/R3/R4 are cheap+safe (run first); R2/R5 stress the wallet (cap hard, run last). NOTE: the hold-vs-settlement rule experiment (dryrun/hold_vs_settlement_experiment.md) is a related in-flight probe."
+
+---
+
 ## STRUCTURED + UNSTRUCTURED — agent-trace mining (they want a DE who does both)
 A trace = execution log: tool sequence + timing + cost (structured) AND inputs/outputs/reasoning per step (unstructured). Richest "analyze both" substrate, and it's THEIR data. Sapiom confirmed to have "a bunch of agent traces."
 
@@ -323,7 +405,7 @@ ENABLER CONFIRMED: SDK lets you set `traceExternalId` → deterministic chain-st
 ## ENGINEERING BUILDS (build-side — infra other agents use, not read-side analysis)
 
 ### [P1] ⭐⭐ Governance-as-Code — declarative control plane for agent spend
-⚠️ **PRE-CHECK before writing any code:** ⚠️ BLOCKER: SDK source confirms NO programmatic rule create (not SDK, not MCP) — governance is dashboard-only today. sapiomctl has no write API to target. Either (a) park this until Sapiom exposes governance via API/MCP, or (b) rescope to a READ-ONLY drift-detector (fetch live rules, diff vs YAML, REPORT drift — no apply). Don't build the apply path.
+⚠️ **PRE-CHECK before writing any code:** ⚠️ BLOCKER: SDK source confirms NO programmatic rule create (not SDK, not MCP) [SUPERSEDED — REST create works, see UNDOCUMENTED API SURFACE / governance_api_probe.md] — governance is dashboard-only today. sapiomctl has no write API to target. Either (a) park this until Sapiom exposes governance via API/MCP, or (b) rescope to a READ-ONLY drift-detector (fetch live rules, diff vs YAML, REPORT drift — no apply). Don't build the apply path.
 
 The pitch nobody else will have: their rules/agents/budgets are configured by clicking the dashboard. Build the IaC layer — GitOps for agent governance. **This is the DQX CI-sync pattern (YAML → diff → reconcile-merge) ported to Sapiom's API.** Same senior muscle, their domain. Real backend software, not scripts.
 
@@ -503,6 +585,32 @@ What it needs (only #1 is new work; rest assembles from what we have):
 4. **Experiments become the evidence** — float, reconciliation, hold mechanics, cost-per-task = "here's what's already extractable from a trickle; imagine it modeled at petabyte scale."
 5. **Package** — deck: inventory (what) → architecture (how) → roadmap 0→1.0→2.0 (vision) → findings (proof). One artifact = "I see your entire data future."
 Appeal: THE DE-charter proof; pairs with the petabyte scale-thesis; maps to Jay's CH stack (medallion, SCD2/append-derive claims ledger, DQX, reconciliation at scale).
+
+## INTERVIEW QUESTION BANK
+
+> **⚠️ Number correction (2026-07-04) — read before any interview prep.** The dashboard's earlier "$1M/day TPV → $4.57M customer capital frozen daily" scale-hook was WRONG and has been corrected everywhere (dashboard, `findings.md`, `NARRATIVE.md`). It was a per-day *flow* quantity (a pure capture-ratio effect with no time dimension) mislabeled as an instantaneous frozen *stock* — it implicitly assumes a ~4.57-DAY average hold lifetime, when the measured reality is 5.3–12.0 SECONDS (~33,000x shorter). The defensible figure via Little's Law (L = λW): **≈$61–$138 instantaneously frozen at $1M/day TPV**, holds clearing in ~5.3–12.0s; the two levers that actually shrink it are hold-lifetime (settle faster) and hold-size (`max_tokens` right-sizing, ~79% reduction achievable per `advisor.md`). Full derivation + sensitivity table: `dryrun/float_model.md`. **Do NOT re-cite the $4.57M number from any stale notes, emails, or earlier prep.**
+
+### For Jordi (Founding Engineer, protocol)
+1. [ANSWERED — rules fire on the HOLD, not settlement; a $0.001 `usage_limit` rule denied a call whose real settlement was ~$0.0001 because the hold was $0.002403 (`violations[].currentValue` matched the hold exactly). Present as finding, then ask:] Is holding-based enforcement intended, given `max_tokens` can inflate the hold ~40× actual spend? (Original question: "Do spending rules evaluate on the hold amount or the settlement amount?") — earned by: 5.5× hold overhang measured; confirmed empirically 2026-07-04 — see `dryrun/hold_vs_settlement_experiment.md`.
+14. [REPRODUCED, scales with concurrency — reframed from open question to a finding-plus-question, 2026-07-04] "I reproduced the TOCTOU check-then-act race deliberately: a hold-based usage_limit rule sized to permit exactly 1 call leaked 2 of 20 concurrent calls (`max_tokens=8000`) and 3 of 50 (`max_tokens=4000`) — while a fast, small-hold batch (N=10, `max_tokens=500`) leaked 0, exactly as designed. Both confirmed by the rule engine's own decisions AND client HTTP status. The leak tracks the spread of `completedAt` across the batch — more concurrent calls (and, to a lesser extent, larger holds) widen the window where checks race against a stale cumulative ledger. Is the authorization check meant to be atomic per-wallet/per-rule, and is there a design reason it isn't serialized under concurrency?" — earned by: `dryrun/hold_vs_settlement_experiment.md` TOCTOU variant (RL-006, the original 3-call anecdote) + `dryrun/toctou_latency_experiment.md` (the FAST/SLOW-A/SLOW-B reproduction, `findings.md` §8).
+15. "`measurementScope` defaults to `\"all\"`, which sums spend TENANT-WIDE rather than per-scoped-agent — a rule meant to cap one agent (`agentIds:[...]`) can silently sum the whole tenant's historical spend unless `measurementScope:\"rule\"` (undocumented, found only by probing the parameter schema) is set explicitly. Is tenant-wide-by-default intended, or a misconfiguration footgun worth surfacing at rule-creation time?" — earned by: `dryrun/hold_vs_settlement_experiment.md` Rule 1 (RL-004) false start.
+16. "Two failure-lifecycle findings, combined, produce a worst case: (a) holds are priced off the *requested* `max_tokens`, confirmed linear to 64k tokens, even when that's 4x past `gpt-4o-mini`'s real ~16k completion ceiling — the model silently accepts and gets held against a number it can never produce; (b) when a call then fails mid-flight (our 128k rung hit a 502 gateway error), the FULL hold is captured as the final settled cost, not refunded or superseded — confirmed by an exact balance drop. So the worst case is: a caller over-requests `max_tokens`, the call fails for a transient/unrelated reason, and they're billed the maximum possible amount for zero output. For Jordi: is capture-on-failure the intended semantics of the x402 `\"upto\"` scheme, or should a gateway-level failure (as opposed to a clean model rejection) release the hold? For Zerbib: is 'recoverable' meant to cover this case — a hold that survives a mid-execution death — or only clean-reject paths?" — earned by: `dryrun/hold_linearity_extension.md` (128k rung), `findings.md` §9/§10, BACKLOG R1 (now answered).
+2. "Traces are flat grouping IDs — is span hierarchy / parentSpanId in x402 metadata on the roadmap? How should cost attribution work for agent DAGs?" — earned by: BUILD 4 trace-mining + the DAG-inference limitation (BUILD 13).
+3. "Tiny calls skip the hold/settle chain entirely (single cost row), and OpenRouter shows a $0.0001 minimum-billing floor — is the floor protocol-level or per-service?" — earned by: min-charge-floor lead + take_rate.md OpenRouter +2930% artifact.
+4. "Hold pricing is linear on max_tokens — intended pre-auth padding, or worth model-aware estimates? Right-sizing caps cuts hold size ~79% in our fleet." — earned by: advisor.md.
+5. "Under 10-way concurrency, holds stacked to 4.4× settled spend. At fleet scale, does wallet sizing become the customer's working-capital planning problem?" — earned by: extrapolation experiment.
+12. "Governance rules + agents are creatable over plain REST (POST /v1/spending-rules, POST /v1/agents) — but your docs only expose governance via MCP, and the SDK has zero rules code. Is the REST governance surface intentionally undocumented / not-yet-GA, or an oversight? Also: rules have no hard-delete, only pause via PUT with optimistic-concurrency version — is governance state intentionally append-only?" — earned by: dryrun/governance_api_probe.md (OPTIONS advertised POST/PUT/PATCH/DELETE; POST returned 201; DELETE/PATCH 404; SDK @sapiom/core + @sapiom/fetch have no governance code; docs.sapiom.ai documents governance only via MCP at api.sapiom.ai/v1/mcp).
+13. "A failed call today creates a full transaction row with outcome='error' but ZERO cost rows — the hold is never placed because execution fails AFTER authorization but before pricing (auth ≠ execution, verified in our sample). But what happens when a vendor dies MID-execution, after the hold is placed? Does the ledger emit an orphan live-hold that must be reaped, or a supersession/refund chain that releases it? We have zero such records in 81 txns, so I couldn't observe it — how does hold-release-on-failure actually work?" — earned by: failure-record shape analysis (outcome='error' + costs:[] + currentPaymentTransactionId:null + authorizationRequests[].status='authorized'; raw JSON in the failed-record investigation). **Maps to Zerbib's "failures must be bounded, visible, RECOVERABLE"** — this is the recoverable edge, unobserved in our data. See also BUILD 3.3 (deliberate post-hold-failure test).
+
+### For Ilan Zerbib (CEO)
+6. "What's the GPV-equivalent north star — agent spend through your rails? How do you think about penetration vs agents calling vendor APIs directly?" — earned by: fluency (his Shopify world: GPV 67% of GMV).
+7. "Every developer's first experiment costs real money — no test mode, staging is invite-only. Is a sandbox on the roadmap?" — earned by: test-mode probe verdict; adoption-funnel-leak framing; x402-emulator backlog idea.
+8. "You coined KYA — what does the scorecard concretely look like? Here's my attempt from your own ledger." — earned by: KYA scorecard (BUILD 12 dashboard Section 2).
+9. "Measured take rates run 0% (Linkup) to +233% (ElevenLabs), blended 789bps — is long-term margin pass-through-plus-floor or real markup?" — earned by: take_rate.md 9-service table. CAUTION: frame as margin-observability, not gotcha.
+10. "At agent-scale TPV this ledger is petabytes/day with supersession restatements. Append-only + derive-current, not MERGE — who owns the analytics stack today?" — earned by: scale thesis; their stack = BigQuery + dbt.
+
+### For the data team
+11. "How do supersession chains land in the warehouse today — SCD2-style or overwrite? A naive sum overstates spend +10% — I measured it." — earned by: reconciliation finding (phantom spend rate).
 
 ## SHOWCASE & DELIVERY
 - [P1] Git push (personal GitHub), topics, pin.

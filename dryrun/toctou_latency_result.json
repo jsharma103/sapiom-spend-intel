@@ -1,0 +1,217 @@
+{
+  "experiment": "toctou_latency_experiment",
+  "hypothesis": "The authorization check-then-act (TOCTOU) window scales with call round-trip latency; SLOW calls (large max_tokens, large hold, longer round trip) at meaningful concurrency should reproduce a leak that FAST calls (small max_tokens) did not.",
+  "fast_baseline_reference": {
+    "round": "n10 (from dryrun/toctou_scale_experiment.js, prior run)",
+    "concurrent_calls": 10,
+    "max_tokens": 500,
+    "baseline_hold": 0.000303,
+    "baseline_elapsed_ms": 3510,
+    "allowed_count": 10,
+    "denied_count": 9,
+    "leak_factor": 10,
+    "dollars_authorized_through": 0.0030299999999999997,
+    "limit_dollars": 0.0004545,
+    "note": "allowed_count/leak_factor here are the CORRECTED values (1 allowed) per the hand-correction in toctou_scale_experiment.md; the raw JSON field from that older script version has a known counting bug (counts phase-1 pre-negotiation ALLOWED). This new latency experiment fixes that bug in toctou_latency_experiment.js."
+  },
+  "slow_round_A": {
+    "round": "slowA20",
+    "concurrent_calls": 20,
+    "max_tokens": 8000,
+    "baseline_hold": 0.004803,
+    "baseline_settle": 0.0001,
+    "baseline_elapsed_ms": 6701,
+    "rule_limit_value": 0.0072045,
+    "peak_hold_dollars_projected": 0.09606,
+    "race_avg_elapsed_ms": 3231.55,
+    "allowed_count": 2,
+    "denied_count": 18,
+    "unknown_count": 0,
+    "http_allowed_count": 2,
+    "http_denied_count": 18,
+    "dollars_authorized_through": 0.009606,
+    "limit_dollars": 0.0072045,
+    "leak_factor": 2,
+    "accounts_before": {
+      "availableBalance": 4.709889,
+      "unavailableBalance": 0.012339,
+      "totalBalance": 4.722228
+    },
+    "accounts_mid": {
+      "availableBalance": 4.709789,
+      "unavailableBalance": 0.012339,
+      "totalBalance": 4.722128
+    },
+    "accounts_after": {
+      "availableBalance": 4.623135,
+      "unavailableBalance": 0.098793,
+      "totalBalance": 4.721928
+    },
+    "rule_paused_confirmation": {
+      "id": "c2a7d837-5e55-49e4-ad80-ca9ce2be3cf9",
+      "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+      "numericId": 8,
+      "formattedId": "RL-008",
+      "name": "race-lat-rule-slowA20",
+      "ruleType": "usage_limit",
+      "resolutionStrategy": "automatic",
+      "status": "paused",
+      "version": 2,
+      "metadata": null,
+      "createdAt": "2026-07-04T17:47:48.324Z",
+      "updatedAt": "2026-07-04T17:48:04.895Z",
+      "lastEditedBy": {
+        "apiKeyId": "bfb69755-474f-41c3-bc82-22ca4aa97eec"
+      },
+      "deletedAt": null,
+      "conditions": [],
+      "parameters": [
+        {
+          "id": "e07b147b-9686-4bd7-a9f9-8beeede397bf",
+          "ruleId": "c2a7d837-5e55-49e4-ad80-ca9ce2be3cf9",
+          "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+          "parameterName": null,
+          "limitValue": "0.007204000000000000",
+          "measurementType": "sum_transaction_costs",
+          "intervalValue": 1,
+          "intervalUnit": "days",
+          "isRolling": true,
+          "groupBy": null,
+          "measurementScope": "rule",
+          "includeEstimates": true,
+          "description": null,
+          "createdAt": "2026-07-04T17:47:48.324Z",
+          "updatedAt": "2026-07-04T17:47:48.324Z"
+        }
+      ],
+      "agentRules": [
+        {
+          "id": "bb821ebd-f897-41ad-b104-bb11584b62f2",
+          "agentId": "bdb92699-e23f-42e3-8f4b-a2f0ad29e7bf",
+          "agent": {
+            "id": "bdb92699-e23f-42e3-8f4b-a2f0ad29e7bf",
+            "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+            "numericId": 20,
+            "label": "Race Latency Test Agent (slowA20)",
+            "name": "race-lat-agent-slowA20",
+            "description": "Throwaway agent created for the TOCTOU-latency concurrency experiment (dryrun/toctou_latency_experiment.md). Never used for real traffic. Safe to ignore.",
+            "status": "active",
+            "createdAt": "2026-07-04T17:47:29.305Z",
+            "updatedAt": "2026-07-04T17:47:29.305Z"
+          },
+          "ruleId": "c2a7d837-5e55-49e4-ad80-ca9ce2be3cf9",
+          "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+          "createdAt": "2026-07-04T17:47:48.324Z",
+          "updatedAt": "2026-07-04T17:47:48.324Z"
+        }
+      ]
+    }
+  },
+  "slow_round_B": {
+    "round": "slowB50",
+    "concurrent_calls": 50,
+    "max_tokens": 4000,
+    "baseline_hold": 0.002403,
+    "baseline_settle": 0.0001,
+    "baseline_elapsed_ms": 3728,
+    "rule_limit_value": 0.0036045,
+    "peak_hold_dollars_projected": 0.12015,
+    "race_avg_elapsed_ms": 8922.48,
+    "allowed_count": 3,
+    "denied_count": 47,
+    "unknown_count": 0,
+    "http_allowed_count": 3,
+    "http_denied_count": 47,
+    "dollars_authorized_through": 0.007209,
+    "limit_dollars": 0.0036045,
+    "leak_factor": 3,
+    "accounts_before": {
+      "availableBalance": 4.623135,
+      "unavailableBalance": 0.098793,
+      "totalBalance": 4.721928
+    },
+    "accounts_mid": {
+      "availableBalance": 4.623035,
+      "unavailableBalance": 0.098793,
+      "totalBalance": 4.721828
+    },
+    "accounts_after": {
+      "availableBalance": 4.509794,
+      "unavailableBalance": 0.211734,
+      "totalBalance": 4.721528
+    },
+    "rule_paused_confirmation": {
+      "id": "c7c0b61e-12ff-4982-9dad-ae12d41d7824",
+      "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+      "numericId": 9,
+      "formattedId": "RL-009",
+      "name": "race-lat-rule-slowB50",
+      "ruleType": "usage_limit",
+      "resolutionStrategy": "automatic",
+      "status": "paused",
+      "version": 2,
+      "metadata": null,
+      "createdAt": "2026-07-04T17:48:31.383Z",
+      "updatedAt": "2026-07-04T17:48:55.845Z",
+      "lastEditedBy": {
+        "apiKeyId": "bfb69755-474f-41c3-bc82-22ca4aa97eec"
+      },
+      "deletedAt": null,
+      "conditions": [],
+      "parameters": [
+        {
+          "id": "f8455645-5d36-4335-8d67-9c4237be7fe5",
+          "ruleId": "c7c0b61e-12ff-4982-9dad-ae12d41d7824",
+          "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+          "parameterName": null,
+          "limitValue": "0.003605000000000000",
+          "measurementType": "sum_transaction_costs",
+          "intervalValue": 1,
+          "intervalUnit": "days",
+          "isRolling": true,
+          "groupBy": null,
+          "measurementScope": "rule",
+          "includeEstimates": true,
+          "description": null,
+          "createdAt": "2026-07-04T17:48:31.383Z",
+          "updatedAt": "2026-07-04T17:48:31.383Z"
+        }
+      ],
+      "agentRules": [
+        {
+          "id": "f3aaec6f-e477-47fe-b9e5-24bdbc4188f9",
+          "agentId": "a658cbfc-7a71-4f3f-b2c4-798d8254eb13",
+          "agent": {
+            "id": "a658cbfc-7a71-4f3f-b2c4-798d8254eb13",
+            "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+            "numericId": 21,
+            "label": "Race Latency Test Agent (slowB50)",
+            "name": "race-lat-agent-slowB50",
+            "description": "Throwaway agent created for the TOCTOU-latency concurrency experiment (dryrun/toctou_latency_experiment.md). Never used for real traffic. Safe to ignore.",
+            "status": "active",
+            "createdAt": "2026-07-04T17:48:15.291Z",
+            "updatedAt": "2026-07-04T17:48:15.291Z"
+          },
+          "ruleId": "c7c0b61e-12ff-4982-9dad-ae12d41d7824",
+          "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+          "createdAt": "2026-07-04T17:48:31.383Z",
+          "updatedAt": "2026-07-04T17:48:31.383Z"
+        }
+      ]
+    }
+  },
+  "cleanup": {
+    "rules_created_this_run": [
+      "RL-008 race-lat-rule-slowA20",
+      "RL-009 race-lat-rule-slowB50"
+    ],
+    "all_paused_confirmed_via_get": true,
+    "all_9_rules_status": "all paused (RL-001..RL-009)"
+  },
+  "money_summary": {
+    "total_settled_this_run": 0.0007,
+    "available_before": 4.709889,
+    "available_after": 4.509794,
+    "spend_cap": 0.25
+  }
+}
