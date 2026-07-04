@@ -1,0 +1,165 @@
+{
+  "generated_at": "2026-07-04T10:58:59.754838+00:00",
+  "header": {
+    "n_txns": 75,
+    "n_agents": 15,
+    "live_spend_usd": 0.253272,
+    "period_start": "2026-07-04 04:51:39.614000",
+    "period_end": "2026-07-04 10:48:25.001000"
+  },
+  "tile_float_meter": {
+    "available": true,
+    "agent_name": "fleet-test",
+    "initial_balance": 4.767518,
+    "min_balance": 4.763074,
+    "final_balance": 4.766518,
+    "peak_held_usd": 0.004444000000000337,
+    "settled_usd": 0.001000000000000334,
+    "held_over_settled_ratio": 4.443999999998852,
+    "verdict": "FLOAT REAL \u2014 balance dipped by holds mid-flight then recovered"
+  },
+  "tile_capital_efficiency": {
+    "n_chains": 26,
+    "sum_held_usd": 0.02727,
+    "sum_settled_usd": 0.004898,
+    "efficiency_ratio": 0.1796112944627796
+  },
+  "tile_reconciliation": {
+    "double_count_guard_passed": true,
+    "naive_sum_usd": 0.280542,
+    "live_sum_usd": 0.253272,
+    "overstatement_pct": 10.767080451056572,
+    "balance_reconciliation_passed": true,
+    "reconciliation_diff_usd": 0.0,
+    "green": true
+  },
+  "tile_runaway": {
+    "flagged": [
+      "fleet-test"
+    ],
+    "per_agent": [
+      {
+        "agent_name": "spend-runaway",
+        "n": 25,
+        "median_gap_s": 7.983499999999999,
+        "peak_calls_per_min": 9,
+        "peer_median_gap_s": 8.8155,
+        "runaway": false
+      },
+      {
+        "agent_name": "spend-researcher",
+        "n": 12,
+        "median_gap_s": 18.789,
+        "peak_calls_per_min": 4,
+        "peer_median_gap_s": 7.983499999999999,
+        "runaway": false
+      },
+      {
+        "agent_name": "fleet-test",
+        "n": 10,
+        "median_gap_s": 0.076,
+        "peak_calls_per_min": 10,
+        "peer_median_gap_s": 8.8155,
+        "runaway": true
+      },
+      {
+        "agent_name": "spend-writer",
+        "n": 10,
+        "median_gap_s": 23.046,
+        "peak_calls_per_min": 3,
+        "peer_median_gap_s": 7.983499999999999,
+        "runaway": false
+      },
+      {
+        "agent_name": "cap-test",
+        "n": 3,
+        "median_gap_s": 8.8155,
+        "peak_calls_per_min": 3,
+        "peer_median_gap_s": 7.983499999999999,
+        "runaway": false
+      },
+      {
+        "agent_name": "scale-test",
+        "n": 3,
+        "median_gap_s": 6.9755,
+        "peak_calls_per_min": 3,
+        "peer_median_gap_s": 8.8155,
+        "runaway": false
+      },
+      {
+        "agent_name": "estimate-test",
+        "n": 2,
+        "median_gap_s": null,
+        "peak_calls_per_min": null
+      },
+      {
+        "agent_name": "sweep-compute",
+        "n": 2,
+        "median_gap_s": null,
+        "peak_calls_per_min": null
+      },
+      {
+        "agent_name": "sweep-images",
+        "n": 2,
+        "median_gap_s": null,
+        "peak_calls_per_min": null
+      },
+      {
+        "agent_name": "dryrun-researcher",
+        "n": 1,
+        "median_gap_s": null,
+        "peak_calls_per_min": null
+      },
+      {
+        "agent_name": "sweep-audio",
+        "n": 1,
+        "median_gap_s": null,
+        "peak_calls_per_min": null
+      },
+      {
+        "agent_name": "sweep-data",
+        "n": 1,
+        "median_gap_s": null,
+        "peak_calls_per_min": null
+      },
+      {
+        "agent_name": "sweep-llm",
+        "n": 1,
+        "median_gap_s": null,
+        "peak_calls_per_min": null
+      },
+      {
+        "agent_name": "sweep-scraping",
+        "n": 1,
+        "median_gap_s": null,
+        "peak_calls_per_min": null
+      },
+      {
+        "agent_name": "sweep-search",
+        "n": 1,
+        "median_gap_s": null,
+        "peak_calls_per_min": null
+      }
+    ]
+  },
+  "tile_take_rate": {
+    "linkup": {
+      "sapiom_price_usd": 0.006,
+      "public_price_usd": 0.005,
+      "markup_pct": 20.0,
+      "n_calls": 39,
+      "note": "flat per-call price both sides (Linkup standard depth, sourcedAnswer output) \u2014 apples to apples."
+    },
+    "openrouter": {
+      "sapiom_settled_avg_usd": 0.00019248275862068965,
+      "sapiom_settled_min_usd": 0.0001,
+      "sapiom_settled_max_usd": 0.0005,
+      "sapiom_held_avg_usd": 0.001048846153846154,
+      "public_input_per_1k_usd": 0.00015,
+      "public_output_per_1k_usd": 0.0006,
+      "n_settled": 29,
+      "n_held": 26,
+      "note": "No token-usage counts are recorded in the ledger, so an exact per-token markup can't be computed (a real data-completeness gap, not just an omission here). What IS clear: Sapiom's pre-auth HOLD rate ($0.0006/1k max_tokens, established in cap_experiment/extrapolation) equals OpenRouter's public OUTPUT rate ($0.60/1M = $0.0006/1k) almost exactly \u2014 the hold prices every token as if it will be a full-price output token. Actual settled cost ($0.0001-$0.0005/call, avg ~$0.00019) is far below that, which is the float story (tile 1), not a take-rate story."
+    }
+  }
+}
