@@ -54,6 +54,18 @@ const FLAG_RUN = args.includes('--run');
 const FLAG_PROBE_SIDE_EFFECTS = args.includes('--probe-side-effects');
 // Explicit --dry always wins over --run if both are passed (safer default).
 const MODE = FLAG_DRY || !FLAG_RUN ? 'dry' : 'run';
+// --only=svc1,svc2 — restrict which PLAN entries are printed/fired this run
+// (used to re-fire just the services whose endpoints were fixed, without
+// re-spending on services that already worked). Merged back into the
+// existing service_sweep_result.json on write so the file stays complete.
+const ONLY_ARG = args.find((a) => a.startsWith('--only='));
+const ONLY_SERVICES = ONLY_ARG
+  ? ONLY_ARG
+      .slice('--only='.length)
+      .split(',')
+      .map((s) => s.trim())
+      .filter(Boolean)
+  : null;
 
 function sleep(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
@@ -258,7 +270,13 @@ const PLAN = [
   {
     service: 'images',
     provider: 'Fal.ai',
-    url: 'https://fal.services.sapiom.ai/v1/run/fal-ai/flux/schnell',
+    // images.md documents `${FAL}/v1/run/fal-ai/flux/schnell` but that 404s
+    // ("Cannot POST") against the live gateway. Path-probed 2026-07-04 with
+    // unauthenticated curl (404 = route absent, 402 = route exists but needs
+    // payment): `/v1/run/...` -> 404, `/run/fal-ai/flux/schnell` (no /v1/
+    // prefix) -> 402 Payment Required. The doc's leading /v1/ is wrong for
+    // this gateway; corrected path drops it.
+    url: 'https://fal.services.sapiom.ai/run/fal-ai/flux/schnell',
     method: 'POST',
     // flux/schnell is the fastest/cheapest model per images.md; "square" (not
     // square_hd) is the smallest of the documented imageSize options.
@@ -278,7 +296,15 @@ const PLAN = [
   {
     service: 'compute',
     provider: 'Blaxel',
-    url: 'https://compute.services.sapiom.ai/v1/runs',
+    // compute.md documents host `compute.services.sapiom.ai` + path `/v1/runs`
+    // but that host doesn't resolve in DNS at all (fetch failed, no A/CNAME
+    // record) — confirmed 2026-07-04 via `dig` (empty) and raw curl (000).
+    // `blaxel.services.sapiom.ai` DOES resolve (CNAME chain to the same
+    // x402 gateway infra as fal/linkup). Path-probed on that host with
+    // unauthenticated curl: `/v1/runs` (plural) -> 404 Not Found, `/v1/run`
+    // (singular) -> 402 Payment Required (route exists). Corrected host +
+    // singular path below.
+    url: 'https://blaxel.services.sapiom.ai/v1/run',
     method: 'POST',
     body: { code: 'print(1)', language: 'python' },
     estCostUsd: 0.02,
@@ -330,6 +356,10 @@ const PLAN = [
   },
 ];
 
+// PLAN entries actually in scope for this invocation (all of them, unless
+// --only= narrows it).
+const ACTIVE_PLAN = ONLY_SERVICES ? PLAN.filter((e) => ONLY_SERVICES.includes(e.service)) : PLAN;
+
 function willFire(entry) {
   return !entry.sideEffect || FLAG_PROBE_SIDE_EFFECTS;
 }
@@ -362,7 +392,10 @@ function skipResult(entry, keyWorks, note) {
 
 function printPlan() {
   console.log('\n=== PLANNED CALLS ===');
-  for (const entry of PLAN) {
+  if (ONLY_SERVICES) {
+    console.log(`(--only=${ONLY_SERVICES.join(',')} — restricting to these services; rest untouched in output file)`);
+  }
+  for (const entry of ACTIVE_PLAN) {
     const skip = entry.sideEffect && !FLAG_PROBE_SIDE_EFFECTS;
     console.log(`\n[${entry.service}] (${entry.provider})`);
     if (skip) {
@@ -372,7 +405,7 @@ function printPlan() {
     console.log(`  body: ${JSON.stringify(entry.body)}`);
     console.log(`  est. cost: ${formatUsd(entry.estCostUsd)}${entry.sideEffect ? ' (if probed)' : ''}`);
   }
-  const firingNow = PLAN.filter(willFire);
+  const firingNow = ACTIVE_PLAN.filter(willFire);
   const plannedTotal = firingNow.reduce((sum, e) => sum + e.estCostUsd, 0);
   console.log(`\nTotal estimated cost of calls that would fire: ${formatUsd(plannedTotal)} (hard budget guard: ${formatUsd(HARD_BUDGET_USD)})`);
 
@@ -489,7 +522,7 @@ async function main() {
   }
 
   // --- MONEY-SAFETY: static budget guard ------------------------------------
-  const toFire = PLAN.filter(willFire);
+  const toFire = ACTIVE_PLAN.filter(willFire);
   const plannedTotal = toFire.reduce((sum, e) => sum + e.estCostUsd, 0);
   console.log(`\nCost guard: planned total ${formatUsd(plannedTotal)} vs hard limit ${formatUsd(HARD_BUDGET_USD)}`);
   if (plannedTotal > HARD_BUDGET_USD) {
@@ -502,7 +535,7 @@ async function main() {
   let runningCostUsd = 0;
   let budgetAborted = false;
 
-  for (const entry of PLAN) {
+  for (const entry of ACTIVE_PLAN) {
     if (!willFire(entry)) {
       results.push(
         skipResult(
@@ -584,10 +617,35 @@ async function main() {
     console.log(`- [${a.service}] ${a.note}`);
   }
 
+  // --- Merge with prior results when --only= narrowed this run, so the
+  // output file stays a COMPLETE 9-service inventory rather than losing the
+  // services that weren't re-fired this time.
+  let mergedResults = results;
+  let priorRun = null;
+  const outPath = new URL('./service_sweep_result.json', import.meta.url);
+  if (ONLY_SERVICES) {
+    try {
+      const { readFile } = await import('node:fs/promises');
+      priorRun = JSON.parse(await readFile(outPath, 'utf8'));
+      const priorResults = Array.isArray(priorRun.results) ? priorRun.results : [];
+      const newByService = new Map(results.map((r) => [r.service, r]));
+      const merged = priorResults.map((r) => (newByService.has(r.service) ? newByService.get(r.service) : r));
+      // Append any brand-new services that weren't in the prior file at all.
+      for (const r of results) {
+        if (!merged.some((m) => m.service === r.service)) merged.push(r);
+      }
+      mergedResults = merged;
+      console.log(`\nMerged ${ONLY_SERVICES.join(',')} results into prior ${priorResults.length}-entry service_sweep_result.json.`);
+    } catch (err) {
+      console.warn(`\nNo readable prior service_sweep_result.json to merge into (${err?.message || err}); writing only this run's results.`);
+    }
+  }
+
   const output = {
     ranAt: new Date().toISOString(),
     mode: MODE,
     probeSideEffects: FLAG_PROBE_SIDE_EFFECTS,
+    only: ONLY_SERVICES,
     costGuard: {
       minBalanceRequiredUsd: MIN_BALANCE_USD,
       hardBudgetUsd: HARD_BUDGET_USD,
@@ -597,14 +655,14 @@ async function main() {
       budgetAborted,
     },
     balance: { beforeUsd: balanceBefore, afterUsd: balanceAfter },
-    results,
+    results: mergedResults,
     ambiguities: AMBIGUITIES,
     rawAccountsBefore: accountsBefore,
     rawAccountsAfter: accountsAfter,
     rawTransactions,
+    priorRunRanAt: priorRun?.ranAt ?? null,
   };
 
-  const outPath = new URL('./service_sweep_result.json', import.meta.url);
   await writeFile(outPath, JSON.stringify(output, null, 2));
   console.log(`\nWrote ${outPath.pathname}`);
 }
