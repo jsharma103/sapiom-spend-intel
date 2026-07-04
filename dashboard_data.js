@@ -1,5 +1,5 @@
 window.DASHBOARD_DATA = {
-  "generated_at": "2026-07-04T19:16:32.153849+00:00",
+  "generated_at": "2026-07-04T21:11:17.849783+00:00",
   "header": {
     "n_txns": 81,
     "n_agents": 16,
@@ -152,7 +152,10 @@ window.DASHBOARD_DATA = {
         "public_price_usd": 0.006,
         "markup_pct": 0.0,
         "confidence": "HIGH",
+        "ledger_n": 43,
+        "ledger_all_identical": true,
         "likely_floor_artifact": false,
+        "markup_display": "0% spread (N=43)",
         "margin_usd": 0.0,
         "margin_share_of_blended_pct": 0.0
       },
@@ -165,6 +168,7 @@ window.DASHBOARD_DATA = {
         "markup_pct": 2930.303030303031,
         "confidence": "HIGH",
         "likely_floor_artifact": true,
+        "markup_display": "flat sub-cent",
         "margin_usd": 9.67e-05,
         "margin_share_of_blended_pct": 12.137567465796398
       },
@@ -177,6 +181,7 @@ window.DASHBOARD_DATA = {
         "markup_pct": 0.0,
         "confidence": "HIGH",
         "likely_floor_artifact": false,
+        "markup_display": "0% spread",
         "margin_usd": 0.0,
         "margin_share_of_blended_pct": 0.0
       },
@@ -189,6 +194,7 @@ window.DASHBOARD_DATA = {
         "markup_pct": 233.33333333333331,
         "confidence": "HIGH",
         "likely_floor_artifact": true,
+        "markup_display": "flat sub-cent",
         "margin_usd": 0.0007,
         "margin_share_of_blended_pct": 87.86243253420349
       }
@@ -198,6 +204,8 @@ window.DASHBOARD_DATA = {
     "blended_markup_pct_not_a_headline": 8.563627959971203,
     "n_high_rows": 4,
     "n_per_service": 1,
+    "linkup_ledger_n": 43,
+    "linkup_ledger_all_identical": true,
     "real_markup_services": [
       "search",
       "images"
@@ -207,7 +215,7 @@ window.DASHBOARD_DATA = {
       "audio"
     ],
     "floor_margin_share_pct": 99.99999999999989,
-    "note": "9-service sweep (dryrun/service_sweep_result.json), N=1 call per service, full table + MED/DROP rows + sources in take_rate.md. No blended headline is shown: the two real-dollar-volume services (search, images) settle at exactly vendor list price (0% markup); the two tiny-dollar rows (llm, audio) are near-certain minimum-billing-floor artifacts, not percentage markups. Of the dollar-weighted margin across all 4 rows, audio/ElevenLabs is ~88% and llm/OpenRouter is ~12% (recomputed from this same table \u2014 corrects take_rate.md's/NARRATIVE.md's earlier, backwards claim that the LLM row drove 'almost entirely' of the margin)."
+    "note": "9-service sweep (dryrun/service_sweep_result.json), N=1 call per service, full table + MED/DROP rows + sources in take_rate.md. No blended headline is shown: the two real-dollar-volume services (search, images) settle at exactly vendor list price (0% markup \u2014 search is corroborated by all 43 historical sapiom_linkup transactions in the ledger, not just this N=1 sweep call, and all 43 settle at the identical $0.006000); the two tiny-dollar rows (llm, audio) are near-certain minimum-billing-floor artifacts, not percentage markups \u2014 their raw percentages are withheld from the tile's headline cell for that reason (see markup_pct on each row for the number, and take_rate.md for the full writeup). Of the dollar-weighted margin across all 4 rows, audio/ElevenLabs is ~88% and llm/OpenRouter is ~12% (recomputed from this same table \u2014 corrects take_rate.md's/NARRATIVE.md's earlier, backwards claim that the LLM row drove 'almost entirely' of the margin). CAVEAT: every 'public price' in this table is the vendor's published retail list price, not Sapiom's actual negotiated cost (Sapiom likely gets volume/negotiated rates below retail, and does not publish its own per-call pricing) \u2014 so this table measures Sapiom-retail vs. vendor-retail (a build-vs-buy comparison for the agent), not Sapiom's true take rate against its own COGS. Full caveat in take_rate.md."
   },
   "tile_loss_rate": {
     "n_txns": 81,

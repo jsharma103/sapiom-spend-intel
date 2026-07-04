@@ -2,6 +2,14 @@
 
 Free SQL findings bundle over `spend.duckdb` — zero spend, real ingested data.
 
+**Take rate / vendor markup is not covered here.** It isn't derivable from `spend.duckdb`
+alone — it requires comparing Sapiom's settled cost against each vendor's *public* pricing,
+which lives outside the ledger. That analysis, its full honesty caveats (N per row, which
+rows are minimum-billing-floor artifacts, and why "vendor public price" is not the same
+thing as Sapiom's own cost basis), and why no blended take-rate number is treated as a
+dashboard headline, are all in `take_rate.md` — see its CAVEAT section before quoting any
+number from it as Sapiom's margin.
+
 ## 1. Settlement latency (authorize -> final capture)
 
 Time from `authorizedAt` to the live cost row's `createdAt`, per service. For flat single-row services this is the plain authorize->capture round trip; for services with supersession chains (LLM) it includes the restatement wait.

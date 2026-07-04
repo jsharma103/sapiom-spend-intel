@@ -363,12 +363,35 @@ def tile_take_rate(con) -> dict:
     HIGH-confidence rows (search, llm, images, audio) are dollar-weighted into the blended
     number shown on the dashboard; MED (scraping — vendor plan tier unknown) and DROP
     (compute — memory tier undisclosed) are take_rate.md-only, not on the dashboard.
+
+    Adversarial-audit fix (round 2): the sweep is N=1 per service, but the search/Linkup
+    row can be corroborated directly against every historical Linkup transaction in the
+    ledger (spend.duckdb), not just the one sweep call — query it live here rather than
+    hardcoding a count. Also: floor-artifact rows (llm, audio) no longer surface a raw
+    percentage as the headline cell text (e.g. "+2,930.3%", "+233.3%") — a bare percentage
+    next to a real 0%-markup row reads as a comparable take rate, which it is not. The raw
+    number is kept in `markup_pct` for the record/tooltip/take_rate.md, but the rendered
+    cell text is qualitative ("flat sub-cent settle").
     """
     with open(SWEEP_RESULT_PATH) as f:
         sweep = {r["service"]: r for r in json.load(f)["results"]}
 
     def markup_pct(charged, public):
         return (charged - public) / public * 100
+
+    # Ledger corroboration for the search/Linkup row: every sapiom_linkup transaction's
+    # single active cost row, not just the N=1 sweep call. Read-only query, spend.duckdb.
+    linkup_ledger_rows = con.execute(
+        """
+        SELECT c.fiat_amount, count(*) AS n
+        FROM transactions t
+        JOIN costs c ON c.transaction_id = t.id
+        WHERE t.service_name = 'sapiom_linkup' AND c.is_active = true
+        GROUP BY c.fiat_amount
+        """
+    ).fetchall()
+    linkup_ledger_n = sum(n for _, n in linkup_ledger_rows)
+    linkup_ledger_all_identical = len(linkup_ledger_rows) == 1
 
     linkup = sweep["search"]
     linkup_charged = linkup["actualCostUsd"]
@@ -396,6 +419,8 @@ def tile_take_rate(con) -> dict:
             "operation": "1 query, standard depth, sourcedAnswer",
             "sapiom_price_usd": linkup_charged, "public_price_usd": linkup_public,
             "markup_pct": markup_pct(linkup_charged, linkup_public), "confidence": "HIGH",
+            "ledger_n": linkup_ledger_n,
+            "ledger_all_identical": linkup_ledger_all_identical,
         },
         {
             "service": "llm", "provider": "OpenRouter (gpt-4o-mini)",
@@ -422,6 +447,16 @@ def tile_take_rate(con) -> dict:
     FLOOR_ARTIFACT_SERVICES = {"llm", "audio"}
     for r in rows:
         r["likely_floor_artifact"] = r["service"] in FLOOR_ARTIFACT_SERVICES
+        # markup_display is what dashboard.html renders in the table cell. Floor-artifact
+        # rows do NOT show their raw percentage here (2,930%/233% next to a genuine 0%
+        # row misleads at a glance) — the raw number stays in markup_pct for the tooltip
+        # and take_rate.md's full table.
+        if r["likely_floor_artifact"]:
+            r["markup_display"] = "flat sub-cent"
+        elif r["service"] == "search":
+            r["markup_display"] = f"0% spread (N={linkup_ledger_n})"
+        else:
+            r["markup_display"] = "0% spread"
 
     high_rows = [r for r in rows if r["confidence"] == "HIGH"]
     sum_charged = sum(r["sapiom_price_usd"] for r in high_rows)
@@ -446,13 +481,17 @@ def tile_take_rate(con) -> dict:
 
     return {
         "rows": rows,
-        # Retained for cross-check against take_rate.md only — do not render as a
-        # dashboard headline (see note below).
+        # Retained for cross-check against take_rate.md only — NOT a defensible headline:
+        # it is a dollar-weighted blend of exactly 4 N=1 calls, and 100% of the margin
+        # ($0.000797 of $0.000797) comes from the two floor-artifact rows (llm, audio) —
+        # search and images contribute $0 margin each. Do not render this on the dashboard.
         "blended_take_rate_pct_not_a_headline": blended_take_rate_pct,
         "blended_take_rate_bps_not_a_headline": blended_take_rate_pct * 100,
         "blended_markup_pct_not_a_headline": blended_markup_pct,
         "n_high_rows": len(high_rows),
         "n_per_service": 1,
+        "linkup_ledger_n": linkup_ledger_n,
+        "linkup_ledger_all_identical": linkup_ledger_all_identical,
         "real_markup_services": real_markup_services,
         "floor_artifact_services": floor_artifact_services,
         "floor_margin_share_pct": floor_margin_share_pct,
@@ -460,12 +499,22 @@ def tile_take_rate(con) -> dict:
             "9-service sweep (dryrun/service_sweep_result.json), N=1 call per service, full "
             "table + MED/DROP rows + sources in take_rate.md. No blended headline is shown: "
             f"the two real-dollar-volume services ({', '.join(real_markup_services)}) settle at "
-            f"exactly vendor list price (0% markup); the two tiny-dollar rows "
-            f"({', '.join(floor_artifact_services)}) are near-certain minimum-billing-floor "
-            "artifacts, not percentage markups. Of the dollar-weighted margin across all 4 rows, "
-            f"audio/ElevenLabs is ~88% and llm/OpenRouter is ~12% (recomputed from this same "
-            "table — corrects take_rate.md's/NARRATIVE.md's earlier, backwards claim that the "
-            "LLM row drove 'almost entirely' of the margin)."
+            f"exactly vendor list price (0% markup — search is corroborated by all "
+            f"{linkup_ledger_n} historical sapiom_linkup transactions in the ledger, not just "
+            f"this N=1 sweep call, and all {linkup_ledger_n} settle at the identical "
+            f"$0.006000); the two tiny-dollar rows ({', '.join(floor_artifact_services)}) are "
+            "near-certain minimum-billing-floor artifacts, not percentage markups — their raw "
+            "percentages are withheld from the tile's headline cell for that reason (see "
+            "markup_pct on each row for the number, and take_rate.md for the full writeup). "
+            "Of the dollar-weighted margin across all 4 rows, audio/ElevenLabs is ~88% and "
+            "llm/OpenRouter is ~12% (recomputed from this same table — corrects "
+            "take_rate.md's/NARRATIVE.md's earlier, backwards claim that the LLM row drove "
+            "'almost entirely' of the margin). CAVEAT: every 'public price' in this table is "
+            "the vendor's published retail list price, not Sapiom's actual negotiated cost "
+            "(Sapiom likely gets volume/negotiated rates below retail, and does not publish "
+            "its own per-call pricing) — so this table measures Sapiom-retail vs. "
+            "vendor-retail (a build-vs-buy comparison for the agent), not Sapiom's true "
+            "take rate against its own COGS. Full caveat in take_rate.md."
         ),
     }
 

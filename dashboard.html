@@ -347,31 +347,41 @@
 
   // ---- Tile 6: Take rate ----------------------------------------------------
   // No blended-take-rate headline (adversarial-audit fix): N=1 call per service,
-  // and 2 of 4 rows are minimum-fee-floor artifacts, not real markups. Per-row
-  // framing only, with the N=1 caveat visible on the tile.
+  // and 2 of 4 rows are minimum-fee-floor artifacts, not real markups — their raw
+  // percentages (e.g. +2,930%, +233%) are deliberately kept OFF this tile's visible
+  // cell text (round 2 adversarial-audit fix) since a bare % next to a genuine 0%
+  // row reads as a comparable take rate. Raw markup_pct is still in t.note/title
+  // tooltips and in take_rate.md for anyone who wants the number.
   (function tileTakeRate() {
     const t = data.tile_take_rate || {};
     const tile = el('div', 'tile');
     const header = el('h2', null, 'Take Rate');
     header.title = t.note || '';
     tile.appendChild(header);
-    const realServices = (t.real_markup_services || []).join(', ');
-    const floorServices = (t.floor_artifact_services || []).join(', ');
+    const rows = t.rows || [];
+    const searchRow = rows.find((r) => r.service === 'search');
+    const imagesRow = rows.find((r) => r.service === 'images');
+    const realLabel = [searchRow, imagesRow].filter(Boolean).map((r) => r.provider).join(' & ') || 'search & images';
+    const ledgerN = t.linkup_ledger_n;
     const sub = el('div', 'subline',
-      `Real-dollar-volume services (${realServices || 'n/a'}): 0% markup, exact vendor list price. ` +
-      `Tiny-dollar rows (${floorServices || 'n/a'}): near-certain minimum-billing floor, not a % markup.`);
+      `${realLabel}: Sapiom charge = vendor public list price, 0% spread` +
+      (ledgerN ? ` (search: N=${ledgerN} identical historical txns, not just N=1).` : '.') +
+      ` Audio & LLM: flat sub-cent settle — looks like a large % only because vendor cost ` +
+      `is a fraction of a cent → likely minimum-ticket floor, unconfirmed, NOT a take rate.`);
+    sub.title = 'Vendor "public price" = retail list price, not Sapiom\'s actual negotiated cost — ' +
+      'see take_rate.md CAVEAT (this table is a build-vs-buy comparison, not Sapiom\'s true take rate).';
     tile.appendChild(sub);
     const table = el('table');
-    const rows = t.rows || [];
-    // Type qualifier folded into the Markup cell as a small muted sub-line,
-    // rather than a 5th column — a dedicated column of "floor artifact"/"real
-    // markup" text overflowed this tile's narrow (300px min) width.
+    // Markup cell shows markup_display (qualitative for floor-artifact rows, "0%
+    // spread" for real rows) — never a bare floor-artifact percentage. The raw
+    // number, if anyone wants it, is in the row's title= tooltip.
     table.innerHTML = '<tr><th>Service</th><th class="num">Sapiom</th><th class="num">Public</th><th class="num">Markup</th></tr>' +
-      rows.map((r) => `<tr><td>${r.provider}</td><td class="num">${usd(r.sapiom_price_usd)}</td><td class="num">${usd(r.public_price_usd)}</td><td class="num">${pct(r.markup_pct)}<br><span style="color:var(--ink-muted);font-size:11px;">${r.likely_floor_artifact ? 'floor artifact' : 'real markup'}</span></td></tr>`).join('');
+      rows.map((r) => `<tr><td>${r.provider}</td><td class="num">${usd(r.sapiom_price_usd)}</td><td class="num">${usd(r.public_price_usd)}</td><td class="num" title="${r.likely_floor_artifact ? `raw calc vs. vendor list price: ${pct(r.markup_pct)} — minimum-billing-floor artifact, not a real markup` : 'exact match to vendor public list price'}">${r.markup_display || pct(r.markup_pct)}<br><span style="color:var(--ink-muted);font-size:11px;">${r.likely_floor_artifact ? 'floor artifact, not a %' : 'real, matches list price'}</span></td></tr>`).join('');
     tile.appendChild(scrollWrap(table));
     const caption = el('div', 'caption',
-      `N=1 call per service — not a statistically powered sample. No blended headline shown here; ` +
-      `of the dollar-weighted margin across all 4 rows, audio is ~88% and llm is ~12% (see take_rate.md).`);
+      `N=1 sweep call per service (search corroborated by N=${ledgerN ?? '?'} in the ledger). No blended ` +
+      `take-rate headline is shown — it would derive entirely from the two floor-artifact rows above, ` +
+      `not from a real margin (see take_rate.md).`);
     caption.title = t.note || '';
     tile.appendChild(caption);
     grid.appendChild(tile);
