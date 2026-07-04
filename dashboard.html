@@ -196,12 +196,15 @@
     const tile = el('div', 'tile hero');
     tile.appendChild(el('h2', null, 'Capture Ratio'));
     const v = t.ratio_pct;
-    const cls = v === null || v === undefined ? '' : (v < 50 ? 'red' : v < 80 ? 'amber' : 'green');
-    tile.appendChild(el('div', `big-number ${cls}`, v === null ? 'n/a' : `${v.toFixed(1)}%`));
+    // Valence fix: this is a float-inefficiency signal, not a capture-failure /
+    // revenue-leakage signal (settling below the hold is the system working as
+    // designed) — always amber/neutral, never red or green.
+    tile.appendChild(el('div', 'big-number amber', v === null || v === undefined ? 'n/a' : `${v.toFixed(1)}%`));
     tile.appendChild(el('div', 'subline', t.subline || ''));
     const note = el('div', 'scale-note amber', t.scale_note || '');
     note.title = t.method_note || '';
     tile.appendChild(note);
+    tile.appendChild(el('div', 'caption', t.scope_note || ''));
     heroGrid.appendChild(tile);
   })();
 
@@ -218,6 +221,7 @@
     const note = el('div', 'scale-note amber', t.scale_note || '');
     note.title = t.method_note || '';
     tile.appendChild(note);
+    tile.appendChild(el('div', 'caption', t.ingest_note || ''));
     heroGrid.appendChild(tile);
   })();
 
@@ -244,7 +248,12 @@
     if (t.flat_n) {
       const row = document.createElement('tr');
       row.title = t.flat_services_label || '';
-      row.innerHTML = `<td>5 flat services</td><td>${t.flat_n}</td><td>~0ms</td><td>~0ms</td>`;
+      // Real computed min/max range, not a hardcoded "~0ms" (one flat service is
+      // actually -832ms) — see tile.footnote for why these are negative.
+      const flatRange = (t.flat_min_ms == null || t.flat_max_ms == null)
+        ? 'sub-second (write-before-authorize; see note)'
+        : `${fmtMs(t.flat_min_ms)} to ${fmtMs(t.flat_max_ms)}`;
+      row.innerHTML = `<td>5 flat services</td><td>${t.flat_n}</td><td colspan="2">${flatRange}</td>`;
       table.appendChild(row);
     }
     tile.appendChild(table);
@@ -275,24 +284,34 @@
   })();
 
   // ---- Tile 6: Take rate ----------------------------------------------------
+  // No blended-take-rate headline (adversarial-audit fix): N=1 call per service,
+  // and 2 of 4 rows are minimum-fee-floor artifacts, not real markups. Per-row
+  // framing only, with the N=1 caveat visible on the tile.
   (function tileTakeRate() {
     const t = data.tile_take_rate || {};
     const tile = el('div', 'tile');
     const header = el('h2', null, 'Take Rate');
     header.title = t.note || '';
     tile.appendChild(header);
-    const sub = el('div', 'subline', 'margin observability per service — full table: take_rate.md');
-    sub.title = t.note || '';
+    const realServices = (t.real_markup_services || []).join(', ');
+    const floorServices = (t.floor_artifact_services || []).join(', ');
+    const sub = el('div', 'subline',
+      `Real-dollar-volume services (${realServices || 'n/a'}): 0% markup, exact vendor list price. ` +
+      `Tiny-dollar rows (${floorServices || 'n/a'}): near-certain minimum-billing floor, not a % markup.`);
     tile.appendChild(sub);
     const table = el('table');
     const rows = t.rows || [];
+    // Type qualifier folded into the Markup cell as a small muted sub-line,
+    // rather than a 5th column — a dedicated column of "floor artifact"/"real
+    // markup" text overflowed this tile's narrow (300px min) width.
     table.innerHTML = '<tr><th>Service</th><th>Sapiom</th><th>Public</th><th>Markup</th></tr>' +
-      rows.map((r) => `<tr><td>${r.provider}</td><td>${usd(r.sapiom_price_usd)}</td><td>${usd(r.public_price_usd)}</td><td>${pct(r.markup_pct)}</td></tr>`).join('');
+      rows.map((r) => `<tr><td>${r.provider}</td><td>${usd(r.sapiom_price_usd)}</td><td>${usd(r.public_price_usd)}</td><td>${pct(r.markup_pct)}<br><span style="color:var(--muted);font-size:11px;">${r.likely_floor_artifact ? 'floor artifact' : 'real markup'}</span></td></tr>`).join('');
     tile.appendChild(table);
-    const blended = el('div', 'scale-note blue',
-      `Blended take rate: <b>${pct(t.blended_take_rate_pct)}</b> (${(t.blended_take_rate_bps ?? 0).toFixed(0)} bps) of settled TPV, dollar-weighted across ${t.n_high_rows ?? 4} HIGH-confidence rows.`);
-    blended.title = t.note || '';
-    tile.appendChild(blended);
+    const caption = el('div', 'caption',
+      `N=1 call per service — not a statistically powered sample. No blended headline shown here; ` +
+      `of the dollar-weighted margin across all 4 rows, audio is ~88% and llm is ~12% (see take_rate.md).`);
+    caption.title = t.note || '';
+    tile.appendChild(caption);
     grid.appendChild(tile);
   })();
 
@@ -307,6 +326,7 @@
     const sub = el('div', 'subline', `${t.n_failed ?? 0}/${t.n_txns ?? 0} txns failed (${pct(t.failed_pct)}), ${t.n_failed_with_cost_row ?? 0}/${t.n_failed ?? 0} charged`);
     sub.title = t.note || '';
     tile.appendChild(sub);
+    tile.appendChild(el('div', 'caption', t.cross_reference || ''));
     grid.appendChild(tile);
   })();
 
@@ -339,6 +359,8 @@
     const r = t.overhang_ratio;
     tile.appendChild(el('div', 'big-number amber', r === null || r === undefined ? 'n/a' : `${r.toFixed(2)}x`));
     tile.appendChild(el('div', 'definition', t.definition || ''));
+    tile.appendChild(el('div', 'caption', t.clears_note || ''));
+    tile.appendChild(el('div', 'caption', t.scope_note || ''));
     gridBounded.appendChild(tile);
   })();
 
@@ -380,6 +402,7 @@
     const def = el('div', 'definition', t.definition || '');
     def.title = t.note || '';
     tile.appendChild(def);
+    tile.appendChild(el('div', 'caption', t.visible_caveat || ''));
     gridVisible.appendChild(tile);
   })();
 
@@ -405,44 +428,59 @@
     const sub = el('div', 'subline', `${t.service || 'n/a'} — p50 / p95`);
     tile.appendChild(sub);
     tile.appendChild(el('div', 'definition', t.definition || ''));
+    tile.appendChild(el('div', 'caption', t.scope_note || ''));
     gridRecoverable.appendChild(tile);
   })();
 
-  // ---- RECOVERABLE: Refund-on-Failure Rate ------------------------------------
+  // ---- RECOVERABLE: Refund-on-Failure ------------------------------------------
+  // Rewritten per adversarial audit: this used to wrongly say the mid-flight-
+  // failure case was "not yet run". It was run and is confirmed (findings.md §9)
+  // — a direct test, not the n=81 in-sample data, answers the real question.
   (function tileRefundOnFailure() {
     const t = data.tile_refund_on_failure || {};
     const tile = el('div', 'tile');
-    const header = el('h2', null, 'Refund-on-Failure Rate');
+    const header = el('h2', null, 'Refund-on-Failure');
     header.title = t.note || '';
     tile.appendChild(header);
-    tile.appendChild(el('div', 'big-number amber', 'N/A'));
+    const rate = t.direct_test_retention_rate_pct;
+    tile.appendChild(el('div', 'big-number red', rate === null || rate === undefined ? 'n/a' : `${rate.toFixed(0)}% RETAINED`));
+    tile.appendChild(el('div', 'subline', t.subline || ''));
     tile.appendChild(el('div', 'definition', t.definition || ''));
-    const cav = el('div', 'subline', `${t.n_failed_with_hold ?? 0}/${t.n_failed ?? 0} failed calls ever held a cost — nothing to release here.`);
-    cav.title = t.note || '';
-    tile.appendChild(cav);
+    const caveat = el('div', 'caption',
+      `In-sample: ${t.n_failed_with_hold ?? 0}/${t.n_failed ?? 0} natural failures ever held a cost (both died pre-hold — nothing to release). ` +
+      `Direct test: when a hold DOES exist and the call errors, ${t.direct_test_retained ?? 0}/${t.direct_test_n ?? 0} forced trials show the hold ` +
+      `RETAINED/FROZEN (mean ${usd(t.direct_test_mean_retained_usd, 6)}, zero variance) — availableBalance dropped but totalBalance never moved, ` +
+      `so it's not a completed charge and not released either. Caveat: this per-failure rate is measured and deterministic; how OFTEN calls fail ` +
+      `post-hold in live traffic is NOT measured — do not read this as a $/day loss rate.`);
+    caveat.title = t.note || '';
+    tile.appendChild(caveat);
     gridRecoverable.appendChild(tile);
   })();
 
   // ---- KYA Scorecard (closes Section 2) --------------------------------------
+  // Relabeled per adversarial audit: this grade is velocity-only (spend is shown
+  // but never scored) — "composite risk grade" overclaimed what it measures.
   (function kyaScorecard() {
     const k = data.kya_scorecard || {};
     const header = el('h2', null, 'KYA Scorecard — Know Your Agent');
     header.title = k.formula_note || '';
     kyaTile.appendChild(header);
     const def = el('div', 'definition',
-      'One row per agent — spend, calls, velocity, peak burst, anomaly flag → composite A-F risk grade (formula in tooltip).');
+      'One row per agent — spend, calls, velocity, peak burst, anomaly flag → illustrative A-F velocity grade (formula in tooltip).');
     def.title = k.formula_note || '';
     kyaTile.appendChild(def);
+    kyaTile.appendChild(el('div', 'caption', k.visible_caveat || ''));
     const table = el('table');
-    table.innerHTML = '<tr><th>Agent</th><th>Spend</th><th>Calls</th><th>Median gap</th><th>Peak/60s</th><th>Flag</th><th>Grade</th></tr>';
+    table.innerHTML = '<tr><th>Agent</th><th>Spend</th><th>Calls</th><th>Median gap</th><th>Peak/60s</th><th>Flag</th><th>Velocity Grade</th></tr>';
     (k.rows || []).forEach((r) => {
       const row = document.createElement('tr');
       if (r.runaway) row.className = 'flag-red';
       const gapStr = (r.median_gap_s === null || r.median_gap_s === undefined) ? 'n/a' : `${r.median_gap_s.toFixed(2)}s`;
-      const gradeClass = r.grade === 'N/A' ? 'NA' : r.grade;
+      const grade = r.velocity_grade;
+      const gradeClass = grade === 'N/A' ? 'NA' : grade;
       row.innerHTML = `<td>${r.agent_name}${r.runaway ? ' ●' : ''}</td><td>${usd(r.spend_usd, 6)}</td>` +
         `<td>${r.n_calls}</td><td>${gapStr}</td><td>${r.peak_calls_per_min ?? 'n/a'}</td>` +
-        `<td>${r.runaway ? 'RUNAWAY' : ''}</td><td><span class="grade-badge ${gradeClass}">${r.grade}</span></td>`;
+        `<td>${r.runaway ? 'RUNAWAY' : ''}</td><td><span class="grade-badge ${gradeClass}">${grade}</span></td>`;
       table.appendChild(row);
     });
     kyaTile.appendChild(table);

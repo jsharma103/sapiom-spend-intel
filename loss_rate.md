@@ -29,10 +29,15 @@ that got far enough to cost anything" — it does **not** prove Sapiom would eat
 a failure that happens *after* a hold is placed (e.g., vendor times out mid-generation).
 That scenario wasn't present in this n=81 sample, but has since been directly observed:
 `dryrun/hold_linearity_extension.md`'s 128k-token call errored (502) after its $0.076803
-hold was authorized, and the full hold was captured (not refunded) — confirmed via an exact
-$0.076803 balance drop. So the two-case answer is now complete: **fails before the hold =
-$0 (this section, n=2); fails after the hold = the full hold is billed (n=1, see
-`findings.md` §9).** Lifecycle position, not failure type, decides whether you pay.
+hold was authorized, and the full hold was RETAINED/FROZEN, not released — confirmed via an
+exact $0.076803 `availableBalance` drop, while `totalBalance` never moved across that same
+step (see `findings.md` §9) — so this is frozen, unavailable capital, not a confirmed
+completed charge. Replicated 3 more times (N=4/4 total, `dryrun/failure_capture_n3.md`), same
+result every time, zero variance. So the two-case answer is now complete: **fails before the
+hold = $0, nothing ever held (this section, n=2); fails after the hold = the full hold is
+retained/frozen, not released (n=4/4, see `findings.md` §9).** Lifecycle position, not
+failure type, decides whether your capital gets frozen — the per-failure retention rate is
+measured (4/4); how often calls fail *after* a hold is placed in live traffic is not.
 
 ## Reproducing these numbers
 

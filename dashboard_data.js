@@ -1,5 +1,5 @@
 window.DASHBOARD_DATA = {
-  "generated_at": "2026-07-04T18:02:11.779363+00:00",
+  "generated_at": "2026-07-04T18:51:45.928262+00:00",
   "header": {
     "n_txns": 81,
     "n_agents": 16,
@@ -15,7 +15,7 @@ window.DASHBOARD_DATA = {
     "daily_rate_usd": 1.0656809871257225,
     "scale_multiple_to_1m_day": 938367.1211936768,
     "subline": "81 txns \u00b7 16 agents \u00b7 live spend",
-    "scale_note": "at $1M/day TPV \u2192 ~938,367x tonight's pace, same pipeline",
+    "scale_note": "at $1M/day TPV \u2192 ~938,367x tonight's pace (a ratio, not a load test \u2014 this pipeline has not been run at that volume)",
     "method_note": "Tonight's fleet ran at a ~$1.07/day pace over 81 txns / 16 agents; scale multiple = $1M/day / that rate."
   },
   "hero_capture_ratio": {
@@ -23,8 +23,10 @@ window.DASHBOARD_DATA = {
     "sum_held_usd": 0.027838,
     "sum_settled_usd": 0.004998,
     "n_chains": 27,
-    "subline": "authorize $1.00 \u2192 capture $0.18",
-    "scale_note": "instantaneously frozen \u2248 $61\u2013$138 at $1M/day TPV (Little's Law; holds clear in 5.3\u201312.0s) \u2014 lever = hold-lifetime & max_tokens right-sizing",
+    "overhang_ratio": 5.569827931172469,
+    "subline": "holds are ~5.6x oversized vs settlement \u2014 a float inefficiency, not lost revenue (authorize $1.00 \u2192 capture $0.18)",
+    "scale_note": "instantaneously frozen \u2248 $61\u2013$138 at $1M/day TPV (Little's Law; holds clear in 5.3\u201312.0s) \u2014 lever = hold-lifetime & max_tokens right-sizing. Assumes steady-state (non-bursty) call arrivals \u2014 see dryrun/float_model.md \u00a75.",
+    "scope_note": "Scope: n=27 LLM chains (sapiom_openrouter only), one session, gpt-4o-mini \u2014 LLM-specific, not platform-wide.",
     "instantaneous_frozen_p50_usd": 61.284722222222214,
     "instantaneous_frozen_p95_usd": 138.4375,
     "hold_lifetime_p50_s": 5.295,
@@ -39,7 +41,8 @@ window.DASHBOARD_DATA = {
     "live_sum_usd": 0.277472,
     "overstatement_pct": 10.032724022604082,
     "subline": "naive sum overstates +10% \u2014 must filter, not sum, chains",
-    "scale_note": "at $1M/day TPV \u2192 ~$100K/day phantom spend if uncorrected",
+    "scale_note": "at $1M/day TPV \u2192 ~$100K/day phantom spend if uncorrected (assumes tonight's traffic mix/restatement rate holds at scale)",
+    "ingest_note": "Ties out as of this ledger snapshot (ingested through 2026-07-04 11:06:35.634000). The live account has since spent more in dry-run experiments not captured in this snapshot (see RUN_LOG.md) \u2014 re-ingest before claiming this ties out today.",
     "phantom_at_scale_usd": 100327.24022604081,
     "method_note": "Latest balance snapshot vs (initial balance \u2212 live spend): diff $0.000000. Naive = every cost row including superseded holds ($0.305310); live = superseded_at IS NULL only ($0.277472)."
   },
@@ -83,10 +86,13 @@ window.DASHBOARD_DATA = {
       }
     ],
     "headline_service": "sapiom_openrouter",
+    "headline_n": 31,
     "headline_p50_ms": 5295,
     "headline_p95_ms": 11961,
     "flat_n": 47,
     "flat_services_label": "sapiom_blaxel, sapiom_elevenlabs, sapiom_fal, sapiom_linkup, unknown",
+    "flat_min_ms": -832,
+    "flat_max_ms": -95,
     "footnote": "Flat single-row services show a small negative latency \u2014 the cost row is written as part of authorization itself, before authorizedAt is stamped, not a bug. Only chained/restated services (LLM calls) show genuine positive wait for final capture."
   },
   "tile_velocity_checks": {
@@ -145,7 +151,10 @@ window.DASHBOARD_DATA = {
         "sapiom_price_usd": 0.006,
         "public_price_usd": 0.006,
         "markup_pct": 0.0,
-        "confidence": "HIGH"
+        "confidence": "HIGH",
+        "likely_floor_artifact": false,
+        "margin_usd": 0.0,
+        "margin_share_of_blended_pct": 0.0
       },
       {
         "service": "llm",
@@ -154,7 +163,10 @@ window.DASHBOARD_DATA = {
         "sapiom_price_usd": 0.0001,
         "public_price_usd": 3.2999999999999997e-06,
         "markup_pct": 2930.303030303031,
-        "confidence": "HIGH"
+        "confidence": "HIGH",
+        "likely_floor_artifact": true,
+        "margin_usd": 9.67e-05,
+        "margin_share_of_blended_pct": 12.137567465796398
       },
       {
         "service": "images",
@@ -163,7 +175,10 @@ window.DASHBOARD_DATA = {
         "sapiom_price_usd": 0.003,
         "public_price_usd": 0.003,
         "markup_pct": 0.0,
-        "confidence": "HIGH"
+        "confidence": "HIGH",
+        "likely_floor_artifact": false,
+        "margin_usd": 0.0,
+        "margin_share_of_blended_pct": 0.0
       },
       {
         "service": "audio",
@@ -172,15 +187,27 @@ window.DASHBOARD_DATA = {
         "sapiom_price_usd": 0.001,
         "public_price_usd": 0.00030000000000000003,
         "markup_pct": 233.33333333333331,
-        "confidence": "HIGH"
+        "confidence": "HIGH",
+        "likely_floor_artifact": true,
+        "margin_usd": 0.0007,
+        "margin_share_of_blended_pct": 87.86243253420349
       }
     ],
-    "blended_take_rate_pct": 7.888118811881196,
-    "blended_take_rate_bps": 788.8118811881195,
-    "blended_markup_pct": 8.563627959971203,
-    "blended_markup_bps": 856.3627959971203,
+    "blended_take_rate_pct_not_a_headline": 7.888118811881196,
+    "blended_take_rate_bps_not_a_headline": 788.8118811881195,
+    "blended_markup_pct_not_a_headline": 8.563627959971203,
     "n_high_rows": 4,
-    "note": "9-service sweep (dryrun/service_sweep_result.json), full table + MED/DROP rows + sources in take_rate.md. Blended take rate is dollar-weighted margin / Sapiom-charged TPV across the 4 HIGH-confidence rows only (search, llm, images, audio); scraping (MED, vendor plan tier unknown) and compute (DROP, memory tier undisclosed) are excluded from this dashboard tile."
+    "n_per_service": 1,
+    "real_markup_services": [
+      "search",
+      "images"
+    ],
+    "floor_artifact_services": [
+      "llm",
+      "audio"
+    ],
+    "floor_margin_share_pct": 99.99999999999989,
+    "note": "9-service sweep (dryrun/service_sweep_result.json), N=1 call per service, full table + MED/DROP rows + sources in take_rate.md. No blended headline is shown: the two real-dollar-volume services (search, images) settle at exactly vendor list price (0% markup); the two tiny-dollar rows (llm, audio) are near-certain minimum-billing-floor artifacts, not percentage markups. Of the dollar-weighted margin across all 4 rows, audio/ElevenLabs is ~88% and llm/OpenRouter is ~12% (recomputed from this same table \u2014 corrects take_rate.md's/NARRATIVE.md's earlier, backwards claim that the LLM row drove 'almost entirely' of the margin)."
   },
   "tile_loss_rate": {
     "n_txns": 81,
@@ -191,7 +218,8 @@ window.DASHBOARD_DATA = {
     "loss_rate_pct": 0.0,
     "loss_rate_bps": 0.0,
     "n_failed_with_cost_row": 0,
-    "note": "2/81 txns failed (2.5%) but 0/2 produced a cost row \u2014 Sapiom did not charge for either failure in this sample (both were pre-settlement client/gateway errors, not mid-flight failures after a hold). Loss rate = 0 bps of TPV. Full queries + caveats: loss_rate.md."
+    "note": "2/81 txns failed (2.5%) but 0/2 produced a cost row \u2014 Sapiom did not charge for either failure in this sample (both were pre-settlement client/gateway errors, not mid-flight failures after a hold). Loss rate = 0 bps of TPV. Full queries + caveats: loss_rate.md.",
+    "cross_reference": "0 bps applies only to this n=81 sample's pre-hold failures. Post-hold failures are NOT free: see Refund-on-Failure \u2014 in a direct test, 4/4 forced post-hold failures had their hold retained/frozen (not released), not this 0 bps rate."
   },
   "tile_auth_rate": {
     "approved": 81,
@@ -204,6 +232,8 @@ window.DASHBOARD_DATA = {
     "sum_held_usd": 0.027838,
     "sum_settled_usd": 0.004998,
     "definition": "held$ \u00f7 settled$ across all supersession chains \u2014 same chains as Capture Ratio, inverse framing.",
+    "clears_note": "Clears in 5.3\u201312.0s \u2014 not permanently parked capital.",
+    "scope_note": "Scope: n=27 LLM chains (sapiom_openrouter only), one session, gpt-4o-mini \u2014 LLM-specific, not platform-wide.",
     "method_note": "$0.027838 held / $0.004998 settled across 27 chains = 5.57x."
   },
   "tile_blast_radius": {
@@ -222,6 +252,7 @@ window.DASHBOARD_DATA = {
     "pct": 100.0,
     "n_unknown_service": 2,
     "definition": "% of txns with agent, traceId, service, outcome all populated.",
+    "visible_caveat": "2/81 txns carry service_name='unknown' \u2014 present, but unresolved.",
     "note": "81/81 txns have all 4 fields non-null (100%), but 2/81 carry service_name='unknown' \u2014 present, but an unresolved value, so non-null isn't always meaningfully attributed. Noted, not hidden."
   },
   "tile_phantom_spend_rate": {
@@ -235,13 +266,20 @@ window.DASHBOARD_DATA = {
     "p50_ms": 5295,
     "p95_ms": 11961,
     "service": "sapiom_openrouter",
-    "definition": "p50/p95 time from hold to final capture (chained services only)."
+    "n": 31,
+    "definition": "p50/p95 time from hold to final capture (chained services only).",
+    "scope_note": "Scope: sapiom_openrouter only (n=31), one session, gpt-4o-mini \u2014 LLM-specific, not platform-wide."
   },
   "tile_refund_on_failure": {
     "n_failed": 2,
     "n_failed_with_hold": 0,
-    "definition": "% of failed calls whose hold was fully released.",
-    "note": "0/2 failed calls ever produced a cost row \u2014 neither did (loss_rate.md): no hold was placed on either failure, so there's nothing to release. Vacuous in this sample, not 0% or 100% \u2014 becomes real once a call fails after a hold is placed (BACKLOG's mid-flight-failure experiment, not yet run)."
+    "direct_test_n": 4,
+    "direct_test_retained": 4,
+    "direct_test_retention_rate_pct": 100.0,
+    "direct_test_mean_retained_usd": 0.076803,
+    "definition": "% of a hold released back vs. retained/frozen, when a call fails after the hold is placed.",
+    "subline": "100% of hold retained/frozen on post-hold failure (4/4 forced trials)",
+    "note": "In-sample: 0/2 of the n=81 sample's natural failures ever held a cost \u2014 both died pre-hold, so there was nothing to release (loss_rate.md). Direct test: when a hold DOES exist and the call then errors, 4/4 forced trials show the hold RETAINED/FROZEN \u2014 availableBalance dropped by exactly $0.076803 each time (zero variance) while totalBalance never moved, so this is not a completed charge, and it is not released either (findings.md \u00a79; dryrun/failure_capture_n3.md; dryrun/hold_linearity_extension.md; dryrun/refund_watch.log \u2014 still being watched for a delayed release). Over-requested max_tokens makes the frozen amount larger. Honest caveat: the per-failure retention mechanic is deterministic and measured (4/4) \u2014 the FLEET FREQUENCY of post-hold failures in live traffic is NOT measured; do not read this as a $/day loss rate."
   },
   "kya_scorecard": {
     "rows": [
@@ -252,8 +290,8 @@ window.DASHBOARD_DATA = {
         "median_gap_s": 0.076,
         "peak_calls_per_min": 10,
         "runaway": true,
-        "risk_score": 90,
-        "grade": "F"
+        "velocity_score": 90,
+        "velocity_grade": "F"
       },
       {
         "agent_name": "spend-runaway",
@@ -262,8 +300,8 @@ window.DASHBOARD_DATA = {
         "median_gap_s": 7.983499999999999,
         "peak_calls_per_min": 9,
         "runaway": false,
-        "risk_score": 27,
-        "grade": "C"
+        "velocity_score": 27,
+        "velocity_grade": "C"
       },
       {
         "agent_name": "spend-researcher",
@@ -272,8 +310,8 @@ window.DASHBOARD_DATA = {
         "median_gap_s": 18.789,
         "peak_calls_per_min": 4,
         "runaway": false,
-        "risk_score": 12,
-        "grade": "B"
+        "velocity_score": 12,
+        "velocity_grade": "B"
       },
       {
         "agent_name": "cap-test",
@@ -282,8 +320,8 @@ window.DASHBOARD_DATA = {
         "median_gap_s": 8.8155,
         "peak_calls_per_min": 3,
         "runaway": false,
-        "risk_score": 9,
-        "grade": "A"
+        "velocity_score": 9,
+        "velocity_grade": "A"
       },
       {
         "agent_name": "chain-task",
@@ -292,8 +330,8 @@ window.DASHBOARD_DATA = {
         "median_gap_s": 7.955,
         "peak_calls_per_min": 3,
         "runaway": false,
-        "risk_score": 9,
-        "grade": "A"
+        "velocity_score": 9,
+        "velocity_grade": "A"
       },
       {
         "agent_name": "scale-test",
@@ -302,8 +340,8 @@ window.DASHBOARD_DATA = {
         "median_gap_s": 6.9755,
         "peak_calls_per_min": 3,
         "runaway": false,
-        "risk_score": 9,
-        "grade": "A"
+        "velocity_score": 9,
+        "velocity_grade": "A"
       },
       {
         "agent_name": "spend-writer",
@@ -312,8 +350,8 @@ window.DASHBOARD_DATA = {
         "median_gap_s": 23.046,
         "peak_calls_per_min": 3,
         "runaway": false,
-        "risk_score": 9,
-        "grade": "A"
+        "velocity_score": 9,
+        "velocity_grade": "A"
       },
       {
         "agent_name": "dryrun-researcher",
@@ -322,8 +360,8 @@ window.DASHBOARD_DATA = {
         "median_gap_s": null,
         "peak_calls_per_min": null,
         "runaway": false,
-        "risk_score": null,
-        "grade": "N/A"
+        "velocity_score": null,
+        "velocity_grade": "N/A"
       },
       {
         "agent_name": "estimate-test",
@@ -332,8 +370,8 @@ window.DASHBOARD_DATA = {
         "median_gap_s": null,
         "peak_calls_per_min": null,
         "runaway": false,
-        "risk_score": null,
-        "grade": "N/A"
+        "velocity_score": null,
+        "velocity_grade": "N/A"
       },
       {
         "agent_name": "sweep-audio",
@@ -342,8 +380,8 @@ window.DASHBOARD_DATA = {
         "median_gap_s": null,
         "peak_calls_per_min": null,
         "runaway": false,
-        "risk_score": null,
-        "grade": "N/A"
+        "velocity_score": null,
+        "velocity_grade": "N/A"
       },
       {
         "agent_name": "sweep-compute",
@@ -352,8 +390,8 @@ window.DASHBOARD_DATA = {
         "median_gap_s": null,
         "peak_calls_per_min": null,
         "runaway": false,
-        "risk_score": null,
-        "grade": "N/A"
+        "velocity_score": null,
+        "velocity_grade": "N/A"
       },
       {
         "agent_name": "sweep-data",
@@ -362,8 +400,8 @@ window.DASHBOARD_DATA = {
         "median_gap_s": null,
         "peak_calls_per_min": null,
         "runaway": false,
-        "risk_score": null,
-        "grade": "N/A"
+        "velocity_score": null,
+        "velocity_grade": "N/A"
       },
       {
         "agent_name": "sweep-images",
@@ -372,8 +410,8 @@ window.DASHBOARD_DATA = {
         "median_gap_s": null,
         "peak_calls_per_min": null,
         "runaway": false,
-        "risk_score": null,
-        "grade": "N/A"
+        "velocity_score": null,
+        "velocity_grade": "N/A"
       },
       {
         "agent_name": "sweep-llm",
@@ -382,8 +420,8 @@ window.DASHBOARD_DATA = {
         "median_gap_s": null,
         "peak_calls_per_min": null,
         "runaway": false,
-        "risk_score": null,
-        "grade": "N/A"
+        "velocity_score": null,
+        "velocity_grade": "N/A"
       },
       {
         "agent_name": "sweep-scraping",
@@ -392,8 +430,8 @@ window.DASHBOARD_DATA = {
         "median_gap_s": null,
         "peak_calls_per_min": null,
         "runaway": false,
-        "risk_score": null,
-        "grade": "N/A"
+        "velocity_score": null,
+        "velocity_grade": "N/A"
       },
       {
         "agent_name": "sweep-search",
@@ -402,10 +440,11 @@ window.DASHBOARD_DATA = {
         "median_gap_s": null,
         "peak_calls_per_min": null,
         "runaway": false,
-        "risk_score": null,
-        "grade": "N/A"
+        "velocity_score": null,
+        "velocity_grade": "N/A"
       }
     ],
-    "formula_note": "Risk score = 60 pts if peer-relative velocity anomaly flagged (findings.md \u00a75) + up to 30 pts scaled from peak calls in any 60s window (peak x 3, capped). Grade: A 0-9 / B 10-24 / C 25-49 / D 50-74 / F 75-100. Agents with <3 calls show N/A \u2014 not enough data for a median gap."
+    "visible_caveat": "Illustrative \u2014 velocity-only, one session; spend is shown but not a factor in this grade.",
+    "formula_note": "Velocity score = 60 pts if peer-relative velocity anomaly flagged (findings.md \u00a75) + up to 30 pts scaled from peak calls in any 60s window (peak x 3, capped). Grade: A 0-9 / B 10-24 / C 25-49 / D 50-74 / F 75-100. Agents with <3 calls show N/A \u2014 not enough data for a median gap. Spend is NOT part of this score (spend-runaway is ~54% of all TPV and grades C; fleet-test is ~0.4% of TPV and grades F) \u2014 velocity-only, illustrative, one session."
   }
 };

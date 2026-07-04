@@ -42,22 +42,45 @@ same operation; `markup % = (sapiom_charged − vendor_public) / vendor_public`.
 - **Blended take rate (margin ÷ Sapiom-charged TPV, Adyen-style)** = 0.000797 / 0.010100 = **7.89% ≈ 789 bps**
 - (Supporting figure) blended markup over vendor cost (margin ÷ vendor cost) = 0.000797 / 0.009303 = **8.56% ≈ 856 bps**
 
+**Caveat — N=1 per service, and this is NOT a dashboard headline.** This blended figure is
+kept here only as backing arithmetic/audit-trail for the dashboard's Take Rate tile. The
+dashboard itself does not show 789/856 bps as a headline number (adversarial-audit fix): it's
+a single call per service, and 2 of the 4 rows feeding it are minimum-fee-floor artifacts, not
+real percentage markups — see "Notable finding" below, which corrects an earlier factual error
+in this same section (and in `NARRATIVE.md`) about *which* row drives the blended margin.
+
 The two numbers answer different questions: 789 bps is "what fraction of every settled
 dollar is Sapiom's margin" (the payments take-rate framing); 856 bps is "how much extra
 do you pay vs. buying the same operation direct from the vendor." Both are dollar-weighted
 across the 4 HIGH rows, not a simple average of the 4 percentages (a simple average of
 0%, 2930%, 0%, 233% would be dominated by the single tiny LLM call and is not shown).
 
+**Margin share by row (recomputed directly from this table):**
+
+| Service | Margin $ | Share of $0.000797 blended margin |
+|---|---:|---:|
+| search (Linkup) | $0.000000 | 0% |
+| llm (OpenRouter) | $0.0000967 | **~12%** |
+| images (Fal.ai) | $0.000000 | 0% |
+| audio (ElevenLabs) | $0.0007000 | **~88%** |
+
 **Notable finding:** two of four HIGH-confidence services (Linkup search, Fal.ai images)
 settle at **exactly** vendor list price — 0% markup, i.e. Sapiom is not marking up the
 compute-heavy, larger-dollar services in this sample. The entire blended margin comes from
-the LLM row: $0.0001 charged against a $0.0000033 real cost is very likely a **per-call
-minimum-billing floor** ($0.0001 = 1/100th of a cent, a suspiciously round number) rather
-than a percentage markup — Sapiom's ledger probably rounds any settlement below some floor
-up to $0.0001. That would explain why a $0.0000033 call becomes 30× "marked up" while a
-$0.006 call isn't marked up at all. Worth confirming directly with Sapiom before quoting
-2,930% publicly — it is arithmetically correct on this one sample but is a minimum-fee
-artifact, not a genuine percentage-of-value margin.
+the other two rows (llm, audio) — but **not evenly, and not mostly from the LLM row**: per
+the table above, audio/ElevenLabs contributes ~88% of the blended margin and llm/OpenRouter
+contributes ~12%. (**Correction:** an earlier version of this document, and `NARRATIVE.md`,
+claimed the opposite — that the blended margin was "driven almost entirely" by the LLM row.
+That was backwards; this section and `NARRATIVE.md` are both corrected.) Both floor-artifact
+rows are very likely a **per-call minimum-billing floor** rather than a percentage markup:
+llm's $0.0001 charged against a $0.0000033 real cost, and audio's $0.0010 charged against a
+$0.0003 real cost, are both suspiciously round numbers consistent with a ledger that rounds
+any settlement below some floor up to a fixed minimum. That would explain why a $0.0000033
+call reads as 30× "marked up" and a $0.0003 call reads as 3.3× "marked up" while a $0.006 or
+$0.003 call isn't marked up at all. Worth confirming directly with Sapiom before quoting
+either 2,930% or 233% publicly as if they were real percentage margins — both are
+arithmetically correct on this one sample (N=1 per service) but are minimum-fee artifacts,
+not genuine percentage-of-value margins.
 
 ## Appendix — excluded rows (DROP / not charged)
 
