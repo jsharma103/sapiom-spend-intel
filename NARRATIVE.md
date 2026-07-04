@@ -79,8 +79,9 @@ love to compare notes on how the SDK resolves that today.
 | "$1M/day → $4.6M frozen" scale hook | **Capture Ratio** hero, amber scale-note line | "at $1M/day TPV → $4.57M customer capital frozen daily" |
 | "one test agent fired 10 calls in under a second" | **Velocity Checks** tile | `fleet-test` row, red-flagged, `0.08s` median gap vs peers' `~8s` |
 | max_tokens hold-sizing / 79% remedy | *not on dashboard* — pull up `advisor.md` directly | per-agent recommendation table + the fleet-wide "+79.0%" line |
-| unit-economics side question, if asked | **Take Rate** tile | Linkup +20% markup row |
+| unit-economics side question, if asked | **Take Rate** tile | Linkup settles at exact list price (0% markup) + blended take rate **7.9% / 789 bps** across 4 HIGH-confidence rows (`take_rate.md`) |
 | "restates like an adjudicated claim" (chain detail, if pressed) | **Auth → Capture Time** tile | `sapiom_openrouter` row, p50 5.29s / p95 11.96s |
+| **PIVOT (new, BUILD 12):** "those are your world's metrics — here's what I think agent payments actually needs to measure" | **Section 2 header** ("Agent-native KPIs — proposed definitions") + its BOUNDED / VISIBLE / RECOVERABLE subheaders | Point at the three subheaders in turn, then land on the **KYA Scorecard** closing Section 2 — one row per agent, composite A-F risk grade, transparent formula in the tooltip |
 
 ---
 
@@ -99,4 +100,9 @@ love to compare notes on how the SDK resolves that today.
 | Auth→capture latency (openrouter) | p50 5.29s / p95 11.96s | `findings.md` section 1 |
 | Velocity flag | `fleet-test`, 10 calls, 0.08s median gap vs ~8.4s peer median | `findings.md` section 5 |
 | max_tokens hold-sizing remedy | fleet-wide hold reduction +79.0% | `advisor.md` |
-| Linkup take rate | Sapiom $0.006/call vs public $0.005/call = +20% | prior dashboard `tile_take_rate` computation, unchanged in v2; sourced from `costs` table + WebSearch (RUN_LOG.md) |
+| Linkup take rate | Sapiom $0.006/call vs public $0.006/call (incl. Linkup's own $1/1k sourcedAnswer premium) = **0% markup** | `take_rate.md` (BUILD 9's full 9-service sweep) — **supersedes** the earlier +20% figure quoted above, which compared against Linkup's bare standard-depth price and missed the sourcedAnswer premium the sweep call actually used |
+| Blended take rate (4 HIGH-confidence services) | **7.89% (789 bps)** of Sapiom-charged TPV | `take_rate.md`; dollar-weighted margin ÷ Sapiom-charged across search/llm/images/audio — driven almost entirely by the LLM row's likely minimum-billing floor, not a real percentage markup (see caveat in `take_rate.md`) |
+| Capital Overhang Ratio (Section 2) | 5.57x held/settled | same chains as Capture Ratio above, inverse framing; `export_dashboard.py:tile_capital_overhang` |
+| Attribution Completeness (Section 2) | 100% (81/81), 2/81 service_name='unknown' | `export_dashboard.py:tile_attribution_completeness` |
+| Phantom Spend Rate (Section 2) | +10.03% | same number as the naive-sum overstatement above, reused; `export_dashboard.py:tile_phantom_spend_rate` |
+| KYA Scorecard risk grades | fleet-test **F**, spend-runaway **C**, spend-researcher **B**, cap-test/chain-task/scale-test/spend-writer **A**, 9 agents (<3 calls) **N/A** | `export_dashboard.py:kya_scorecard` — transparent formula (60 pts velocity-anomaly flag + up to 30 pts scaled peak-burst) shown in the dashboard tooltip |

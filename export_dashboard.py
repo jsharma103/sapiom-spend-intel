@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""BUILD 6 — export dashboard v2 "CEO KPI edition" data to dashboard_data.js/.json.
+"""BUILD 6/12 — export dashboard v2/v3 data to dashboard_data.js/.json.
 
 Zero spend: reads spend.duckdb + dryrun/extrapolation_result.json (unused by
 v2's rendered tiles but kept as an input for parity/back-compat) only, no
@@ -20,6 +20,14 @@ executive vocabulary, audience = ex-Shopify payments director):
     4. AUTH -> CAPTURE TIME - settlement latency p50/p95 (findings.py reuse)
     5. VELOCITY CHECKS      - renamed runaway-detector (findings.py reuse)
     6. TAKE RATE            - per-service markup vs public list price
+
+BUILD 12 adds a second dashboard section, "Agent-native KPIs — proposed
+definitions" (BOUNDED / VISIBLE / RECOVERABLE), assembled entirely from data
+already computed above or in findings.py/spend.duckdb — no new spend, no new
+external lookups. See tile_capital_overhang / tile_blast_radius_placeholder /
+tile_cap_utilization_placeholder / tile_attribution_completeness /
+tile_phantom_spend_rate / tile_hold_release_latency / tile_refund_on_failure /
+kya_scorecard below.
 
 Usage:
     python export_dashboard.py [--db spend.duckdb] [--out dashboard_data.json]
@@ -412,11 +420,212 @@ def tile_auth_rate(con) -> dict:
 
 
 # ---------------------------------------------------------------------------
+# BUILD 12 — Section 2 "Agent-native KPIs": BOUNDED
+# ---------------------------------------------------------------------------
+
+def tile_capital_overhang(capture_ratio: dict) -> dict:
+    """BOUNDED — Capital Overhang Ratio = held$ / settled$, the inverse framing of
+    Capture Ratio: same supersession chains, same data, read the other way
+    ("dollars frozen per dollar that lands" instead of "% that lands")."""
+    held = capture_ratio["sum_held_usd"]
+    settled = capture_ratio["sum_settled_usd"]
+    ratio = (held / settled) if settled else None
+    return {
+        "overhang_ratio": ratio,
+        "sum_held_usd": held,
+        "sum_settled_usd": settled,
+        "definition": "held$ ÷ settled$ across all supersession chains — same chains as Capture Ratio, inverse framing.",
+        "method_note": (
+            f"${held:.6f} held / ${settled:.6f} settled across {capture_ratio['n_chains']} chains = {ratio:.2f}x."
+            if ratio is not None else "n/a"
+        ),
+    }
+
+
+def tile_blast_radius_placeholder() -> dict:
+    """BOUNDED — greyed placeholder, not a fake number. Max spend a single agent
+    could reach before a governance cap stops it — requires an active spending
+    rule to observe; none was active in this sample (BACKLOG #8, [HUMAN-UI])."""
+    return {
+        "available": False,
+        "definition": "Max spend one agent reaches before a cap stops it.",
+        "note": "Needs governance rules active — no spending rule was configured in this sample (BACKLOG #8, [HUMAN-UI]).",
+    }
+
+
+def tile_cap_utilization_placeholder() -> dict:
+    """BOUNDED — greyed placeholder, not a fake number. Spend ÷ budget per agent —
+    requires a configured per-agent budget (a governance spending rule) to have
+    a denominator; none exists in this sample."""
+    return {
+        "available": False,
+        "definition": "Spend ÷ budget, per agent.",
+        "note": "Needs governance rules active — no per-agent budget exists without a spending rule configured.",
+    }
+
+
+# ---------------------------------------------------------------------------
+# BUILD 12 — Section 2 "Agent-native KPIs": VISIBLE
+# ---------------------------------------------------------------------------
+
+def tile_attribution_completeness(con) -> dict:
+    """VISIBLE — % of txns with a full context chain agent -> trace -> service ->
+    result, i.e. agentName + traceId + service + outcome all non-null."""
+    total = con.execute("SELECT COUNT(*) FROM transactions").fetchone()[0]
+    complete = con.execute("""
+        SELECT COUNT(*) FROM transactions
+        WHERE agent_name IS NOT NULL AND trace_id IS NOT NULL
+          AND service_name IS NOT NULL AND outcome IS NOT NULL
+    """).fetchone()[0]
+    n_unknown_service = con.execute(
+        "SELECT COUNT(*) FROM transactions WHERE service_name = 'unknown'"
+    ).fetchone()[0]
+    pct = (complete / total * 100) if total else None
+    return {
+        "complete": complete,
+        "total": total,
+        "pct": pct,
+        "n_unknown_service": n_unknown_service,
+        "definition": "% of txns with agent, traceId, service, outcome all populated.",
+        "note": (
+            f"{complete}/{total} txns have all 4 fields non-null (100%), but {n_unknown_service}/{total} "
+            "carry service_name='unknown' — present, but an unresolved value, so non-null isn't always "
+            "meaningfully attributed. Noted, not hidden."
+        ),
+    }
+
+
+def tile_phantom_spend_rate(reconciliation: dict) -> dict:
+    """VISIBLE — naive-sum overstatement vs. live spend: how wrong a supersession-
+    naive pipeline reads the ledger. Same number as the Reconciliation hero's
+    subline, reused rather than recomputed."""
+    return {
+        "overstatement_pct": reconciliation["overstatement_pct"],
+        "naive_sum_usd": reconciliation["naive_sum_usd"],
+        "live_sum_usd": reconciliation["live_sum_usd"],
+        "definition": "Naive sum of every cost row vs. live (non-superseded) spend.",
+        "method_note": reconciliation["method_note"],
+    }
+
+
+# ---------------------------------------------------------------------------
+# BUILD 12 — Section 2 "Agent-native KPIs": RECOVERABLE
+# ---------------------------------------------------------------------------
+
+def tile_hold_release_latency(auth_to_capture: dict) -> dict:
+    """RECOVERABLE — Hold-Release Latency: auth->capture time recast as a capital-
+    freed metric (how long a held dollar stays frozen before the chain resolves
+    it). Same numbers as the Auth -> Capture Time tile, reused."""
+    return {
+        "p50_ms": auth_to_capture["headline_p50_ms"],
+        "p95_ms": auth_to_capture["headline_p95_ms"],
+        "service": auth_to_capture["headline_service"],
+        "definition": "p50/p95 time from hold to final capture (chained services only).",
+    }
+
+
+def tile_refund_on_failure(con) -> dict:
+    """RECOVERABLE — % of failed calls whose hold was fully released. In this
+    sample both failed transactions never produced a cost row at all
+    (loss_rate.md) — there was no hold to release, so the honest reading is
+    "n/a, nothing was ever held", not a fabricated 0% or 100%."""
+    n_failed = con.execute("SELECT COUNT(*) FROM transactions WHERE outcome='error'").fetchone()[0]
+    n_failed_with_hold = con.execute("""
+        SELECT COUNT(DISTINCT t.id) FROM transactions t JOIN costs c ON c.transaction_id = t.id
+        WHERE t.outcome = 'error'
+    """).fetchone()[0]
+    return {
+        "n_failed": n_failed,
+        "n_failed_with_hold": n_failed_with_hold,
+        "definition": "% of failed calls whose hold was fully released.",
+        "note": (
+            f"{n_failed_with_hold}/{n_failed} failed calls ever produced a cost row — neither did "
+            "(loss_rate.md): no hold was placed on either failure, so there's nothing to release. "
+            "Vacuous in this sample, not 0% or 100% — becomes real once a call fails after a hold "
+            "is placed (BACKLOG's mid-flight-failure experiment, not yet run)."
+        ),
+    }
+
+
+# ---------------------------------------------------------------------------
+# BUILD 12 — KYA Scorecard (closes Section 2): one row per agent, A-F risk grade
+# ---------------------------------------------------------------------------
+
+RISK_RUNAWAY_POINTS = 60         # peer-relative velocity anomaly flag (findings.md §5)
+RISK_PEAK_POINTS_PER_CALL = 3    # points per call in the busiest rolling 60s window
+RISK_PEAK_POINTS_CAP = 30        # cap on the peak-burst contribution
+
+
+def _grade_from_score(score: float) -> str:
+    if score >= 75:
+        return "F"
+    if score >= 50:
+        return "D"
+    if score >= 25:
+        return "C"
+    if score >= 10:
+        return "B"
+    return "A"
+
+
+def kya_scorecard(con) -> dict:
+    """Section 2 close — one row per agent: spend, calls, velocity (median inter-
+    call gap), peak calls/60s, anomaly flag -> composite A-F risk grade. Assembled
+    from data already computed elsewhere (findings.py's runaway_detection + a
+    live-spend-by-agent query), not recomputed independently, so it can never
+    disagree with findings.md / the Velocity Checks tile."""
+    runaway = findings.runaway_detection(con)
+    spend_rows = con.execute("""
+        SELECT t.agent_name, COALESCE(SUM(c.fiat_amount), 0)
+        FROM transactions t
+        LEFT JOIN costs c ON c.transaction_id = t.id AND c.superseded_at IS NULL
+        WHERE t.agent_name IS NOT NULL
+        GROUP BY 1
+    """).fetchall()
+    spend_by_agent = {name: float(spend) for name, spend in spend_rows}
+
+    rows = []
+    for name, stats in runaway["per_agent"].items():
+        median_gap = stats["median_gap_s"]
+        peak = stats["peak_calls_per_min"]
+        is_runaway = bool(stats.get("runaway"))
+        if median_gap is None:
+            score = None
+            grade = "N/A"
+        else:
+            score = (RISK_RUNAWAY_POINTS if is_runaway else 0) + min(
+                RISK_PEAK_POINTS_CAP, (peak or 0) * RISK_PEAK_POINTS_PER_CALL
+            )
+            grade = _grade_from_score(score)
+        rows.append({
+            "agent_name": name,
+            "spend_usd": spend_by_agent.get(name, 0.0),
+            "n_calls": stats["n"],
+            "median_gap_s": median_gap,
+            "peak_calls_per_min": peak,
+            "runaway": is_runaway,
+            "risk_score": score,
+            "grade": grade,
+        })
+    rows.sort(key=lambda r: (r["grade"] == "N/A", -(r["risk_score"] if r["risk_score"] is not None else -1)))
+
+    return {
+        "rows": rows,
+        "formula_note": (
+            f"Risk score = {RISK_RUNAWAY_POINTS} pts if peer-relative velocity anomaly flagged "
+            f"(findings.md §5) + up to {RISK_PEAK_POINTS_CAP} pts scaled from peak calls in any 60s "
+            f"window (peak x {RISK_PEAK_POINTS_PER_CALL}, capped). Grade: A 0-9 / B 10-24 / C 25-49 / "
+            "D 50-74 / F 75-100. Agents with <3 calls show N/A — not enough data for a median gap."
+        ),
+    }
+
+
+# ---------------------------------------------------------------------------
 # Main
 # ---------------------------------------------------------------------------
 
 def main():
-    ap = argparse.ArgumentParser(description="Export CEO dashboard v2 data from spend.duckdb")
+    ap = argparse.ArgumentParser(description="Export CEO dashboard v2/v3 data from spend.duckdb")
     ap.add_argument("--db", default=DEFAULT_DB)
     ap.add_argument("--out", default=DEFAULT_OUT)
     ap.add_argument("--initial-balance", default="5.00")
@@ -425,6 +634,9 @@ def main():
     con = duckdb.connect(args.db, read_only=True)
 
     header = audit.header_stats(con)
+    capture_ratio = hero_capture_ratio(con)
+    reconciliation = hero_reconciliation(con, Decimal(args.initial_balance))
+    auth_to_capture = tile_auth_to_capture(con)
 
     data = {
         "generated_at": None,
@@ -435,14 +647,25 @@ def main():
             "period_start": str(header["period_start"]),
             "period_end": str(header["period_end"]),
         },
+        # ---- Section 1 — "Payments KPIs — measured on Sapiom" (BUILD 6/9/10/11,
+        # reorganized/retitled by BUILD 12; numbers unchanged) --------------------
         "hero_tpv": hero_tpv(header),
-        "hero_capture_ratio": hero_capture_ratio(con),
-        "hero_reconciliation": hero_reconciliation(con, Decimal(args.initial_balance)),
-        "tile_auth_to_capture": tile_auth_to_capture(con),
+        "hero_capture_ratio": capture_ratio,
+        "hero_reconciliation": reconciliation,
+        "tile_auth_to_capture": auth_to_capture,
         "tile_velocity_checks": tile_velocity_checks(con),
         "tile_take_rate": tile_take_rate(con),
         "tile_loss_rate": tile_loss_rate(con),
         "tile_auth_rate": tile_auth_rate(con),
+        # ---- Section 2 — "Agent-native KPIs — proposed definitions" (BUILD 12) --
+        "tile_capital_overhang": tile_capital_overhang(capture_ratio),
+        "tile_blast_radius": tile_blast_radius_placeholder(),
+        "tile_cap_utilization": tile_cap_utilization_placeholder(),
+        "tile_attribution_completeness": tile_attribution_completeness(con),
+        "tile_phantom_spend_rate": tile_phantom_spend_rate(reconciliation),
+        "tile_hold_release_latency": tile_hold_release_latency(auth_to_capture),
+        "tile_refund_on_failure": tile_refund_on_failure(con),
+        "kya_scorecard": kya_scorecard(con),
     }
     con.close()
 

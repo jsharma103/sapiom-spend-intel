@@ -1,5 +1,5 @@
 window.DASHBOARD_DATA = {
-  "generated_at": "2026-07-04T17:01:27.722694+00:00",
+  "generated_at": "2026-07-04T17:08:23.125875+00:00",
   "header": {
     "n_txns": 81,
     "n_agents": 16,
@@ -194,5 +194,214 @@ window.DASHBOARD_DATA = {
     "denied": 0,
     "auth_rate_pct": 100.0,
     "note": "No spending rules were active in this sample \u2014 100% reflects an unconfigured account (nothing to deny), not proof governance works. Full distribution + caveat: findings.md \u00a77."
+  },
+  "tile_capital_overhang": {
+    "overhang_ratio": 5.56982793117247,
+    "sum_held_usd": 0.027838,
+    "sum_settled_usd": 0.004998,
+    "definition": "held$ \u00f7 settled$ across all supersession chains \u2014 same chains as Capture Ratio, inverse framing.",
+    "method_note": "$0.027838 held / $0.004998 settled across 27 chains = 5.57x."
+  },
+  "tile_blast_radius": {
+    "available": false,
+    "definition": "Max spend one agent reaches before a cap stops it.",
+    "note": "Needs governance rules active \u2014 no spending rule was configured in this sample (BACKLOG #8, [HUMAN-UI])."
+  },
+  "tile_cap_utilization": {
+    "available": false,
+    "definition": "Spend \u00f7 budget, per agent.",
+    "note": "Needs governance rules active \u2014 no per-agent budget exists without a spending rule configured."
+  },
+  "tile_attribution_completeness": {
+    "complete": 81,
+    "total": 81,
+    "pct": 100.0,
+    "n_unknown_service": 2,
+    "definition": "% of txns with agent, traceId, service, outcome all populated.",
+    "note": "81/81 txns have all 4 fields non-null (100%), but 2/81 carry service_name='unknown' \u2014 present, but an unresolved value, so non-null isn't always meaningfully attributed. Noted, not hidden."
+  },
+  "tile_phantom_spend_rate": {
+    "overstatement_pct": 10.032724022604082,
+    "naive_sum_usd": 0.30531,
+    "live_sum_usd": 0.277472,
+    "definition": "Naive sum of every cost row vs. live (non-superseded) spend.",
+    "method_note": "Latest balance snapshot vs (initial balance \u2212 live spend): diff $0.000000. Naive = every cost row including superseded holds ($0.305310); live = superseded_at IS NULL only ($0.277472)."
+  },
+  "tile_hold_release_latency": {
+    "p50_ms": 5295,
+    "p95_ms": 11961,
+    "service": "sapiom_openrouter",
+    "definition": "p50/p95 time from hold to final capture (chained services only)."
+  },
+  "tile_refund_on_failure": {
+    "n_failed": 2,
+    "n_failed_with_hold": 0,
+    "definition": "% of failed calls whose hold was fully released.",
+    "note": "0/2 failed calls ever produced a cost row \u2014 neither did (loss_rate.md): no hold was placed on either failure, so there's nothing to release. Vacuous in this sample, not 0% or 100% \u2014 becomes real once a call fails after a hold is placed (BACKLOG's mid-flight-failure experiment, not yet run)."
+  },
+  "kya_scorecard": {
+    "rows": [
+      {
+        "agent_name": "fleet-test",
+        "spend_usd": 0.001,
+        "n_calls": 10,
+        "median_gap_s": 0.076,
+        "peak_calls_per_min": 10,
+        "runaway": true,
+        "risk_score": 90,
+        "grade": "F"
+      },
+      {
+        "agent_name": "spend-runaway",
+        "spend_usd": 0.15,
+        "n_calls": 25,
+        "median_gap_s": 7.983499999999999,
+        "peak_calls_per_min": 9,
+        "runaway": false,
+        "risk_score": 27,
+        "grade": "C"
+      },
+      {
+        "agent_name": "spend-researcher",
+        "spend_usd": 0.072,
+        "n_calls": 12,
+        "median_gap_s": 18.789,
+        "peak_calls_per_min": 4,
+        "runaway": false,
+        "risk_score": 12,
+        "grade": "B"
+      },
+      {
+        "agent_name": "cap-test",
+        "spend_usd": 0.0003,
+        "n_calls": 3,
+        "median_gap_s": 8.8155,
+        "peak_calls_per_min": 3,
+        "runaway": false,
+        "risk_score": 9,
+        "grade": "A"
+      },
+      {
+        "agent_name": "chain-task",
+        "spend_usd": 0.0242,
+        "n_calls": 6,
+        "median_gap_s": 7.955,
+        "peak_calls_per_min": 3,
+        "runaway": false,
+        "risk_score": 9,
+        "grade": "A"
+      },
+      {
+        "agent_name": "scale-test",
+        "spend_usd": 0.0003,
+        "n_calls": 3,
+        "median_gap_s": 6.9755,
+        "peak_calls_per_min": 3,
+        "runaway": false,
+        "risk_score": 9,
+        "grade": "A"
+      },
+      {
+        "agent_name": "spend-writer",
+        "spend_usd": 0.00291,
+        "n_calls": 10,
+        "median_gap_s": 23.046,
+        "peak_calls_per_min": 3,
+        "runaway": false,
+        "risk_score": 9,
+        "grade": "A"
+      },
+      {
+        "agent_name": "dryrun-researcher",
+        "spend_usd": 0.006,
+        "n_calls": 1,
+        "median_gap_s": null,
+        "peak_calls_per_min": null,
+        "runaway": false,
+        "risk_score": null,
+        "grade": "N/A"
+      },
+      {
+        "agent_name": "estimate-test",
+        "spend_usd": 0.000972,
+        "n_calls": 2,
+        "median_gap_s": null,
+        "peak_calls_per_min": null,
+        "runaway": false,
+        "risk_score": null,
+        "grade": "N/A"
+      },
+      {
+        "agent_name": "sweep-audio",
+        "spend_usd": 0.001,
+        "n_calls": 1,
+        "median_gap_s": null,
+        "peak_calls_per_min": null,
+        "runaway": false,
+        "risk_score": null,
+        "grade": "N/A"
+      },
+      {
+        "agent_name": "sweep-compute",
+        "spend_usd": 0.00069,
+        "n_calls": 2,
+        "median_gap_s": null,
+        "peak_calls_per_min": null,
+        "runaway": false,
+        "risk_score": null,
+        "grade": "N/A"
+      },
+      {
+        "agent_name": "sweep-data",
+        "spend_usd": 0.0,
+        "n_calls": 1,
+        "median_gap_s": null,
+        "peak_calls_per_min": null,
+        "runaway": false,
+        "risk_score": null,
+        "grade": "N/A"
+      },
+      {
+        "agent_name": "sweep-images",
+        "spend_usd": 0.003,
+        "n_calls": 2,
+        "median_gap_s": null,
+        "peak_calls_per_min": null,
+        "runaway": false,
+        "risk_score": null,
+        "grade": "N/A"
+      },
+      {
+        "agent_name": "sweep-llm",
+        "spend_usd": 0.0001,
+        "n_calls": 1,
+        "median_gap_s": null,
+        "peak_calls_per_min": null,
+        "runaway": false,
+        "risk_score": null,
+        "grade": "N/A"
+      },
+      {
+        "agent_name": "sweep-scraping",
+        "spend_usd": 0.009,
+        "n_calls": 1,
+        "median_gap_s": null,
+        "peak_calls_per_min": null,
+        "runaway": false,
+        "risk_score": null,
+        "grade": "N/A"
+      },
+      {
+        "agent_name": "sweep-search",
+        "spend_usd": 0.006,
+        "n_calls": 1,
+        "median_gap_s": null,
+        "peak_calls_per_min": null,
+        "runaway": false,
+        "risk_score": null,
+        "grade": "N/A"
+      }
+    ],
+    "formula_note": "Risk score = 60 pts if peer-relative velocity anomaly flagged (findings.md \u00a75) + up to 30 pts scaled from peak calls in any 60s window (peak x 3, capped). Grade: A 0-9 / B 10-24 / C 25-49 / D 50-74 / F 75-100. Agents with <3 calls show N/A \u2014 not enough data for a median gap."
   }
 };

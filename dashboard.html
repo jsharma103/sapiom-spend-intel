@@ -26,6 +26,17 @@
   h1 { font-size: 22px; margin: 0 0 4px 0; }
   .subtitle { color: var(--muted); font-size: 13px; margin-bottom: 24px; }
   .row-label { color: var(--muted); font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; margin: 22px 0 8px 2px; }
+  .section-title {
+    font-size: 16px; font-weight: 700; margin: 40px 0 4px 0;
+    padding-top: 24px; border-top: 1px solid var(--panel-border);
+  }
+  .section-title.first { margin-top: 28px; padding-top: 0; border-top: none; }
+  .section-subtitle { color: var(--muted); font-size: 12.5px; line-height: 1.5; max-width: 780px; margin-bottom: 6px; }
+  .kpi-subhead {
+    color: var(--blue); font-size: 11px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.12em; margin: 22px 0 8px 2px;
+  }
+  .definition { color: var(--muted); font-size: 12.5px; margin-top: 10px; line-height: 1.5; font-style: italic; }
   .hero-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -75,6 +86,19 @@
   }
   .badge.green { background: rgba(53,208,127,0.15); color: var(--green); }
   .badge.red { background: rgba(255,92,92,0.15); color: var(--red); }
+  .grade-badge { display: inline-block; padding: 2px 11px; border-radius: 6px; font-weight: 700; font-size: 13px; }
+  .grade-badge.A { background: rgba(53,208,127,0.18); color: var(--green); }
+  .grade-badge.B { background: rgba(53,208,127,0.12); color: var(--green); }
+  .grade-badge.C { background: rgba(255,180,84,0.18); color: var(--amber); }
+  .grade-badge.D { background: rgba(255,92,92,0.15); color: var(--red); }
+  .grade-badge.F { background: rgba(255,92,92,0.22); color: var(--red); }
+  .grade-badge.NA { background: rgba(138,146,166,0.14); color: var(--muted); }
+  .tile.placeholder { opacity: 0.55; border-style: dashed; }
+  .tile.placeholder .big-number { color: var(--muted); font-size: 30px; }
+  .lock-tag {
+    display: inline-block; font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase;
+    color: var(--muted); background: rgba(138,146,166,0.14); border-radius: 999px; padding: 3px 10px; margin-top: 8px;
+  }
   .footer { margin-top: 28px; color: var(--muted); font-size: 12px; }
   .error { color: var(--red); }
 </style>
@@ -84,11 +108,29 @@
 <h1>Sapiom Spend — CEO Dashboard</h1>
 <div class="subtitle" id="subtitle">Loading...</div>
 
+<div class="section-title first">Section 1 — Payments KPIs — measured on Sapiom</div>
+<div class="section-subtitle">Metrics a payments executive already knows how to read, measured live on Sapiom's own ledger.</div>
+
 <div class="row-label">Hero KPIs</div>
 <div class="hero-grid" id="hero-grid"></div>
 
 <div class="row-label">Detail</div>
 <div class="grid" id="grid"></div>
+
+<div class="section-title">Section 2 — Agent-native KPIs — proposed definitions</div>
+<div class="section-subtitle">Those are your world's metrics. Here's what I think agent payments actually needs to measure — failures that are bounded, visible, and recoverable, plus a per-agent "Know Your Agent" read. Vocabulary from Sapiom's own public framing (ComputerWeekly / Unite.AI). Definitions are the product here; every number still traces to an existing file.</div>
+
+<div class="kpi-subhead">Bounded</div>
+<div class="grid" id="grid-bounded"></div>
+
+<div class="kpi-subhead">Visible</div>
+<div class="grid" id="grid-visible"></div>
+
+<div class="kpi-subhead">Recoverable</div>
+<div class="grid" id="grid-recoverable"></div>
+
+<div class="row-label">KYA Scorecard — Know Your Agent</div>
+<div class="tile" id="kya-tile"></div>
 
 <div class="footer" id="footer"></div>
 
@@ -113,6 +155,10 @@
 
   const heroGrid = document.getElementById('hero-grid');
   const grid = document.getElementById('grid');
+  const gridBounded = document.getElementById('grid-bounded');
+  const gridVisible = document.getElementById('grid-visible');
+  const gridRecoverable = document.getElementById('grid-recoverable');
+  const kyaTile = document.getElementById('kya-tile');
   const subtitle = document.getElementById('subtitle');
   const footer = document.getElementById('footer');
 
@@ -202,11 +248,6 @@
       table.appendChild(row);
     }
     tile.appendChild(table);
-    const lr = data.tile_loss_rate || {};
-    const lossLine = el('div', 'caption',
-      `Loss rate: <b>${(lr.loss_rate_bps ?? 0).toFixed(0)} bps</b> of TPV — ${lr.n_failed ?? 0}/${lr.n_txns ?? 0} txns failed (${pct(lr.failed_pct)}), ${lr.n_failed_with_cost_row ?? 0}/${lr.n_failed ?? 0} charged. Detail: loss_rate.md.`);
-    lossLine.title = lr.note || '';
-    tile.appendChild(lossLine);
     grid.appendChild(tile);
   })();
 
@@ -255,10 +296,159 @@
     grid.appendChild(tile);
   })();
 
-  const ar = data.tile_auth_rate || {};
-  const authRateStr = (ar.auth_rate_pct === null || ar.auth_rate_pct === undefined) ? 'n/a' : `${Number(ar.auth_rate_pct).toFixed(0)}%`;
-  footer.innerHTML = `Static, offline viewer. Governance auth rate: <b>${authRateStr}</b> (${ar.approved ?? 0}/${(ar.approved ?? 0) + (ar.denied ?? 0)}, no spending rules active in this sample — findings.md §7).`;
-  footer.title = 'Reads dashboard_data.js only, no network, no backend. Regenerate with: python export_dashboard.py. ' + (ar.note || '');
+  // ---- Tile 7: Loss rate (BUILD 10 — promoted to its own tile in BUILD 12) --
+  (function tileLossRate() {
+    const t = data.tile_loss_rate || {};
+    const tile = el('div', 'tile');
+    const header = el('h2', null, 'Loss Rate');
+    header.title = t.note || '';
+    tile.appendChild(header);
+    tile.appendChild(el('div', `big-number ${t.loss_rate_bps ? 'red' : 'green'}`, `${(t.loss_rate_bps ?? 0).toFixed(0)} bps`));
+    const sub = el('div', 'subline', `${t.n_failed ?? 0}/${t.n_txns ?? 0} txns failed (${pct(t.failed_pct)}), ${t.n_failed_with_cost_row ?? 0}/${t.n_failed ?? 0} charged`);
+    sub.title = t.note || '';
+    tile.appendChild(sub);
+    grid.appendChild(tile);
+  })();
+
+  // ---- Tile 8: Auth rate (BUILD 11 — promoted to its own tile in BUILD 12) --
+  (function tileAuthRate() {
+    const t = data.tile_auth_rate || {};
+    const tile = el('div', 'tile');
+    const header = el('h2', null, 'Auth Rate');
+    header.title = t.note || '';
+    tile.appendChild(header);
+    const v = t.auth_rate_pct;
+    tile.appendChild(el('div', 'big-number green', v === null || v === undefined ? 'n/a' : `${Number(v).toFixed(0)}%`));
+    const sub = el('div', 'subline', `${t.approved ?? 0}/${(t.approved ?? 0) + (t.denied ?? 0)} approved — no spending rules active in this sample`);
+    sub.title = t.note || '';
+    tile.appendChild(sub);
+    grid.appendChild(tile);
+  })();
+
+  // =====================================================================
+  // Section 2 — Agent-native KPIs — proposed definitions
+  // =====================================================================
+
+  // ---- BOUNDED: Capital Overhang Ratio (real number) -------------------------
+  (function tileCapitalOverhang() {
+    const t = data.tile_capital_overhang || {};
+    const tile = el('div', 'tile');
+    const header = el('h2', null, 'Capital Overhang Ratio');
+    header.title = t.method_note || '';
+    tile.appendChild(header);
+    const r = t.overhang_ratio;
+    tile.appendChild(el('div', 'big-number amber', r === null || r === undefined ? 'n/a' : `${r.toFixed(2)}x`));
+    tile.appendChild(el('div', 'definition', t.definition || ''));
+    gridBounded.appendChild(tile);
+  })();
+
+  // ---- BOUNDED: Blast Radius $ (greyed placeholder, no fake number) ---------
+  (function tileBlastRadius() {
+    const t = data.tile_blast_radius || {};
+    const tile = el('div', 'tile placeholder');
+    tile.appendChild(el('h2', null, 'Blast Radius $'));
+    tile.appendChild(el('div', 'big-number', '—'));
+    const lock = el('div', 'lock-tag', 'Needs governance rules active');
+    lock.title = t.note || '';
+    tile.appendChild(lock);
+    tile.appendChild(el('div', 'definition', t.definition || ''));
+    gridBounded.appendChild(tile);
+  })();
+
+  // ---- BOUNDED: Cap Utilization (greyed placeholder, no fake number) --------
+  (function tileCapUtilization() {
+    const t = data.tile_cap_utilization || {};
+    const tile = el('div', 'tile placeholder');
+    tile.appendChild(el('h2', null, 'Cap Utilization'));
+    tile.appendChild(el('div', 'big-number', '—'));
+    const lock = el('div', 'lock-tag', 'Needs governance rules active');
+    lock.title = t.note || '';
+    tile.appendChild(lock);
+    tile.appendChild(el('div', 'definition', t.definition || ''));
+    gridBounded.appendChild(tile);
+  })();
+
+  // ---- VISIBLE: Attribution Completeness -------------------------------------
+  (function tileAttributionCompleteness() {
+    const t = data.tile_attribution_completeness || {};
+    const tile = el('div', 'tile');
+    const header = el('h2', null, 'Attribution Completeness');
+    header.title = t.note || '';
+    tile.appendChild(header);
+    const p = t.pct;
+    tile.appendChild(el('div', 'big-number green', p === null || p === undefined ? 'n/a' : `${p.toFixed(0)}%`));
+    const def = el('div', 'definition', t.definition || '');
+    def.title = t.note || '';
+    tile.appendChild(def);
+    gridVisible.appendChild(tile);
+  })();
+
+  // ---- VISIBLE: Phantom Spend Rate --------------------------------------------
+  (function tilePhantomSpendRate() {
+    const t = data.tile_phantom_spend_rate || {};
+    const tile = el('div', 'tile');
+    const header = el('h2', null, 'Phantom Spend Rate');
+    header.title = t.method_note || '';
+    tile.appendChild(header);
+    const v = t.overstatement_pct;
+    tile.appendChild(el('div', 'big-number amber', v === null || v === undefined ? 'n/a' : `+${v.toFixed(1)}%`));
+    tile.appendChild(el('div', 'definition', t.definition || ''));
+    gridVisible.appendChild(tile);
+  })();
+
+  // ---- RECOVERABLE: Hold-Release Latency --------------------------------------
+  (function tileHoldReleaseLatency() {
+    const t = data.tile_hold_release_latency || {};
+    const tile = el('div', 'tile');
+    tile.appendChild(el('h2', null, 'Hold-Release Latency'));
+    tile.appendChild(el('div', 'big-number amber', `${fmtMs(t.p50_ms)} / ${fmtMs(t.p95_ms)}`));
+    const sub = el('div', 'subline', `${t.service || 'n/a'} — p50 / p95`);
+    tile.appendChild(sub);
+    tile.appendChild(el('div', 'definition', t.definition || ''));
+    gridRecoverable.appendChild(tile);
+  })();
+
+  // ---- RECOVERABLE: Refund-on-Failure Rate ------------------------------------
+  (function tileRefundOnFailure() {
+    const t = data.tile_refund_on_failure || {};
+    const tile = el('div', 'tile');
+    const header = el('h2', null, 'Refund-on-Failure Rate');
+    header.title = t.note || '';
+    tile.appendChild(header);
+    tile.appendChild(el('div', 'big-number amber', 'N/A'));
+    tile.appendChild(el('div', 'definition', t.definition || ''));
+    const cav = el('div', 'subline', `${t.n_failed_with_hold ?? 0}/${t.n_failed ?? 0} failed calls ever held a cost — nothing to release here.`);
+    cav.title = t.note || '';
+    tile.appendChild(cav);
+    gridRecoverable.appendChild(tile);
+  })();
+
+  // ---- KYA Scorecard (closes Section 2) --------------------------------------
+  (function kyaScorecard() {
+    const k = data.kya_scorecard || {};
+    const header = el('h2', null, 'KYA Scorecard — Know Your Agent');
+    header.title = k.formula_note || '';
+    kyaTile.appendChild(header);
+    const def = el('div', 'definition',
+      'One row per agent — spend, calls, velocity, peak burst, anomaly flag → composite A-F risk grade (formula in tooltip).');
+    def.title = k.formula_note || '';
+    kyaTile.appendChild(def);
+    const table = el('table');
+    table.innerHTML = '<tr><th>Agent</th><th>Spend</th><th>Calls</th><th>Median gap</th><th>Peak/60s</th><th>Flag</th><th>Grade</th></tr>';
+    (k.rows || []).forEach((r) => {
+      const row = document.createElement('tr');
+      if (r.runaway) row.className = 'flag-red';
+      const gapStr = (r.median_gap_s === null || r.median_gap_s === undefined) ? 'n/a' : `${r.median_gap_s.toFixed(2)}s`;
+      const gradeClass = r.grade === 'N/A' ? 'NA' : r.grade;
+      row.innerHTML = `<td>${r.agent_name}${r.runaway ? ' ●' : ''}</td><td>${usd(r.spend_usd, 6)}</td>` +
+        `<td>${r.n_calls}</td><td>${gapStr}</td><td>${r.peak_calls_per_min ?? 'n/a'}</td>` +
+        `<td>${r.runaway ? 'RUNAWAY' : ''}</td><td><span class="grade-badge ${gradeClass}">${r.grade}</span></td>`;
+      table.appendChild(row);
+    });
+    kyaTile.appendChild(table);
+  })();
+
+  footer.innerHTML = 'Static, offline viewer. No network, no backend — reads dashboard_data.js only. Regenerate with: python export_dashboard.py.';
 })();
 </script>
 
