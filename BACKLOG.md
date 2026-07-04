@@ -57,6 +57,7 @@ Money-safety + operational rules for an autonomous run. Rules 1-2 are SAFETY-CRI
 
 ## EXECUTION ORDER (single queue)
 
+0. ⭐ **BUILDs 6 → 7 → 8** (Dashboard v2 "CEO KPI edition" → NARRATIVE.md → README v2) — HIGHEST PRIORITY, do before everything below. All free, zero API spend; do NOT run spend scripts. Sheets under TOP BUILD PRIORITIES. Commit after each build; push allowed (repo public at github.com/jsharma103/sapiom-spend-intel — verify `gh auth status` active account = jsharma103 first, else commit only).
 1. **[HUMAN-UI]** Test-mode probe — 30-sec check at app.sapiom.ai/settings: create a key, is there a Live/Test toggle? Could make every experiment below free. (The API-side verdict is already logged under API RECON below — this just closes the one unscraped gap: the settings-page create-key UI.)
 2. **[HUMAN-RUN]** Ship MVP delivery now: `git push` (personal GitHub, topics, pin) → record Loom 2-min → email Jeff + David (Tuesday night, lead with the max_tokens finding as a question). Converts what's already built into "delivered" before piling on more experiments.
 3. Cheap high-value experiments — agent builds + self-tests each script on fixtures first, Jay runs against the real API (~$0.02 each, budget guard on):
@@ -80,7 +81,7 @@ Money-safety + operational rules for an autonomous run. Rules 1-2 are SAFETY-CRI
 
 ## TOP BUILD PRIORITIES (curated build sheets — execute top-down)
 
-Interview 2026-07-08. BUILD 0 is a prereq for 2/3/4. BUILDS 1-2 = the demo pair (build before interview). BUILD 3 = [HUMAN-RUN]. 4-5 = depth/post. Each sheet: files · inputs · outputs · acceptance. Ponytail: no frameworks, smallest thing that works.
+Interview 2026-07-08. BUILD 0 is a prereq for 2/3/4. BUILDS 1-2 = the demo pair (build before interview). BUILD 3 = [HUMAN-RUN]. 4-5 = depth/post. BUILDS 6-8 = the polish pass (dashboard v2 → narrative → README v2) — all free, HIGHEST PRIORITY, execute 6 → 7 → 8 first. Each sheet: files · inputs · outputs · acceptance. Ponytail: no frameworks, smallest thing that works.
 
 ### BUILD 0 (PREREQ for builds 2,3,4) — Extend ingest.py schema.
 SDK revealed fields the findings need. Add: `transactions.trace_external_id` (from `trace.externalId`), `transactions.outcome`, a payment sub-object (either new table `payments(transaction_id, status, amount, protocol, network, authorized_at, completed_at)` or flatten onto transactions), `costs.fact_phase`, `costs.cost_details`. Keep INSERT OR REPLACE idempotency. Acceptance: re-ingest fixture + (Jay) live data, new columns populate, idempotent. Without this, cost-per-task + precise x402-tax can't compute.
@@ -100,6 +101,33 @@ Group on `trace_external_id`: path-mining (tool sequences, frequent paths via pr
 
 ### BUILD 5 ⭐ — Advisor + Reliability (free, existing data).
 `advisor.py`: per agent recommended max_tokens = p95(actual tokens)×buffer + cheaper-provider suggestion (the remedy for the float finding). `reliability.py`: success rate + p95 latency (authorized→completed) + error taxonomy per service. Outputs md. NOTE: advisor = the Spend-optimization advisor / Auto-Cap-Tuner core — build once here.
+
+### BUILD 6 ⭐⭐⭐ — DASHBOARD v2 "CEO KPI edition" [HIGHEST PRIORITY — do first].
+Goal: rebuild dashboard around 3 hero KPIs in payments-executive vocabulary (audience: ex-Shopify payments director). Cut info density — every number must land in <5 seconds. v1 problem: too much text, invented metric names.
+Files: rewrite `export_dashboard.py` (emits `dashboard_data.js`) + `dashboard.html`. MUST stay self-contained: relative `<script src="dashboard_data.js">`, no CDN, no fetch() — must work from file:// AND GitHub Pages.
+Layout:
+- Top strip — 3 HERO tiles (huge numbers, minimal text):
+  1. **TPV** (Total Payment Volume) = sum of live (non-superseded) costs. Subline: "N transactions · N agents · live spend".
+  2. **CAPTURE RATIO** = settled/held, dollar-weighted across supersession chains (currently 18.0%). Subline: "authorize $1.00 → capture $0.18".
+  3. **RECONCILIATION** = $0.000000 TIES OUT. Subline: "naive sum overstates +10% — supersession chains must be filtered, not summed".
+- Under EACH hero: one scale-hook line in accent color extrapolating to $1M/day TPV (e.g. for capture ratio: "at $1M/day TPV → $X.XM customer capital frozen daily" — COMPUTE the overhang multiple from data, don't hardcode).
+- Second row — 3 smaller tiles: (4) **AUTH→CAPTURE TIME** — settlement latency p50/p95 (data already in findings.py output). (5) **VELOCITY CHECKS** — renamed runaway-detection tile; keep flagged-agent table, max 5 rows; caption: "agent runaway = card-testing analog". (6) **TAKE RATE** — per-service markup table (Linkup +20%, etc. from service_sweep). Neutral header: "margin observability per service".
+- Any tile body >40 words: move method detail into `title=` tooltips or a single footnote line. Regenerate timestamp at build time.
+Acceptance: renders via file://; numbers match findings.md/report.md exactly; total visible words < half of v1; hero numbers readable across a room.
+
+### BUILD 7 ⭐⭐ — NARRATIVE.md (interview story, numbers from data).
+Goal: write `NARRATIVE.md` — 30-sec + 2-min story scripts with exact numbers pulled from findings.md/report.md (NO invented figures). Structure (expand this skeleton exactly):
+- 30-sec (CEO/Zerbib): (1) "put a fleet of agents on your platform and audited it like a payments ledger" (2) "reconciles penny-exact — but capture ratio is 18%: you freeze $5 to settle $1" (3) "at agent-scale TPV that's real customer capital — and the ledger doing this is petabytes/day. That's the data platform I build."
+- 2-min (CEO): expand with: TPV numbers; holds price on max_tokens (ONE sentence, no protocol jargon); the +10% naive-sum trap → why supersession-aware pipelines matter; velocity-check flag story; close: scale thesis (append-only + derive-current on BigQuery, petabyte/day) + remedy (advisor shows max_tokens right-sizing cuts holds ~79%).
+- 30-sec variant (Jordi/protocol engineer): hold-vs-settlement divergence framing + open question "do spending rules evaluate on the hold or the settlement?" — framed as invitation to reason together, not gotcha.
+- Each version: bold the ONE number to remember. Delivery notes section: which dashboard tile to point at per story beat.
+Acceptance: every number traceable to findings.md/report.md; each 30-sec ≤ 90 words; CEO versions jargon-free (short, plain sentences).
+
+### BUILD 8 ⭐ — README v2 (CEO-skimmable) [do after 6+7].
+Goal: top of README = dashboard link + 3 hero KPIs + one-line finding. Method detail moves below the fold. Line 1: live dashboard link https://jsharma103.github.io/sapiom-spend-intel/dashboard.html. Then 3 bullets: TPV, capture ratio, ties-out (same numbers as dashboard). Then the 30-sec CEO paragraph from NARRATIVE.md. Existing content stays below under "Method / Full findings".
+Acceptance: everything above the fold readable in 20 seconds.
+
+**OPERATIONS addendum for BUILDs 6–8:** all free — NO API spend, do NOT run spend scripts. After each build: commit. Push now ALLOWED (repo is public at github.com/jsharma103/sapiom-spend-intel; verify `gh auth status` shows active account jsharma103 before pushing — if a different account is active, commit only, don't push). Order: 6 → 7 → 8.
 
 ---
 
