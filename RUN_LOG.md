@@ -3,6 +3,37 @@
 Cumulative spend: $0.02789 / $2.00 cap
 Wallet start: ~$4.75 (confirmed $4.750418 pre-run via /v1/accounts)
 
+## RUN COMPLETE — summary for the morning
+
+All scoped items (HANDOFF.md items 1-5, including the "if budget/time remain" stretch goals 3-5)
+finished successfully. Stopped because all scoped work was done, not because of the spend cap or
+errors — plenty of budget headroom remained ($1.97 of the $2.00 cap unused).
+
+- **Total spent tonight: $0.02789** (images $0.003 + compute $0.00069 + 2x chaining-experiment
+  $0.0121 each). Final wallet balance: **$4.722528** (confirmed via GET /v1/accounts at the end of
+  the run). Zero errors, zero retries into paid calls, zero halts.
+- **Deliverables produced** (all committed locally, 7 commits, nothing pushed):
+  service_sweep_result.json (all 9 services now inventoried, 2 endpoint bugs fixed), extended
+  spend.duckdb schema + ingest.py (trace_external_id, cost_details), findings.md, updated report.md,
+  export_dashboard.py + dashboard.html (5-tile CEO dashboard, verified offline via headless Chrome),
+  dryrun/chaining_experiment.js + chaining_result.json (trace-stitching CONFIRMED), traces.py +
+  traces.md (trace-path mining), advisor.py + advisor.md (max_tokens right-sizing), reliability.py +
+  reliability.md (SLA + error taxonomy).
+- **Best new findings for the interview**: (1) trace-stitching across chained calls is CONFIRMED
+  real (Sapiom's find-or-create groups separate transactions under one internal traceId when they
+  share a traceExternalId) — but a documented SDK feature, the per-request `.__sapiom` Request
+  override, does NOT actually work in this SDK version (verified locally, zero cost) — a real,
+  reportable SDK bug/doc gap. (2) Hold-stacking is real under CONCURRENCY (already known, 4.4x) but
+  structurally CANNOT happen in a sequential chain — settlement completes synchronously with each
+  call's own response — a precise refinement worth stating correctly rather than conflating the two
+  risk surfaces. (3) Fleet-wide, right-sizing max_tokens per agent (advisor.py) would cut LLM hold
+  size by an estimated 79%, with the most over-provisioned agent needing a 98.6% reduction.
+- **Left for the human**: everything in BACKLOG.md tagged `[HUMAN-UI]` or `[HUMAN-RUN]` and not
+  explicitly authorized by HANDOFF.md (rule/TOCTOU experiments, git push, Loom, email) — untouched,
+  as instructed. Also worth a look: dryrun/chaining_result_run1_maxtokens60.json shows a small-
+  max_tokens LLM call skips the hold/settle chain entirely (single cost row, likely a minimum-charge
+  floor) — not chased further tonight, could be its own small finding.
+
 | time | item | status | cost | cumulative | output | notes |
 |---|---|---|---|---|---|---|
 | 2026-07-04 03:48:40 -0700 | Item 1: fix + re-run service_sweep (images, compute) | done | $0.003690 | $0.003690 | dryrun/service_sweep_result.json | TONIGHT's spend = $0.003690 only (images+compute). Fal images path was `${host}/v1/run/fal-ai/flux/schnell` (404) — probed unauthenticated (404=no route, 402=route exists=needs payment) and found correct path drops the `/v1/` prefix: `https://fal.services.sapiom.ai/run/fal-ai/flux/schnell` → 200 ($0.003). Blaxel compute host `compute.services.sapiom.ai` doesn't resolve in DNS at all (confirmed via dig/curl, not just a wrong path) — correct host is `blaxel.services.sapiom.ai` + singular path `/v1/run` (not `/v1/runs`) → 200 ($0.00069). Added `--only=svc1,svc2` flag to service_sweep.js so re-fires merge into the existing 9-service result file instead of re-spending on the 7 services that already worked from the PRIOR (pre-overnight) run: search $0.006, llm $0.0001, audio $0.001, scraping $0.009 — those are historical/already-spent, not tonight's cost. data=$0 (documented free endpoint), messaging+verify SKIPPED by design (side-effecting, real SMS/webhook). Balance $4.750418 → $4.746728 (tonight only). |
