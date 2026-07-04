@@ -339,6 +339,56 @@ def tile_take_rate(con) -> dict:
 
 
 # ---------------------------------------------------------------------------
+# BUILD 10 — Loss rate (chargeback analog, bps of TPV)
+# ---------------------------------------------------------------------------
+
+def tile_loss_rate(con) -> dict:
+    """Failed/errored transactions expressed in payments loss-rate language.
+    Full queries + method: loss_rate.md."""
+    n_txns = con.execute("SELECT COUNT(*) FROM transactions").fetchone()[0]
+    n_failed = con.execute(
+        "SELECT COUNT(*) FROM transactions WHERE outcome = 'error'"
+    ).fetchone()[0]
+    total_tpv = float(
+        con.execute("SELECT COALESCE(SUM(fiat_amount), 0) FROM costs WHERE superseded_at IS NULL")
+        .fetchone()[0]
+    )
+    failed_tpv = float(
+        con.execute("""
+            SELECT COALESCE(SUM(c.fiat_amount), 0)
+            FROM costs c JOIN transactions t ON t.id = c.transaction_id
+            WHERE t.outcome = 'error' AND c.superseded_at IS NULL
+        """).fetchone()[0]
+    )
+    n_failed_with_cost_row = con.execute("""
+        SELECT COUNT(DISTINCT t.id)
+        FROM transactions t JOIN costs c ON c.transaction_id = t.id
+        WHERE t.outcome = 'error'
+    """).fetchone()[0]
+
+    failed_pct = (n_failed / n_txns * 100) if n_txns else 0.0
+    loss_rate_pct = (failed_tpv / total_tpv * 100) if total_tpv else 0.0
+
+    return {
+        "n_txns": n_txns,
+        "n_failed": n_failed,
+        "failed_pct": failed_pct,
+        "total_tpv_usd": total_tpv,
+        "failed_tpv_usd": failed_tpv,
+        "loss_rate_pct": loss_rate_pct,
+        "loss_rate_bps": loss_rate_pct * 100,
+        "n_failed_with_cost_row": n_failed_with_cost_row,
+        "note": (
+            f"{n_failed}/{n_txns} txns failed ({failed_pct:.1f}%) but "
+            f"{n_failed_with_cost_row}/{n_failed} produced a cost row — Sapiom did not charge "
+            "for either failure in this sample (both were pre-settlement client/gateway errors, "
+            "not mid-flight failures after a hold). Loss rate = 0 bps of TPV. Full queries + "
+            "caveats: loss_rate.md."
+        ),
+    }
+
+
+# ---------------------------------------------------------------------------
 # Main
 # ---------------------------------------------------------------------------
 
@@ -368,6 +418,7 @@ def main():
         "tile_auth_to_capture": tile_auth_to_capture(con),
         "tile_velocity_checks": tile_velocity_checks(con),
         "tile_take_rate": tile_take_rate(con),
+        "tile_loss_rate": tile_loss_rate(con),
     }
     con.close()
 

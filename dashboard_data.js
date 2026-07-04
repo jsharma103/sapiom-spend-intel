@@ -1,5 +1,5 @@
 window.DASHBOARD_DATA = {
-  "generated_at": "2026-07-04T16:54:15.052222+00:00",
+  "generated_at": "2026-07-04T16:58:37.263860+00:00",
   "header": {
     "n_txns": 81,
     "n_agents": 16,
@@ -177,5 +177,16 @@ window.DASHBOARD_DATA = {
     "blended_markup_bps": 856.3627959971203,
     "n_high_rows": 4,
     "note": "9-service sweep (dryrun/service_sweep_result.json), full table + MED/DROP rows + sources in take_rate.md. Blended take rate is dollar-weighted margin / Sapiom-charged TPV across the 4 HIGH-confidence rows only (search, llm, images, audio); scraping (MED, vendor plan tier unknown) and compute (DROP, memory tier undisclosed) are excluded from this dashboard tile."
+  },
+  "tile_loss_rate": {
+    "n_txns": 81,
+    "n_failed": 2,
+    "failed_pct": 2.4691358024691357,
+    "total_tpv_usd": 0.277472,
+    "failed_tpv_usd": 0.0,
+    "loss_rate_pct": 0.0,
+    "loss_rate_bps": 0.0,
+    "n_failed_with_cost_row": 0,
+    "note": "2/81 txns failed (2.5%) but 0/2 produced a cost row \u2014 Sapiom did not charge for either failure in this sample (both were pre-settlement client/gateway errors, not mid-flight failures after a hold). Loss rate = 0 bps of TPV. Full queries + caveats: loss_rate.md."
   }
 };

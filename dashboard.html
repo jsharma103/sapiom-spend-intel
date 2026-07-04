@@ -202,6 +202,11 @@
       table.appendChild(row);
     }
     tile.appendChild(table);
+    const lr = data.tile_loss_rate || {};
+    const lossLine = el('div', 'caption',
+      `Loss rate: <b>${(lr.loss_rate_bps ?? 0).toFixed(0)} bps</b> of TPV — ${lr.n_failed ?? 0}/${lr.n_txns ?? 0} txns failed (${pct(lr.failed_pct)}), ${lr.n_failed_with_cost_row ?? 0}/${lr.n_failed ?? 0} charged. Detail: loss_rate.md.`);
+    lossLine.title = lr.note || '';
+    tile.appendChild(lossLine);
     grid.appendChild(tile);
   })();
 
