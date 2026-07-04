@@ -103,8 +103,19 @@ def extract_balance(accounts_payload: dict) -> str:
 
 
 def normalize_transaction(txn: dict) -> tuple:
-    """Returns (transaction_row_tuple, [cost_row_tuples])."""
+    """Returns (transaction_row_tuple, [cost_row_tuples]).
+
+    BUILD 0 (2026-07-04): added trace_external_id (from trace.externalId) and
+    costs.cost_details (JSON blob). Field availability was probed live against
+    GET /v1/transactions before adding: trace.externalId, outcome (top-level),
+    costs[].isEstimate/supersededAt/supersedesCostId/costDetails all confirmed
+    present. No top-level `payment` sub-object and no `factPhase` field exist
+    anywhere in the live data (checked both a single-cost and a 2-cost/
+    superseded transaction) — those two were deliberately NOT added. See
+    BACKLOG.md BUILD 0 for the full verification note.
+    """
     agent = txn.get("agent") or {}
+    trace = txn.get("trace") or {}
     txn_row = (
         txn["id"],
         txn.get("serviceName"),
@@ -114,6 +125,7 @@ def normalize_transaction(txn: dict) -> tuple:
         txn.get("agentId"),
         agent.get("name"),
         txn.get("traceId"),
+        trace.get("externalId"),
         txn.get("createdAt"),
         txn.get("authorizedAt"),
         txn.get("completedAt"),
@@ -121,6 +133,7 @@ def normalize_transaction(txn: dict) -> tuple:
     )
     cost_rows = []
     for c in txn.get("costs", []) or []:
+        cost_details = c.get("costDetails")
         cost_rows.append((
             c["id"],
             c["transactionId"],
@@ -130,6 +143,7 @@ def normalize_transaction(txn: dict) -> tuple:
             c.get("supersedesCostId"),
             c.get("supersededAt"),
             c.get("createdAt"),
+            json.dumps(cost_details) if cost_details is not None else None,
         ))
     return txn_row, cost_rows
 
@@ -145,6 +159,7 @@ def init_schema(con) -> None:
             agent_id VARCHAR,
             agent_name VARCHAR,
             trace_id VARCHAR,
+            trace_external_id VARCHAR,
             created_at TIMESTAMP,
             authorized_at TIMESTAMP,
             completed_at TIMESTAMP,
@@ -160,7 +175,8 @@ def init_schema(con) -> None:
             is_active BOOLEAN,
             supersedes_cost_id VARCHAR,
             superseded_at TIMESTAMP,
-            created_at TIMESTAMP
+            created_at TIMESTAMP,
+            cost_details JSON
         )
     """)
     con.execute("""
@@ -170,6 +186,12 @@ def init_schema(con) -> None:
             raw JSON
         )
     """)
+    # BUILD 0 migration: CREATE TABLE IF NOT EXISTS above is a no-op against
+    # an already-existing spend.duckdb from before this schema change, so
+    # add the two new columns explicitly (idempotent — IF NOT EXISTS guards
+    # re-running against an already-migrated db).
+    con.execute("ALTER TABLE transactions ADD COLUMN IF NOT EXISTS trace_external_id VARCHAR")
+    con.execute("ALTER TABLE costs ADD COLUMN IF NOT EXISTS cost_details JSON")
 
 
 def run_dq_checks(txn_rows: list, cost_rows: list) -> None:
@@ -226,12 +248,24 @@ def main():
     con = duckdb.connect(args.db)
     init_schema(con)
 
+    # Named columns (not positional VALUES) — required because ALTER TABLE
+    # ADD COLUMN (in init_schema, for pre-existing dbs migrating to this
+    # schema) always appends new columns at the physical end of the table,
+    # which no longer matches the CREATE TABLE-only column order used below.
+    # Naming columns explicitly makes the insert order-independent of the
+    # table's actual physical column layout.
     con.executemany(
-        "INSERT OR REPLACE INTO transactions VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+        """INSERT OR REPLACE INTO transactions
+           (id, service_name, action_name, status, outcome, agent_id, agent_name,
+            trace_id, trace_external_id, created_at, authorized_at, completed_at, raw)
+           VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)""",
         txn_rows,
     )
     con.executemany(
-        "INSERT OR REPLACE INTO costs VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
+        """INSERT OR REPLACE INTO costs
+           (id, transaction_id, fiat_amount, is_estimate, is_active,
+            supersedes_cost_id, superseded_at, created_at, cost_details)
+           VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)""",
         cost_rows,
     )
     fetched_at = datetime.now(timezone.utc).isoformat()
