@@ -1,5 +1,5 @@
 window.DASHBOARD_DATA = {
-  "generated_at": "2026-07-04T16:30:53.740505+00:00",
+  "generated_at": "2026-07-04T16:54:15.052222+00:00",
   "header": {
     "n_txns": 81,
     "n_agents": 16,
@@ -133,20 +133,49 @@ window.DASHBOARD_DATA = {
     ]
   },
   "tile_take_rate": {
-    "linkup": {
-      "service_label": "Linkup search",
-      "sapiom_price_usd": 0.006,
-      "public_price_usd": 0.005,
-      "markup_pct": 20.0,
-      "n_calls": 43
-    },
-    "openrouter": {
-      "service_label": "OpenRouter LLM (gpt-4o-mini, settled avg)",
-      "sapiom_price_usd": 0.00018651612903225806,
-      "public_price_usd": null,
-      "markup_pct": null,
-      "n_calls": 31
-    },
-    "note": "Linkup is flat per-call both sides (apples-to-apples): Sapiom $0.006 vs public $0.005 -> +20%. OpenRouter has no clean per-call comparison (no token-usage field in this ledger to price against OpenRouter's public per-token rate) \u2014 shown for reference, markup n/a."
+    "rows": [
+      {
+        "service": "search",
+        "provider": "Linkup",
+        "operation": "1 query, standard depth, sourcedAnswer",
+        "sapiom_price_usd": 0.006,
+        "public_price_usd": 0.006,
+        "markup_pct": 0.0,
+        "confidence": "HIGH"
+      },
+      {
+        "service": "llm",
+        "provider": "OpenRouter (gpt-4o-mini)",
+        "operation": "14 prompt + 2 completion tokens",
+        "sapiom_price_usd": 0.0001,
+        "public_price_usd": 3.2999999999999997e-06,
+        "markup_pct": 2930.303030303031,
+        "confidence": "HIGH"
+      },
+      {
+        "service": "images",
+        "provider": "Fal.ai (flux/schnell)",
+        "operation": "1 image, 512x512 (1MP billed)",
+        "sapiom_price_usd": 0.003,
+        "public_price_usd": 0.003,
+        "markup_pct": 0.0,
+        "confidence": "HIGH"
+      },
+      {
+        "service": "audio",
+        "provider": "ElevenLabs (multilingual v2)",
+        "operation": "text-to-speech, 3 characters",
+        "sapiom_price_usd": 0.001,
+        "public_price_usd": 0.00030000000000000003,
+        "markup_pct": 233.33333333333331,
+        "confidence": "HIGH"
+      }
+    ],
+    "blended_take_rate_pct": 7.888118811881196,
+    "blended_take_rate_bps": 788.8118811881195,
+    "blended_markup_pct": 8.563627959971203,
+    "blended_markup_bps": 856.3627959971203,
+    "n_high_rows": 4,
+    "note": "9-service sweep (dryrun/service_sweep_result.json), full table + MED/DROP rows + sources in take_rate.md. Blended take rate is dollar-weighted margin / Sapiom-charged TPV across the 4 HIGH-confidence rows only (search, llm, images, audio); scraping (MED, vendor plan tier unknown) and compute (DROP, memory tier undisclosed) are excluded from this dashboard tile."
   }
 };

@@ -57,7 +57,7 @@ Money-safety + operational rules for an autonomous run. Rules 1-2 are SAFETY-CRI
 
 ## EXECUTION ORDER (single queue)
 
-0. ⭐ **BUILDs 6 → 7 → 8** (Dashboard v2 "CEO KPI edition" → NARRATIVE.md → README v2) — HIGHEST PRIORITY, do before everything below. All free, zero API spend; do NOT run spend scripts. Sheets under TOP BUILD PRIORITIES. Commit after each build; push allowed (repo public at github.com/jsharma103/sapiom-spend-intel — verify `gh auth status` active account = jsharma103 first, else commit only).
+0. ⭐ **BUILDs 6 → 7 → 8 → 9 → 10 → 11 → 12 (ONLY after 9-11 complete — touches same dashboard files)** (Dashboard v2 → NARRATIVE.md → README v2 → take-rate → loss-rate → auth-rate → dashboard v3) — HIGHEST PRIORITY, do before everything below. All free, zero API spend; do NOT run spend scripts. Sheets under TOP BUILD PRIORITIES. Commit after each build; push allowed (repo public at github.com/jsharma103/sapiom-spend-intel — verify `gh auth status` active account = jsharma103 first, else commit only).
 1. **[HUMAN-UI]** Test-mode probe — 30-sec check at app.sapiom.ai/settings: create a key, is there a Live/Test toggle? Could make every experiment below free. (The API-side verdict is already logged under API RECON below — this just closes the one unscraped gap: the settings-page create-key UI.)
 2. **[HUMAN-RUN]** Ship MVP delivery now: `git push` (personal GitHub, topics, pin) → record Loom 2-min → email Jeff + David (Tuesday night, lead with the max_tokens finding as a question). Converts what's already built into "delivered" before piling on more experiments.
 3. Cheap high-value experiments — agent builds + self-tests each script on fixtures first, Jay runs against the real API (~$0.02 each, budget guard on):
@@ -81,7 +81,7 @@ Money-safety + operational rules for an autonomous run. Rules 1-2 are SAFETY-CRI
 
 ## TOP BUILD PRIORITIES (curated build sheets — execute top-down)
 
-Interview 2026-07-08. BUILD 0 is a prereq for 2/3/4. BUILDS 1-2 = the demo pair (build before interview). BUILD 3 = [HUMAN-RUN]. 4-5 = depth/post. BUILDS 6-8 = the polish pass (dashboard v2 → narrative → README v2) — all free, HIGHEST PRIORITY, execute 6 → 7 → 8 first. Each sheet: files · inputs · outputs · acceptance. Ponytail: no frameworks, smallest thing that works.
+Interview 2026-07-08. BUILD 0 is a prereq for 2/3/4. BUILDS 1-2 = the demo pair (build before interview). BUILD 3 = [HUMAN-RUN]. 4-5 = depth/post. BUILDS 6-8 = the polish pass (dashboard v2 → narrative → README v2) — all free, HIGHEST PRIORITY, execute 6 → 7 → 8 first. BUILDS 9-11 = payment-exec metrics (take-rate → loss-rate → auth-rate) — all free, execute 9 → 10 → 11 after 6-8. Each sheet: files · inputs · outputs · acceptance. Ponytail: no frameworks, smallest thing that works.
 
 ### BUILD 0 (PREREQ for builds 2,3,4) — Extend ingest.py schema.
 SDK revealed fields the findings need. Add: `transactions.trace_external_id` (from `trace.externalId`), `transactions.outcome`, a payment sub-object (either new table `payments(transaction_id, status, amount, protocol, network, authorized_at, completed_at)` or flatten onto transactions), `costs.fact_phase`, `costs.cost_details`. Keep INSERT OR REPLACE idempotency. Acceptance: re-ingest fixture + (Jay) live data, new columns populate, idempotent. Without this, cost-per-task + precise x402-tax can't compute.
@@ -128,6 +128,43 @@ Goal: top of README = dashboard link + 3 hero KPIs + one-line finding. Method de
 Acceptance: everything above the fold readable in 20 seconds.
 
 **OPERATIONS addendum for BUILDs 6–8:** all free — NO API spend, do NOT run spend scripts. After each build: commit. Push now ALLOWED (repo is public at github.com/jsharma103/sapiom-spend-intel; verify `gh auth status` shows active account jsharma103 before pushing — if a different account is active, commit only, don't push). Order: 6 → 7 → 8.
+
+### BUILD 9 ⭐⭐⭐ — TAKE RATE full table (9 services, "his-world KPI #1")
+**Goal:** current take-rate table has only 2 comparators (Linkup, OpenRouter). Expand to all 9 swept services → blended take rate. Payments-exec framing (Adyen-style blended bps).
+**Input:** `dryrun/service_sweep_result.json` (real charged amounts per service), sapiom.ai published pricing page, each underlying vendor's public pricing (web research — free).
+**Method:** for each service: identify underlying vendor + EXACT operation performed (model, size, depth, duration); find vendor public list price for that exact operation; markup % = (sapiom_charged − vendor_public)/vendor_public. Assign confidence per row: HIGH (exact operation match), MED (close match — note the difference), DROP (can't match cleanly — EXCLUDE from dashboard, list in appendix; do not fudge apples-to-oranges rows).
+**Output:** `take_rate.md` — table (service, operation, Sapiom charged, vendor public, markup %, confidence, source URL) + **blended take rate** dollar-weighted across HIGH-confidence rows, expressed as % and bps. Then update the dashboard take-rate tile: HIGH rows only + blended number.
+**Acceptance:** every row has a source URL; blended number reproducible from table; dashboard tile matches take_rate.md.
+
+### BUILD 10 ⭐⭐ — LOSS RATE (chargeback analog, bps)
+**Goal:** express failures in payments language — "loss rate in bps of TPV".
+**Input:** `spend.duckdb` + reliability.md data. Free, read-only.
+**Method:** failed/errored transactions as % of txn count AND dollar-weighted bps of TPV ($ on failed calls / total live TPV). KEY question: were failures charged or auto-refunded? Inspect cost rows on failed txns — did a settlement occur? "Does Sapiom charge for failures" is the interesting finding either way.
+**Output:** `loss_rate.md` + one line/mini-tile on dashboard. If sample has 0 failures, report honestly: "0 failures in N=81 sample" — still a number.
+**Acceptance:** numbers reproducible from duckdb queries shown in the file.
+
+### BUILD 11 ⭐ — AUTH RATE (governance approval rate)
+**Goal:** payments auth-rate analog = % of agent transactions approved vs denied by governance.
+**Input:** `spend.duckdb` `outcome` column (ingested in BUILD 0). Free, read-only.
+**Method:** outcome distribution; auth rate = approved/(approved+denied). EXPECTED: ~100% since no spending rules were active in the sample — report honestly with caveat: "no governance rules active; metric becomes meaningful once rules deny transactions" + note the [HUMAN-UI] rule experiment (already in backlog) would populate it for real.
+**Output:** auth-rate section appended to `findings.md`; optional dashboard footnote.
+**Acceptance:** distribution table shown; caveat present.
+
+### BUILD 12 ⭐⭐⭐ — DASHBOARD v3: two-section restructure (agent-native KPI definitions)
+**PRECONDITION:** BUILDs 9-11 must be complete (this edits the same dashboard files).
+**Goal:** restructure dashboard.html into TWO labeled sections. Section 1 = credibility (metrics a payments exec already knows, measured on Sapiom). Section 2 = the category-defining move (KPIs agent payments needs but nobody has defined — named after the CEO's own public vocabulary: "bounded, visible, recoverable" failures + "KYA / Know Your Agent", sources: his ComputerWeekly + Unite.AI interviews).
+**Section 1 — "Payments KPIs — measured on Sapiom":** existing hero strip (TPV, Capture Ratio, Reconciliation) + second row (Auth→Capture Time, Velocity Checks, Take Rate incl. BUILD 9 blended rate) + BUILD 10 loss-rate + BUILD 11 auth-rate. Reorganize/retitle only — numbers unchanged.
+**Section 2 — "Agent-native KPIs — proposed definitions":** grouped under three subheaders BOUNDED / VISIBLE / RECOVERABLE:
+- BOUNDED: **Capital Overhang Ratio** = held$/settled$ (currently 5.5× dollar-weighted — same data as capture ratio, inverse framing). Greyed placeholder tiles (visibly "needs governance rules active" — honest roadmap, do NOT fake numbers): **Blast Radius $** (max spend before caps stop an agent), **Cap Utilization** (spend/budget per agent).
+- VISIBLE: **Attribution Completeness** = % of txns with full context chain agent→trace→service→result (compute from duckdb: fraction of txns having agentName + traceId + service + outcome all non-null; use trace-mining data). **Phantom Spend Rate** = naive-sum overstatement vs live spend (the +10% — measures how wrong a supersession-naive pipeline reads the ledger).
+- RECOVERABLE: **Hold-Release Latency** p50/p95 (auth→capture recast as capital-freed metric). **Refund-on-Failure Rate** = % failed calls with hold fully released (number comes from BUILD 10's loss_rate.md analysis).
+- **KYA Scorecard** (full-width table closing section 2): one row per agent — spend, calls, velocity (median inter-call gap), peak calls/60s, anomaly flag → composite risk grade A-F (simple transparent formula, show it in tooltip). Data already in dashboard_data/traces/reliability outputs; assemble, don't recompute.
+**Every Section-2 KPI tile:** one-line DEFINITION under the number (definitions are the product here). Method detail in title= tooltips.
+**Also:** update NARRATIVE.md delivery notes with one new beat: after showing Section 1, pivot line — "these are your world's metrics; here's what I think agent payments actually needs to measure" → point at Section 2 headers, close on KYA scorecard.
+**Acceptance:** two clearly labeled sections; all Section-2 numbers reproducible from existing data files; greyed placeholders visually distinct (no fake numbers); dashboard stays fully self-contained (relative script src, no CDN/fetch); still renders via file://; word budget — tile bodies ≤ 25 words.
+**Ops:** free, zero API spend. Commit; push allowed (verify gh auth active account = jsharma103 first).
+
+**OPERATIONS addendum for BUILDs 9–11:** ZERO API spend — no spend scripts; BUILD 9 uses web research + existing JSON only. After each build: commit; push allowed (verify `gh auth status` active account = jsharma103 first — else commit only). Order: 9 → 10 → 11.
 
 ---
 

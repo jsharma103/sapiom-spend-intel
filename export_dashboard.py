@@ -45,6 +45,19 @@ LINKUP_PUBLIC_PRICE_USD = 0.005
 OPENROUTER_PUBLIC_INPUT_PER_1K = 0.00015
 OPENROUTER_PUBLIC_OUTPUT_PER_1K = 0.00060
 
+# BUILD 9 — full 9-service take-rate table. Vendor public prices WebSearched 2026-07-04,
+# full method/sources/confidence grading in take_rate.md. Only HIGH-confidence rows (exact
+# operation match, no vendor plan-tier ambiguity) feed the dashboard + blended number:
+LINKUP_SOURCED_ANSWER_PREMIUM_USD = 0.001  # docs.linkup.so: sourcedAnswer/structured add $1/1k over standard-depth
+FAL_FLUX_SCHNELL_PER_MP_USD = 0.003  # fal.ai/models/fal-ai/flux/schnell, billed rounded up to nearest megapixel
+ELEVENLABS_PER_CHAR_USD = 0.0001  # elevenlabs.io/pricing/api: $0.10 / 1,000 chars, multilingual v2
+# OpenRouter sweep-call exact usage (14 prompt + 2 completion tokens) — read from the sweep
+# response's usage block; hardcoded here because service_sweep_result.json truncates
+# responseSample mid-string so it isn't valid re-parseable JSON (see take_rate.md).
+OPENROUTER_SWEEP_PROMPT_TOKENS = 14
+OPENROUTER_SWEEP_COMPLETION_TOKENS = 2
+SWEEP_RESULT_PATH = HERE / "dryrun" / "service_sweep_result.json"
+
 SCALE_TARGET_DAILY_TPV = 1_000_000  # the "$1M/day TPV" scale-hook, per BACKLOG BUILD 6
 
 
@@ -240,45 +253,87 @@ def tile_velocity_checks(con) -> dict:
 # ---------------------------------------------------------------------------
 
 def tile_take_rate(con) -> dict:
-    linkup = con.execute("""
-        SELECT AVG(c.fiat_amount), COUNT(*)
-        FROM costs c JOIN transactions t ON t.id = c.transaction_id
-        WHERE t.service_name = 'sapiom_linkup' AND c.superseded_at IS NULL
-    """).fetchone()
-    linkup_avg, linkup_n = linkup
-    linkup_avg = float(linkup_avg) if linkup_avg is not None else None
-    linkup_markup_pct = (
-        (linkup_avg - LINKUP_PUBLIC_PRICE_USD) / LINKUP_PUBLIC_PRICE_USD * 100
-        if linkup_avg else None
+    """BUILD 9 — take-rate table sourced from the 9-service sweep
+    (dryrun/service_sweep_result.json), not from spend.duckdb: the sweep is the only place
+    all 9 services were exercised with a known request shape to price against vendor public
+    rates. Full 9-row table + confidence grading + sources: take_rate.md. Only the 4
+    HIGH-confidence rows (search, llm, images, audio) are dollar-weighted into the blended
+    number shown on the dashboard; MED (scraping — vendor plan tier unknown) and DROP
+    (compute — memory tier undisclosed) are take_rate.md-only, not on the dashboard.
+    """
+    with open(SWEEP_RESULT_PATH) as f:
+        sweep = {r["service"]: r for r in json.load(f)["results"]}
+
+    def markup_pct(charged, public):
+        return (charged - public) / public * 100
+
+    linkup = sweep["search"]
+    linkup_charged = linkup["actualCostUsd"]
+    linkup_public = LINKUP_PUBLIC_PRICE_USD + LINKUP_SOURCED_ANSWER_PREMIUM_USD
+
+    llm = sweep["llm"]
+    llm_charged = llm["actualCostUsd"]
+    llm_public = (
+        OPENROUTER_SWEEP_PROMPT_TOKENS / 1000 * OPENROUTER_PUBLIC_INPUT_PER_1K
+        + OPENROUTER_SWEEP_COMPLETION_TOKENS / 1000 * OPENROUTER_PUBLIC_OUTPUT_PER_1K
     )
 
-    llm = con.execute("""
-        SELECT AVG(c.fiat_amount), COUNT(*)
-        FROM costs c JOIN transactions t ON t.id = c.transaction_id
-        WHERE t.service_name = 'sapiom_openrouter' AND c.superseded_at IS NULL
-    """).fetchone()
-    llm_avg, llm_n = llm
-    llm_avg = float(llm_avg) if llm_avg is not None else None
+    images = sweep["images"]
+    images_charged = images["actualCostUsd"]
+    images_public = FAL_FLUX_SCHNELL_PER_MP_USD  # 512x512 = 0.262MP, rounds up to 1MP billed
+
+    audio = sweep["audio"]
+    audio_charged = audio["actualCostUsd"]
+    audio_chars = len(audio["requestBody"]["text"])
+    audio_public = audio_chars * ELEVENLABS_PER_CHAR_USD
+
+    rows = [
+        {
+            "service": "search", "provider": "Linkup",
+            "operation": "1 query, standard depth, sourcedAnswer",
+            "sapiom_price_usd": linkup_charged, "public_price_usd": linkup_public,
+            "markup_pct": markup_pct(linkup_charged, linkup_public), "confidence": "HIGH",
+        },
+        {
+            "service": "llm", "provider": "OpenRouter (gpt-4o-mini)",
+            "operation": "14 prompt + 2 completion tokens",
+            "sapiom_price_usd": llm_charged, "public_price_usd": llm_public,
+            "markup_pct": markup_pct(llm_charged, llm_public), "confidence": "HIGH",
+        },
+        {
+            "service": "images", "provider": "Fal.ai (flux/schnell)",
+            "operation": "1 image, 512x512 (1MP billed)",
+            "sapiom_price_usd": images_charged, "public_price_usd": images_public,
+            "markup_pct": markup_pct(images_charged, images_public), "confidence": "HIGH",
+        },
+        {
+            "service": "audio", "provider": "ElevenLabs (multilingual v2)",
+            "operation": f"text-to-speech, {audio_chars} characters",
+            "sapiom_price_usd": audio_charged, "public_price_usd": audio_public,
+            "markup_pct": markup_pct(audio_charged, audio_public), "confidence": "HIGH",
+        },
+    ]
+
+    high_rows = [r for r in rows if r["confidence"] == "HIGH"]
+    sum_charged = sum(r["sapiom_price_usd"] for r in high_rows)
+    sum_public = sum(r["public_price_usd"] for r in high_rows)
+    margin = sum_charged - sum_public
+    blended_take_rate_pct = margin / sum_charged * 100  # margin / TPV, Adyen-style take rate
+    blended_markup_pct = margin / sum_public * 100  # margin / vendor cost, supporting figure
 
     return {
-        "linkup": {
-            "service_label": "Linkup search",
-            "sapiom_price_usd": linkup_avg,
-            "public_price_usd": LINKUP_PUBLIC_PRICE_USD,
-            "markup_pct": linkup_markup_pct,
-            "n_calls": linkup_n,
-        },
-        "openrouter": {
-            "service_label": "OpenRouter LLM (gpt-4o-mini, settled avg)",
-            "sapiom_price_usd": llm_avg,
-            "public_price_usd": None,
-            "markup_pct": None,
-            "n_calls": llm_n,
-        },
+        "rows": rows,
+        "blended_take_rate_pct": blended_take_rate_pct,
+        "blended_take_rate_bps": blended_take_rate_pct * 100,
+        "blended_markup_pct": blended_markup_pct,
+        "blended_markup_bps": blended_markup_pct * 100,
+        "n_high_rows": len(high_rows),
         "note": (
-            "Linkup is flat per-call both sides (apples-to-apples): Sapiom $0.006 vs public $0.005 -> +20%. "
-            "OpenRouter has no clean per-call comparison (no token-usage field in this ledger to price against "
-            "OpenRouter's public per-token rate) — shown for reference, markup n/a."
+            "9-service sweep (dryrun/service_sweep_result.json), full table + MED/DROP rows "
+            "+ sources in take_rate.md. Blended take rate is dollar-weighted margin / Sapiom-"
+            "charged TPV across the 4 HIGH-confidence rows only (search, llm, images, audio); "
+            "scraping (MED, vendor plan tier unknown) and compute (DROP, memory tier "
+            "undisclosed) are excluded from this dashboard tile."
         ),
     }
 

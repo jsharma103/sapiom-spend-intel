@@ -235,18 +235,18 @@
     const header = el('h2', null, 'Take Rate');
     header.title = t.note || '';
     tile.appendChild(header);
-    const sub = el('div', 'subline', 'margin observability per service');
+    const sub = el('div', 'subline', 'margin observability per service — full table: take_rate.md');
     sub.title = t.note || '';
     tile.appendChild(sub);
     const table = el('table');
-    const lk = t.linkup || {};
-    const or_ = t.openrouter || {};
-    table.innerHTML = `
-      <tr><th>Service</th><th>Sapiom</th><th>Public</th><th>Markup</th></tr>
-      <tr><td>${lk.service_label || 'Linkup search'}</td><td>${usd(lk.sapiom_price_usd)}/call</td><td>${usd(lk.public_price_usd)}/call</td><td>${pct(lk.markup_pct)}</td></tr>
-      <tr><td>OpenRouter LLM</td><td>${usd(or_.sapiom_price_usd)}/call</td><td>n/a</td><td>n/a</td></tr>
-    `;
+    const rows = t.rows || [];
+    table.innerHTML = '<tr><th>Service</th><th>Sapiom</th><th>Public</th><th>Markup</th></tr>' +
+      rows.map((r) => `<tr><td>${r.provider}</td><td>${usd(r.sapiom_price_usd)}</td><td>${usd(r.public_price_usd)}</td><td>${pct(r.markup_pct)}</td></tr>`).join('');
     tile.appendChild(table);
+    const blended = el('div', 'scale-note blue',
+      `Blended take rate: <b>${pct(t.blended_take_rate_pct)}</b> (${(t.blended_take_rate_bps ?? 0).toFixed(0)} bps) of settled TPV, dollar-weighted across ${t.n_high_rows ?? 4} HIGH-confidence rows.`);
+    blended.title = t.note || '';
+    tile.appendChild(blended);
     grid.appendChild(tile);
   })();
 
