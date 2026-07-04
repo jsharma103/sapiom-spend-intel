@@ -1,8 +1,23 @@
 # Sapiom Ledger Audit
 
-A reconciliation audit over Sapiom's agent-spend ledger — built on the live API, with real agents spending real money.
+▶ **[Live dashboard](https://jsharma103.github.io/sapiom-spend-intel/dashboard.html)** · [2-min demo](LOOM_LINK_TBD)
 
-▶ [2-min demo](LOOM_LINK_TBD)
+- **TPV:** $0.277472 across 81 transactions / 16 agents — one evening, live Sapiom API, real money.
+- **Capture ratio:** 18% — authorize $1.00 → capture $0.18.
+- **Reconciliation:** $0.000000 diff — ties out to the penny.
+
+I put a fleet of agents on Sapiom and audited it like a payments ledger. It reconciles penny-exact
+— $0.000000 diff on real spend — but the **capture ratio is 18%: you freeze $5 to settle $1**. At
+agent-scale transaction volume that's real customer capital sitting frozen, not spent, and the
+ledger that has to track it honestly runs at petabytes a day. That's the data platform I build.
+
+*(Full story + delivery notes: [`NARRATIVE.md`](./NARRATIVE.md). Full numbers: [`report.md`](./report.md) / [`findings.md`](./findings.md).)*
+
+---
+
+## Method / Full findings
+
+A reconciliation audit over Sapiom's agent-spend ledger — built on the live API, with real agents spending real money.
 
 ## Why
 
