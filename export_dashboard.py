@@ -19,7 +19,6 @@ executive vocabulary, audience = ex-Shopify payments director):
   SECOND ROW
     4. AUTH -> CAPTURE TIME - settlement latency p50/p95 (findings.py reuse)
     5. VELOCITY CHECKS      - renamed runaway-detector (findings.py reuse)
-    6. TAKE RATE            - per-service markup vs public list price
 
 BUILD 12 adds a second dashboard section, "Agent-native KPIs — proposed
 definitions" (BOUNDED / VISIBLE / RECOVERABLE), assembled entirely from data
@@ -43,28 +42,6 @@ import duckdb
 HERE = Path(__file__).resolve().parent
 DEFAULT_DB = str(HERE / "spend.duckdb")
 DEFAULT_OUT = str(HERE / "dashboard_data.json")
-
-# Public provider prices, WebSearched 2026-07-04 (see RUN_LOG.md for the queries/sources):
-#   OpenRouter gpt-4o-mini: $0.15 / 1M input tokens, $0.60 / 1M output tokens
-#     (https://openrouter.ai/openai/gpt-4o-mini)
-#   Linkup standard-depth search: ~$0.005/call (EUR5 per 1,000 standard queries)
-#     (https://docs.linkup.so/pages/documentation/platform/pricing)
-LINKUP_PUBLIC_PRICE_USD = 0.005
-OPENROUTER_PUBLIC_INPUT_PER_1K = 0.00015
-OPENROUTER_PUBLIC_OUTPUT_PER_1K = 0.00060
-
-# BUILD 9 — full 9-service take-rate table. Vendor public prices WebSearched 2026-07-04,
-# full method/sources/confidence grading in take_rate.md. Only HIGH-confidence rows (exact
-# operation match, no vendor plan-tier ambiguity) feed the dashboard + blended number:
-LINKUP_SOURCED_ANSWER_PREMIUM_USD = 0.001  # docs.linkup.so: sourcedAnswer/structured add $1/1k over standard-depth
-FAL_FLUX_SCHNELL_PER_MP_USD = 0.003  # fal.ai/models/fal-ai/flux/schnell, billed rounded up to nearest megapixel
-ELEVENLABS_PER_CHAR_USD = 0.0001  # elevenlabs.io/pricing/api: $0.10 / 1,000 chars, multilingual v2
-# OpenRouter sweep-call exact usage (14 prompt + 2 completion tokens) — read from the sweep
-# response's usage block; hardcoded here because service_sweep_result.json truncates
-# responseSample mid-string so it isn't valid re-parseable JSON (see take_rate.md).
-OPENROUTER_SWEEP_PROMPT_TOKENS = 14
-OPENROUTER_SWEEP_COMPLETION_TOKENS = 2
-SWEEP_RESULT_PATH = HERE / "dryrun" / "service_sweep_result.json"
 
 SCALE_TARGET_DAILY_TPV = 1_000_000  # the "$1M/day TPV" scale-hook, per BACKLOG BUILD 6
 
@@ -348,174 +325,6 @@ def tile_velocity_checks(con) -> dict:
     return {
         "flagged": result["flagged"],
         "per_agent": per_agent[:5],
-    }
-
-
-# ---------------------------------------------------------------------------
-# Tile 6 — Take rate / margin (per-service markup vs public list price)
-# ---------------------------------------------------------------------------
-
-def tile_take_rate(con) -> dict:
-    """BUILD 9 — take-rate table sourced from the 9-service sweep
-    (dryrun/service_sweep_result.json), not from spend.duckdb: the sweep is the only place
-    all 9 services were exercised with a known request shape to price against vendor public
-    rates. Full 9-row table + confidence grading + sources: take_rate.md. Only the 4
-    HIGH-confidence rows (search, llm, images, audio) are dollar-weighted into the blended
-    number shown on the dashboard; MED (scraping — vendor plan tier unknown) and DROP
-    (compute — memory tier undisclosed) are take_rate.md-only, not on the dashboard.
-
-    Adversarial-audit fix (round 2): the sweep is N=1 per service, but the search/Linkup
-    row can be corroborated directly against every historical Linkup transaction in the
-    ledger (spend.duckdb), not just the one sweep call — query it live here rather than
-    hardcoding a count. Also: floor-artifact rows (llm, audio) no longer surface a raw
-    percentage as the headline cell text (e.g. "+2,930.3%", "+233.3%") — a bare percentage
-    next to a real 0%-markup row reads as a comparable take rate, which it is not. The raw
-    number is kept in `markup_pct` for the record/tooltip/take_rate.md, but the rendered
-    cell text is qualitative ("flat sub-cent settle").
-    """
-    with open(SWEEP_RESULT_PATH) as f:
-        sweep = {r["service"]: r for r in json.load(f)["results"]}
-
-    def markup_pct(charged, public):
-        return (charged - public) / public * 100
-
-    # Ledger corroboration for the search/Linkup row: every sapiom_linkup transaction's
-    # single active cost row, not just the N=1 sweep call. Read-only query, spend.duckdb.
-    linkup_ledger_rows = con.execute(
-        """
-        SELECT c.fiat_amount, count(*) AS n
-        FROM transactions t
-        JOIN costs c ON c.transaction_id = t.id
-        WHERE t.service_name = 'sapiom_linkup' AND c.is_active = true
-        GROUP BY c.fiat_amount
-        """
-    ).fetchall()
-    linkup_ledger_n = sum(n for _, n in linkup_ledger_rows)
-    linkup_ledger_all_identical = len(linkup_ledger_rows) == 1
-
-    linkup = sweep["search"]
-    linkup_charged = linkup["actualCostUsd"]
-    linkup_public = LINKUP_PUBLIC_PRICE_USD + LINKUP_SOURCED_ANSWER_PREMIUM_USD
-
-    llm = sweep["llm"]
-    llm_charged = llm["actualCostUsd"]
-    llm_public = (
-        OPENROUTER_SWEEP_PROMPT_TOKENS / 1000 * OPENROUTER_PUBLIC_INPUT_PER_1K
-        + OPENROUTER_SWEEP_COMPLETION_TOKENS / 1000 * OPENROUTER_PUBLIC_OUTPUT_PER_1K
-    )
-
-    images = sweep["images"]
-    images_charged = images["actualCostUsd"]
-    images_public = FAL_FLUX_SCHNELL_PER_MP_USD  # 512x512 = 0.262MP, rounds up to 1MP billed
-
-    audio = sweep["audio"]
-    audio_charged = audio["actualCostUsd"]
-    audio_chars = len(audio["requestBody"]["text"])
-    audio_public = audio_chars * ELEVENLABS_PER_CHAR_USD
-
-    rows = [
-        {
-            "service": "search", "provider": "Linkup",
-            "operation": "1 query, standard depth, sourcedAnswer",
-            "sapiom_price_usd": linkup_charged, "public_price_usd": linkup_public,
-            "markup_pct": markup_pct(linkup_charged, linkup_public), "confidence": "HIGH",
-            "ledger_n": linkup_ledger_n,
-            "ledger_all_identical": linkup_ledger_all_identical,
-        },
-        {
-            "service": "llm", "provider": "OpenRouter (gpt-4o-mini)",
-            "operation": "14 prompt + 2 completion tokens",
-            "sapiom_price_usd": llm_charged, "public_price_usd": llm_public,
-            "markup_pct": markup_pct(llm_charged, llm_public), "confidence": "HIGH",
-        },
-        {
-            "service": "images", "provider": "Fal.ai (flux/schnell)",
-            "operation": "1 image, 512x512 (1MP billed)",
-            "sapiom_price_usd": images_charged, "public_price_usd": images_public,
-            "markup_pct": markup_pct(images_charged, images_public), "confidence": "HIGH",
-        },
-        {
-            "service": "audio", "provider": "ElevenLabs (multilingual v2)",
-            "operation": f"text-to-speech, {audio_chars} characters",
-            "sapiom_price_usd": audio_charged, "public_price_usd": audio_public,
-            "markup_pct": markup_pct(audio_charged, audio_public), "confidence": "HIGH",
-        },
-    ]
-
-    # Adversarial-audit fix: known-floor-artifact services (per-call minimum-billing
-    # floor, not a real percentage markup — see take_rate.md "Notable finding").
-    FLOOR_ARTIFACT_SERVICES = {"llm", "audio"}
-    for r in rows:
-        r["likely_floor_artifact"] = r["service"] in FLOOR_ARTIFACT_SERVICES
-        # markup_display is what dashboard.html renders in the table cell. Floor-artifact
-        # rows do NOT show their raw percentage here (2,930%/233% next to a genuine 0%
-        # row misleads at a glance) — the raw number stays in markup_pct for the tooltip
-        # and take_rate.md's full table.
-        if r["likely_floor_artifact"]:
-            r["markup_display"] = "flat sub-cent"
-        elif r["service"] == "search":
-            r["markup_display"] = f"0% spread (N={linkup_ledger_n})"
-        else:
-            r["markup_display"] = "0% spread"
-
-    high_rows = [r for r in rows if r["confidence"] == "HIGH"]
-    sum_charged = sum(r["sapiom_price_usd"] for r in high_rows)
-    sum_public = sum(r["public_price_usd"] for r in high_rows)
-    margin = sum_charged - sum_public
-    # NOT displayed as a dashboard headline (adversarial-audit fix: this is N=1 call
-    # per service, and 2 of the 4 rows are minimum-fee-floor artifacts, not real
-    # markups — a single blended bps number falsely implies a statistically-grounded
-    # unit-economics read). Kept only for cross-checking against take_rate.md.
-    blended_take_rate_pct = margin / sum_charged * 100
-    blended_markup_pct = margin / sum_public * 100
-
-    for r in high_rows:
-        r["margin_usd"] = r["sapiom_price_usd"] - r["public_price_usd"]
-        r["margin_share_of_blended_pct"] = (r["margin_usd"] / margin * 100) if margin else None
-
-    real_markup_services = [r["service"] for r in high_rows if not r["likely_floor_artifact"]]
-    floor_artifact_services = [r["service"] for r in high_rows if r["likely_floor_artifact"]]
-    floor_margin_share_pct = sum(
-        r["margin_share_of_blended_pct"] or 0 for r in high_rows if r["likely_floor_artifact"]
-    )
-
-    return {
-        "rows": rows,
-        # Retained for cross-check against take_rate.md only — NOT a defensible headline:
-        # it is a dollar-weighted blend of exactly 4 N=1 calls, and 100% of the margin
-        # ($0.000797 of $0.000797) comes from the two floor-artifact rows (llm, audio) —
-        # search and images contribute $0 margin each. Do not render this on the dashboard.
-        "blended_take_rate_pct_not_a_headline": blended_take_rate_pct,
-        "blended_take_rate_bps_not_a_headline": blended_take_rate_pct * 100,
-        "blended_markup_pct_not_a_headline": blended_markup_pct,
-        "n_high_rows": len(high_rows),
-        "n_per_service": 1,
-        "linkup_ledger_n": linkup_ledger_n,
-        "linkup_ledger_all_identical": linkup_ledger_all_identical,
-        "real_markup_services": real_markup_services,
-        "floor_artifact_services": floor_artifact_services,
-        "floor_margin_share_pct": floor_margin_share_pct,
-        "note": (
-            "9-service sweep (dryrun/service_sweep_result.json), N=1 call per service, full "
-            "table + MED/DROP rows + sources in take_rate.md. No blended headline is shown: "
-            f"the two real-dollar-volume services ({', '.join(real_markup_services)}) settle at "
-            f"exactly vendor list price (0% markup — search is corroborated by all "
-            f"{linkup_ledger_n} historical sapiom_linkup transactions in the ledger, not just "
-            f"this N=1 sweep call, and all {linkup_ledger_n} settle at the identical "
-            f"$0.006000); the two tiny-dollar rows ({', '.join(floor_artifact_services)}) are "
-            "near-certain minimum-billing-floor artifacts, not percentage markups — their raw "
-            "percentages are withheld from the tile's headline cell for that reason (see "
-            "markup_pct on each row for the number, and take_rate.md for the full writeup). "
-            "Of the dollar-weighted margin across all 4 rows, audio/ElevenLabs is ~88% and "
-            "llm/OpenRouter is ~12% (recomputed from this same table — corrects "
-            "take_rate.md's/NARRATIVE.md's earlier, backwards claim that the LLM row drove "
-            "'almost entirely' of the margin). CAVEAT: every 'public price' in this table is "
-            "the vendor's published retail list price, not Sapiom's actual negotiated cost "
-            "(Sapiom likely gets volume/negotiated rates below retail, and does not publish "
-            "its own per-call pricing) — so this table measures Sapiom-retail vs. "
-            "vendor-retail (a build-vs-buy comparison for the agent), not Sapiom's true "
-            "take rate against its own COGS. Full caveat in take_rate.md."
-        ),
     }
 
 
@@ -917,7 +726,6 @@ def main():
         "hero_reconciliation": reconciliation,
         "tile_auth_to_capture": auth_to_capture,
         "tile_velocity_checks": tile_velocity_checks(con),
-        "tile_take_rate": tile_take_rate(con),
         "tile_loss_rate": tile_loss_rate(con),
         "tile_auth_rate": tile_auth_rate(con),
         # ---- Section 2 — "Agent-native KPIs — proposed definitions" (BUILD 12) --

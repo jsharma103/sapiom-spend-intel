@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-04T21:11:17.849783+00:00",
+  "generated_at": "2026-07-04T23:33:02.937661+00:00",
   "header": {
     "n_txns": 81,
     "n_agents": 16,
@@ -141,81 +141,6 @@
         "runaway": false
       }
     ]
-  },
-  "tile_take_rate": {
-    "rows": [
-      {
-        "service": "search",
-        "provider": "Linkup",
-        "operation": "1 query, standard depth, sourcedAnswer",
-        "sapiom_price_usd": 0.006,
-        "public_price_usd": 0.006,
-        "markup_pct": 0.0,
-        "confidence": "HIGH",
-        "ledger_n": 43,
-        "ledger_all_identical": true,
-        "likely_floor_artifact": false,
-        "markup_display": "0% spread (N=43)",
-        "margin_usd": 0.0,
-        "margin_share_of_blended_pct": 0.0
-      },
-      {
-        "service": "llm",
-        "provider": "OpenRouter (gpt-4o-mini)",
-        "operation": "14 prompt + 2 completion tokens",
-        "sapiom_price_usd": 0.0001,
-        "public_price_usd": 3.2999999999999997e-06,
-        "markup_pct": 2930.303030303031,
-        "confidence": "HIGH",
-        "likely_floor_artifact": true,
-        "markup_display": "flat sub-cent",
-        "margin_usd": 9.67e-05,
-        "margin_share_of_blended_pct": 12.137567465796398
-      },
-      {
-        "service": "images",
-        "provider": "Fal.ai (flux/schnell)",
-        "operation": "1 image, 512x512 (1MP billed)",
-        "sapiom_price_usd": 0.003,
-        "public_price_usd": 0.003,
-        "markup_pct": 0.0,
-        "confidence": "HIGH",
-        "likely_floor_artifact": false,
-        "markup_display": "0% spread",
-        "margin_usd": 0.0,
-        "margin_share_of_blended_pct": 0.0
-      },
-      {
-        "service": "audio",
-        "provider": "ElevenLabs (multilingual v2)",
-        "operation": "text-to-speech, 3 characters",
-        "sapiom_price_usd": 0.001,
-        "public_price_usd": 0.00030000000000000003,
-        "markup_pct": 233.33333333333331,
-        "confidence": "HIGH",
-        "likely_floor_artifact": true,
-        "markup_display": "flat sub-cent",
-        "margin_usd": 0.0007,
-        "margin_share_of_blended_pct": 87.86243253420349
-      }
-    ],
-    "blended_take_rate_pct_not_a_headline": 7.888118811881196,
-    "blended_take_rate_bps_not_a_headline": 788.8118811881195,
-    "blended_markup_pct_not_a_headline": 8.563627959971203,
-    "n_high_rows": 4,
-    "n_per_service": 1,
-    "linkup_ledger_n": 43,
-    "linkup_ledger_all_identical": true,
-    "real_markup_services": [
-      "search",
-      "images"
-    ],
-    "floor_artifact_services": [
-      "llm",
-      "audio"
-    ],
-    "floor_margin_share_pct": 99.99999999999989,
-    "note": "9-service sweep (dryrun/service_sweep_result.json), N=1 call per service, full table + MED/DROP rows + sources in take_rate.md. No blended headline is shown: the two real-dollar-volume services (search, images) settle at exactly vendor list price (0% markup \u2014 search is corroborated by all 43 historical sapiom_linkup transactions in the ledger, not just this N=1 sweep call, and all 43 settle at the identical $0.006000); the two tiny-dollar rows (llm, audio) are near-certain minimum-billing-floor artifacts, not percentage markups \u2014 their raw percentages are withheld from the tile's headline cell for that reason (see markup_pct on each row for the number, and take_rate.md for the full writeup). Of the dollar-weighted margin across all 4 rows, audio/ElevenLabs is ~88% and llm/OpenRouter is ~12% (recomputed from this same table \u2014 corrects take_rate.md's/NARRATIVE.md's earlier, backwards claim that the LLM row drove 'almost entirely' of the margin). CAVEAT: every 'public price' in this table is the vendor's published retail list price, not Sapiom's actual negotiated cost (Sapiom likely gets volume/negotiated rates below retail, and does not publish its own per-call pricing) \u2014 so this table measures Sapiom-retail vs. vendor-retail (a build-vs-buy comparison for the agent), not Sapiom's true take rate against its own COGS. Full caveat in take_rate.md."
   },
   "tile_loss_rate": {
     "n_txns": 81,

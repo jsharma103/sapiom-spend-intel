@@ -1,5 +1,7 @@
 # Take Rate — full 9-service table
 
+NOT shown on dashboard — vendor-list-price ≠ Sapiom COGS assumption too weak to display.
+
 Payments-executive framing: Sapiom is a payment/settlement layer sitting between an agent
 and 9 underlying vendor APIs. Every call Sapiom settles has two prices we can observe — the
 **vendor's published retail list price** and **what Sapiom charges the agent** (settled cost
