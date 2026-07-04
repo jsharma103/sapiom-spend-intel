@@ -135,3 +135,66 @@ or the blended "789 bps" figure presented as if it were a real, statistically-gr
   since Pages on a private repo needs GitHub Pro/Team), not something introduced by this
   take-rate change. Not in scope to fix here (outside the take-rate task and outside repo-settings
   access from this session) — flagging for Jay to check Settings → Pages directly.
+
+## Take Rate tile removed entirely — 2026-07-04
+
+Zero spend, no API calls, no network beyond the offline headless-Chrome render checks. Jay's
+call: every prior pass (BUILD 9, round-2 adversarial audit, the N=43 ledger-corroboration fix)
+kept re-labeling/re-caveating the same underlying problem — the tile's "markup" was always
+Sapiom-charge vs. **vendor public retail list price**, not Sapiom's margin over its own actual
+COGS (Sapiom likely gets negotiated/volume rates below retail and publishes no per-call price
+list of its own to diff against). No amount of caveat text makes that a defensible take-rate
+number to show a payments-executive audience, so the tile is cut rather than caveated again.
+
+- **`export_dashboard.py`**: deleted `tile_take_rate(con)` in full (the 4-row HIGH-confidence
+  table — Linkup/search, OpenRouter/llm, Fal.ai/images, ElevenLabs/audio — the floor-artifact
+  logic, `markup_display`, and the blended-bps/blended-markup figures), plus its now-orphaned
+  module-level constants (`LINKUP_PUBLIC_PRICE_USD`, `OPENROUTER_PUBLIC_INPUT_PER_1K`,
+  `OPENROUTER_PUBLIC_OUTPUT_PER_1K`, `LINKUP_SOURCED_ANSWER_PREMIUM_USD`,
+  `FAL_FLUX_SCHNELL_PER_MP_USD`, `ELEVENLABS_PER_CHAR_USD`, `OPENROUTER_SWEEP_PROMPT_TOKENS`,
+  `OPENROUTER_SWEEP_COMPLETION_TOKENS`, `SWEEP_RESULT_PATH`) — all were only ever read inside
+  the removed function. Dropped the `"tile_take_rate": tile_take_rate(con)` line from `main()`'s
+  output dict and the "6. TAKE RATE" line from the module docstring's tile inventory. Confirmed
+  via `python -m py_compile` and a real run that the script still executes clean end to end.
+- **`dashboard.html` + `Sapiom_Spend_Dashboard.html`**: deleted the `tileTakeRate()` IIFE (both
+  the markup-building JS and its "no blended headline shown" comment block) from both files —
+  identical removal in each, since the standalone file is a copy of the same render script.
+  Renumbered the trailing tile comments in both (`Tile 7: Loss rate`→`Tile 6`, `Tile 8: Auth
+  rate`→`Tile 7`) so there's no numbering gap left behind. The `grid` div uses CSS
+  `grid-template-columns: repeat(auto-fit, minmax(300px,1fr))`, so removing one `grid.appendChild`
+  call was sufficient for the remaining tiles to reflow with no manual position fixes and no
+  empty cell — confirmed visually (see verification below).
+- **`dashboard_data.json` / `dashboard_data.js`**: regenerated via `python export_dashboard.py`
+  (not hand-edited) — diffed before/after with `generated_at` excluded: the ONLY change is the
+  77-line `tile_take_rate` block disappearing, every other key/value byte-identical.
+  `Sapiom_Spend_Dashboard.html`'s inlined `window.DASHBOARD_DATA = {...}` block got the matching
+  75-line `"tile_take_rate": {...}` object deleted by hand (it has no build script — hand-
+  maintained) and the surrounding JSON re-validated with `json.loads()` after the edit.
+- **`take_rate.md`**: left on disk untouched except one new line right under the H1: "NOT shown
+  on dashboard — vendor-list-price ≠ Sapiom COGS assumption too weak to display." Still the
+  full 9-service analysis/appendix, just explicitly marked as not a dashboard tile anymore.
+- **Verification — both files, offline, via real Chrome over the DevTools Protocol** (raw
+  WebSocket CDP driver, no puppeteer available; more reliable than `--dump-dom`/stderr-grepping
+  for catching real `Runtime.consoleAPICalled`/`Runtime.exceptionThrown` events vs. Chrome's own
+  internal telemetry noise): navigated to `file://.../dashboard.html` and
+  `file://.../Sapiom_Spend_Dashboard.html` directly from disk — **zero console messages, zero
+  exceptions** on both. `window.DASHBOARD_DATA` loaded correctly on both (confirmed real data
+  rendered — subtitle "81 txns · 16 agents", not the `<h2>Load error</h2>` fallback branch).
+  Full-page screenshots (1280px wide, full scroll height via `Emulation.setDeviceMetricsOverride`
+  + `captureBeyondViewport`) show 15 tiles total, both files pixel-identical: hero row (3) +
+  Section-1-detail row now 4 tiles (Auth→Capture Time, Velocity Checks, Loss Rate, Auth Rate —
+  Take Rate gone, no visible hole, the 4 tiles wrap 3-then-1 the way CSS grid auto-fit normally
+  does) + Section 2's 3 sub-rows (3+2+2) + KYA Scorecard. Grepped both rendered files for
+  `take rate|takerate|markup|789|2930|233.3|blended` (case-insensitive): the only hits left are
+  two false positives, present in both files before this change too — the JS helper comment
+  `// status-chip markup helper` (refers to HTML markup generation, unrelated) and a
+  `median_gap_s: 18.789` data value for the spend-researcher agent (an unrelated velocity-checks
+  number that happens to contain the substring "789"). Same grep against `dashboard_data.json`/
+  `.js`: only the same `18.789` false positive, no `tile_take_rate` key, no markup/blended keys
+  anywhere in the payload.
+- **Safety before commit:** `git diff`/full-file grep for `sk_live_` on all 6 changed files —
+  zero hits. `gh auth status` active account = `jsharma103`; `git config user.email` =
+  `jsharma3962@gmail.com` — both confirmed before staging. Staged exactly `export_dashboard.py
+  dashboard.html dashboard_data.json dashboard_data.js Sapiom_Spend_Dashboard.html take_rate.md`
+  by name, not `-A` — left the untracked `DESIGN.md` and `dryrun/*` files (unrelated in-flight
+  work) alone. Committed as `d3fe6e0`, pushed clean to `origin/main`.
