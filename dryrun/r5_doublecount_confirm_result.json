@@ -1,0 +1,1453 @@
+{
+  "fetched_at": "2026-07-07T05:19:40.977Z",
+  "agent_id": "5f6e9cb5-2d59-4c4c-90b3-b0685a268891",
+  "rule_id": "d55f4abc-1491-474b-ae86-7b4d2440121e",
+  "max_tokens": 400,
+  "hold_usd_expected": 0.000243,
+  "settle_usd_expected": 0.0001,
+  "limit_usd": 0.004,
+  "predict_bug_denial_call": 20,
+  "predict_nobug_denial_call": 39,
+  "observed_denial_call": 20,
+  "n_allowed": 19,
+  "engine_current_value": 0.004043,
+  "engine_reason": "Total transaction costs including this transaction (0.00 USD) would exceed limit of 0.00 USD in 1 days",
+  "true_settled_history_at_denial": 0.0019,
+  "verdict": "BUG CONFIRMED — denied call 20 ≈ predicted 20 (2x-history)",
+  "calls": [
+    {
+      "i": 1,
+      "http_status": 200,
+      "denied": false,
+      "error": null,
+      "response_headers": {
+        "access-control-allow-credentials": "true",
+        "alt-svc": "h3=\":443\"; ma=86400",
+        "cf-cache-status": "DYNAMIC",
+        "cf-ray": "a1746133e8055cfb-SJC",
+        "connection": "keep-alive",
+        "content-encoding": "br",
+        "content-length": "496",
+        "content-type": "application/json; charset=utf-8",
+        "date": "Tue, 07 Jul 2026 05:16:54 GMT",
+        "etag": "W/\"3e1-WwhMK49LCbdOJzOJmPmLZjnaFGk\"",
+        "payment-response": "eyJzdWNjZXNzIjp0cnVlLCJ0cmFuc2FjdGlvbiI6IiIsIm5ldHdvcmsiOiJzYXBpb206bWFpbiIsInBheWVyIjoiMGY2YTU2YmEtZGViMy00MzA3LTkyYWEtZWY3OTIyOTMwMmZmIn0=",
+        "rndr-id": "791f0bd4-e49e-4bea",
+        "server": "cloudflare",
+        "vary": "Origin, Accept-Encoding",
+        "x-powered-by": "Express",
+        "x-ratelimit-limit": "100",
+        "x-ratelimit-remaining": "98",
+        "x-ratelimit-reset": "59",
+        "x-render-origin-server": "Render"
+      },
+      "raw_response_body": {
+        "id": "gen-1783401413-viT8V7hlF2C6M0gxyStE",
+        "object": "chat.completion",
+        "created": 1783401413,
+        "model": "openai/gpt-4o-mini",
+        "provider": "OpenAI",
+        "system_fingerprint": "fp_dd933fdd28",
+        "service_tier": null,
+        "choices": [
+          {
+            "index": 0,
+            "logprobs": null,
+            "finish_reason": "stop",
+            "native_finish_reason": "stop",
+            "message": {
+              "role": "assistant",
+              "content": "Reconciliation in payments refers to the process of verifying and matching financial transactions between different records or accounts to ensure accuracy and consistency in financial reporting.",
+              "refusal": null,
+              "reasoning": null
+            }
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 20,
+          "completion_tokens": 28,
+          "total_tokens": 48,
+          "cost": 0.0000198,
+          "is_byok": false,
+          "prompt_tokens_details": {
+            "cached_tokens": 0,
+            "cache_write_tokens": 0,
+            "audio_tokens": 0,
+            "video_tokens": 0
+          },
+          "cost_details": {
+            "upstream_inference_cost": 0.0000198,
+            "upstream_inference_prompt_cost": 0.000003,
+            "upstream_inference_completions_cost": 0.0000168
+          },
+          "completion_tokens_details": {
+            "reasoning_tokens": 0,
+            "image_tokens": 0,
+            "audio_tokens": 0
+          }
+        }
+      }
+    },
+    {
+      "i": 2,
+      "http_status": 200,
+      "denied": false,
+      "error": null,
+      "response_headers": {
+        "access-control-allow-credentials": "true",
+        "alt-svc": "h3=\":443\"; ma=86400",
+        "cf-cache-status": "DYNAMIC",
+        "cf-ray": "a1746162fae16c48-SJC",
+        "connection": "keep-alive",
+        "content-encoding": "br",
+        "content-length": "505",
+        "content-type": "application/json; charset=utf-8",
+        "date": "Tue, 07 Jul 2026 05:17:02 GMT",
+        "etag": "W/\"3db-6qtWV5mqQYz1Lj90miuYQ0bVzE4\"",
+        "payment-response": "eyJzdWNjZXNzIjp0cnVlLCJ0cmFuc2FjdGlvbiI6IiIsIm5ldHdvcmsiOiJzYXBpb206bWFpbiIsInBheWVyIjoiMGY2YTU2YmEtZGViMy00MzA3LTkyYWEtZWY3OTIyOTMwMmZmIn0=",
+        "rndr-id": "fe5933ee-c0ca-4bb8",
+        "server": "cloudflare",
+        "vary": "Origin, Accept-Encoding",
+        "x-powered-by": "Express",
+        "x-ratelimit-limit": "100",
+        "x-ratelimit-remaining": "96",
+        "x-ratelimit-reset": "52",
+        "x-render-origin-server": "Render"
+      },
+      "raw_response_body": {
+        "id": "gen-1783401421-gVAukSzfxxCAo62dYyJG",
+        "object": "chat.completion",
+        "created": 1783401421,
+        "model": "openai/gpt-4o-mini",
+        "provider": "OpenAI",
+        "system_fingerprint": "fp_dd933fdd28",
+        "service_tier": null,
+        "choices": [
+          {
+            "index": 0,
+            "logprobs": null,
+            "finish_reason": "stop",
+            "native_finish_reason": "stop",
+            "message": {
+              "role": "assistant",
+              "content": "Reconciliation in payments refers to the process of verifying and matching financial transactions between two parties to ensure that their records align and any discrepancies are resolved.",
+              "refusal": null,
+              "reasoning": null
+            }
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 20,
+          "completion_tokens": 29,
+          "total_tokens": 49,
+          "cost": 0.0000204,
+          "is_byok": false,
+          "prompt_tokens_details": {
+            "cached_tokens": 0,
+            "cache_write_tokens": 0,
+            "audio_tokens": 0,
+            "video_tokens": 0
+          },
+          "cost_details": {
+            "upstream_inference_cost": 0.0000204,
+            "upstream_inference_prompt_cost": 0.000003,
+            "upstream_inference_completions_cost": 0.0000174
+          },
+          "completion_tokens_details": {
+            "reasoning_tokens": 0,
+            "image_tokens": 0,
+            "audio_tokens": 0
+          }
+        }
+      }
+    },
+    {
+      "i": 3,
+      "http_status": 200,
+      "denied": false,
+      "error": null,
+      "response_headers": {
+        "access-control-allow-credentials": "true",
+        "alt-svc": "h3=\":443\"; ma=86400",
+        "cf-cache-status": "DYNAMIC",
+        "cf-ray": "a1746190a89f9814-SJC",
+        "connection": "keep-alive",
+        "content-encoding": "br",
+        "content-length": "517",
+        "content-type": "application/json; charset=utf-8",
+        "date": "Tue, 07 Jul 2026 05:17:09 GMT",
+        "etag": "W/\"3f4-GuTDtqY2N9ajJgtXBAeTA6xA+YA\"",
+        "payment-response": "eyJzdWNjZXNzIjp0cnVlLCJ0cmFuc2FjdGlvbiI6IiIsIm5ldHdvcmsiOiJzYXBpb206bWFpbiIsInBheWVyIjoiMGY2YTU2YmEtZGViMy00MzA3LTkyYWEtZWY3OTIyOTMwMmZmIn0=",
+        "rndr-id": "95d9f798-9949-4424",
+        "server": "cloudflare",
+        "vary": "Origin, Accept-Encoding",
+        "x-powered-by": "Express",
+        "x-ratelimit-limit": "100",
+        "x-ratelimit-remaining": "94",
+        "x-ratelimit-reset": "44",
+        "x-render-origin-server": "Render"
+      },
+      "raw_response_body": {
+        "id": "gen-1783401428-GlwL3uxKHk34dGWpD2pK",
+        "object": "chat.completion",
+        "created": 1783401428,
+        "model": "openai/gpt-4o-mini",
+        "provider": "Azure",
+        "system_fingerprint": "fp_965c8b9ecf",
+        "service_tier": null,
+        "choices": [
+          {
+            "index": 0,
+            "logprobs": null,
+            "finish_reason": "stop",
+            "native_finish_reason": "stop",
+            "message": {
+              "role": "assistant",
+              "content": "Reconciliation in payments refers to the process of verifying and matching financial transactions and records between account statements and internal accounting systems to ensure accuracy and resolve discrepancies.",
+              "refusal": null,
+              "reasoning": null
+            }
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 20,
+          "completion_tokens": 31,
+          "total_tokens": 51,
+          "cost": 0.0000216,
+          "is_byok": false,
+          "prompt_tokens_details": {
+            "cached_tokens": 0,
+            "cache_write_tokens": 0,
+            "audio_tokens": 0,
+            "video_tokens": 0
+          },
+          "cost_details": {
+            "upstream_inference_cost": 0.0000216,
+            "upstream_inference_prompt_cost": 0.000003,
+            "upstream_inference_completions_cost": 0.0000186
+          },
+          "completion_tokens_details": {
+            "reasoning_tokens": 0,
+            "image_tokens": 0,
+            "audio_tokens": 0
+          }
+        }
+      }
+    },
+    {
+      "i": 4,
+      "http_status": 200,
+      "denied": false,
+      "error": null,
+      "response_headers": {
+        "access-control-allow-credentials": "true",
+        "alt-svc": "h3=\":443\"; ma=86400",
+        "cf-cache-status": "DYNAMIC",
+        "cf-ray": "a17461c51950ce64-SJC",
+        "connection": "keep-alive",
+        "content-encoding": "br",
+        "content-length": "543",
+        "content-type": "application/json; charset=utf-8",
+        "date": "Tue, 07 Jul 2026 05:17:18 GMT",
+        "etag": "W/\"429-MxDdXSAyd0vMbxrtlif1L14Aw1Y\"",
+        "payment-response": "eyJzdWNjZXNzIjp0cnVlLCJ0cmFuc2FjdGlvbiI6IiIsIm5ldHdvcmsiOiJzYXBpb206bWFpbiIsInBheWVyIjoiMGY2YTU2YmEtZGViMy00MzA3LTkyYWEtZWY3OTIyOTMwMmZmIn0=",
+        "rndr-id": "6db90357-8f37-4471",
+        "server": "cloudflare",
+        "vary": "Origin, Accept-Encoding",
+        "x-powered-by": "Express",
+        "x-ratelimit-limit": "100",
+        "x-ratelimit-remaining": "92",
+        "x-ratelimit-reset": "36",
+        "x-render-origin-server": "Render"
+      },
+      "raw_response_body": {
+        "id": "gen-1783401437-qUmDEoIpUukTDkSdbX8K",
+        "object": "chat.completion",
+        "created": 1783401437,
+        "model": "openai/gpt-4o-mini",
+        "provider": "OpenAI",
+        "system_fingerprint": "fp_dd933fdd28",
+        "service_tier": null,
+        "choices": [
+          {
+            "index": 0,
+            "logprobs": null,
+            "finish_reason": "stop",
+            "native_finish_reason": "stop",
+            "message": {
+              "role": "assistant",
+              "content": "Reconciliation in payments refers to the process of ensuring that two sets of financial records—typically those of a business and its bank or payment processor—match and are accurate, verifying that all transactions have been properly recorded and accounted for.",
+              "refusal": null,
+              "reasoning": null
+            }
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 20,
+          "completion_tokens": 46,
+          "total_tokens": 66,
+          "cost": 0.0000306,
+          "is_byok": false,
+          "prompt_tokens_details": {
+            "cached_tokens": 0,
+            "cache_write_tokens": 0,
+            "audio_tokens": 0,
+            "video_tokens": 0
+          },
+          "cost_details": {
+            "upstream_inference_cost": 0.0000306,
+            "upstream_inference_prompt_cost": 0.000003,
+            "upstream_inference_completions_cost": 0.0000276
+          },
+          "completion_tokens_details": {
+            "reasoning_tokens": 0,
+            "image_tokens": 0,
+            "audio_tokens": 0
+          }
+        }
+      }
+    },
+    {
+      "i": 5,
+      "http_status": 200,
+      "denied": false,
+      "error": null,
+      "response_headers": {
+        "access-control-allow-credentials": "true",
+        "alt-svc": "h3=\":443\"; ma=86400",
+        "cf-cache-status": "DYNAMIC",
+        "cf-ray": "a17461fda951b917-SJC",
+        "connection": "keep-alive",
+        "content-encoding": "br",
+        "content-length": "536",
+        "content-type": "application/json; charset=utf-8",
+        "date": "Tue, 07 Jul 2026 05:17:27 GMT",
+        "etag": "W/\"434-iLXaImM+cYB/maRE5WX7pdB3NOw\"",
+        "payment-response": "eyJzdWNjZXNzIjp0cnVlLCJ0cmFuc2FjdGlvbiI6IiIsIm5ldHdvcmsiOiJzYXBpb206bWFpbiIsInBheWVyIjoiMGY2YTU2YmEtZGViMy00MzA3LTkyYWEtZWY3OTIyOTMwMmZmIn0=",
+        "rndr-id": "9fc71b70-acbe-4288",
+        "server": "cloudflare",
+        "vary": "Origin, Accept-Encoding",
+        "x-powered-by": "Express",
+        "x-ratelimit-limit": "100",
+        "x-ratelimit-remaining": "90",
+        "x-ratelimit-reset": "27",
+        "x-render-origin-server": "Render"
+      },
+      "raw_response_body": {
+        "id": "gen-1783401446-do6QOhVSgcXqVSgKfDzG",
+        "object": "chat.completion",
+        "created": 1783401446,
+        "model": "openai/gpt-4o-mini",
+        "provider": "Azure",
+        "system_fingerprint": "fp_965c8b9ecf",
+        "service_tier": null,
+        "choices": [
+          {
+            "index": 0,
+            "logprobs": null,
+            "finish_reason": "stop",
+            "native_finish_reason": "stop",
+            "message": {
+              "role": "assistant",
+              "content": "Reconciliation in payments refers to the process of ensuring that financial records between two parties, such as a business and its bank or a merchant and a payment processor, match and are accurate, confirming that all transactions are accounted for and discrepancies are resolved.",
+              "refusal": null,
+              "reasoning": null
+            }
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 20,
+          "completion_tokens": 50,
+          "total_tokens": 70,
+          "cost": 0.000033,
+          "is_byok": false,
+          "prompt_tokens_details": {
+            "cached_tokens": 0,
+            "cache_write_tokens": 0,
+            "audio_tokens": 0,
+            "video_tokens": 0
+          },
+          "cost_details": {
+            "upstream_inference_cost": 0.000033,
+            "upstream_inference_prompt_cost": 0.000003,
+            "upstream_inference_completions_cost": 0.00003
+          },
+          "completion_tokens_details": {
+            "reasoning_tokens": 0,
+            "image_tokens": 0,
+            "audio_tokens": 0
+          }
+        }
+      }
+    },
+    {
+      "i": 6,
+      "http_status": 200,
+      "denied": false,
+      "error": null,
+      "response_headers": {
+        "access-control-allow-credentials": "true",
+        "alt-svc": "h3=\":443\"; ma=86400",
+        "cf-cache-status": "DYNAMIC",
+        "cf-ray": "a17462341b8feb21-SJC",
+        "connection": "keep-alive",
+        "content-encoding": "br",
+        "content-length": "511",
+        "content-type": "application/json; charset=utf-8",
+        "date": "Tue, 07 Jul 2026 05:17:35 GMT",
+        "etag": "W/\"3f9-yj3kuA5kihuIYm5Cs0bGvMOYf8A\"",
+        "payment-response": "eyJzdWNjZXNzIjp0cnVlLCJ0cmFuc2FjdGlvbiI6IiIsIm5ldHdvcmsiOiJzYXBpb206bWFpbiIsInBheWVyIjoiMGY2YTU2YmEtZGViMy00MzA3LTkyYWEtZWY3OTIyOTMwMmZmIn0=",
+        "rndr-id": "fe319119-87c1-458d",
+        "server": "cloudflare",
+        "vary": "Origin, Accept-Encoding",
+        "x-powered-by": "Express",
+        "x-ratelimit-limit": "100",
+        "x-ratelimit-remaining": "88",
+        "x-ratelimit-reset": "18",
+        "x-render-origin-server": "Render"
+      },
+      "raw_response_body": {
+        "id": "gen-1783401454-7EXUhOn9toa7xgcb7vYm",
+        "object": "chat.completion",
+        "created": 1783401454,
+        "model": "openai/gpt-4o-mini",
+        "provider": "OpenAI",
+        "system_fingerprint": "fp_dd933fdd28",
+        "service_tier": null,
+        "choices": [
+          {
+            "index": 0,
+            "logprobs": null,
+            "finish_reason": "stop",
+            "native_finish_reason": "stop",
+            "message": {
+              "role": "assistant",
+              "content": "Reconciliation in payments is the process of ensuring that financial transactions and balances in payment systems match with corresponding records in accounting or banking systems to identify and resolve discrepancies.",
+              "refusal": null,
+              "reasoning": null
+            }
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 20,
+          "completion_tokens": 32,
+          "total_tokens": 52,
+          "cost": 0.0000222,
+          "is_byok": false,
+          "prompt_tokens_details": {
+            "cached_tokens": 0,
+            "cache_write_tokens": 0,
+            "audio_tokens": 0,
+            "video_tokens": 0
+          },
+          "cost_details": {
+            "upstream_inference_cost": 0.0000222,
+            "upstream_inference_prompt_cost": 0.000003,
+            "upstream_inference_completions_cost": 0.0000192
+          },
+          "completion_tokens_details": {
+            "reasoning_tokens": 0,
+            "image_tokens": 0,
+            "audio_tokens": 0
+          }
+        }
+      }
+    },
+    {
+      "i": 7,
+      "http_status": 200,
+      "denied": false,
+      "error": null,
+      "response_headers": {
+        "access-control-allow-credentials": "true",
+        "alt-svc": "h3=\":443\"; ma=86400",
+        "cf-cache-status": "DYNAMIC",
+        "cf-ray": "a174626719e397f0-SJC",
+        "connection": "keep-alive",
+        "content-encoding": "br",
+        "content-length": "490",
+        "content-type": "application/json; charset=utf-8",
+        "date": "Tue, 07 Jul 2026 05:17:44 GMT",
+        "etag": "W/\"3dc-53X/w2ylhb8pA8Y65eDsBX+Kc38\"",
+        "payment-response": "eyJzdWNjZXNzIjp0cnVlLCJ0cmFuc2FjdGlvbiI6IiIsIm5ldHdvcmsiOiJzYXBpb206bWFpbiIsInBheWVyIjoiMGY2YTU2YmEtZGViMy00MzA3LTkyYWEtZWY3OTIyOTMwMmZmIn0=",
+        "rndr-id": "f3ed9a63-e43b-4924",
+        "server": "cloudflare",
+        "vary": "Origin, Accept-Encoding",
+        "x-powered-by": "Express",
+        "x-ratelimit-limit": "100",
+        "x-ratelimit-remaining": "86",
+        "x-ratelimit-reset": "10",
+        "x-render-origin-server": "Render"
+      },
+      "raw_response_body": {
+        "id": "gen-1783401463-Bb2GEM28CZNtpDvyaG1k",
+        "object": "chat.completion",
+        "created": 1783401463,
+        "model": "openai/gpt-4o-mini",
+        "provider": "Azure",
+        "system_fingerprint": "fp_965c8b9ecf",
+        "service_tier": null,
+        "choices": [
+          {
+            "index": 0,
+            "logprobs": null,
+            "finish_reason": "stop",
+            "native_finish_reason": "stop",
+            "message": {
+              "role": "assistant",
+              "content": "Reconciliation in payments is the process of verifying and matching financial transactions between different records to ensure accuracy and consistency in accounting and financial reporting.",
+              "refusal": null,
+              "reasoning": null
+            }
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 20,
+          "completion_tokens": 28,
+          "total_tokens": 48,
+          "cost": 0.0000198,
+          "is_byok": false,
+          "prompt_tokens_details": {
+            "cached_tokens": 0,
+            "cache_write_tokens": 0,
+            "audio_tokens": 0,
+            "video_tokens": 0
+          },
+          "cost_details": {
+            "upstream_inference_cost": 0.0000198,
+            "upstream_inference_prompt_cost": 0.000003,
+            "upstream_inference_completions_cost": 0.0000168
+          },
+          "completion_tokens_details": {
+            "reasoning_tokens": 0,
+            "image_tokens": 0,
+            "audio_tokens": 0
+          }
+        }
+      }
+    },
+    {
+      "i": 8,
+      "http_status": 200,
+      "denied": false,
+      "error": null,
+      "response_headers": {
+        "access-control-allow-credentials": "true",
+        "alt-svc": "h3=\":443\"; ma=86400",
+        "cf-cache-status": "DYNAMIC",
+        "cf-ray": "a174629e7cd7cf12-SJC",
+        "connection": "keep-alive",
+        "content-encoding": "br",
+        "content-length": "506",
+        "content-type": "application/json; charset=utf-8",
+        "date": "Tue, 07 Jul 2026 05:17:53 GMT",
+        "etag": "W/\"3ee-NIjZtVfM+u01m50F6IKlOFu1B8A\"",
+        "payment-response": "eyJzdWNjZXNzIjp0cnVlLCJ0cmFuc2FjdGlvbiI6IiIsIm5ldHdvcmsiOiJzYXBpb206bWFpbiIsInBheWVyIjoiMGY2YTU2YmEtZGViMy00MzA3LTkyYWEtZWY3OTIyOTMwMmZmIn0=",
+        "rndr-id": "19414fec-1a27-4fc8",
+        "server": "cloudflare",
+        "vary": "Origin, Accept-Encoding",
+        "x-powered-by": "Express",
+        "x-ratelimit-limit": "100",
+        "x-ratelimit-remaining": "84",
+        "x-ratelimit-reset": "1",
+        "x-render-origin-server": "Render"
+      },
+      "raw_response_body": {
+        "id": "gen-1783401471-lVm5T58yICGgTh1Z8fbb",
+        "object": "chat.completion",
+        "created": 1783401471,
+        "model": "openai/gpt-4o-mini",
+        "provider": "Azure",
+        "system_fingerprint": "fp_965c8b9ecf",
+        "service_tier": null,
+        "choices": [
+          {
+            "index": 0,
+            "logprobs": null,
+            "finish_reason": "stop",
+            "native_finish_reason": "stop",
+            "message": {
+              "role": "assistant",
+              "content": "Reconciliation in payments refers to the process of comparing and aligning financial records from different sources, such as transactions and bank statements, to ensure accuracy and consistency in accounting.",
+              "refusal": null,
+              "reasoning": null
+            }
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 20,
+          "completion_tokens": 34,
+          "total_tokens": 54,
+          "cost": 0.0000234,
+          "is_byok": false,
+          "prompt_tokens_details": {
+            "cached_tokens": 0,
+            "cache_write_tokens": 0,
+            "audio_tokens": 0,
+            "video_tokens": 0
+          },
+          "cost_details": {
+            "upstream_inference_cost": 0.0000234,
+            "upstream_inference_prompt_cost": 0.000003,
+            "upstream_inference_completions_cost": 0.0000204
+          },
+          "completion_tokens_details": {
+            "reasoning_tokens": 0,
+            "image_tokens": 0,
+            "audio_tokens": 0
+          }
+        }
+      }
+    },
+    {
+      "i": 9,
+      "http_status": 200,
+      "denied": false,
+      "error": null,
+      "response_headers": {
+        "access-control-allow-credentials": "true",
+        "alt-svc": "h3=\":443\"; ma=86400",
+        "cf-cache-status": "DYNAMIC",
+        "cf-ray": "a17462d3cce1cf8b-SJC",
+        "connection": "keep-alive",
+        "content-encoding": "br",
+        "content-length": "526",
+        "content-type": "application/json; charset=utf-8",
+        "date": "Tue, 07 Jul 2026 05:18:01 GMT",
+        "etag": "W/\"409-ZHl3aJG91/j/9WN32Dj/rOiXwWY\"",
+        "payment-response": "eyJzdWNjZXNzIjp0cnVlLCJ0cmFuc2FjdGlvbiI6IiIsIm5ldHdvcmsiOiJzYXBpb206bWFpbiIsInBheWVyIjoiMGY2YTU2YmEtZGViMy00MzA3LTkyYWEtZWY3OTIyOTMwMmZmIn0=",
+        "rndr-id": "cf482b64-4bbc-4b4c",
+        "server": "cloudflare",
+        "vary": "Origin, Accept-Encoding",
+        "x-powered-by": "Express",
+        "x-ratelimit-limit": "100",
+        "x-ratelimit-remaining": "98",
+        "x-ratelimit-reset": "59",
+        "x-render-origin-server": "Render"
+      },
+      "raw_response_body": {
+        "id": "gen-1783401480-9lpvigBHhAbQzzvTRlMW",
+        "object": "chat.completion",
+        "created": 1783401480,
+        "model": "openai/gpt-4o-mini",
+        "provider": "OpenAI",
+        "system_fingerprint": "fp_dd933fdd28",
+        "service_tier": null,
+        "choices": [
+          {
+            "index": 0,
+            "logprobs": null,
+            "finish_reason": "stop",
+            "native_finish_reason": "stop",
+            "message": {
+              "role": "assistant",
+              "content": "Reconciliation in payments is the process of ensuring that two financial records, such as a company's internal records and its bank statements, match and accurately reflect the transactions that have occurred within a specific period.",
+              "refusal": null,
+              "reasoning": null
+            }
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 20,
+          "completion_tokens": 39,
+          "total_tokens": 59,
+          "cost": 0.0000264,
+          "is_byok": false,
+          "prompt_tokens_details": {
+            "cached_tokens": 0,
+            "cache_write_tokens": 0,
+            "audio_tokens": 0,
+            "video_tokens": 0
+          },
+          "cost_details": {
+            "upstream_inference_cost": 0.0000264,
+            "upstream_inference_prompt_cost": 0.000003,
+            "upstream_inference_completions_cost": 0.0000234
+          },
+          "completion_tokens_details": {
+            "reasoning_tokens": 0,
+            "image_tokens": 0,
+            "audio_tokens": 0
+          }
+        }
+      }
+    },
+    {
+      "i": 10,
+      "http_status": 200,
+      "denied": false,
+      "error": null,
+      "response_headers": {
+        "access-control-allow-credentials": "true",
+        "alt-svc": "h3=\":443\"; ma=86400",
+        "cf-cache-status": "DYNAMIC",
+        "cf-ray": "a17463081f1ccf2e-SJC",
+        "connection": "keep-alive",
+        "content-encoding": "br",
+        "content-length": "512",
+        "content-type": "application/json; charset=utf-8",
+        "date": "Tue, 07 Jul 2026 05:18:10 GMT",
+        "etag": "W/\"3fb-v+xWCu1Z+0q7RBvvlJ+2lCZgiNM\"",
+        "payment-response": "eyJzdWNjZXNzIjp0cnVlLCJ0cmFuc2FjdGlvbiI6IiIsIm5ldHdvcmsiOiJzYXBpb206bWFpbiIsInBheWVyIjoiMGY2YTU2YmEtZGViMy00MzA3LTkyYWEtZWY3OTIyOTMwMmZmIn0=",
+        "rndr-id": "c2ffb364-fb62-427e",
+        "server": "cloudflare",
+        "vary": "Origin, Accept-Encoding",
+        "x-powered-by": "Express",
+        "x-ratelimit-limit": "100",
+        "x-ratelimit-remaining": "96",
+        "x-ratelimit-reset": "51",
+        "x-render-origin-server": "Render"
+      },
+      "raw_response_body": {
+        "id": "gen-1783401488-cf3DzHk9G6PYWRS9oKOt",
+        "object": "chat.completion",
+        "created": 1783401488,
+        "model": "openai/gpt-4o-mini",
+        "provider": "Azure",
+        "system_fingerprint": "fp_965c8b9ecf",
+        "service_tier": null,
+        "choices": [
+          {
+            "index": 0,
+            "logprobs": null,
+            "finish_reason": "stop",
+            "native_finish_reason": "stop",
+            "message": {
+              "role": "assistant",
+              "content": "Reconciliation in payments is the process of ensuring that two sets of financial records, typically those of a business and its bank or payment processor, match and are in agreement to verify the accuracy of transactions.",
+              "refusal": null,
+              "reasoning": null
+            }
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 20,
+          "completion_tokens": 41,
+          "total_tokens": 61,
+          "cost": 0.0000276,
+          "is_byok": false,
+          "prompt_tokens_details": {
+            "cached_tokens": 0,
+            "cache_write_tokens": 0,
+            "audio_tokens": 0,
+            "video_tokens": 0
+          },
+          "cost_details": {
+            "upstream_inference_cost": 0.0000276,
+            "upstream_inference_prompt_cost": 0.000003,
+            "upstream_inference_completions_cost": 0.0000246
+          },
+          "completion_tokens_details": {
+            "reasoning_tokens": 0,
+            "image_tokens": 0,
+            "audio_tokens": 0
+          }
+        }
+      }
+    },
+    {
+      "i": 11,
+      "http_status": 200,
+      "denied": false,
+      "error": null,
+      "response_headers": {
+        "access-control-allow-credentials": "true",
+        "alt-svc": "h3=\":443\"; ma=86400",
+        "cf-cache-status": "DYNAMIC",
+        "cf-ray": "a1746340dc767b83-SJC",
+        "connection": "keep-alive",
+        "content-encoding": "br",
+        "content-length": "514",
+        "content-type": "application/json; charset=utf-8",
+        "date": "Tue, 07 Jul 2026 05:18:18 GMT",
+        "etag": "W/\"3f5-dT/SaHcKGI2dUoxo+JVFWtrnrrA\"",
+        "payment-response": "eyJzdWNjZXNzIjp0cnVlLCJ0cmFuc2FjdGlvbiI6IiIsIm5ldHdvcmsiOiJzYXBpb206bWFpbiIsInBheWVyIjoiMGY2YTU2YmEtZGViMy00MzA3LTkyYWEtZWY3OTIyOTMwMmZmIn0=",
+        "rndr-id": "f89d9176-b655-4ba5",
+        "server": "cloudflare",
+        "vary": "Origin, Accept-Encoding",
+        "x-powered-by": "Express",
+        "x-ratelimit-limit": "100",
+        "x-ratelimit-remaining": "94",
+        "x-ratelimit-reset": "42",
+        "x-render-origin-server": "Render"
+      },
+      "raw_response_body": {
+        "id": "gen-1783401497-Q3zdoKxhxL2GPMqGRVRJ",
+        "object": "chat.completion",
+        "created": 1783401497,
+        "model": "openai/gpt-4o-mini",
+        "provider": "Azure",
+        "system_fingerprint": "fp_965c8b9ecf",
+        "service_tier": null,
+        "choices": [
+          {
+            "index": 0,
+            "logprobs": null,
+            "finish_reason": "stop",
+            "native_finish_reason": "stop",
+            "message": {
+              "role": "assistant",
+              "content": "Reconciliation in payments refers to the process of verifying and matching financial transactions recorded in accounting systems against bank statements or other financial records to ensure accuracy and consistency.",
+              "refusal": null,
+              "reasoning": null
+            }
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 20,
+          "completion_tokens": 32,
+          "total_tokens": 52,
+          "cost": 0.0000222,
+          "is_byok": false,
+          "prompt_tokens_details": {
+            "cached_tokens": 0,
+            "cache_write_tokens": 0,
+            "audio_tokens": 0,
+            "video_tokens": 0
+          },
+          "cost_details": {
+            "upstream_inference_cost": 0.0000222,
+            "upstream_inference_prompt_cost": 0.000003,
+            "upstream_inference_completions_cost": 0.0000192
+          },
+          "completion_tokens_details": {
+            "reasoning_tokens": 0,
+            "image_tokens": 0,
+            "audio_tokens": 0
+          }
+        }
+      }
+    },
+    {
+      "i": 12,
+      "http_status": 200,
+      "denied": false,
+      "error": null,
+      "response_headers": {
+        "access-control-allow-credentials": "true",
+        "alt-svc": "h3=\":443\"; ma=86400",
+        "cf-cache-status": "DYNAMIC",
+        "cf-ray": "a1746374bf512c39-SJC",
+        "connection": "keep-alive",
+        "content-encoding": "br",
+        "content-length": "501",
+        "content-type": "application/json; charset=utf-8",
+        "date": "Tue, 07 Jul 2026 05:18:27 GMT",
+        "etag": "W/\"3f5-rDPh+EXiyHc2JxOcMy2EBxadRNM\"",
+        "payment-response": "eyJzdWNjZXNzIjp0cnVlLCJ0cmFuc2FjdGlvbiI6IiIsIm5ldHdvcmsiOiJzYXBpb206bWFpbiIsInBheWVyIjoiMGY2YTU2YmEtZGViMy00MzA3LTkyYWEtZWY3OTIyOTMwMmZmIn0=",
+        "rndr-id": "98778df3-e738-4c7d",
+        "server": "cloudflare",
+        "vary": "Origin, Accept-Encoding",
+        "x-powered-by": "Express",
+        "x-ratelimit-limit": "100",
+        "x-ratelimit-remaining": "92",
+        "x-ratelimit-reset": "34",
+        "x-render-origin-server": "Render"
+      },
+      "raw_response_body": {
+        "id": "gen-1783401506-fFJE5C4Ii2TVseoXbSq0",
+        "object": "chat.completion",
+        "created": 1783401506,
+        "model": "openai/gpt-4o-mini",
+        "provider": "Azure",
+        "system_fingerprint": "fp_965c8b9ecf",
+        "service_tier": null,
+        "choices": [
+          {
+            "index": 0,
+            "logprobs": null,
+            "finish_reason": "stop",
+            "native_finish_reason": "stop",
+            "message": {
+              "role": "assistant",
+              "content": "Reconciliation in payments is the process of comparing and verifying financial records to ensure that transactions are accurately recorded and that the balances agree between different financial systems or accounts.",
+              "refusal": null,
+              "reasoning": null
+            }
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 20,
+          "completion_tokens": 33,
+          "total_tokens": 53,
+          "cost": 0.0000228,
+          "is_byok": false,
+          "prompt_tokens_details": {
+            "cached_tokens": 0,
+            "cache_write_tokens": 0,
+            "audio_tokens": 0,
+            "video_tokens": 0
+          },
+          "cost_details": {
+            "upstream_inference_cost": 0.0000228,
+            "upstream_inference_prompt_cost": 0.000003,
+            "upstream_inference_completions_cost": 0.0000198
+          },
+          "completion_tokens_details": {
+            "reasoning_tokens": 0,
+            "image_tokens": 0,
+            "audio_tokens": 0
+          }
+        }
+      }
+    },
+    {
+      "i": 13,
+      "http_status": 200,
+      "denied": false,
+      "error": null,
+      "response_headers": {
+        "access-control-allow-credentials": "true",
+        "alt-svc": "h3=\":443\"; ma=86400",
+        "cf-cache-status": "DYNAMIC",
+        "cf-ray": "a17463ab7b4cccf8-SJC",
+        "connection": "keep-alive",
+        "content-encoding": "br",
+        "content-length": "493",
+        "content-type": "application/json; charset=utf-8",
+        "date": "Tue, 07 Jul 2026 05:18:36 GMT",
+        "etag": "W/\"3cb-VE29f0bDY6L7rKRjj+e0NVvdqZM\"",
+        "payment-response": "eyJzdWNjZXNzIjp0cnVlLCJ0cmFuc2FjdGlvbiI6IiIsIm5ldHdvcmsiOiJzYXBpb206bWFpbiIsInBheWVyIjoiMGY2YTU2YmEtZGViMy00MzA3LTkyYWEtZWY3OTIyOTMwMmZmIn0=",
+        "rndr-id": "2a85409e-81e1-4d9f",
+        "server": "cloudflare",
+        "vary": "Origin, Accept-Encoding",
+        "x-powered-by": "Express",
+        "x-ratelimit-limit": "100",
+        "x-ratelimit-remaining": "90",
+        "x-ratelimit-reset": "25",
+        "x-render-origin-server": "Render"
+      },
+      "raw_response_body": {
+        "id": "gen-1783401515-IV3Xr64QDQPNR2NLzQRH",
+        "object": "chat.completion",
+        "created": 1783401515,
+        "model": "openai/gpt-4o-mini",
+        "provider": "Azure",
+        "system_fingerprint": "fp_965c8b9ecf",
+        "service_tier": null,
+        "choices": [
+          {
+            "index": 0,
+            "logprobs": null,
+            "finish_reason": "stop",
+            "native_finish_reason": "stop",
+            "message": {
+              "role": "assistant",
+              "content": "Reconciliation in payments refers to the process of comparing and matching financial transactions recorded in different systems to ensure accuracy and resolve discrepancies.",
+              "refusal": null,
+              "reasoning": null
+            }
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 20,
+          "completion_tokens": 26,
+          "total_tokens": 46,
+          "cost": 0.0000186,
+          "is_byok": false,
+          "prompt_tokens_details": {
+            "cached_tokens": 0,
+            "cache_write_tokens": 0,
+            "audio_tokens": 0,
+            "video_tokens": 0
+          },
+          "cost_details": {
+            "upstream_inference_cost": 0.0000186,
+            "upstream_inference_prompt_cost": 0.000003,
+            "upstream_inference_completions_cost": 0.0000156
+          },
+          "completion_tokens_details": {
+            "reasoning_tokens": 0,
+            "image_tokens": 0,
+            "audio_tokens": 0
+          }
+        }
+      }
+    },
+    {
+      "i": 14,
+      "http_status": 200,
+      "denied": false,
+      "error": null,
+      "response_headers": {
+        "access-control-allow-credentials": "true",
+        "alt-svc": "h3=\":443\"; ma=86400",
+        "cf-cache-status": "DYNAMIC",
+        "cf-ray": "a17463e0ebf04b6f-SJC",
+        "connection": "keep-alive",
+        "content-encoding": "br",
+        "content-length": "543",
+        "content-type": "application/json; charset=utf-8",
+        "date": "Tue, 07 Jul 2026 05:18:44 GMT",
+        "etag": "W/\"435-zkHHsxswHsZomX/IDV1IL0s8xXU\"",
+        "payment-response": "eyJzdWNjZXNzIjp0cnVlLCJ0cmFuc2FjdGlvbiI6IiIsIm5ldHdvcmsiOiJzYXBpb206bWFpbiIsInBheWVyIjoiMGY2YTU2YmEtZGViMy00MzA3LTkyYWEtZWY3OTIyOTMwMmZmIn0=",
+        "rndr-id": "ba0dba62-106f-4e04",
+        "server": "cloudflare",
+        "vary": "Origin, Accept-Encoding",
+        "x-powered-by": "Express",
+        "x-ratelimit-limit": "100",
+        "x-ratelimit-remaining": "88",
+        "x-ratelimit-reset": "16",
+        "x-render-origin-server": "Render"
+      },
+      "raw_response_body": {
+        "id": "gen-1783401523-RP0lZLd7dFgHcimMlabc",
+        "object": "chat.completion",
+        "created": 1783401523,
+        "model": "openai/gpt-4o-mini",
+        "provider": "OpenAI",
+        "system_fingerprint": "fp_dd933fdd28",
+        "service_tier": null,
+        "choices": [
+          {
+            "index": 0,
+            "logprobs": null,
+            "finish_reason": "stop",
+            "native_finish_reason": "stop",
+            "message": {
+              "role": "assistant",
+              "content": "Reconciliation in payments refers to the process of ensuring that two sets of financial records, such as transactions from a business's accounting system and its bank statements, align accurately to confirm that all transactions are accounted for and discrepancies are resolved.",
+              "refusal": null,
+              "reasoning": null
+            }
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 20,
+          "completion_tokens": 46,
+          "total_tokens": 66,
+          "cost": 0.0000306,
+          "is_byok": false,
+          "prompt_tokens_details": {
+            "cached_tokens": 0,
+            "cache_write_tokens": 0,
+            "audio_tokens": 0,
+            "video_tokens": 0
+          },
+          "cost_details": {
+            "upstream_inference_cost": 0.0000306,
+            "upstream_inference_prompt_cost": 0.000003,
+            "upstream_inference_completions_cost": 0.0000276
+          },
+          "completion_tokens_details": {
+            "reasoning_tokens": 0,
+            "image_tokens": 0,
+            "audio_tokens": 0
+          }
+        }
+      }
+    },
+    {
+      "i": 15,
+      "http_status": 200,
+      "denied": false,
+      "error": null,
+      "response_headers": {
+        "access-control-allow-credentials": "true",
+        "alt-svc": "h3=\":443\"; ma=86400",
+        "cf-cache-status": "DYNAMIC",
+        "cf-ray": "a1746415e8c1ebf3-SJC",
+        "connection": "keep-alive",
+        "content-encoding": "br",
+        "content-length": "485",
+        "content-type": "application/json; charset=utf-8",
+        "date": "Tue, 07 Jul 2026 05:18:52 GMT",
+        "etag": "W/\"3cb-Wo7ULJp/CQ4QWcsSNQTHZZDzwcQ\"",
+        "payment-response": "eyJzdWNjZXNzIjp0cnVlLCJ0cmFuc2FjdGlvbiI6IiIsIm5ldHdvcmsiOiJzYXBpb206bWFpbiIsInBheWVyIjoiMGY2YTU2YmEtZGViMy00MzA3LTkyYWEtZWY3OTIyOTMwMmZmIn0=",
+        "rndr-id": "cb27ed60-c670-49eb",
+        "server": "cloudflare",
+        "vary": "Origin, Accept-Encoding",
+        "x-powered-by": "Express",
+        "x-ratelimit-limit": "100",
+        "x-ratelimit-remaining": "86",
+        "x-ratelimit-reset": "8",
+        "x-render-origin-server": "Render"
+      },
+      "raw_response_body": {
+        "id": "gen-1783401531-5tgCIMvBH2c0ZzjRvbc8",
+        "object": "chat.completion",
+        "created": 1783401531,
+        "model": "openai/gpt-4o-mini",
+        "provider": "OpenAI",
+        "system_fingerprint": "fp_dd933fdd28",
+        "service_tier": null,
+        "choices": [
+          {
+            "index": 0,
+            "logprobs": null,
+            "finish_reason": "stop",
+            "native_finish_reason": "stop",
+            "message": {
+              "role": "assistant",
+              "content": "Reconciliation in payments refers to the process of comparing and verifying financial transactions to ensure that records in different systems or accounts align accurately.",
+              "refusal": null,
+              "reasoning": null
+            }
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 20,
+          "completion_tokens": 26,
+          "total_tokens": 46,
+          "cost": 0.0000186,
+          "is_byok": false,
+          "prompt_tokens_details": {
+            "cached_tokens": 0,
+            "cache_write_tokens": 0,
+            "audio_tokens": 0,
+            "video_tokens": 0
+          },
+          "cost_details": {
+            "upstream_inference_cost": 0.0000186,
+            "upstream_inference_prompt_cost": 0.000003,
+            "upstream_inference_completions_cost": 0.0000156
+          },
+          "completion_tokens_details": {
+            "reasoning_tokens": 0,
+            "image_tokens": 0,
+            "audio_tokens": 0
+          }
+        }
+      }
+    },
+    {
+      "i": 16,
+      "http_status": 200,
+      "denied": false,
+      "error": null,
+      "response_headers": {
+        "access-control-allow-credentials": "true",
+        "alt-svc": "h3=\":443\"; ma=86400",
+        "cf-cache-status": "DYNAMIC",
+        "cf-ray": "a1746448dcf24b96-SJC",
+        "connection": "keep-alive",
+        "content-encoding": "br",
+        "content-length": "532",
+        "content-type": "application/json; charset=utf-8",
+        "date": "Tue, 07 Jul 2026 05:19:01 GMT",
+        "etag": "W/\"414-fNJtpdR+CCB2ycRKaGrxBxClHPs\"",
+        "payment-response": "eyJzdWNjZXNzIjp0cnVlLCJ0cmFuc2FjdGlvbiI6IiIsIm5ldHdvcmsiOiJzYXBpb206bWFpbiIsInBheWVyIjoiMGY2YTU2YmEtZGViMy00MzA3LTkyYWEtZWY3OTIyOTMwMmZmIn0=",
+        "rndr-id": "15f4d997-0ee3-45ca",
+        "server": "cloudflare",
+        "vary": "Origin, Accept-Encoding",
+        "x-powered-by": "Express",
+        "x-ratelimit-limit": "100",
+        "x-ratelimit-remaining": "99",
+        "x-ratelimit-reset": "60",
+        "x-render-origin-server": "Render"
+      },
+      "raw_response_body": {
+        "id": "gen-1783401540-qPUKB3332w5Vz0T1i3tG",
+        "object": "chat.completion",
+        "created": 1783401540,
+        "model": "openai/gpt-4o-mini",
+        "provider": "OpenAI",
+        "system_fingerprint": "fp_dd933fdd28",
+        "service_tier": null,
+        "choices": [
+          {
+            "index": 0,
+            "logprobs": null,
+            "finish_reason": "stop",
+            "native_finish_reason": "stop",
+            "message": {
+              "role": "assistant",
+              "content": "Reconciliation in payments is the process of ensuring that two sets of records—typically a company's financial statements and their corresponding transaction records—are in agreement, identifying and resolving any discrepancies between them.",
+              "refusal": null,
+              "reasoning": null
+            }
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 20,
+          "completion_tokens": 38,
+          "total_tokens": 58,
+          "cost": 0.0000258,
+          "is_byok": false,
+          "prompt_tokens_details": {
+            "cached_tokens": 0,
+            "cache_write_tokens": 0,
+            "audio_tokens": 0,
+            "video_tokens": 0
+          },
+          "cost_details": {
+            "upstream_inference_cost": 0.0000258,
+            "upstream_inference_prompt_cost": 0.000003,
+            "upstream_inference_completions_cost": 0.0000228
+          },
+          "completion_tokens_details": {
+            "reasoning_tokens": 0,
+            "image_tokens": 0,
+            "audio_tokens": 0
+          }
+        }
+      }
+    },
+    {
+      "i": 17,
+      "http_status": 200,
+      "denied": false,
+      "error": null,
+      "response_headers": {
+        "access-control-allow-credentials": "true",
+        "alt-svc": "h3=\":443\"; ma=86400",
+        "cf-cache-status": "DYNAMIC",
+        "cf-ray": "a174647c9f9f2364-SJC",
+        "connection": "keep-alive",
+        "content-encoding": "br",
+        "content-length": "513",
+        "content-type": "application/json; charset=utf-8",
+        "date": "Tue, 07 Jul 2026 05:19:10 GMT",
+        "etag": "W/\"3f7-6G/SymEwj/YNkQuWTOe75+ugLfQ\"",
+        "payment-response": "eyJzdWNjZXNzIjp0cnVlLCJ0cmFuc2FjdGlvbiI6IiIsIm5ldHdvcmsiOiJzYXBpb206bWFpbiIsInBheWVyIjoiMGY2YTU2YmEtZGViMy00MzA3LTkyYWEtZWY3OTIyOTMwMmZmIn0=",
+        "rndr-id": "896e44c9-a306-4575",
+        "server": "cloudflare",
+        "vary": "Origin, Accept-Encoding",
+        "x-powered-by": "Express",
+        "x-ratelimit-limit": "100",
+        "x-ratelimit-remaining": "97",
+        "x-ratelimit-reset": "52",
+        "x-render-origin-server": "Render"
+      },
+      "raw_response_body": {
+        "id": "gen-1783401548-wo9CDSxtAdCcDPd974QN",
+        "object": "chat.completion",
+        "created": 1783401548,
+        "model": "openai/gpt-4o-mini",
+        "provider": "Azure",
+        "system_fingerprint": "fp_965c8b9ecf",
+        "service_tier": null,
+        "choices": [
+          {
+            "index": 0,
+            "logprobs": null,
+            "finish_reason": "stop",
+            "native_finish_reason": "stop",
+            "message": {
+              "role": "assistant",
+              "content": "Reconciliation in payments refers to the process of verifying and matching financial transactions recorded in an organization's accounts with external records to ensure accuracy and consistency in financial reporting.",
+              "refusal": null,
+              "reasoning": null
+            }
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 20,
+          "completion_tokens": 32,
+          "total_tokens": 52,
+          "cost": 0.0000222,
+          "is_byok": false,
+          "prompt_tokens_details": {
+            "cached_tokens": 0,
+            "cache_write_tokens": 0,
+            "audio_tokens": 0,
+            "video_tokens": 0
+          },
+          "cost_details": {
+            "upstream_inference_cost": 0.0000222,
+            "upstream_inference_prompt_cost": 0.000003,
+            "upstream_inference_completions_cost": 0.0000192
+          },
+          "completion_tokens_details": {
+            "reasoning_tokens": 0,
+            "image_tokens": 0,
+            "audio_tokens": 0
+          }
+        }
+      }
+    },
+    {
+      "i": 18,
+      "http_status": 200,
+      "denied": false,
+      "error": null,
+      "response_headers": {
+        "access-control-allow-credentials": "true",
+        "alt-svc": "h3=\":443\"; ma=86400",
+        "cf-cache-status": "DYNAMIC",
+        "cf-ray": "a17464b909326803-SJC",
+        "connection": "keep-alive",
+        "content-encoding": "br",
+        "content-length": "500",
+        "content-type": "application/json; charset=utf-8",
+        "date": "Tue, 07 Jul 2026 05:19:19 GMT",
+        "etag": "W/\"3db-FFFAPAr7+QMQHhnBSioMzEhimY4\"",
+        "payment-response": "eyJzdWNjZXNzIjp0cnVlLCJ0cmFuc2FjdGlvbiI6IiIsIm5ldHdvcmsiOiJzYXBpb206bWFpbiIsInBheWVyIjoiMGY2YTU2YmEtZGViMy00MzA3LTkyYWEtZWY3OTIyOTMwMmZmIn0=",
+        "rndr-id": "ae47ca51-88d3-4158",
+        "server": "cloudflare",
+        "vary": "Origin, Accept-Encoding",
+        "x-powered-by": "Express",
+        "x-ratelimit-limit": "100",
+        "x-ratelimit-remaining": "95",
+        "x-ratelimit-reset": "43",
+        "x-render-origin-server": "Render"
+      },
+      "raw_response_body": {
+        "id": "gen-1783401557-KiZYBhPtijqJ29XvxtXT",
+        "object": "chat.completion",
+        "created": 1783401557,
+        "model": "openai/gpt-4o-mini",
+        "provider": "OpenAI",
+        "system_fingerprint": "fp_dd933fdd28",
+        "service_tier": null,
+        "choices": [
+          {
+            "index": 0,
+            "logprobs": null,
+            "finish_reason": "stop",
+            "native_finish_reason": "stop",
+            "message": {
+              "role": "assistant",
+              "content": "Reconciliation in payments refers to the process of comparing and matching financial transactions recorded in two or more systems to ensure accuracy and consistency in financial reporting.",
+              "refusal": null,
+              "reasoning": null
+            }
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 20,
+          "completion_tokens": 29,
+          "total_tokens": 49,
+          "cost": 0.0000204,
+          "is_byok": false,
+          "prompt_tokens_details": {
+            "cached_tokens": 0,
+            "cache_write_tokens": 0,
+            "audio_tokens": 0,
+            "video_tokens": 0
+          },
+          "cost_details": {
+            "upstream_inference_cost": 0.0000204,
+            "upstream_inference_prompt_cost": 0.000003,
+            "upstream_inference_completions_cost": 0.0000174
+          },
+          "completion_tokens_details": {
+            "reasoning_tokens": 0,
+            "image_tokens": 0,
+            "audio_tokens": 0
+          }
+        }
+      }
+    },
+    {
+      "i": 19,
+      "http_status": 200,
+      "denied": false,
+      "error": null,
+      "response_headers": {
+        "access-control-allow-credentials": "true",
+        "alt-svc": "h3=\":443\"; ma=86400",
+        "cf-cache-status": "DYNAMIC",
+        "cf-ray": "a17464ec7dfa1d41-SJC",
+        "connection": "keep-alive",
+        "content-encoding": "br",
+        "content-length": "548",
+        "content-type": "application/json; charset=utf-8",
+        "date": "Tue, 07 Jul 2026 05:19:27 GMT",
+        "etag": "W/\"436-NBsjH26uMnsva73x8AwkxvA7pe0\"",
+        "payment-response": "eyJzdWNjZXNzIjp0cnVlLCJ0cmFuc2FjdGlvbiI6IiIsIm5ldHdvcmsiOiJzYXBpb206bWFpbiIsInBheWVyIjoiMGY2YTU2YmEtZGViMy00MzA3LTkyYWEtZWY3OTIyOTMwMmZmIn0=",
+        "rndr-id": "087b6679-4a54-4312",
+        "server": "cloudflare",
+        "vary": "Origin, Accept-Encoding",
+        "x-powered-by": "Express",
+        "x-ratelimit-limit": "100",
+        "x-ratelimit-remaining": "93",
+        "x-ratelimit-reset": "34",
+        "x-render-origin-server": "Render"
+      },
+      "raw_response_body": {
+        "id": "gen-1783401566-Z64GOT8KM9NC91xSclOx",
+        "object": "chat.completion",
+        "created": 1783401566,
+        "model": "openai/gpt-4o-mini",
+        "provider": "OpenAI",
+        "system_fingerprint": "fp_dd933fdd28",
+        "service_tier": null,
+        "choices": [
+          {
+            "index": 0,
+            "logprobs": null,
+            "finish_reason": "stop",
+            "native_finish_reason": "stop",
+            "message": {
+              "role": "assistant",
+              "content": "Reconciliation in payments refers to the process of ensuring that two sets of records (typically the financial records of a company and the records provided by a payment processor or bank) agree and match, verifying the accuracy of transactions and identifying any discrepancies.",
+              "refusal": null,
+              "reasoning": null
+            }
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 20,
+          "completion_tokens": 48,
+          "total_tokens": 68,
+          "cost": 0.0000318,
+          "is_byok": false,
+          "prompt_tokens_details": {
+            "cached_tokens": 0,
+            "cache_write_tokens": 0,
+            "audio_tokens": 0,
+            "video_tokens": 0
+          },
+          "cost_details": {
+            "upstream_inference_cost": 0.0000318,
+            "upstream_inference_prompt_cost": 0.000003,
+            "upstream_inference_completions_cost": 0.0000288
+          },
+          "completion_tokens_details": {
+            "reasoning_tokens": 0,
+            "image_tokens": 0,
+            "audio_tokens": 0
+          }
+        }
+      }
+    },
+    {
+      "i": 20,
+      "http_status": 402,
+      "denied": true,
+      "error": null,
+      "response_headers": {
+        "access-control-allow-credentials": "true",
+        "alt-svc": "h3=\":443\"; ma=86400",
+        "cf-cache-status": "DYNAMIC",
+        "cf-ray": "a17465197b8dfa36-SJC",
+        "connection": "keep-alive",
+        "content-encoding": "br",
+        "content-length": "252",
+        "content-type": "application/json; charset=utf-8",
+        "date": "Tue, 07 Jul 2026 05:19:33 GMT",
+        "etag": "W/\"16d-IhAOjdEPw3WaF5GCwNfHSi/iz0U\"",
+        "payment-required": "eyJ4NDAyVmVyc2lvbiI6MiwiZXJyb3IiOiJQYXltZW50IHJlcXVpcmVkIiwicmVzb3VyY2UiOnsidXJsIjoiaHR0cDovL29wZW5yb3V0ZXIuc2VydmljZXMuc2FwaW9tLmFpL3YxL2NoYXQvY29tcGxldGlvbnMiLCJkZXNjcmlwdGlvbiI6Ik9wZW5Sb3V0ZXIgY2hhdCBjb21wbGV0aW9uIiwibWltZVR5cGUiOiJhcHBsaWNhdGlvbi9qc29uIn0sImFjY2VwdHMiOlt7InNjaGVtZSI6InVwdG8iLCJuZXR3b3JrIjoic2FwaW9tOm1haW4iLCJhbW91bnQiOiIwLjAwMDI0MyIsImFzc2V0IjoiVVNEIiwicGF5VG8iOiIzOTdiOTM5NS1kMzBkLTQyY2MtYWJmOS0wYzU2NjI5ZDFjMmYiLCJtYXhUaW1lb3V0U2Vjb25kcyI6MzAwLCJleHRyYSI6e319XX0=",
+        "rndr-id": "665e498f-9943-4060",
+        "server": "cloudflare",
+        "vary": "Origin, Accept-Encoding",
+        "x-powered-by": "Express",
+        "x-ratelimit-limit": "100",
+        "x-ratelimit-remaining": "92",
+        "x-ratelimit-reset": "27",
+        "x-render-origin-server": "Render"
+      },
+      "raw_response_body": {
+        "x402Version": 2,
+        "error": "Payment required",
+        "resource": {
+          "url": "http://openrouter.services.sapiom.ai/v1/chat/completions",
+          "description": "OpenRouter chat completion",
+          "mimeType": "application/json"
+        },
+        "accepts": [
+          {
+            "scheme": "upto",
+            "network": "sapiom:main",
+            "amount": "0.000243",
+            "asset": "USD",
+            "payTo": "397b9395-d30d-42cc-abf9-0c56629d1c2f",
+            "maxTimeoutSeconds": 300,
+            "extra": {}
+          }
+        ]
+      }
+    }
+  ]
+}

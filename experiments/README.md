@@ -11,9 +11,11 @@ not discriminate from outside, and the questions only Sapiom's server-side logs 
 | # | Doc | Question | Status |
 |---|---|---|---|
 | 01 | [Hold pricing & capture ratio](01_hold_pricing_and_capture_ratio.md) | What prices an LLM hold? What does the fleet-level 18% capture actually mean? | complete |
-| 02 | frozen capital / hold recovery | Do retained holds (post-hold failures, denied-at-auth) ever release? | planned — data exists (`dryrun/REFUND_WATCH.md`, `denial_analytics.md`) |
-| 03 | governance cumulative double-count | Why did a $0.005 rule deny at $0.0037 of true spend? | planned — data exists (`dryrun/r5_boundary.md`) |
+| 02 | [Frozen capital / orphan holds](02_frozen_capital_orphan_holds.md) | Do retained holds (post-hold crash, deny-after-hold) ever release? | complete |
+| 03 | [Governance cumulative double-count](03_governance_cumulative_double_count.md) | Why did a $0.005 rule deny at $0.0037 of true spend? | complete |
 | 04 | TOCTOU authorization race | Do concurrent calls leak past a budget? | planned — data exists (`dryrun/toctou_latency_experiment.md`) |
+
+Inconclusive / low-signal runs (idempotency replay, etc.) are logged in [minor_probes.md](minor_probes.md), not given a numbered doc.
 
 Tenant for all experiments: `7234a7f9-4074-4aad-b13f-84e0e28b469a` · window 2026-07-04 → 2026-07-07.
 
