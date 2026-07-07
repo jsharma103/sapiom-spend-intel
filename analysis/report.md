@@ -19,8 +19,8 @@
 | sweep-search | 1 | $0.006000 |
 | sweep-images | 2 | $0.003000 |
 | spend-writer | 10 | $0.002910 |
-| fleet-test | 10 | $0.001000 |
 | sweep-audio | 1 | $0.001000 |
+| fleet-test | 10 | $0.001000 |
 | estimate-test | 2 | $0.000972 |
 | sweep-compute | 2 | $0.000690 |
 | scale-test | 3 | $0.000300 |

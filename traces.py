@@ -15,7 +15,7 @@ from decimal import Decimal
 import duckdb
 
 DEFAULT_DB = "spend.duckdb"
-DEFAULT_OUT = "traces.md"
+DEFAULT_OUT = "analysis/traces.md"
 
 
 def fmt_usd(d) -> str:

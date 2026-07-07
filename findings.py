@@ -27,7 +27,7 @@ from decimal import Decimal
 import duckdb
 
 DEFAULT_DB = "spend.duckdb"
-DEFAULT_OUT = "findings.md"
+DEFAULT_OUT = "analysis/findings.md"
 
 # Runaway heuristic thresholds (see METHODOLOGY note in Check 5's section).
 RUNAWAY_GAP_RATIO = 0.2   # flag if agent's median gap < 20% of peer median gap

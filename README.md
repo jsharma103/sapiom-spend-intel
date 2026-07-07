@@ -11,7 +11,7 @@ I put a fleet of agents on Sapiom and audited it like a payments ledger. It reco
 agent-scale transaction volume that's real customer capital sitting frozen, not spent, and the
 ledger that has to track it honestly runs at petabytes a day. That's the data platform I build.
 
-*(Full story + delivery notes: [`NARRATIVE.md`](./NARRATIVE.md). Full numbers: [`report.md`](./report.md) / [`findings.md`](./findings.md).)*
+*(Full story + delivery notes: [`NARRATIVE.md`](./docs/NARRATIVE.md). Full numbers: [`report.md`](./analysis/report.md) / [`findings.md`](./analysis/findings.md).)*
 
 ---
 
@@ -38,7 +38,7 @@ Running the four checks against 50 real transactions across 5 agents:
 - **The float is real, not bookkeeping.** Ten parallel calls (cap 900) were fired while polling the account balance every 500ms: balance dropped from $4.767518 to $4.763074 mid-flight — the in-flight holds froze **4.4× the actual settled cost** ($0.00444 held vs $0.001 settled) — then recovered as settlements landed. Under concurrency, holds genuinely reduce available balance: a fleet of agents with generous caps needs proportionally more wallet than it actually spends.
 - **Chain integrity is clean.** 0 orphaned superseded rows, 0 completed transactions with no cost row, 0 double-live-row transactions (the double-charge bug). No structural corruption in the ledger.
 
-Full numbers and per-agent breakdown: [`report.md`](./report.md).
+Full numbers and per-agent breakdown: [`report.md`](./analysis/report.md).
 
 ## The four checks
 
@@ -53,7 +53,7 @@ Three-stage pipeline:
 
 1. **`generate_spend.js`** — drives real spend through 3 Sapiom agents (a steady researcher, a steady writer, and a deliberate runaway agent that bursts calls with almost no delay — anomaly data for later).
 2. **`ingest.py`** — pulls transactions and account balance from the Sapiom API into DuckDB. Idempotent (safe to re-run), with inline data-quality asserts (unique IDs, no negative costs, no orphaned foreign keys).
-3. **`audit.py`** — runs the four SQL checks above against `spend.duckdb` and writes `report.md`.
+3. **`audit.py`** — runs the four SQL checks above against `spend.duckdb` and writes `analysis/report.md`.
 
 To run it:
 

@@ -37,7 +37,7 @@ from decimal import Decimal
 import duckdb
 
 DEFAULT_DB = "spend.duckdb"
-DEFAULT_OUT = "advisor.md"
+DEFAULT_OUT = "analysis/advisor.md"
 RATE_PER_TOKEN_USD = Decimal("0.0006") / Decimal("1000")  # $/token, from cap_experiment_result.json
 DEFAULT_BUFFER = 1.3
 

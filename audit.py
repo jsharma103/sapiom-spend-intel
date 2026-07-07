@@ -10,7 +10,7 @@ from decimal import Decimal
 import duckdb
 
 DEFAULT_DB = "spend.duckdb"
-DEFAULT_OUT = "report.md"
+DEFAULT_OUT = "analysis/report.md"
 DEFAULT_INITIAL_BALANCE = Decimal("5.00")
 BALANCE_TOLERANCE = Decimal("0.000001")
 

@@ -12,7 +12,7 @@ import argparse
 import duckdb
 
 DEFAULT_DB = "spend.duckdb"
-DEFAULT_OUT = "reliability.md"
+DEFAULT_OUT = "analysis/reliability.md"
 
 # Ground-truth root-cause notes for errors captured tonight, cross-referenced
 # against the service_sweep debugging work (RUN_LOG.md item 1) — the ledger
