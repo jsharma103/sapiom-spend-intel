@@ -116,3 +116,20 @@ love to compare notes on how the SDK resolves that today.
 | Phantom Spend Rate (Section 2) | +10.03% | same number as the naive-sum overstatement above, reused; `export_dashboard.py:tile_phantom_spend_rate` |
 | Refund-on-Failure (Section 2) | In-sample 0/2 natural failures ever held a cost (pre-hold, nothing to release); direct test 4/4 forced post-hold failures show the hold **retained/frozen**, mean $0.076803, zero variance — fleet frequency of post-hold failures NOT measured | `findings.md` §9; `dryrun/failure_capture_n3.md`; `dryrun/hold_linearity_extension.md`; `export_dashboard.py:tile_refund_on_failure`. Rewritten from an earlier, wrong "not yet run" placeholder — the test was run and is confirmed. |
 | KYA Scorecard velocity grades (relabeled from "risk grade" — velocity-only, spend not a factor) | fleet-test **F**, spend-runaway **C**, spend-researcher **B**, cap-test/chain-task/scale-test/spend-writer **A**, 9 agents (<3 calls) **N/A** | `export_dashboard.py:kya_scorecard` — transparent formula (60 pts velocity-anomaly flag + up to 30 pts scaled peak-burst) shown in the dashboard tooltip. Note spend is NOT part of the score: spend-runaway is ~54% of all TPV and grades C; fleet-test is ~0.4% of TPV and grades F. |
+
+---
+
+## Smart questions to ask (Jul 8 onsite)
+
+### The hold-expiry question — strongest one, backed by a fresh measurement
+
+**The data (refund_watch, read-only, 2026-07-06 18:53 PT — 47h after the last spend):**
+frozen gap grew $0.518946 → **$0.525856** (+$0.006910); the 4 failure-capture holds still on the books at full **$0.307212** (unchanged); totalBalance *dropped* $0.006900 on a completely idle account. Nothing released. Normal holds clear in 5.3–12 **seconds**; these have survived **2+ days**. Source: `dryrun/refund_watch.log` (v2 line, 2026-07-07T02:53Z).
+
+**For Jordi (protocol framing):**
+> "Fail-after-hold froze $0.077 per call, 4/4 reproduced. I left a read-only watcher on it — two days later it's still frozen, and the frozen aggregate actually *grew* while the account sat idle. Is there a hold-expiry sweep, or is this capital leaked until someone manually reconciles?"
+
+**For Ilan (payments framing):**
+> "In card processing, an uncaptured auth auto-expires in days and the float returns. Here I've measured holds that survive failure indefinitely — at agent scale that's customer capital leaking on every failed call. What's the intended release path?"
+
+**Honesty guardrails (per the rules above):** mechanism measured (4/4, zero variance, exact $0.076803 each); duration observed (47h+, one account); fleet frequency of post-hold failures NOT measured; the idle-account balance movement (−$0.0069 total, +$0.0069 frozen, near-identical magnitudes) is unexplained — state it as an observation, not an accusation. Invitation, never gotcha.

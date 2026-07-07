@@ -1,3 +1,4 @@
 2026-07-04T18:10:12.292Z	available=4.432691	total=4.721228	activeCost=0.076803	superseded=false	verdict=STILL-CAPTURED
 # --- format changed 2026-07-04: v2 tracks all 4 failure-capture holds + aggregate frozen gap (see REFUND_WATCH.md) ---
 2026-07-04T18:54:29.244Z	available=4.202282	total=4.721228	frozen=0.518946	holdsSum=0.307212	residual=0.211734	d59fb015=FROZEN($0.076803)|c2c2ef60=FROZEN($0.076803)|0d248074=FROZEN($0.076803)|2f8bec77=FROZEN($0.076803)	rollup=4 FROZEN / 0 RELEASED / 0 GONE	prevFrozen=0.288537	frozenDelta=+0.230409
+2026-07-07T02:53:30.079Z	available=4.188472	total=4.714328	frozen=0.525856	holdsSum=0.307212	residual=0.218644	d59fb015=GONE($0.076803)|c2c2ef60=GONE($0.076803)|0d248074=GONE($0.076803)|2f8bec77=GONE($0.076803)	rollup=0 FROZEN / 0 RELEASED / 4 GONE	prevFrozen=0.518946	frozenDelta=+0.006910
