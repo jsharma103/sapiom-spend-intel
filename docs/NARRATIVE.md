@@ -123,13 +123,13 @@ love to compare notes on how the SDK resolves that today.
 
 ### The hold-expiry question — strongest one, backed by a fresh measurement
 
-**The data (refund_watch, read-only, 2026-07-06 18:53 PT — 47h after the last spend):**
-frozen gap grew $0.518946 → **$0.525856** (+$0.006910); the 4 failure-capture holds still on the books at full **$0.307212** (unchanged); totalBalance *dropped* $0.006900 on a completely idle account. Nothing released. Normal holds clear in 5.3–12 **seconds**; these have survived **2+ days**. Source: `dryrun/refund_watch.log` (v2 line, 2026-07-07T02:53Z).
+**The data (refund_watch, read-only, 2026-07-06 18:53 PT — 47h after the holds were placed):**
+the 4 failure-capture holds are still on the books at full **$0.307212** (holdsSum unchanged between readings). Nothing released. Normal holds clear in 5.3–12 **seconds**; these have survived **2+ days**. Source: `dryrun/refund_watch.log` (v2 line, 2026-07-07T02:53Z). *(Aggregate balance movement between the two readings is NOT usable as evidence — other experiments were running against the same wallet in that window, so only the per-hold sums are clean. An earlier draft claimed the account was idle; it wasn't. Cut per the honesty rules.)*
 
 **For Jordi (protocol framing):**
-> "Fail-after-hold froze $0.077 per call, 4/4 reproduced. I left a read-only watcher on it — two days later it's still frozen, and the frozen aggregate actually *grew* while the account sat idle. Is there a hold-expiry sweep, or is this capital leaked until someone manually reconciles?"
+> "Fail-after-hold froze $0.077 per call, 4/4 reproduced. I left a read-only watcher on it — two days later all four holds are still frozen at the full amount. Is there a hold-expiry sweep, or is this capital leaked until someone manually reconciles?"
 
 **For Ilan (payments framing):**
 > "In card processing, an uncaptured auth auto-expires in days and the float returns. Here I've measured holds that survive failure indefinitely — at agent scale that's customer capital leaking on every failed call. What's the intended release path?"
 
-**Honesty guardrails (per the rules above):** mechanism measured (4/4, zero variance, exact $0.076803 each); duration observed (47h+, one account); fleet frequency of post-hold failures NOT measured; the idle-account balance movement (−$0.0069 total, +$0.0069 frozen, near-identical magnitudes) is unexplained — state it as an observation, not an accusation. Invitation, never gotcha.
+**Honesty guardrails (per the rules above):** mechanism measured (4/4, zero variance, exact $0.076803 each); duration observed (47h+, one account); fleet frequency of post-hold failures NOT measured; aggregate wallet movement in the window is confounded by concurrent experiments and must not be cited — only the per-hold sums. Invitation, never gotcha.
