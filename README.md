@@ -59,9 +59,21 @@ To run it:
 
 ```bash
 export SAPIOM_API_KEY=your_key_here
-node generate_spend.js
-./.venv/bin/python ingest.py
-./.venv/bin/python audit.py
+node src/generate_spend.js
+./.venv/bin/python src/ingest.py
+./.venv/bin/python src/audit.py
+```
+
+## Repo structure
+
+```
+dashboard.html, dashboard_data.*   GitHub Pages front door
+src/                               pipeline: generate → ingest → audit → export
+data/                              spend.duckdb
+analysis/                          generated findings
+docs/                              process log & prep notes
+dryrun/                            lab notebook: raw experiments
+tests/                             fixtures
 ```
 
 ## Cost

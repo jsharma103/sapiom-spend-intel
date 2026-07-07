@@ -6,16 +6,18 @@ Requires BUILD 3 (chaining experiment) to have run at least once — grouping
 is on `trace_external_id`, which stays NULL until a chained call sets it.
 
 Usage:
-    python traces.py [--db spend.duckdb] [--out traces.md]
+    python src/traces.py [--db spend.duckdb] [--out traces.md]
 """
 import argparse
 from collections import Counter
 from decimal import Decimal
+from pathlib import Path
 
 import duckdb
 
-DEFAULT_DB = "spend.duckdb"
-DEFAULT_OUT = "analysis/traces.md"
+REPO = Path(__file__).resolve().parents[1]
+DEFAULT_DB = str(REPO / "data" / "spend.duckdb")
+DEFAULT_OUT = str(REPO / "analysis" / "traces.md")
 
 
 def fmt_usd(d) -> str:

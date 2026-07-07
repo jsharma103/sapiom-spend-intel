@@ -5,14 +5,16 @@ per service. Writes reliability.md.
 Zero spend: reads spend.duckdb only, no network calls, no API key needed.
 
 Usage:
-    python reliability.py [--db spend.duckdb] [--out reliability.md]
+    python src/reliability.py [--db spend.duckdb] [--out reliability.md]
 """
 import argparse
+from pathlib import Path
 
 import duckdb
 
-DEFAULT_DB = "spend.duckdb"
-DEFAULT_OUT = "analysis/reliability.md"
+REPO = Path(__file__).resolve().parents[1]
+DEFAULT_DB = str(REPO / "data" / "spend.duckdb")
+DEFAULT_OUT = str(REPO / "analysis" / "reliability.md")
 
 # Ground-truth root-cause notes for errors captured tonight, cross-referenced
 # against the service_sweep debugging work (RUN_LOG.md item 1) — the ledger

@@ -28,16 +28,18 @@ different input/output per-token rates) — stated here explicitly per the
 "state sample size + conditions" honesty rule, not fabricated as exact.
 
 Usage:
-    python advisor.py [--db spend.duckdb] [--out advisor.md] [--buffer 1.3]
+    python src/advisor.py [--db spend.duckdb] [--out advisor.md] [--buffer 1.3]
 """
 import argparse
 import math
 from decimal import Decimal
+from pathlib import Path
 
 import duckdb
 
-DEFAULT_DB = "spend.duckdb"
-DEFAULT_OUT = "analysis/advisor.md"
+REPO = Path(__file__).resolve().parents[1]
+DEFAULT_DB = str(REPO / "data" / "spend.duckdb")
+DEFAULT_OUT = str(REPO / "analysis" / "advisor.md")
 RATE_PER_TOKEN_USD = Decimal("0.0006") / Decimal("1000")  # $/token, from cap_experiment_result.json
 DEFAULT_BUFFER = 1.3
 

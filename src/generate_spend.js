@@ -16,8 +16,8 @@ import { createFetch } from '@sapiom/fetch';
 // counted and logged, not thrown.
 //
 // Usage:
-//   node generate_spend.js --dry   # print the plan, fire nothing
-//   node generate_spend.js         # real run, real spend
+//   node src/generate_spend.js --dry   # print the plan, fire nothing
+//   node src/generate_spend.js         # real run, real spend
 // ---------------------------------------------------------------------------
 
 const DRY = process.argv.includes('--dry');

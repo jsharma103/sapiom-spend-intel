@@ -2,15 +2,17 @@
 """Stage 3 — reconciliation audit over spend.duckdb. Writes report.md.
 
 Usage:
-    python audit.py [--db spend.duckdb] [--initial-balance 5.00] [--out report.md]
+    python src/audit.py [--db spend.duckdb] [--initial-balance 5.00] [--out report.md]
 """
 import argparse
 from decimal import Decimal
+from pathlib import Path
 
 import duckdb
 
-DEFAULT_DB = "spend.duckdb"
-DEFAULT_OUT = "analysis/report.md"
+REPO = Path(__file__).resolve().parents[1]
+DEFAULT_DB = str(REPO / "data" / "spend.duckdb")
+DEFAULT_OUT = str(REPO / "analysis" / "report.md")
 DEFAULT_INITIAL_BALANCE = Decimal("5.00")
 BALANCE_TOLERANCE = Decimal("0.000001")
 

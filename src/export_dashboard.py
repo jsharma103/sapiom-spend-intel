@@ -29,7 +29,7 @@ tile_phantom_spend_rate / tile_hold_release_latency / tile_refund_on_failure /
 kya_scorecard below.
 
 Usage:
-    python export_dashboard.py [--db spend.duckdb] [--out dashboard_data.json]
+    python src/export_dashboard.py [--db spend.duckdb] [--out dashboard_data.json]
 """
 import argparse
 import importlib.util
@@ -40,8 +40,9 @@ from pathlib import Path
 import duckdb
 
 HERE = Path(__file__).resolve().parent
-DEFAULT_DB = str(HERE / "spend.duckdb")
-DEFAULT_OUT = str(HERE / "dashboard_data.json")
+REPO = HERE.parent
+DEFAULT_DB = str(REPO / "data" / "spend.duckdb")
+DEFAULT_OUT = str(REPO / "dashboard_data.json")
 
 SCALE_TARGET_DAILY_TPV = 1_000_000  # the "$1M/day TPV" scale-hook, per BACKLOG BUILD 6
 

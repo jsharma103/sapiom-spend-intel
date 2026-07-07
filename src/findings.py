@@ -4,7 +4,7 @@
 Zero spend: reads spend.duckdb only, no network calls, no API key needed.
 
 Usage:
-    python findings.py [--db spend.duckdb] [--out findings.md]
+    python src/findings.py [--db spend.duckdb] [--out findings.md]
 
 Sections (see BACKLOG.md BUILD 2 for the spec each one implements):
   1. Settlement latency        — authorizedAt -> live-cost createdAt, p50/p95 per service
@@ -23,11 +23,13 @@ Sections (see BACKLOG.md BUILD 2 for the spec each one implements):
 import argparse
 import statistics
 from decimal import Decimal
+from pathlib import Path
 
 import duckdb
 
-DEFAULT_DB = "spend.duckdb"
-DEFAULT_OUT = "analysis/findings.md"
+REPO = Path(__file__).resolve().parents[1]
+DEFAULT_DB = str(REPO / "data" / "spend.duckdb")
+DEFAULT_OUT = str(REPO / "analysis" / "findings.md")
 
 # Runaway heuristic thresholds (see METHODOLOGY note in Check 5's section).
 RUNAWAY_GAP_RATIO = 0.2   # flag if agent's median gap < 20% of peer median gap

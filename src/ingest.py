@@ -2,9 +2,9 @@
 """Stage 2 — ingest Sapiom transactions + account balance into DuckDB.
 
 Real mode (default):
-    SAPIOM_API_KEY=... python ingest.py
+    SAPIOM_API_KEY=... python src/ingest.py
 Fixture mode (no key / no network required):
-    python ingest.py --from-file tests/fixture_transactions.json
+    python src/ingest.py --from-file tests/fixture_transactions.json
 
 Writes/updates spend.duckdb with three tables: transactions, costs,
 balance_snapshots. Safe to rerun (INSERT OR REPLACE on PK).
@@ -16,12 +16,14 @@ import sys
 import urllib.error
 import urllib.request
 from datetime import datetime, timezone
+from pathlib import Path
 from urllib.parse import urlsplit, urlunsplit
 
 API_BASE = "https://api.sapiom.ai"
 TRANSACTIONS_PATH = "/v1/transactions"
 ACCOUNTS_PATH = "/v1/accounts"
-DEFAULT_DB = "spend.duckdb"
+REPO = Path(__file__).resolve().parents[1]
+DEFAULT_DB = str(REPO / "data" / "spend.duckdb")
 
 
 def die(msg: str) -> None:
