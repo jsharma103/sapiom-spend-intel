@@ -60,8 +60,8 @@ To run it:
 ```bash
 export SAPIOM_API_KEY=your_key_here
 node generate_spend.js
-~/projects/infer_takehome/.venv/bin/python ingest.py
-~/projects/infer_takehome/.venv/bin/python audit.py
+./.venv/bin/python ingest.py
+./.venv/bin/python audit.py
 ```
 
 ## Cost

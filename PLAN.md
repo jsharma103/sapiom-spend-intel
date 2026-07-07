@@ -31,7 +31,7 @@ README.md                stage 4
 package.json             (move/copy dryrun deps: @sapiom/fetch)
 ```
 
-Python: use `~/projects/infer_takehome/.venv/bin/python` (has no duckdb? — pip install duckdb into it, or `python3 -m pip install --user duckdb`; agent verifies).
+Python: use `./.venv/bin/python` (has no duckdb? — pip install duckdb into it, or `python3 -m pip install --user duckdb`; agent verifies).
 
 ## Stage 1 — generate_spend.js (Sonnet)
 

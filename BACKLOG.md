@@ -14,7 +14,7 @@ Setup, verified API facts, and repo layout live in `PLAN.md` and `README.md` (sa
 ## PREREQUISITES
 
 - Env: `export SAPIOM_API_KEY=...` — set in Jay's terminal only; it spends real money, the agent never has it. **⚠️ In an autonomous-agent harness, EACH shell call is a FRESH shell — env does NOT persist between separate commands.** `source .env` in one call has no effect on the next command. EVERY key-needing command must inline the load in the SAME command: `set -a && source .env && set +a && <command>` (for node: `node --env-file=.env script.js`). Applies to service_sweep, ingest.py, chaining, and any spend script.
-- Python: `~/projects/infer_takehome/.venv/bin/python` (duckdb 1.5.4 installed).
+- Python: `./.venv/bin/python` (duckdb 1.4.5 installed).
 - Node: `@sapiom/fetch` already `npm install`ed at repo root and in `dryrun/`. ESM (`"type": "module"`).
 - Governance API: `GET https://api.sapiom.ai/v1/...` requires header `User-Agent: curl/8.6.0` (omit it → Cloudflare 1010 block). Pagination: prefer `page[limit]=100` over following `links.next`.
 - Working reference scripts to copy from: `dryrun/hypothesis_test.js`, `dryrun/cap_experiment.js`, `dryrun/extrapolation_experiment.js`. Pipeline order: `generate_spend.js` → `ingest.py` → `audit.py`.
