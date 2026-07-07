@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-04T23:33:02.937661+00:00",
+  "generated_at": "2026-07-07T04:32:26.299848+00:00",
   "header": {
     "n_txns": 81,
     "n_agents": 16,
@@ -24,15 +24,32 @@
     "sum_settled_usd": 0.004998,
     "n_chains": 27,
     "overhang_ratio": 5.569827931172469,
-    "subline": "holds are ~5.6x oversized vs settlement \u2014 a float inefficiency, not lost revenue (authorize $1.00 \u2192 capture $0.18)",
-    "scale_note": "instantaneously frozen \u2248 $61\u2013$138 at $1M/day TPV (Little's Law; holds clear in 5.3\u201312.0s) \u2014 lever = hold-lifetime & max_tokens right-sizing. Assumes steady-state (non-bursty) call arrivals \u2014 see dryrun/float_model.md \u00a75.",
+    "subline": "holds are ~5.6x oversized vs settlement \u2014 a float inefficiency, not lost revenue (authorize $1.00 \u2192 capture $0.18) \u00b7 capture % is workload-shaped (cap hygiene): right-sized ~100% \u00b7 this fleet 18% \u00b7 lazy 16k caps ~1%",
+    "scale_note": "to sustain $1M/day of settled spend, customer wallets carry \u2248 $341\u2013$771 frozen at any instant (Little's Law, validated live within 9% \u2014 dryrun/ll_validation.md; holds clear in 5.3\u201312.0s; held volume = 5.6x settled) \u2014 levers: hold-lifetime & max_tokens right-sizing. Assumes steady-state arrivals \u2014 float_model.md \u00a75.",
     "scope_note": "Scope: n=27 LLM chains (sapiom_openrouter only), one session, gpt-4o-mini \u2014 LLM-specific, not platform-wide.",
-    "instantaneous_frozen_p50_usd": 61.284722222222214,
-    "instantaneous_frozen_p95_usd": 138.4375,
+    "instantaneous_frozen_p50_usd": 341.3453575874794,
+    "instantaneous_frozen_p95_usd": 771.0730542216886,
     "hold_lifetime_p50_s": 5.295,
     "hold_lifetime_p95_s": 11.961,
     "naive_flow_at_scale_usd": 4569827.931172469,
-    "method_note": "Sigma settled (0.004998) / Sigma held (0.027838) dollar-weighted across all 27 supersession chains (hold \u2192 final capture). Little's Law: frozen$ = held$/day \u00d7 (hold_lifetime_sec / 86400) \u2014 at $1M/day TPV, p50 (5.29s) \u2192 $61.28, p95 (11.96s) \u2192 $138.44. Full derivation + sensitivity: dryrun/float_model.md. (Superseded framing: naively scaling the capture ratio gives $4,569,828 \u2014 a per-day FLOW, not an instantaneous stock; it implicitly assumes a ~4.57-day hold lifetime vs. the measured 5.3-12.0s, ~33,000x off. See float_model.md \u00a74d.)"
+    "method_note": "Sigma settled (0.004998) / Sigma held (0.027838) dollar-weighted across all 27 supersession chains (hold \u2192 final capture). Little's Law: frozen$ = settled$/day \u00d7 overhang \u00d7 (hold_lifetime_sec/86400) \u2014 at $1M/day TPV, p50 (5.29s) \u2192 $341.35, p95 (11.96s) \u2192 $771.07. Full derivation + sensitivity: dryrun/float_model.md. (Superseded framing: naively scaling the capture ratio gives $4,569,828 \u2014 a per-day FLOW, not an instantaneous stock; it implicitly assumes a ~4.57-day hold lifetime vs. the measured 5.3-12.0s, ~33,000x off. See float_model.md \u00a74d.)"
+  },
+  "hero_frozen_capital": {
+    "frozen_total_usd": 0.528259,
+    "wallet_total_usd": 4.710528,
+    "frozen_pct_of_wallet": 11.2,
+    "n_holds": 89,
+    "n_failure_holds": 4,
+    "failure_holds_usd": 0.307212,
+    "n_denied_holds": 85,
+    "denied_holds_usd": 0.221047,
+    "days_observed": 3,
+    "n_released": 0,
+    "snapshot_at": "2026-07-07",
+    "subline": "11.2% of wallet unavailable \u2014 4 failed-call holds ($0.307) + 85 denied-call holds ($0.221), zero released in 3 days",
+    "definition": "Money in a third state: not charged (totalBalance untouched), not returned (availableBalance reduced). No release/void API exists; no backend sweep observed.",
+    "scale_note": "failure mechanic is deterministic \u2014 4/4 forced post-hold failures froze the full max_tokens-priced hold; denial-after-hold froze 85/85. Frequency of post-hold failures in organic traffic is NOT measured \u2014 do not read this as a $/day loss rate.",
+    "method_note": "Live account snapshot 2026-07-07: unavailableBalance $0.528259 = 4 x $0.076803 failure holds (failure_capture_n3.md, hold_linearity_extension.md) + $0.221047 live holds on 85 denied transactions (denial_analytics.md) \u2014 ties to the micro-dollar. Cross-checked live: sampled failure holds still isActive:true, supersededAt:null, 3 days after placement (refund_watch.log)."
   },
   "hero_reconciliation": {
     "diff_usd": 0.0,

@@ -1,0 +1,116 @@
+{
+  "fetched_at": "2026-07-07T03:37:39.455Z",
+  "agent_name": "r3-idem-agent",
+  "replay_mode": "sdk-capture-replay",
+  "replays": [
+    {
+      "url": "https://api.sapiom.ai/v1/auth/tokens",
+      "idempotency_key": "98349643-d765-42e3-9272-e5466ee3ce97",
+      "original_status": 200,
+      "original_txn_id": null,
+      "replay_status": 200,
+      "replay_txn_id": null,
+      "replay_body_excerpt": "{\"identity\":\"eyJhbGciOiJFZERTQSIsInR5cCI6InNhcGlvbS1pZGVudGl0eStqd3QiLCJraWQiOiJzYXBpb20taWRlbnRpdHkta2V5LXYxIn0.eyJzYXBpb206diI6Miwic2FwaW9tOnRlbmFudCI6IjcyMzRhN2Y5LTQwNzQtNGFhZC1iMTNmLTg0ZTBlMjhiNDY5YSIsInNhcGlvbTpvcmciOiJmNGJhMjg1Yi0wODU1LTRhZTMtOTkwYy1lNWJkZWUyOTFjNDciLCJzYXBpb206YWNjIjoiMGY2YTU2YmEtZGViMy00MzA3LTkyYWEtZWY3OTIyOTMwMmZmIiwiaXNzIjoiaHR0cHM6Ly9hcGkuc2FwaW9tLmFpIiwic3ViIjoidGVuXzcyMzRhN2Y5LTQwNzQtNGFhZC1iMTNmLTg0ZTBlMjhiNDY5YSIsImF1ZCI6WyJzZXJ2aWNlcy5zYXBpb20uYWkiXSwiaWF0IjoxNzg"
+    },
+    {
+      "url": "https://api.sapiom.ai/v1/transactions",
+      "idempotency_key": "d17ab49d-4517-4ad0-a009-4e6e49844ac2",
+      "original_status": 201,
+      "original_txn_id": "70b37044-ae11-4070-b635-650ed367098a",
+      "replay_status": 201,
+      "replay_txn_id": "0a5ac472-d099-413d-87a8-c26e00ba3b73",
+      "replay_body_excerpt": "{\"id\":\"0a5ac472-d099-413d-87a8-c26e00ba3b73\",\"tenantId\":\"7234a7f9-4074-4aad-b13f-84e0e28b469a\",\"serviceName\":\"sapiom_openrouter\",\"actionName\":\"generate\",\"resourceName\":\"/v1/chat/completions\",\"serviceId\":\"0fb63c2c-067f-4d39-9ef2-036408fbb822\",\"status\":\"pending\",\"requiresPayment\":false,\"qualifiers\":{},\"metadata\":{\"preemptiveAuthorization\":true,\"createdByApiKeyId\":\"472392ae-9985-48a4-8040-4d6e7bfe2fc0\"},\"createdAt\":\"2026-07-07T03:37:32.954Z\",\"updatedAt\":\"2026-07-07T03:37:32.954Z\",\"authorizedAt\":nul"
+    },
+    {
+      "url": "https://api.sapiom.ai/v1/transactions/70b37044-ae11-4070-b635-650ed367098a/reauthorize",
+      "idempotency_key": "df81be95-c566-4706-b9f9-80646ed7a4aa",
+      "original_status": 200,
+      "original_txn_id": "70b37044-ae11-4070-b635-650ed367098a",
+      "replay_status": 200,
+      "replay_txn_id": "70b37044-ae11-4070-b635-650ed367098a",
+      "replay_body_excerpt": "{\"id\":\"70b37044-ae11-4070-b635-650ed367098a\",\"tenantId\":\"7234a7f9-4074-4aad-b13f-84e0e28b469a\",\"serviceName\":\"sapiom_openrouter\",\"actionName\":\"generate\",\"resourceName\":\"/v1/chat/completions\",\"serviceId\":\"0fb63c2c-067f-4d39-9ef2-036408fbb822\",\"status\":\"completed\",\"requiresPayment\":true,\"qualifiers\":{},\"metadata\":{\"createdByApiKeyId\":\"472392ae-9985-48a4-8040-4d6e7bfe2fc0\",\"preemptiveAuthorization\":true},\"createdAt\":\"2026-07-07T03:37:23.443Z\",\"updatedAt\":\"2026-07-07T03:37:26.673Z\",\"authorizedAt\":\"2"
+    },
+    {
+      "url": "https://api.sapiom.ai/v1/transactions/70b37044-ae11-4070-b635-650ed367098a/complete",
+      "idempotency_key": "51e90ef9-7130-4b24-b3c6-fb8546088845",
+      "original_status": 200,
+      "original_txn_id": "70b37044-ae11-4070-b635-650ed367098a",
+      "replay_status": 400,
+      "replay_txn_id": null,
+      "replay_body_excerpt": "{\"message\":\"Transaction 70b37044-ae11-4070-b635-650ed367098a must be in authorized status to complete. Current status: completed\",\"error\":\"Bad Request\",\"statusCode\":400}"
+    }
+  ],
+  "ledger_txns": [
+    {
+      "id": "0a5ac472-d099-413d-87a8-c26e00ba3b73",
+      "createdAt": "2026-07-07T03:37:32.954Z",
+      "status": "authorized",
+      "outcome": null,
+      "n_cost_rows": 0,
+      "live_usd": 0
+    },
+    {
+      "id": "70b37044-ae11-4070-b635-650ed367098a",
+      "createdAt": "2026-07-07T03:37:23.443Z",
+      "status": "completed",
+      "outcome": "success",
+      "n_cost_rows": 1,
+      "live_usd": 0.0001
+    }
+  ],
+  "n_ledger_txns": 2,
+  "total_live_charged_usd": 0.0001,
+  "dedupe_verdict": "NOT DEDUPED — replay produced a different/new result",
+  "captured_request_log": [
+    {
+      "url": "https://api.sapiom.ai/v1/auth/tokens",
+      "method": "POST",
+      "status": 200
+    },
+    {
+      "url": "https://api.sapiom.ai/v1/transactions",
+      "method": "POST",
+      "status": 201
+    },
+    {
+      "url": "https://api.sapiom.ai/v1/transactions/70b37044-ae11-4070-b635-650ed367098a",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "url": "https://api.sapiom.ai/v1/transactions/70b37044-ae11-4070-b635-650ed367098a",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "url": "https://openrouter.services.sapiom.ai/v1/chat/completions",
+      "method": "POST",
+      "status": 402
+    },
+    {
+      "url": "https://api.sapiom.ai/v1/transactions/70b37044-ae11-4070-b635-650ed367098a/reauthorize",
+      "method": "POST",
+      "status": 200
+    },
+    {
+      "url": "https://api.sapiom.ai/v1/transactions/70b37044-ae11-4070-b635-650ed367098a",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "url": "https://api.sapiom.ai/v1/transactions/70b37044-ae11-4070-b635-650ed367098a",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "url": "https://openrouter.services.sapiom.ai/v1/chat/completions",
+      "method": "POST",
+      "status": 200
+    },
+    {
+      "url": "https://api.sapiom.ai/v1/transactions/70b37044-ae11-4070-b635-650ed367098a/complete",
+      "method": "POST",
+      "status": 200
+    }
+  ]
+}

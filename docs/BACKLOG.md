@@ -260,7 +260,8 @@ Feeds: lineage/cost-per-task vertical (#1 trace), float finding (#3 stacking), r
 
 ## TIER 2 — cross-service / mechanics (generalize the finding)
 
-### [P2] Hold mechanics for OTHER variable-priced services
+### [P0 ⭐⭐ — UPGRADED from P2, 2026-07-07] Hold/pricing model for OTHER variable-priced services
+WHY P0: the entire capture-ratio/float story (18% capture, 5.6x overhang, frozen-at-scale) is measured on LLM chains ONLY (n=27, sapiom_openrouter). The 9-service sweep hit every other service with ONE tiny request and saw a flat single cost row — no hold/settle chain. Unknown whether those services never hold, or whether our requests were too small to trigger one. Until answered, every float number must carry "LLM-specific" and we cannot say whether the finding is a platform property or an OpenRouter-integration quirk. Single biggest scope gap in the findings.
 Same dissection as max_tokens, per service knob:
 - **Image gen (FAL)**: $0.004/megapixel — does hold scale with requested resolution/size param?
 - **Compute (Blaxel sandboxes)**: duration-priced — hold on estimated runtime? what's the estimate?

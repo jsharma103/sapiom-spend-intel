@@ -11,9 +11,12 @@ truth per metric.
 v2 layout per BACKLOG.md BUILD 6 (3 hero KPIs + 3 secondary tiles, payments-
 executive vocabulary, audience = ex-Shopify payments director):
   HERO ROW
-    1. TPV            - sum of live (non-superseded) costs
-    2. CAPTURE RATIO   - Sigma settled / Sigma held across supersession chains
-    3. RECONCILIATION  - balance ties out to $0.000000
+    1. TPV              - sum of live (non-superseded) costs
+    2. FROZEN CAPITAL    - live-account unrecovered holds snapshot (2026-07-07)
+    3. RECONCILIATION    - balance ties out to $0.000000
+  Capture Ratio (Sigma settled / Sigma held across supersession chains) demoted
+  from hero row to the first tile of the Section-1 Detail grid 2026-07-07
+  (LLM-only scope + workload-shaped magnitude).
   Each hero also carries a "scale hook": the same metric extrapolated to a
   hypothetical $1M/day TPV, computed from real data (not hardcoded).
   SECOND ROW
@@ -174,22 +177,25 @@ def hero_capture_ratio(con, hold_lifetime_p50_s=None, hold_lifetime_p95_s=None) 
     # dryrun/float_model.md §3/§4c. Hold lifetime = auth->capture latency for the
     # chained (LLM) service, findings.md §1 / tile_auth_to_capture (n=31,
     # sapiom_openrouter, p50=5.295s, p95=11.961s).
+    # Bug fix (2026-07-07): held$/day, not settled$/day (= SCALE_TARGET_DAILY_TPV),
+    # is the correct Little's-Law input — held = settled x overhang_ratio.
     instantaneous_frozen_p50_usd = (
-        SCALE_TARGET_DAILY_TPV * (hold_lifetime_p50_s / 86400)
-        if hold_lifetime_p50_s is not None else None
+        SCALE_TARGET_DAILY_TPV * overhang_ratio * (hold_lifetime_p50_s / 86400)
+        if hold_lifetime_p50_s is not None and overhang_ratio is not None else None
     )
     instantaneous_frozen_p95_usd = (
-        SCALE_TARGET_DAILY_TPV * (hold_lifetime_p95_s / 86400)
-        if hold_lifetime_p95_s is not None else None
+        SCALE_TARGET_DAILY_TPV * overhang_ratio * (hold_lifetime_p95_s / 86400)
+        if hold_lifetime_p95_s is not None and overhang_ratio is not None else None
     )
 
     if instantaneous_frozen_p50_usd is not None and instantaneous_frozen_p95_usd is not None:
         scale_note = (
-            f"instantaneously frozen ≈ ${instantaneous_frozen_p50_usd:,.0f}"
-            f"–${instantaneous_frozen_p95_usd:,.0f} at $1M/day TPV (Little's Law; holds "
-            f"clear in {hold_lifetime_p50_s:.1f}–{hold_lifetime_p95_s:.1f}s) — lever = "
-            "hold-lifetime & max_tokens right-sizing. Assumes steady-state (non-bursty) call "
-            "arrivals — see dryrun/float_model.md §5."
+            f"to sustain $1M/day of settled spend, customer wallets carry ≈ "
+            f"${instantaneous_frozen_p50_usd:,.0f}–${instantaneous_frozen_p95_usd:,.0f} frozen at any instant "
+            "(Little's Law, validated live within 9% — dryrun/ll_validation.md; holds "
+            f"clear in {hold_lifetime_p50_s:.1f}–{hold_lifetime_p95_s:.1f}s; held volume = "
+            f"{overhang_ratio:.1f}x settled) — levers: hold-lifetime & max_tokens right-sizing. "
+            "Assumes steady-state arrivals — float_model.md §5."
         )
     else:
         scale_note = "n/a (hold-lifetime data unavailable)"
@@ -207,6 +213,7 @@ def hero_capture_ratio(con, hold_lifetime_p50_s=None, hold_lifetime_p95_s=None) 
         "subline": (
             f"holds are ~{overhang_ratio:.1f}x oversized vs settlement — a float "
             f"inefficiency, not lost revenue (authorize $1.00 → capture ${capture_per_dollar:.2f})"
+            " · capture % is workload-shaped (cap hygiene): right-sized ~100% · this fleet 18% · lazy 16k caps ~1%"
             if capture_per_dollar is not None else "n/a"
         ),
         "scale_note": scale_note,
@@ -221,7 +228,7 @@ def hero_capture_ratio(con, hold_lifetime_p50_s=None, hold_lifetime_p95_s=None) 
         "method_note": (
             f"Sigma settled ({sum_settled:.6f}) / Sigma held ({sum_held:.6f}) dollar-weighted "
             f"across all {n_chains} supersession chains (hold → final capture). Little's Law: "
-            "frozen$ = held$/day × (hold_lifetime_sec / 86400) — at $1M/day TPV, p50 "
+            "frozen$ = settled$/day × overhang × (hold_lifetime_sec/86400) — at $1M/day TPV, p50 "
             f"({hold_lifetime_p50_s:.2f}s) → ${instantaneous_frozen_p50_usd:,.2f}, p95 "
             f"({hold_lifetime_p95_s:.2f}s) → ${instantaneous_frozen_p95_usd:,.2f}. Full "
             "derivation + sensitivity: dryrun/float_model.md. (Superseded framing: naively "
@@ -232,6 +239,38 @@ def hero_capture_ratio(con, hold_lifetime_p50_s=None, hold_lifetime_p95_s=None) 
             f"Sigma settled ({sum_settled:.6f}) / Sigma held ({sum_held:.6f}) dollar-weighted "
             f"across all {n_chains} supersession chains (hold → final capture)."
         ),
+    }
+
+
+# ---------------------------------------------------------------------------
+# Hero 2 — Frozen Capital (live-account unrecovered holds snapshot)
+# ---------------------------------------------------------------------------
+
+def hero_frozen_capital() -> dict:
+    """Live-account snapshot of unrecovered holds — sourced from dry-run
+    experiment artifacts + a live balance snapshot (2026-07-07), NOT from
+    spend.duckdb (the ingested n=81 sample predates these holds). Sources:
+    dryrun/denial_analytics.md (85 denied-call holds, $0.221047 live),
+    dryrun/failure_capture_n3.md + hold_linearity_extension.md (4 failure
+    holds x $0.076803 = $0.307212), live GET /v1/accounts 2026-07-07
+    (unavailableBalance $0.528259 = the two sources exactly, to the
+    micro-dollar)."""
+    return {
+        "frozen_total_usd": 0.528259,
+        "wallet_total_usd": 4.710528,
+        "frozen_pct_of_wallet": 11.2,
+        "n_holds": 89,
+        "n_failure_holds": 4,
+        "failure_holds_usd": 0.307212,
+        "n_denied_holds": 85,
+        "denied_holds_usd": 0.221047,
+        "days_observed": 3,
+        "n_released": 0,
+        "snapshot_at": "2026-07-07",
+        "subline": "11.2% of wallet unavailable — 4 failed-call holds ($0.307) + 85 denied-call holds ($0.221), zero released in 3 days",
+        "definition": "Money in a third state: not charged (totalBalance untouched), not returned (availableBalance reduced). No release/void API exists; no backend sweep observed.",
+        "scale_note": "failure mechanic is deterministic — 4/4 forced post-hold failures froze the full max_tokens-priced hold; denial-after-hold froze 85/85. Frequency of post-hold failures in organic traffic is NOT measured — do not read this as a $/day loss rate.",
+        "method_note": "Live account snapshot 2026-07-07: unavailableBalance $0.528259 = 4 x $0.076803 failure holds (failure_capture_n3.md, hold_linearity_extension.md) + $0.221047 live holds on 85 denied transactions (denial_analytics.md) — ties to the micro-dollar. Cross-checked live: sampled failure holds still isActive:true, supersededAt:null, 3 days after placement (refund_watch.log).",
     }
 
 
@@ -724,6 +763,7 @@ def main():
         # reorganized/retitled by BUILD 12; numbers unchanged) --------------------
         "hero_tpv": hero_tpv(header),
         "hero_capture_ratio": capture_ratio,
+        "hero_frozen_capital": hero_frozen_capital(),
         "hero_reconciliation": reconciliation,
         "tile_auth_to_capture": auth_to_capture,
         "tile_velocity_checks": tile_velocity_checks(con),

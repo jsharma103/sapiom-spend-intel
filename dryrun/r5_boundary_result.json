@@ -1,0 +1,173 @@
+{
+  "fetched_at": "2026-07-07T03:33:27.995Z",
+  "agent_name": "r5-boundary-agent",
+  "agent_id": "a376c0cb-dc96-4d16-a150-d63f3117b171",
+  "rule_id": "f5759057-9b9c-4acd-b8e7-ea200e1c458f",
+  "limit_usd": 0.005,
+  "max_tokens": 4000,
+  "expected_hold_usd": 0.002403,
+  "calls": [
+    {
+      "i": 1,
+      "started": "2026-07-07T03:32:13.123Z",
+      "http_status": 200,
+      "denied": false,
+      "error": null,
+      "body_excerpt": "{\"id\":\"gen-1783395135-HbNsa2ZfWIaf25i9m2zp\",\"object\":\"chat.completion\",\"created\":1783395135,\"model\":\"openai/gpt-4o-mini\",\"provider\":\"OpenAI\",\"system_fingerprint\":\"fp_bbc23ca3d7\",\"service_tier\":null,\"choices\":[{\"index\":0,\"logprobs\":null,\"finish_reason\":\"stop\",\"native_finish_reason\":\"stop\",\"message\":{\"role\":\"assistant\",\"content\":\"A budget in payments is a financial plan that outlines expected income"
+    },
+    {
+      "i": 2,
+      "started": "2026-07-07T03:32:21.723Z",
+      "http_status": 200,
+      "denied": false,
+      "error": null,
+      "body_excerpt": "{\"id\":\"gen-1783395144-RlL4L9NbquRyuHUain7z\",\"object\":\"chat.completion\",\"created\":1783395144,\"model\":\"openai/gpt-4o-mini\",\"provider\":\"OpenAI\",\"system_fingerprint\":\"fp_bbc23ca3d7\",\"service_tier\":null,\"choices\":[{\"index\":0,\"logprobs\":null,\"finish_reason\":\"stop\",\"native_finish_reason\":\"stop\",\"message\":{\"role\":\"assistant\",\"content\":\"A budget in payments is a financial plan that outlines expected revenu"
+    },
+    {
+      "i": 3,
+      "started": "2026-07-07T03:32:30.061Z",
+      "http_status": 200,
+      "denied": false,
+      "error": null,
+      "body_excerpt": "{\"id\":\"gen-1783395152-KtT3NhLqx6Yms0UkqL2T\",\"object\":\"chat.completion\",\"created\":1783395152,\"model\":\"openai/gpt-4o-mini\",\"provider\":\"Azure\",\"system_fingerprint\":\"fp_965c8b9ecf\",\"service_tier\":null,\"choices\":[{\"index\":0,\"logprobs\":null,\"finish_reason\":\"stop\",\"native_finish_reason\":\"stop\",\"message\":{\"role\":\"assistant\",\"content\":\"A budget in payments refers to a financial plan that outlines expected "
+    },
+    {
+      "i": 4,
+      "started": "2026-07-07T03:32:38.934Z",
+      "http_status": 200,
+      "denied": false,
+      "error": null,
+      "body_excerpt": "{\"id\":\"gen-1783395161-jPr2TPOQJAZSSPOtMAAm\",\"object\":\"chat.completion\",\"created\":1783395161,\"model\":\"openai/gpt-4o-mini\",\"provider\":\"Azure\",\"system_fingerprint\":\"fp_965c8b9ecf\",\"service_tier\":null,\"choices\":[{\"index\":0,\"logprobs\":null,\"finish_reason\":\"stop\",\"native_finish_reason\":\"stop\",\"message\":{\"role\":\"assistant\",\"content\":\"A budget in payments refers to a financial plan that outlines expected "
+    },
+    {
+      "i": 5,
+      "started": "2026-07-07T03:32:47.533Z",
+      "http_status": 200,
+      "denied": false,
+      "error": null,
+      "body_excerpt": "{\"id\":\"gen-1783395170-84dnds8mMEEryuRPNNcd\",\"object\":\"chat.completion\",\"created\":1783395170,\"model\":\"openai/gpt-4o-mini\",\"provider\":\"OpenAI\",\"system_fingerprint\":\"fp_bbc23ca3d7\",\"service_tier\":null,\"choices\":[{\"index\":0,\"logprobs\":null,\"finish_reason\":\"stop\",\"native_finish_reason\":\"stop\",\"message\":{\"role\":\"assistant\",\"content\":\"A budget in payments is a financial plan that outlines expected income"
+    },
+    {
+      "i": 6,
+      "started": "2026-07-07T03:32:55.820Z",
+      "http_status": 200,
+      "denied": false,
+      "error": null,
+      "body_excerpt": "{\"id\":\"gen-1783395178-eoLUtzOS6EiLrVLCDouL\",\"object\":\"chat.completion\",\"created\":1783395178,\"model\":\"openai/gpt-4o-mini\",\"provider\":\"OpenAI\",\"system_fingerprint\":\"fp_bbc23ca3d7\",\"service_tier\":null,\"choices\":[{\"index\":0,\"logprobs\":null,\"finish_reason\":\"stop\",\"native_finish_reason\":\"stop\",\"message\":{\"role\":\"assistant\",\"content\":\"A budget in payments is a financial plan that outlines expected income"
+    },
+    {
+      "i": 7,
+      "started": "2026-07-07T03:33:04.360Z",
+      "http_status": 200,
+      "denied": false,
+      "error": null,
+      "body_excerpt": "{\"id\":\"gen-1783395187-fweVDoksUKmmJFRWhFwM\",\"object\":\"chat.completion\",\"created\":1783395187,\"model\":\"openai/gpt-4o-mini\",\"provider\":\"OpenAI\",\"system_fingerprint\":\"fp_bbc23ca3d7\",\"service_tier\":null,\"choices\":[{\"index\":0,\"logprobs\":null,\"finish_reason\":\"stop\",\"native_finish_reason\":\"stop\",\"message\":{\"role\":\"assistant\",\"content\":\"A budget in payments refers to a financial plan that outlines expected"
+    },
+    {
+      "i": 8,
+      "started": "2026-07-07T03:33:12.696Z",
+      "http_status": 200,
+      "denied": false,
+      "error": null,
+      "body_excerpt": "{\"id\":\"gen-1783395195-nzAvEMwk1mPpizYblNBK\",\"object\":\"chat.completion\",\"created\":1783395195,\"model\":\"openai/gpt-4o-mini\",\"provider\":\"OpenAI\",\"system_fingerprint\":\"fp_bbc23ca3d7\",\"service_tier\":null,\"choices\":[{\"index\":0,\"logprobs\":null,\"finish_reason\":\"stop\",\"native_finish_reason\":\"stop\",\"message\":{\"role\":\"assistant\",\"content\":\"A budget in payments is a financial plan that outlines expected income"
+    }
+  ],
+  "ledger_txns": [
+    {
+      "id": "7c11ef82-5e9b-49d8-8bbf-6a09073ba48f",
+      "createdAt": "2026-07-07T03:33:13.271Z",
+      "status": "completed",
+      "outcome": "success",
+      "auth_status": "authorized",
+      "hold_usd": 0.002403,
+      "live_usd": 0.0001,
+      "n_cost_rows": 2,
+      "rule_current_value": null
+    },
+    {
+      "id": "f3afce21-c979-45ed-a4c8-8db72c2dc528",
+      "createdAt": "2026-07-07T03:33:04.430Z",
+      "status": "completed",
+      "outcome": "success",
+      "auth_status": "authorized",
+      "hold_usd": 0.002403,
+      "live_usd": 0.0001,
+      "n_cost_rows": 2,
+      "rule_current_value": null
+    },
+    {
+      "id": "af559a03-0061-40d2-acf8-cc55d4b8baf1",
+      "createdAt": "2026-07-07T03:32:55.879Z",
+      "status": "completed",
+      "outcome": "success",
+      "auth_status": "authorized",
+      "hold_usd": 0.002403,
+      "live_usd": 0.0001,
+      "n_cost_rows": 2,
+      "rule_current_value": null
+    },
+    {
+      "id": "fe80bcc3-5e8a-46b3-95ea-28f76699da0d",
+      "createdAt": "2026-07-07T03:32:47.596Z",
+      "status": "completed",
+      "outcome": "success",
+      "auth_status": "authorized",
+      "hold_usd": 0.002403,
+      "live_usd": 0.0001,
+      "n_cost_rows": 2,
+      "rule_current_value": null
+    },
+    {
+      "id": "775b58ef-3818-4f99-b8ba-8bd45bfb1605",
+      "createdAt": "2026-07-07T03:32:38.990Z",
+      "status": "completed",
+      "outcome": "success",
+      "auth_status": "authorized",
+      "hold_usd": 0.002403,
+      "live_usd": 0.0001,
+      "n_cost_rows": 2,
+      "rule_current_value": null
+    },
+    {
+      "id": "aa26fd01-cb5a-413e-ba11-c94e64573414",
+      "createdAt": "2026-07-07T03:32:30.202Z",
+      "status": "completed",
+      "outcome": "success",
+      "auth_status": "authorized",
+      "hold_usd": 0.002403,
+      "live_usd": 0.0001,
+      "n_cost_rows": 2,
+      "rule_current_value": null
+    },
+    {
+      "id": "5510c567-bea3-4f6f-8bcb-52ec74f51006",
+      "createdAt": "2026-07-07T03:32:21.779Z",
+      "status": "completed",
+      "outcome": "success",
+      "auth_status": "authorized",
+      "hold_usd": 0.002403,
+      "live_usd": 0.0001,
+      "n_cost_rows": 2,
+      "rule_current_value": null
+    },
+    {
+      "id": "dee6fcc1-1a5f-46cd-9bb0-c322991395ce",
+      "createdAt": "2026-07-07T03:32:13.211Z",
+      "status": "completed",
+      "outcome": "success",
+      "auth_status": "authorized",
+      "hold_usd": 0.002403,
+      "live_usd": 0.0001,
+      "n_cost_rows": 2,
+      "rule_current_value": null
+    }
+  ],
+  "n_allowed": 8,
+  "n_denied": 0,
+  "blast_radius_hold_usd": 0.019224,
+  "blast_radius_settled_usd": 0.0008000000000000001,
+  "cap_utilization_hold_based": 3.8448,
+  "cap_utilization_settle_based": 0.16000000000000003,
+  "denial_call_index": null,
+  "interpretation": "denial at call 3 => cumulative counted at HOLD values; no denial by call 8 => cumulative counted at LIVE/SETTLED values"
+}

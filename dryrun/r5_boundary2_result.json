@@ -1,0 +1,71 @@
+{
+  "fetched_at": "2026-07-07T03:35:34.271Z",
+  "rule_id": "f5759057-9b9c-4acd-b8e7-ea200e1c458f",
+  "limit_usd": 0.005,
+  "run2_calls": [
+    {
+      "i": 1,
+      "http_status": 200,
+      "denied": false,
+      "error": null
+    },
+    {
+      "i": 2,
+      "http_status": 200,
+      "denied": false,
+      "error": null
+    },
+    {
+      "i": 3,
+      "http_status": 200,
+      "denied": false,
+      "error": null
+    },
+    {
+      "i": 4,
+      "http_status": 200,
+      "denied": false,
+      "error": null
+    },
+    {
+      "i": 5,
+      "http_status": 200,
+      "denied": false,
+      "error": null
+    },
+    {
+      "i": 6,
+      "http_status": 402,
+      "denied": true,
+      "error": null
+    }
+  ],
+  "denial_at_run2_call": 6,
+  "denial_http_body": {
+    "x402Version": 2,
+    "error": "Payment required",
+    "resource": {
+      "url": "http://openrouter.services.sapiom.ai/v1/chat/completions",
+      "description": "OpenRouter chat completion",
+      "mimeType": "application/json"
+    },
+    "accepts": [
+      {
+        "scheme": "upto",
+        "network": "sapiom:main",
+        "amount": "0.002403",
+        "asset": "USD",
+        "payTo": "397b9395-d30d-42cc-abf9-0c56629d1c2f",
+        "maxTimeoutSeconds": 300,
+        "extra": {}
+      }
+    ]
+  },
+  "denied_txn_id": "c5d06c38-801b-49ea-9545-eeccb69f41f0",
+  "violation_excerpt": "{\"id\":\"cb11b624-36f9-45c4-b787-6ef6c1768768\",\"ruleId\":\"5d35cc64-3d49-4069-bb77-52d66ae5b3d5\",\"rule\":{\"id\":\"5d35cc64-3d49-4069-bb77-52d66ae5b3d5\",\"numericId\":1,\"name\":\"System: Payment Authorization\"},\"transactionId\":\"c5d06c38-801b-49ea-9545-eeccb69f41f0\",\"transactionAuthorizationRequestId\":\"68202a55-5304-42c7-aa39-b626d4aafb98\",\"tenantId\":\"7234a7f9-4074-4aad-b13f-84e0e28b469a\",\"status\":\"completed\",\"inputData\":{\"tenantId\":\"7234a7f9-4074-4aad-b13f-84e0e28b469a\",\"actionName\":\"generate\",\"serviceName\":\"sapiom_openrouter\",\"resourceName\":\"/v1/chat/completions\",\"transactionId\":\"c5d06c38-801b-49ea-9545-eeccb69f41f0\",\"transactionAuthorizationRequestId\":\"68202a55-5304-42c7-aa39-b626d4aafb98\"},\"outputData\":{\"reason\":\"Payment successfully authorized\",\"decision\":\"ALLOWED\",\"metadata\":{\"ruleType\":\"payment_authorization\",\"networkId\":\"6ea41a69-c23b-4cbd-9582-94bdbe3a010c\",\"authorizationDetails\":{\"payload\":{\"nonce\":\"9327198e-473d-4c43-a273-7cb536c5dc57\",\"token\":\"eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6InNhcGlvbS1wYXltZW50LWtleS12MSJ9.eyJzdWIiOiIyMzg2ZjY3Mi05MmI1LTRlNGUtYjQxNC0xOTgwMjgxYmZjNjQiLCJ0cmFuc2ZlcklkIjoiNmVhNDFhNjktYzIzYi00Y2JkLTk1ODItOTRiZGJlM2EwMTBjIiwiYWNjb3VudElkIjoiMGY2YTU2YmEtZGViMy00MzA3LTkyYWEtZWY3OTIyOTMwMmZmIiwicGF5VG8iOiIzOTdiOTM5NS1kMzBkLTQyY2MtYWJmOS0wYzU2NjI5ZDFjMmYiLCJhbW91bnQiOiIwLjAwMjQwMzAwMDAwMDAwMDAwMCIsIm5vbmNlIjoiOTMyNzE5OGUtNDczZC00YzQzLWEyNzMtN2NiNTM2YzVkYzU3IiwiaWRlbnRpdHkiOnsidmVyc2lvbiI6MiwidGVuYW50SWQiOiI3MjM0YTdmOS00MDc0LTRhYWQtYjEzZi04NGUwZTI4YjQ2OWEiLC",
+  "totals_across_both_runs": {
+    "n_allowed": 13,
+    "settled_usd_live": 0.003702999999999998,
+    "note": "includes run 1 (8 allowed) + run 2; settled = live cost rows on all agent txns incl. any frozen denied-hold"
+  }
+}

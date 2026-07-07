@@ -1,0 +1,682 @@
+{
+  "fetched_at": "2026-07-07T04:54:06.901Z",
+  "agent_name": "ladder-usage-replicate",
+  "model": "openai/gpt-4o-mini",
+  "prompt": "In exactly two sentences, explain what double-entry bookkeeping is.",
+  "rows": [
+    {
+      "max_tokens": 100,
+      "http_status": 200,
+      "error": null,
+      "generation_id": "gen-1783399996-EU0911Pw6pUKNyAVG1es",
+      "model_echoed": "openai/gpt-4o-mini",
+      "prompt_tokens": 19,
+      "completion_tokens": 63,
+      "total_tokens": 82,
+      "upstream_cost_usd": 0.00004065,
+      "finish_reason": "stop",
+      "response_chars": 372,
+      "response_headers": {
+        "access-control-allow-credentials": "true",
+        "alt-svc": "h3=\":443\"; ma=86400",
+        "cf-cache-status": "DYNAMIC",
+        "cf-ray": "a1743e9ac8cbb701-SJC",
+        "connection": "keep-alive",
+        "content-encoding": "br",
+        "content-length": "607",
+        "content-type": "application/json; charset=utf-8",
+        "date": "Tue, 07 Jul 2026 04:53:18 GMT",
+        "etag": "W/\"497-644WFOY8dFLj4Rr164sBPf3sohc\"",
+        "payment-response": "eyJzdWNjZXNzIjp0cnVlLCJ0cmFuc2FjdGlvbiI6IiIsIm5ldHdvcmsiOiJzYXBpb206bWFpbiIsInBheWVyIjoiMGY2YTU2YmEtZGViMy00MzA3LTkyYWEtZWY3OTIyOTMwMmZmIn0=",
+        "rndr-id": "6ab1f1b4-e594-4d22",
+        "server": "cloudflare",
+        "vary": "Origin, Accept-Encoding",
+        "x-powered-by": "Express",
+        "x-ratelimit-limit": "100",
+        "x-ratelimit-remaining": "98",
+        "x-ratelimit-reset": "59",
+        "x-render-origin-server": "Render"
+      },
+      "raw_response_body": {
+        "id": "gen-1783399996-EU0911Pw6pUKNyAVG1es",
+        "object": "chat.completion",
+        "created": 1783399996,
+        "model": "openai/gpt-4o-mini",
+        "provider": "OpenAI",
+        "system_fingerprint": "fp_8648f47b2a",
+        "service_tier": null,
+        "choices": [
+          {
+            "index": 0,
+            "logprobs": null,
+            "finish_reason": "stop",
+            "native_finish_reason": "stop",
+            "message": {
+              "role": "assistant",
+              "content": "Double-entry bookkeeping is an accounting system that records each financial transaction in at least two accounts, ensuring that the accounting equation (Assets = Liabilities + Equity) stays balanced. This method helps maintain accuracy by providing a comprehensive view of a company's financial activities, making it easier to track assets, liabilities, and owner equity.",
+              "refusal": null,
+              "reasoning": null
+            }
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 19,
+          "completion_tokens": 63,
+          "total_tokens": 82,
+          "cost": 0.00004065,
+          "is_byok": false,
+          "prompt_tokens_details": {
+            "cached_tokens": 0,
+            "cache_write_tokens": 0,
+            "audio_tokens": 0,
+            "video_tokens": 0
+          },
+          "cost_details": {
+            "upstream_inference_cost": 0.00004065,
+            "upstream_inference_prompt_cost": 0.00000285,
+            "upstream_inference_completions_cost": 0.0000378
+          },
+          "completion_tokens_details": {
+            "reasoning_tokens": 0,
+            "image_tokens": 0,
+            "audio_tokens": 0
+          }
+        }
+      }
+    },
+    {
+      "max_tokens": 400,
+      "http_status": 200,
+      "error": null,
+      "generation_id": "gen-1783400003-eP65iYck24oqINdOap4M",
+      "model_echoed": "openai/gpt-4o-mini",
+      "prompt_tokens": 19,
+      "completion_tokens": 54,
+      "total_tokens": 73,
+      "upstream_cost_usd": 0.00003525,
+      "finish_reason": "stop",
+      "response_chars": 343,
+      "response_headers": {
+        "access-control-allow-credentials": "true",
+        "alt-svc": "h3=\":443\"; ma=86400",
+        "cf-cache-status": "DYNAMIC",
+        "cf-ray": "a1743ec7db119e53-SJC",
+        "connection": "keep-alive",
+        "content-encoding": "br",
+        "content-length": "583",
+        "content-type": "application/json; charset=utf-8",
+        "date": "Tue, 07 Jul 2026 04:53:25 GMT",
+        "etag": "W/\"47a-udje98SprBu1aT2unRi4Y2aAkqA\"",
+        "payment-response": "eyJzdWNjZXNzIjp0cnVlLCJ0cmFuc2FjdGlvbiI6IiIsIm5ldHdvcmsiOiJzYXBpb206bWFpbiIsInBheWVyIjoiMGY2YTU2YmEtZGViMy00MzA3LTkyYWEtZWY3OTIyOTMwMmZmIn0=",
+        "rndr-id": "71381566-1450-4923",
+        "server": "cloudflare",
+        "vary": "Origin, Accept-Encoding",
+        "x-powered-by": "Express",
+        "x-ratelimit-limit": "100",
+        "x-ratelimit-remaining": "96",
+        "x-ratelimit-reset": "52",
+        "x-render-origin-server": "Render"
+      },
+      "raw_response_body": {
+        "id": "gen-1783400003-eP65iYck24oqINdOap4M",
+        "object": "chat.completion",
+        "created": 1783400003,
+        "model": "openai/gpt-4o-mini",
+        "provider": "OpenAI",
+        "system_fingerprint": "fp_8648f47b2a",
+        "service_tier": null,
+        "choices": [
+          {
+            "index": 0,
+            "logprobs": null,
+            "finish_reason": "stop",
+            "native_finish_reason": "stop",
+            "message": {
+              "role": "assistant",
+              "content": "Double-entry bookkeeping is an accounting method that records each financial transaction in two separate accounts, ensuring that the accounting equation (Assets = Liabilities + Equity) remains balanced. This system helps maintain accurate financial records by providing a comprehensive view of a company's financial health and reducing errors.",
+              "refusal": null,
+              "reasoning": null
+            }
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 19,
+          "completion_tokens": 54,
+          "total_tokens": 73,
+          "cost": 0.00003525,
+          "is_byok": false,
+          "prompt_tokens_details": {
+            "cached_tokens": 0,
+            "cache_write_tokens": 0,
+            "audio_tokens": 0,
+            "video_tokens": 0
+          },
+          "cost_details": {
+            "upstream_inference_cost": 0.00003525,
+            "upstream_inference_prompt_cost": 0.00000285,
+            "upstream_inference_completions_cost": 0.0000324
+          },
+          "completion_tokens_details": {
+            "reasoning_tokens": 0,
+            "image_tokens": 0,
+            "audio_tokens": 0
+          }
+        }
+      }
+    },
+    {
+      "max_tokens": 900,
+      "http_status": 200,
+      "error": null,
+      "generation_id": "gen-1783400009-2FGSCu6TdEkqdZxfeHDh",
+      "model_echoed": "openai/gpt-4o-mini",
+      "prompt_tokens": 19,
+      "completion_tokens": 62,
+      "total_tokens": 81,
+      "upstream_cost_usd": 0.00004005,
+      "finish_reason": "stop",
+      "response_chars": 357,
+      "response_headers": {
+        "access-control-allow-credentials": "true",
+        "alt-svc": "h3=\":443\"; ma=86400",
+        "cf-cache-status": "DYNAMIC",
+        "cf-ray": "a1743eeb29fc9e53-SJC",
+        "connection": "keep-alive",
+        "content-encoding": "br",
+        "content-length": "608",
+        "content-type": "application/json; charset=utf-8",
+        "date": "Tue, 07 Jul 2026 04:53:31 GMT",
+        "etag": "W/\"488-6n8nlpdevVgE/L7uJf09E77DrM4\"",
+        "payment-response": "eyJzdWNjZXNzIjp0cnVlLCJ0cmFuc2FjdGlvbiI6IiIsIm5ldHdvcmsiOiJzYXBpb206bWFpbiIsInBheWVyIjoiMGY2YTU2YmEtZGViMy00MzA3LTkyYWEtZWY3OTIyOTMwMmZmIn0=",
+        "rndr-id": "6ae8f229-982e-4b5c",
+        "server": "cloudflare",
+        "vary": "Origin, Accept-Encoding",
+        "x-powered-by": "Express",
+        "x-ratelimit-limit": "100",
+        "x-ratelimit-remaining": "94",
+        "x-ratelimit-reset": "46",
+        "x-render-origin-server": "Render"
+      },
+      "raw_response_body": {
+        "id": "gen-1783400009-2FGSCu6TdEkqdZxfeHDh",
+        "object": "chat.completion",
+        "created": 1783400009,
+        "model": "openai/gpt-4o-mini",
+        "provider": "OpenAI",
+        "system_fingerprint": "fp_8648f47b2a",
+        "service_tier": null,
+        "choices": [
+          {
+            "index": 0,
+            "logprobs": null,
+            "finish_reason": "stop",
+            "native_finish_reason": "stop",
+            "message": {
+              "role": "assistant",
+              "content": "Double-entry bookkeeping is an accounting system that records each transaction in at least two accounts, ensuring that the accounting equation (Assets = Liabilities + Equity) remains balanced. This method provides a comprehensive overview of a company's financial position by tracking both the source and use of funds, reducing the risk of errors and fraud.",
+              "refusal": null,
+              "reasoning": null
+            }
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 19,
+          "completion_tokens": 62,
+          "total_tokens": 81,
+          "cost": 0.00004005,
+          "is_byok": false,
+          "prompt_tokens_details": {
+            "cached_tokens": 0,
+            "cache_write_tokens": 0,
+            "audio_tokens": 0,
+            "video_tokens": 0
+          },
+          "cost_details": {
+            "upstream_inference_cost": 0.00004005,
+            "upstream_inference_prompt_cost": 0.00000285,
+            "upstream_inference_completions_cost": 0.0000372
+          },
+          "completion_tokens_details": {
+            "reasoning_tokens": 0,
+            "image_tokens": 0,
+            "audio_tokens": 0
+          }
+        }
+      }
+    },
+    {
+      "max_tokens": 2000,
+      "http_status": 200,
+      "error": null,
+      "generation_id": "gen-1783400014-QgbKFiV3xf2S7tYpHTgR",
+      "model_echoed": "openai/gpt-4o-mini",
+      "prompt_tokens": 19,
+      "completion_tokens": 57,
+      "total_tokens": 76,
+      "upstream_cost_usd": 0.00003705,
+      "finish_reason": "stop",
+      "response_chars": 342,
+      "response_headers": {
+        "access-control-allow-credentials": "true",
+        "alt-svc": "h3=\":443\"; ma=86400",
+        "cf-cache-status": "DYNAMIC",
+        "cf-ray": "a1743f0b0de59e53-SJC",
+        "connection": "keep-alive",
+        "content-encoding": "br",
+        "content-length": "591",
+        "content-type": "application/json; charset=utf-8",
+        "date": "Tue, 07 Jul 2026 04:53:35 GMT",
+        "etag": "W/\"479-ku3XWmHuXcAKByHkbpip8f4pxFQ\"",
+        "payment-response": "eyJzdWNjZXNzIjp0cnVlLCJ0cmFuc2FjdGlvbiI6IiIsIm5ldHdvcmsiOiJzYXBpb206bWFpbiIsInBheWVyIjoiMGY2YTU2YmEtZGViMy00MzA3LTkyYWEtZWY3OTIyOTMwMmZmIn0=",
+        "rndr-id": "567452ab-d8aa-4bcb",
+        "server": "cloudflare",
+        "vary": "Origin, Accept-Encoding",
+        "x-powered-by": "Express",
+        "x-ratelimit-limit": "100",
+        "x-ratelimit-remaining": "92",
+        "x-ratelimit-reset": "41",
+        "x-render-origin-server": "Render"
+      },
+      "raw_response_body": {
+        "id": "gen-1783400014-QgbKFiV3xf2S7tYpHTgR",
+        "object": "chat.completion",
+        "created": 1783400014,
+        "model": "openai/gpt-4o-mini",
+        "provider": "OpenAI",
+        "system_fingerprint": "fp_8648f47b2a",
+        "service_tier": null,
+        "choices": [
+          {
+            "index": 0,
+            "logprobs": null,
+            "finish_reason": "stop",
+            "native_finish_reason": "stop",
+            "message": {
+              "role": "assistant",
+              "content": "Double-entry bookkeeping is an accounting method that records each financial transaction in two separate accounts, ensuring that the accounting equation (Assets = Liabilities + Equity) always remains balanced. This system enhances accuracy and helps identify errors, as every debit entry must have a corresponding credit entry of equal value.",
+              "refusal": null,
+              "reasoning": null
+            }
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 19,
+          "completion_tokens": 57,
+          "total_tokens": 76,
+          "cost": 0.00003705,
+          "is_byok": false,
+          "prompt_tokens_details": {
+            "cached_tokens": 0,
+            "cache_write_tokens": 0,
+            "audio_tokens": 0,
+            "video_tokens": 0
+          },
+          "cost_details": {
+            "upstream_inference_cost": 0.00003705,
+            "upstream_inference_prompt_cost": 0.00000285,
+            "upstream_inference_completions_cost": 0.0000342
+          },
+          "completion_tokens_details": {
+            "reasoning_tokens": 0,
+            "image_tokens": 0,
+            "audio_tokens": 0
+          }
+        }
+      }
+    },
+    {
+      "max_tokens": 8000,
+      "http_status": 200,
+      "error": null,
+      "generation_id": "gen-1783400021-cOH1yhhJeV0K8PI7kB6I",
+      "model_echoed": "openai/gpt-4o-mini",
+      "prompt_tokens": 19,
+      "completion_tokens": 69,
+      "total_tokens": 88,
+      "upstream_cost_usd": 0.00004425,
+      "finish_reason": "stop",
+      "response_chars": 392,
+      "response_headers": {
+        "access-control-allow-credentials": "true",
+        "alt-svc": "h3=\":443\"; ma=86400",
+        "cf-cache-status": "DYNAMIC",
+        "cf-ray": "a1743f368c28d005-SJC",
+        "connection": "keep-alive",
+        "content-encoding": "br",
+        "content-length": "614",
+        "content-type": "application/json; charset=utf-8",
+        "date": "Tue, 07 Jul 2026 04:53:44 GMT",
+        "etag": "W/\"4aa-MifuCjegPbuMrtVZOyW6QzN7WfU\"",
+        "payment-response": "eyJzdWNjZXNzIjp0cnVlLCJ0cmFuc2FjdGlvbiI6IiIsIm5ldHdvcmsiOiJzYXBpb206bWFpbiIsInBheWVyIjoiMGY2YTU2YmEtZGViMy00MzA3LTkyYWEtZWY3OTIyOTMwMmZmIn0=",
+        "rndr-id": "4607519e-a83f-4539",
+        "server": "cloudflare",
+        "vary": "Origin, Accept-Encoding",
+        "x-powered-by": "Express",
+        "x-ratelimit-limit": "100",
+        "x-ratelimit-remaining": "90",
+        "x-ratelimit-reset": "34",
+        "x-render-origin-server": "Render"
+      },
+      "raw_response_body": {
+        "id": "gen-1783400021-cOH1yhhJeV0K8PI7kB6I",
+        "object": "chat.completion",
+        "created": 1783400021,
+        "model": "openai/gpt-4o-mini",
+        "provider": "Azure",
+        "system_fingerprint": "fp_965c8b9ecf",
+        "service_tier": null,
+        "choices": [
+          {
+            "index": 0,
+            "logprobs": null,
+            "finish_reason": "stop",
+            "native_finish_reason": "stop",
+            "message": {
+              "role": "assistant",
+              "content": "Double-entry bookkeeping is an accounting system that records each financial transaction in two accounts: a debit in one account and a credit in another, ensuring that the accounting equation (Assets = Liabilities + Equity) remains balanced. This method provides a comprehensive view of a company's financial position and helps detect errors by ensuring that total debits equal total credits.",
+              "refusal": null,
+              "reasoning": null
+            }
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 19,
+          "completion_tokens": 69,
+          "total_tokens": 88,
+          "cost": 0.00004425,
+          "is_byok": false,
+          "prompt_tokens_details": {
+            "cached_tokens": 0,
+            "cache_write_tokens": 0,
+            "audio_tokens": 0,
+            "video_tokens": 0
+          },
+          "cost_details": {
+            "upstream_inference_cost": 0.00004425,
+            "upstream_inference_prompt_cost": 0.00000285,
+            "upstream_inference_completions_cost": 0.0000414
+          },
+          "completion_tokens_details": {
+            "reasoning_tokens": 0,
+            "image_tokens": 0,
+            "audio_tokens": 0
+          }
+        }
+      }
+    },
+    {
+      "max_tokens": 16000,
+      "http_status": 200,
+      "error": null,
+      "generation_id": "gen-1783400029-qDeDtjv30QDPCnWOPjrp",
+      "model_echoed": "openai/gpt-4o-mini",
+      "prompt_tokens": 19,
+      "completion_tokens": 61,
+      "total_tokens": 80,
+      "upstream_cost_usd": 0.00003945,
+      "finish_reason": "stop",
+      "response_chars": 365,
+      "response_headers": {
+        "access-control-allow-credentials": "true",
+        "alt-svc": "h3=\":443\"; ma=86400",
+        "cf-cache-status": "DYNAMIC",
+        "cf-ray": "a1743f6a09ca2af7-SJC",
+        "connection": "keep-alive",
+        "content-encoding": "br",
+        "content-length": "606",
+        "content-type": "application/json; charset=utf-8",
+        "date": "Tue, 07 Jul 2026 04:53:51 GMT",
+        "etag": "W/\"48f-pb1sdpt5/j43HSCD9YvL7ev2zgo\"",
+        "payment-response": "eyJzdWNjZXNzIjp0cnVlLCJ0cmFuc2FjdGlvbiI6IiIsIm5ldHdvcmsiOiJzYXBpb206bWFpbiIsInBheWVyIjoiMGY2YTU2YmEtZGViMy00MzA3LTkyYWEtZWY3OTIyOTMwMmZmIn0=",
+        "rndr-id": "5ffb718d-a99e-443e",
+        "server": "cloudflare",
+        "vary": "Origin, Accept-Encoding",
+        "x-powered-by": "Express",
+        "x-ratelimit-limit": "100",
+        "x-ratelimit-remaining": "88",
+        "x-ratelimit-reset": "26",
+        "x-render-origin-server": "Render"
+      },
+      "raw_response_body": {
+        "id": "gen-1783400029-qDeDtjv30QDPCnWOPjrp",
+        "object": "chat.completion",
+        "created": 1783400029,
+        "model": "openai/gpt-4o-mini",
+        "provider": "Azure",
+        "system_fingerprint": "fp_965c8b9ecf",
+        "service_tier": null,
+        "choices": [
+          {
+            "index": 0,
+            "logprobs": null,
+            "finish_reason": "stop",
+            "native_finish_reason": "stop",
+            "message": {
+              "role": "assistant",
+              "content": "Double-entry bookkeeping is an accounting method where every financial transaction impacts at least two accounts, ensuring that the accounting equation (Assets = Liabilities + Equity) remains balanced. This approach helps maintain accuracy and provides a comprehensive view of a business's financial health by recording both debits and credits for each transaction.",
+              "refusal": null,
+              "reasoning": null
+            }
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 19,
+          "completion_tokens": 61,
+          "total_tokens": 80,
+          "cost": 0.00003945,
+          "is_byok": false,
+          "prompt_tokens_details": {
+            "cached_tokens": 0,
+            "cache_write_tokens": 0,
+            "audio_tokens": 0,
+            "video_tokens": 0
+          },
+          "cost_details": {
+            "upstream_inference_cost": 0.00003945,
+            "upstream_inference_prompt_cost": 0.00000285,
+            "upstream_inference_completions_cost": 0.0000366
+          },
+          "completion_tokens_details": {
+            "reasoning_tokens": 0,
+            "image_tokens": 0,
+            "audio_tokens": 0
+          }
+        }
+      }
+    },
+    {
+      "max_tokens": 64000,
+      "http_status": 200,
+      "error": null,
+      "generation_id": "gen-1783400036-NFpb34mNApNQLAIgf5LP",
+      "model_echoed": "openai/gpt-4o-mini",
+      "prompt_tokens": 19,
+      "completion_tokens": 58,
+      "total_tokens": 77,
+      "upstream_cost_usd": 0.00003765,
+      "finish_reason": "stop",
+      "response_chars": 354,
+      "response_headers": {
+        "access-control-allow-credentials": "true",
+        "alt-svc": "h3=\":443\"; ma=86400",
+        "cf-cache-status": "DYNAMIC",
+        "cf-ray": "a1743f90eefb2af7-SJC",
+        "connection": "keep-alive",
+        "content-encoding": "br",
+        "content-length": "595",
+        "content-type": "application/json; charset=utf-8",
+        "date": "Tue, 07 Jul 2026 04:53:57 GMT",
+        "etag": "W/\"485-RIQNrYvVnY3cjPrDYULZEHU1f7A\"",
+        "payment-response": "eyJzdWNjZXNzIjp0cnVlLCJ0cmFuc2FjdGlvbiI6IiIsIm5ldHdvcmsiOiJzYXBpb206bWFpbiIsInBheWVyIjoiMGY2YTU2YmEtZGViMy00MzA3LTkyYWEtZWY3OTIyOTMwMmZmIn0=",
+        "rndr-id": "19b5a107-6f5c-4875",
+        "server": "cloudflare",
+        "vary": "Origin, Accept-Encoding",
+        "x-powered-by": "Express",
+        "x-ratelimit-limit": "100",
+        "x-ratelimit-remaining": "86",
+        "x-ratelimit-reset": "20",
+        "x-render-origin-server": "Render"
+      },
+      "raw_response_body": {
+        "id": "gen-1783400036-NFpb34mNApNQLAIgf5LP",
+        "object": "chat.completion",
+        "created": 1783400036,
+        "model": "openai/gpt-4o-mini",
+        "provider": "OpenAI",
+        "system_fingerprint": "fp_8648f47b2a",
+        "service_tier": null,
+        "choices": [
+          {
+            "index": 0,
+            "logprobs": null,
+            "finish_reason": "stop",
+            "native_finish_reason": "stop",
+            "message": {
+              "role": "assistant",
+              "content": "Double-entry bookkeeping is an accounting method where every financial transaction is recorded in at least two accounts, ensuring that debits and credits are always balanced. This system helps maintain accuracy and provides a comprehensive view of a company's financial position by tracking the effects of transactions on assets, liabilities, and equity.",
+              "refusal": null,
+              "reasoning": null
+            }
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 19,
+          "completion_tokens": 58,
+          "total_tokens": 77,
+          "cost": 0.00003765,
+          "is_byok": false,
+          "prompt_tokens_details": {
+            "cached_tokens": 0,
+            "cache_write_tokens": 0,
+            "audio_tokens": 0,
+            "video_tokens": 0
+          },
+          "cost_details": {
+            "upstream_inference_cost": 0.00003765,
+            "upstream_inference_prompt_cost": 0.00000285,
+            "upstream_inference_completions_cost": 0.0000348
+          },
+          "completion_tokens_details": {
+            "reasoning_tokens": 0,
+            "image_tokens": 0,
+            "audio_tokens": 0
+          }
+        }
+      }
+    }
+  ],
+  "ledger": [
+    {
+      "txn_id": "02f215c4-3647-4606-95d0-20f1a4e64b56",
+      "createdAt": "2026-07-07T04:51:34.838Z",
+      "outcome": "success",
+      "hold_usd": null,
+      "settle_usd": 0.0001,
+      "n_cost_rows": 1
+    },
+    {
+      "txn_id": "3f690ba6-7a06-4426-83a1-5234db368a30",
+      "createdAt": "2026-07-07T04:51:41.658Z",
+      "outcome": "success",
+      "hold_usd": 0.000243,
+      "settle_usd": 0.0001,
+      "n_cost_rows": 2
+    },
+    {
+      "txn_id": "47be7716-a482-4d1d-9f50-e0710471fe0a",
+      "createdAt": "2026-07-07T04:51:47.848Z",
+      "outcome": "success",
+      "hold_usd": 0.000543,
+      "settle_usd": 0.0001,
+      "n_cost_rows": 2
+    },
+    {
+      "txn_id": "19a4be07-a598-43e6-9b5c-8a2cc2f2ca2e",
+      "createdAt": "2026-07-07T04:51:53.645Z",
+      "outcome": "success",
+      "hold_usd": 0.001203,
+      "settle_usd": 0.0001,
+      "n_cost_rows": 2
+    },
+    {
+      "txn_id": "75319327-dde7-4d43-8ac6-89a5007c49eb",
+      "createdAt": "2026-07-07T04:52:00.483Z",
+      "outcome": "success",
+      "hold_usd": 0.004803,
+      "settle_usd": 0.0001,
+      "n_cost_rows": 2
+    },
+    {
+      "txn_id": "62b99b52-26ec-48ab-a660-4aaf93746bcd",
+      "createdAt": "2026-07-07T04:52:07.007Z",
+      "outcome": "success",
+      "hold_usd": 0.009603,
+      "settle_usd": 0.0001,
+      "n_cost_rows": 2
+    },
+    {
+      "txn_id": "6f4a3bd7-8778-4fd0-b2c6-0b29693bcaea",
+      "createdAt": "2026-07-07T04:52:13.366Z",
+      "outcome": "success",
+      "hold_usd": 0.038403,
+      "settle_usd": 0.0001,
+      "n_cost_rows": 2
+    },
+    {
+      "txn_id": "4887c2ea-2229-4851-bb84-0656c2f6bb40",
+      "createdAt": "2026-07-07T04:53:15.121Z",
+      "outcome": "success",
+      "hold_usd": null,
+      "settle_usd": 0.0001,
+      "n_cost_rows": 1
+    },
+    {
+      "txn_id": "a9cfe4e6-45a1-407f-947b-69f52ac87854",
+      "createdAt": "2026-07-07T04:53:21.240Z",
+      "outcome": "success",
+      "hold_usd": 0.000243,
+      "settle_usd": 0.0001,
+      "n_cost_rows": 2
+    },
+    {
+      "txn_id": "9d432cac-2ac6-4911-a709-6a1db894f582",
+      "createdAt": "2026-07-07T04:53:28.073Z",
+      "outcome": "success",
+      "hold_usd": 0.000543,
+      "settle_usd": 0.0001,
+      "n_cost_rows": 2
+    },
+    {
+      "txn_id": "7b10e1a6-a144-4960-9271-a0966abd7012",
+      "createdAt": "2026-07-07T04:53:34.129Z",
+      "outcome": "success",
+      "hold_usd": 0.001203,
+      "settle_usd": 0.0001,
+      "n_cost_rows": 2
+    },
+    {
+      "txn_id": "dc886c3c-25fa-4b18-a2ff-880656363b54",
+      "createdAt": "2026-07-07T04:53:39.028Z",
+      "outcome": "success",
+      "hold_usd": 0.004803,
+      "settle_usd": 0.0001,
+      "n_cost_rows": 2
+    },
+    {
+      "txn_id": "f6e22ee6-026a-43c9-824d-6e171effd6bb",
+      "createdAt": "2026-07-07T04:53:47.067Z",
+      "outcome": "success",
+      "hold_usd": 0.009603,
+      "settle_usd": 0.0001,
+      "n_cost_rows": 2
+    },
+    {
+      "txn_id": "84f85ead-b76a-48ef-8fff-ba0996f674a5",
+      "createdAt": "2026-07-07T04:53:54.517Z",
+      "outcome": "success",
+      "hold_usd": 0.038403,
+      "settle_usd": 0.0001,
+      "n_cost_rows": 2
+    }
+  ]
+}

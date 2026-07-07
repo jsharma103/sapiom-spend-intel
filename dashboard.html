@@ -248,21 +248,17 @@
     heroGrid.appendChild(tile);
   })();
 
-  // ---- Hero 2: Capture ratio -----------------------------------------------
-  (function heroCapture() {
-    const t = data.hero_capture_ratio || {};
+  // ---- Hero 2: Frozen Capital -----------------------------------------------
+  (function heroFrozenCapital() {
+    const t = data.hero_frozen_capital || {};
     const tile = el('div', 'tile hero');
-    tile.appendChild(el('h2', null, 'Capture Ratio'));
-    const v = t.ratio_pct;
-    // Valence fix: this is a float-inefficiency signal, not a capture-failure /
-    // revenue-leakage signal (settling below the hold is the system working as
-    // designed) — magnitude only, neutral ink, never a status color.
-    tile.appendChild(el('div', 'big-number', v === null || v === undefined ? 'n/a' : `${v.toFixed(1)}%`));
+    tile.appendChild(el('h2', null, 'Frozen Capital — Unrecovered Holds'));
+    tile.appendChild(el('div', 'big-number', `${usd(t.frozen_total_usd)} ${chip('critical', '0 RELEASED / 3 DAYS')}`));
     tile.appendChild(el('div', 'subline', t.subline || ''));
-    const note = el('div', 'scale-note', t.scale_note || '');
+    const note = el('div', 'scale-note', t.definition || '');
     note.title = t.method_note || '';
     tile.appendChild(note);
-    tile.appendChild(el('div', 'caption', t.scope_note || ''));
+    tile.appendChild(el('div', 'caption', t.scale_note || ''));
     heroGrid.appendChild(tile);
   })();
 
@@ -281,6 +277,24 @@
     tile.appendChild(note);
     tile.appendChild(el('div', 'caption', t.ingest_note || ''));
     heroGrid.appendChild(tile);
+  })();
+
+  // ---- Detail 1: Capture Ratio (demoted from hero row 2026-07-07 — LLM-only scope + workload-shaped magnitude)
+  (function heroCapture() {
+    const t = data.hero_capture_ratio || {};
+    const tile = el('div', 'tile');
+    tile.appendChild(el('h2', null, 'Capture Ratio'));
+    const v = t.ratio_pct;
+    // Valence fix: this is a float-inefficiency signal, not a capture-failure /
+    // revenue-leakage signal (settling below the hold is the system working as
+    // designed) — magnitude only, neutral ink, never a status color.
+    tile.appendChild(el('div', 'big-number', v === null || v === undefined ? 'n/a' : `${v.toFixed(1)}%`));
+    tile.appendChild(el('div', 'subline', t.subline || ''));
+    const note = el('div', 'scale-note', t.scale_note || '');
+    note.title = t.method_note || '';
+    tile.appendChild(note);
+    tile.appendChild(el('div', 'caption', t.scope_note || ''));
+    grid.appendChild(tile);
   })();
 
   // ---- Tile 4: Auth -> Capture time -----------------------------------------
