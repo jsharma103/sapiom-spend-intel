@@ -2,7 +2,7 @@
 
 I gave AI agents a $5 wallet on Sapiom, let them spend it across every service the platform offers, and audited the ledger like a payments ledger. Everything below is measured — every number traces to a file in this repo.
 
-▶ **[Live dashboard](https://jsharma103.github.io/sapiom-spend-intel/)** · [3-min walkthrough](LOOM_LINK_TBD)
+▶ **[Live dashboard](https://jsharma103.github.io/sapiom-spend-intel/)** · [3-min walkthrough](https://www.loom.com/share/4bbe988b4eb049269a85db6e7cbd4b9b)
 
 - **$0.567745 settled** — 375 transactions, 41 agents, 9 service families, real money
 - **$0.528502 frozen** — holds never charged, never returned; zero released in 3 days
