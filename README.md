@@ -21,6 +21,16 @@ The dashboard has two halves. **Section 1** measures industry-standard payments 
 - **And leak under concurrency.** A cap sized for exactly one call allowed 3 of 50 concurrent calls — authorization checks race a stale cumulative ledger. (`dryrun/toctou_latency_experiment.md`)
 - **A quarter of calls can't be fully explained.** 86 denied txns get no outcome written, 6 land as `service='unknown'` (100% of scrape revenue), 2 never complete. Only 2% of spend traces to a task.
 
+## Open questions this surfaced
+
+*Observations from the outside — likely missing context, so posed as questions.*
+
+1. **Do failed and denied holds ever release?** 4/4 failed and 85/85 denied holds stayed frozen — zero released in 3 days.
+2. **Does cumulative spend count a hold and its settlement together?** Agents were cut off at 54–80% of their cap while the engine read ~100%.
+3. **Is scrape spend meant to be unlabeled?** Every scrape call logs `service_name='unknown'` — 100% of that revenue unattributable.
+4. **Should a hold price on `max_tokens` or on usage?** A generous cap froze ~5.6× real spend and can trip budget rules on money never spent.
+5. **Should per-wallet authorization be atomic?** A cap sized for one call let 3 of 50 concurrent calls through.
+
 ## How it works
 
 ```
