@@ -10,7 +10,7 @@ I gave AI agents a $5 wallet on Sapiom, let them spend it across every service t
 
 ## What this is
 
-The dashboard has two halves. **Section 1** measures industry-standard payments KPIs (TPV, authorization rate, capture rate) on agent traffic. **Section 2** proposes the KPIs agent payments actually needs — built from Sapiom's own framing that failures must be *bounded, visible and recoverable* — and closes with a per-agent Know-Your-Agent scorecard.
+The dashboard has two halves. **Section 1** measures industry-standard payments KPIs (TPV, authorization rate, capture rate) on agent traffic. **Section 2** proposes the KPIs agent payments actually needs — built from [Ilan Zerbib's own framing](https://www.computerweekly.com/blog/CW-Developer-Network/Sapiom-CEO-Software-is-becoming-the-customer-of-the-Internet) that failures must be *bounded, visible and recoverable* — and closes with a per-agent Know-Your-Agent scorecard.
 
 ## Key findings
 
