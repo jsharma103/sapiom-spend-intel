@@ -1,0 +1,123 @@
+{
+  "runStartedAt": "2026-07-07T15:46:14.590Z",
+  "runEndedAt": "2026-07-07T15:47:02.980Z",
+  "mainRunReservedUsd": 0.105961,
+  "cumulativeWorstCaseUsd": 0.274962,
+  "budgetLog": [
+    {
+      "label": "audio/chars_700",
+      "reservedUsd": 0.2184,
+      "cumulativeAfterUsd": 0.324361
+    },
+    {
+      "label": "data/create-15m",
+      "reservedUsd": 0.001,
+      "cumulativeAfterUsd": 0.274961
+    },
+    {
+      "label": "data/create-4h",
+      "reservedUsd": 0.005,
+      "cumulativeAfterUsd": 0.279961
+    }
+  ],
+  "globalAbort": false,
+  "preBalance": {
+    "ok": true,
+    "available": 4.072764,
+    "total": 4.601266
+  },
+  "postBalance": {
+    "ok": true,
+    "available": 3.903763,
+    "total": 4.432265
+  },
+  "results": {
+    "audioExtra": {
+      "label": "chars_700",
+      "knobValue": 700,
+      "worstCaseUsd": 0.2184,
+      "httpStatus": 200,
+      "ok": true,
+      "textLen": 700,
+      "transactionId": "f229b403-6eba-4ed1-99f7-9ca4a2640592",
+      "analysis": {
+        "nCostRows": 1,
+        "finalAmount": 0.168,
+        "requiresPayment": true,
+        "actionName": "text-to-speech",
+        "serviceName": "sapiom_elevenlabs",
+        "status": "completed",
+        "outcome": "success",
+        "rows": [
+          {
+            "fiatAmount": 0.168,
+            "isEstimate": false,
+            "isActive": true,
+            "supersedesCostId": null,
+            "supersededAt": null
+          }
+        ]
+      }
+    },
+    "neonExtra": [
+      {
+        "duration": "15m",
+        "worstCaseUsd": 0.001,
+        "quotedPrice": 0.000001,
+        "httpStatus": 201,
+        "ok": true,
+        "errMsg": null,
+        "dbId": "ndb_PS31gbZLXEQH",
+        "responseSample": "{\"id\":\"ndb_PS31gbZLXEQH\",\"handle\":\"survey-neon-addendum-15m\",\"name\":null,\"description\":null,\"status\":\"active\",\"region\":\"aws-us-east-1\",\"pgVersion\":17,\"duration\":\"15m\",\"connectionUri\":\"postgresql://neondb_owner:npg_SLNThAUGc26v@ep-solitary-surf-athzcplg.c-9.us-east-1.aws.neon.tech/neondb?sslmode=require\",\"expiresAt\":\"2026-07-07T16:01:36.885Z\",\"createdAt\":\"2026-07-07T15:46:36.891Z\"}",
+        "transactionId": "73d38681-aae9-438a-b125-a0310aaeb7f1",
+        "analysis": {
+          "nCostRows": 1,
+          "finalAmount": 0.000001,
+          "requiresPayment": true,
+          "actionName": "create",
+          "serviceName": "sapiom_neon",
+          "status": "completed",
+          "outcome": "success",
+          "rows": [
+            {
+              "fiatAmount": 0.000001,
+              "isEstimate": false,
+              "isActive": true,
+              "supersedesCostId": null,
+              "supersededAt": null
+            }
+          ]
+        }
+      },
+      {
+        "duration": "4h",
+        "worstCaseUsd": 0.005,
+        "quotedPrice": 0.001,
+        "httpStatus": 201,
+        "ok": true,
+        "errMsg": null,
+        "dbId": "ndb_d8rSWWnv-IXp",
+        "responseSample": "{\"id\":\"ndb_d8rSWWnv-IXp\",\"handle\":\"survey-neon-addendum-4h\",\"name\":null,\"description\":null,\"status\":\"active\",\"region\":\"aws-us-east-1\",\"pgVersion\":17,\"duration\":\"4h\",\"connectionUri\":\"postgresql://neondb_owner:npg_pdMSAF5loGN8@ep-aged-dew-atp5heps.c-9.us-east-1.aws.neon.tech/neondb?sslmode=require\",\"expiresAt\":\"2026-07-07T19:46:46.659Z\",\"createdAt\":\"2026-07-07T15:46:46.663Z\"}",
+        "transactionId": "e90b9306-0aba-480a-bf60-87cc3fdf138b",
+        "analysis": {
+          "nCostRows": 1,
+          "finalAmount": 0.001,
+          "requiresPayment": true,
+          "actionName": "create",
+          "serviceName": "sapiom_neon",
+          "status": "completed",
+          "outcome": "success",
+          "rows": [
+            {
+              "fiatAmount": 0.001,
+              "isEstimate": false,
+              "isActive": true,
+              "supersedesCostId": null,
+              "supersededAt": null
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

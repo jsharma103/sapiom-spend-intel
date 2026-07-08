@@ -1,0 +1,2294 @@
+{
+  "runStartedAt": "2026-07-07T15:58:40.943Z",
+  "runEndedAt": "2026-07-07T16:00:35.398Z",
+  "agentName": "survey-neon-n10",
+  "duration": "15m",
+  "nRequested": 10,
+  "governance": {
+    "total": 17,
+    "active": 0,
+    "activeRules": []
+  },
+  "cumulativeWorstCaseUsd": 0.000010000000000000053,
+  "budgetLog": [
+    {
+      "label": "n10-call-1",
+      "reservedUsd": 0.0001,
+      "cumulativeAfterUsd": 0.0001
+    },
+    {
+      "label": "n10-call-2",
+      "reservedUsd": 0.0001,
+      "cumulativeAfterUsd": 0.0002
+    },
+    {
+      "label": "n10-call-3",
+      "reservedUsd": 0.0001,
+      "cumulativeAfterUsd": 0.00030000000000000003
+    },
+    {
+      "label": "n10-call-4",
+      "reservedUsd": 0.0001,
+      "cumulativeAfterUsd": 0.0004
+    },
+    {
+      "label": "n10-call-5",
+      "reservedUsd": 0.0001,
+      "cumulativeAfterUsd": 0.0005
+    },
+    {
+      "label": "n10-call-6",
+      "reservedUsd": 0.0001,
+      "cumulativeAfterUsd": 0.0006000000000000001
+    },
+    {
+      "label": "n10-call-7",
+      "reservedUsd": 0.0001,
+      "cumulativeAfterUsd": 0.0007000000000000001
+    },
+    {
+      "label": "n10-call-8",
+      "reservedUsd": 0.0001,
+      "cumulativeAfterUsd": 0.0008000000000000001
+    },
+    {
+      "label": "n10-call-9",
+      "reservedUsd": 0.0001,
+      "cumulativeAfterUsd": 0.0009000000000000002
+    },
+    {
+      "label": "n10-call-10",
+      "reservedUsd": 0.0001,
+      "cumulativeAfterUsd": 0.0010000000000000002
+    }
+  ],
+  "globalAbort": false,
+  "preBalance": {
+    "ok": true,
+    "available": 3.903763,
+    "total": 4.432265
+  },
+  "postBalance": {
+    "ok": true,
+    "available": 3.903753,
+    "total": 4.432255
+  },
+  "actualSpendUsd": 0.00001,
+  "summary": {
+    "chargedCount": 10,
+    "freeCount": 0,
+    "resolvedCount": 10
+  },
+  "calls": [
+    {
+      "index": 1,
+      "label": "n10-call-1",
+      "handle": "survey-neon-n10-1",
+      "firedAt": "2026-07-07T15:58:41.364Z",
+      "worstCaseUsd": 0.0001,
+      "httpStatus": 201,
+      "ok": true,
+      "errMsg": null,
+      "dbId": "ndb_e0mRftvw01KJ",
+      "createResponse": {
+        "id": "ndb_e0mRftvw01KJ",
+        "handle": "survey-neon-n10-1",
+        "name": null,
+        "description": null,
+        "status": "active",
+        "region": "aws-us-east-1",
+        "pgVersion": 17,
+        "duration": "15m",
+        "connectionUri": "postgresql://neondb_owner:npg_3Th8samBzEty@ep-holy-hall-atmyrp1n.c-9.us-east-1.aws.neon.tech/neondb?sslmode=require",
+        "expiresAt": "2026-07-07T16:13:44.089Z",
+        "createdAt": "2026-07-07T15:58:44.094Z"
+      },
+      "transactionId": "834519ce-e7cd-4119-8b21-672601f78566",
+      "analysis": {
+        "nCostRows": 1,
+        "finalAmount": 0.000001,
+        "requiresPayment": true,
+        "actionName": "create",
+        "serviceName": "sapiom_neon",
+        "status": "completed",
+        "outcome": "success",
+        "createdAt": "2026-07-07T15:58:41.454Z",
+        "authorizedAt": "2026-07-07T15:58:43.001Z",
+        "completedAt": "2026-07-07T15:58:48.786Z",
+        "rows": [
+          {
+            "fiatAmount": 0.000001,
+            "isEstimate": false,
+            "isActive": true,
+            "supersedesCostId": null,
+            "supersededAt": null,
+            "createdAt": "2026-07-07T15:58:42.874Z"
+          }
+        ]
+      },
+      "rawTransaction": {
+        "id": "834519ce-e7cd-4119-8b21-672601f78566",
+        "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+        "serviceName": "sapiom_neon",
+        "actionName": "create",
+        "resourceName": "database",
+        "serviceId": "2344f568-35ca-4010-b223-51a386cf94a8",
+        "status": "completed",
+        "requiresPayment": true,
+        "qualifiers": {},
+        "metadata": {
+          "createdByApiKeyId": "472392ae-9985-48a4-8040-4d6e7bfe2fc0",
+          "preemptiveAuthorization": true
+        },
+        "createdAt": "2026-07-07T15:58:41.454Z",
+        "updatedAt": "2026-07-07T15:58:48.785Z",
+        "authorizedAt": "2026-07-07T15:58:43.001Z",
+        "completedAt": "2026-07-07T15:58:48.786Z",
+        "outcome": "success",
+        "currentPaymentTransactionId": "636c93e9-85d1-46eb-95ff-ef004d06498d",
+        "trace": {
+          "id": "507d4d15-ce46-47e0-824a-351bc0927ee6",
+          "externalId": null
+        },
+        "agentId": "93ddc174-ee4f-4024-a519-ccc9866fa5a8",
+        "agent": {
+          "id": "93ddc174-ee4f-4024-a519-ccc9866fa5a8",
+          "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+          "label": "survey-neon-n10",
+          "name": "survey-neon-n10",
+          "description": null,
+          "status": "active",
+          "createdAt": "2026-07-07T15:58:41.443Z",
+          "updatedAt": "2026-07-07T15:58:41.443Z",
+          "numericId": 42
+        },
+        "costs": [
+          {
+            "id": "a30cea8e-3d5e-435e-a1ab-d6e217b85b58",
+            "transactionId": "834519ce-e7cd-4119-8b21-672601f78566",
+            "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+            "paymentTransactionId": "636c93e9-85d1-46eb-95ff-ef004d06498d",
+            "fiatAmount": "0.000001000000000000",
+            "fiatAssetId": "4657ab13-b6e6-4ba4-9df8-47b351c0041c",
+            "isEstimate": false,
+            "isActive": true,
+            "supersedesCostId": null,
+            "supersededAt": null,
+            "costDetails": {
+              "source": "payment_transaction",
+              "network": "sapiom",
+              "protocol": "x402",
+              "paymentTransactionId": "636c93e9-85d1-46eb-95ff-ef004d06498d"
+            },
+            "createdAt": "2026-07-07T15:58:42.874Z",
+            "updatedAt": "2026-07-07T15:58:42.874Z",
+            "inferredFromFactId": null
+          }
+        ],
+        "traceId": "507d4d15-ce46-47e0-824a-351bc0927ee6",
+        "apiKeyId": "472392ae-9985-48a4-8040-4d6e7bfe2fc0",
+        "createdByActorType": "api_key",
+        "createdByActorId": "472392ae-9985-48a4-8040-4d6e7bfe2fc0",
+        "mandateId": null,
+        "facilitatedByServiceAccount": null,
+        "service": {
+          "id": "2344f568-35ca-4010-b223-51a386cf94a8",
+          "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+          "numericId": 6,
+          "globalServiceId": "957575b6-38a2-4707-a5d0-632d2b0da375",
+          "name": "sapiom_neon",
+          "label": null,
+          "description": null,
+          "metadata": null,
+          "createdAt": "2026-07-04T10:23:47.923Z",
+          "updatedAt": "2026-07-04T10:23:47.923Z",
+          "deletedAt": null
+        },
+        "preparingAt": "2026-07-07T15:58:42.916Z",
+        "deniedAt": null,
+        "cancelledAt": null,
+        "authorizationRequests": [
+          {
+            "id": "fe4be9f6-ad56-43c6-9c04-67a47873157e",
+            "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+            "transactionId": "834519ce-e7cd-4119-8b21-672601f78566",
+            "status": "authorized",
+            "createdAt": "2026-07-07T15:58:41.489Z",
+            "updatedAt": "2026-07-07T15:58:41.545Z",
+            "completedAt": "2026-07-07T15:58:41.560Z",
+            "processingAt": "2026-07-07T15:58:41.551Z",
+            "authorizedAt": "2026-07-07T15:58:41.560Z",
+            "deniedAt": null,
+            "ruleExecutions": []
+          },
+          {
+            "id": "38834e44-2167-42cb-96eb-0735950508e9",
+            "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+            "transactionId": "834519ce-e7cd-4119-8b21-672601f78566",
+            "status": "authorized",
+            "createdAt": "2026-07-07T15:58:42.874Z",
+            "updatedAt": "2026-07-07T15:58:42.940Z",
+            "completedAt": "2026-07-07T15:58:43.001Z",
+            "processingAt": "2026-07-07T15:58:42.945Z",
+            "authorizedAt": "2026-07-07T15:58:43.001Z",
+            "deniedAt": null,
+            "ruleExecutions": [
+              {
+                "id": "b0901c64-d286-4ce2-af52-00738d1da6b7",
+                "ruleId": "5d35cc64-3d49-4069-bb77-52d66ae5b3d5",
+                "rule": {
+                  "id": "5d35cc64-3d49-4069-bb77-52d66ae5b3d5",
+                  "numericId": 1,
+                  "name": "System: Payment Authorization"
+                },
+                "transactionId": "834519ce-e7cd-4119-8b21-672601f78566",
+                "transactionAuthorizationRequestId": "38834e44-2167-42cb-96eb-0735950508e9",
+                "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+                "status": "completed",
+                "inputData": {
+                  "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+                  "actionName": "create",
+                  "serviceName": "sapiom_neon",
+                  "resourceName": "database",
+                  "transactionId": "834519ce-e7cd-4119-8b21-672601f78566",
+                  "transactionAuthorizationRequestId": "38834e44-2167-42cb-96eb-0735950508e9"
+                },
+                "outputData": {
+                  "reason": "Payment successfully authorized",
+                  "decision": "ALLOWED",
+                  "metadata": {
+                    "ruleType": "payment_authorization",
+                    "networkId": "c4079c0a-ad4d-4a6d-85db-7aa15375b161",
+                    "authorizationDetails": {
+                      "payload": {
+                        "nonce": "605e39b9-5f2d-4068-8a6f-caeb8386468a",
+                        "token": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6InNhcGlvbS1wYXltZW50LWtleS12MSJ9.eyJzdWIiOiI2MzZjOTNlOS04NWQxLTQ2ZWItOTVmZi1lZjAwNGQwNjQ5OGQiLCJ0cmFuc2ZlcklkIjoiYzQwNzljMGEtYWQ0ZC00YTZkLTg1ZGItN2FhMTUzNzViMTYxIiwiYWNjb3VudElkIjoiMGY2YTU2YmEtZGViMy00MzA3LTkyYWEtZWY3OTIyOTMwMmZmIiwicGF5VG8iOiIzOTdiOTM5NS1kMzBkLTQyY2MtYWJmOS0wYzU2NjI5ZDFjMmYiLCJhbW91bnQiOiIwLjAwMDAwMTAwMDAwMDAwMDAwMCIsIm5vbmNlIjoiNjA1ZTM5YjktNWYyZC00MDY4LThhNmYtY2FlYjgzODY0NjhhIiwiaWRlbnRpdHkiOnsidmVyc2lvbiI6MiwidGVuYW50SWQiOiI3MjM0YTdmOS00MDc0LTRhYWQtYjEzZi04NGUwZTI4YjQ2OWEiLCJvcmdhbml6YXRpb25JZCI6ImY0YmEyODViLTA4NTUtNGFlMy05OTBjLWU1YmRlZTI5MWM0NyIsInBheW1lbnRBY2NvdW50SWQiOiIwZjZhNTZiYS1kZWIzLTQzMDctOTJhYS1lZjc5MjI5MzAyZmYifSwiaWF0IjoxNzgzNDM5OTIyfQ.V6jjkauhn88IV7jTXU6F8dVctTArzWR4lYRVcZq_tCK-gukyKUHjUamtL1S7HN4Qfn-cvMK_4Lc8xIc2MClKHOjaaVYanXOacYJ4AUdo0JBKg0c27NY0XGhgac--J-0N6FxLSTNwpwOmYj-epMfLjSVCofQcNUkhMV2cjSeJ9X11cYGQpJc4vp9wtAM9r14o66qOU8uyOOsoAnVaAG2wCmpau8myDvpMw4F7eSJcN_tZ6twS0h2558Y7YBJ69n-Nc-atxOTfD6l9Yj7hd7s8GTuinqvC-0Ieaa4CsbV6cYTX1sXlCRQ7RhCzddZFPJj0N4bbdeku9XLJBxDVYZxiKQ",
+                        "amount": "0.000001000000000000",
+                        "accountId": "0f6a56ba-deb3-4307-92aa-ef79229302ff",
+                        "authorizationId": "c4079c0a-ad4d-4a6d-85db-7aa15375b161"
+                      },
+                      "accepted": {
+                        "asset": "USD",
+                        "extra": {},
+                        "payTo": "397b9395-d30d-42cc-abf9-0c56629d1c2f",
+                        "amount": "0.000001",
+                        "scheme": "exact",
+                        "network": "sapiom:main",
+                        "maxTimeoutSeconds": 300
+                      },
+                      "resource": {
+                        "url": "http://neon.services.sapiom.ai/v1/databases",
+                        "mimeType": "application/json",
+                        "description": ""
+                      },
+                      "x402Version": 2
+                    },
+                    "paymentTransactionId": "636c93e9-85d1-46eb-95ff-ef004d06498d"
+                  }
+                },
+                "errorMessage": null,
+                "errorDetails": null,
+                "startedAt": "2026-07-07T15:58:42.954Z",
+                "completedAt": "2026-07-07T15:58:42.994Z",
+                "executionTimeMs": 40,
+                "retryCount": 0,
+                "parentExecutionId": null,
+                "createdAt": "2026-07-07T15:58:42.940Z",
+                "updatedAt": "2026-07-07T15:58:42.940Z"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "index": 2,
+      "label": "n10-call-2",
+      "handle": "survey-neon-n10-2",
+      "firedAt": "2026-07-07T15:58:51.239Z",
+      "worstCaseUsd": 0.0001,
+      "httpStatus": 201,
+      "ok": true,
+      "errMsg": null,
+      "dbId": "ndb_rFlYbNddS4Qg",
+      "createResponse": {
+        "id": "ndb_rFlYbNddS4Qg",
+        "handle": "survey-neon-n10-2",
+        "name": null,
+        "description": null,
+        "status": "active",
+        "region": "aws-us-east-1",
+        "pgVersion": 17,
+        "duration": "15m",
+        "connectionUri": "postgresql://neondb_owner:npg_tDua8gnlsZA4@ep-jolly-lake-at8ch54j.c-9.us-east-1.aws.neon.tech/neondb?sslmode=require",
+        "expiresAt": "2026-07-07T16:13:53.778Z",
+        "createdAt": "2026-07-07T15:58:53.784Z"
+      },
+      "transactionId": "1e79b84d-c4b1-4765-b96e-ce208de98158",
+      "analysis": {
+        "nCostRows": 1,
+        "finalAmount": 0.000001,
+        "requiresPayment": true,
+        "actionName": "create",
+        "serviceName": "sapiom_neon",
+        "status": "completed",
+        "outcome": "success",
+        "createdAt": "2026-07-07T15:58:51.270Z",
+        "authorizedAt": "2026-07-07T15:58:52.703Z",
+        "completedAt": "2026-07-07T15:59:00.599Z",
+        "rows": [
+          {
+            "fiatAmount": 0.000001,
+            "isEstimate": false,
+            "isActive": true,
+            "supersedesCostId": null,
+            "supersededAt": null,
+            "createdAt": "2026-07-07T15:58:52.569Z"
+          }
+        ]
+      },
+      "rawTransaction": {
+        "id": "1e79b84d-c4b1-4765-b96e-ce208de98158",
+        "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+        "serviceName": "sapiom_neon",
+        "actionName": "create",
+        "resourceName": "database",
+        "serviceId": "2344f568-35ca-4010-b223-51a386cf94a8",
+        "status": "completed",
+        "requiresPayment": true,
+        "qualifiers": {},
+        "metadata": {
+          "createdByApiKeyId": "472392ae-9985-48a4-8040-4d6e7bfe2fc0",
+          "preemptiveAuthorization": true
+        },
+        "createdAt": "2026-07-07T15:58:51.270Z",
+        "updatedAt": "2026-07-07T15:59:00.597Z",
+        "authorizedAt": "2026-07-07T15:58:52.703Z",
+        "completedAt": "2026-07-07T15:59:00.599Z",
+        "outcome": "success",
+        "currentPaymentTransactionId": "449aa359-9f54-41f4-a21f-bbe61752613e",
+        "trace": {
+          "id": "d46bb47b-c7da-4a74-aaf5-e2ad949574fd",
+          "externalId": null
+        },
+        "agentId": "93ddc174-ee4f-4024-a519-ccc9866fa5a8",
+        "agent": {
+          "id": "93ddc174-ee4f-4024-a519-ccc9866fa5a8",
+          "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+          "label": "survey-neon-n10",
+          "name": "survey-neon-n10",
+          "description": null,
+          "status": "active",
+          "createdAt": "2026-07-07T15:58:41.443Z",
+          "updatedAt": "2026-07-07T15:58:41.443Z",
+          "numericId": 42
+        },
+        "costs": [
+          {
+            "id": "53ef97bc-5ae3-4408-a43e-b4503c4f0c72",
+            "transactionId": "1e79b84d-c4b1-4765-b96e-ce208de98158",
+            "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+            "paymentTransactionId": "449aa359-9f54-41f4-a21f-bbe61752613e",
+            "fiatAmount": "0.000001000000000000",
+            "fiatAssetId": "4657ab13-b6e6-4ba4-9df8-47b351c0041c",
+            "isEstimate": false,
+            "isActive": true,
+            "supersedesCostId": null,
+            "supersededAt": null,
+            "costDetails": {
+              "source": "payment_transaction",
+              "network": "sapiom",
+              "protocol": "x402",
+              "paymentTransactionId": "449aa359-9f54-41f4-a21f-bbe61752613e"
+            },
+            "createdAt": "2026-07-07T15:58:52.569Z",
+            "updatedAt": "2026-07-07T15:58:52.569Z",
+            "inferredFromFactId": null
+          }
+        ],
+        "traceId": "d46bb47b-c7da-4a74-aaf5-e2ad949574fd",
+        "apiKeyId": "472392ae-9985-48a4-8040-4d6e7bfe2fc0",
+        "createdByActorType": "api_key",
+        "createdByActorId": "472392ae-9985-48a4-8040-4d6e7bfe2fc0",
+        "mandateId": null,
+        "facilitatedByServiceAccount": null,
+        "service": {
+          "id": "2344f568-35ca-4010-b223-51a386cf94a8",
+          "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+          "numericId": 6,
+          "globalServiceId": "957575b6-38a2-4707-a5d0-632d2b0da375",
+          "name": "sapiom_neon",
+          "label": null,
+          "description": null,
+          "metadata": null,
+          "createdAt": "2026-07-04T10:23:47.923Z",
+          "updatedAt": "2026-07-04T10:23:47.923Z",
+          "deletedAt": null
+        },
+        "preparingAt": "2026-07-07T15:58:52.606Z",
+        "deniedAt": null,
+        "cancelledAt": null,
+        "authorizationRequests": [
+          {
+            "id": "f6092809-e07b-49de-acfd-8293636d33f6",
+            "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+            "transactionId": "1e79b84d-c4b1-4765-b96e-ce208de98158",
+            "status": "authorized",
+            "createdAt": "2026-07-07T15:58:52.569Z",
+            "updatedAt": "2026-07-07T15:58:52.627Z",
+            "completedAt": "2026-07-07T15:58:52.703Z",
+            "processingAt": "2026-07-07T15:58:52.646Z",
+            "authorizedAt": "2026-07-07T15:58:52.703Z",
+            "deniedAt": null,
+            "ruleExecutions": [
+              {
+                "id": "4565f3ce-6f8a-46d6-8976-43d348d6df4f",
+                "ruleId": "5d35cc64-3d49-4069-bb77-52d66ae5b3d5",
+                "rule": {
+                  "id": "5d35cc64-3d49-4069-bb77-52d66ae5b3d5",
+                  "numericId": 1,
+                  "name": "System: Payment Authorization"
+                },
+                "transactionId": "1e79b84d-c4b1-4765-b96e-ce208de98158",
+                "transactionAuthorizationRequestId": "f6092809-e07b-49de-acfd-8293636d33f6",
+                "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+                "status": "completed",
+                "inputData": {
+                  "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+                  "actionName": "create",
+                  "serviceName": "sapiom_neon",
+                  "resourceName": "database",
+                  "transactionId": "1e79b84d-c4b1-4765-b96e-ce208de98158",
+                  "transactionAuthorizationRequestId": "f6092809-e07b-49de-acfd-8293636d33f6"
+                },
+                "outputData": {
+                  "reason": "Payment successfully authorized",
+                  "decision": "ALLOWED",
+                  "metadata": {
+                    "ruleType": "payment_authorization",
+                    "networkId": "5ad5c377-9f44-46c7-abdc-3b033933d4e8",
+                    "authorizationDetails": {
+                      "payload": {
+                        "nonce": "02ec92e5-809d-4250-96ff-e5f5ca6a92ce",
+                        "token": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6InNhcGlvbS1wYXltZW50LWtleS12MSJ9.eyJzdWIiOiI0NDlhYTM1OS05ZjU0LTQxZjQtYTIxZi1iYmU2MTc1MjYxM2UiLCJ0cmFuc2ZlcklkIjoiNWFkNWMzNzctOWY0NC00NmM3LWFiZGMtM2IwMzM5MzNkNGU4IiwiYWNjb3VudElkIjoiMGY2YTU2YmEtZGViMy00MzA3LTkyYWEtZWY3OTIyOTMwMmZmIiwicGF5VG8iOiIzOTdiOTM5NS1kMzBkLTQyY2MtYWJmOS0wYzU2NjI5ZDFjMmYiLCJhbW91bnQiOiIwLjAwMDAwMTAwMDAwMDAwMDAwMCIsIm5vbmNlIjoiMDJlYzkyZTUtODA5ZC00MjUwLTk2ZmYtZTVmNWNhNmE5MmNlIiwiaWRlbnRpdHkiOnsidmVyc2lvbiI6MiwidGVuYW50SWQiOiI3MjM0YTdmOS00MDc0LTRhYWQtYjEzZi04NGUwZTI4YjQ2OWEiLCJvcmdhbml6YXRpb25JZCI6ImY0YmEyODViLTA4NTUtNGFlMy05OTBjLWU1YmRlZTI5MWM0NyIsInBheW1lbnRBY2NvdW50SWQiOiIwZjZhNTZiYS1kZWIzLTQzMDctOTJhYS1lZjc5MjI5MzAyZmYifSwiaWF0IjoxNzgzNDM5OTMyfQ.Ta-Ba4pB-WPrWjDvfEDy7qV2lHymyV1gUgv0s3gxH9kGhJZOFLXBiQAatus1eQFVxD9_BjfiB_PrWmI_GJd7bkOAxtbTU4aqGYWykkgINeNnLMLC2ENWnaXYEuW13eArzYQUUWcyNNCIjvoU9SNOjP7wBAGySb7oqPh66VU5-xikyKaIlrdZqXxfVJenrOnPZ7CJNPaz4aV_9S5vSntEv9IZtX9dP5ila5mFVGCxNBPnTPbiZ6fe5CPhd2m8jkMjKdBM-sswqt0JGWUicYRsZuIfGsz7BqHlEaq1jHEm6GQKbVlPd5rLJJL4oTtL7TKClaOR1b9dDrWxRHexApo_ag",
+                        "amount": "0.000001000000000000",
+                        "accountId": "0f6a56ba-deb3-4307-92aa-ef79229302ff",
+                        "authorizationId": "5ad5c377-9f44-46c7-abdc-3b033933d4e8"
+                      },
+                      "accepted": {
+                        "asset": "USD",
+                        "extra": {},
+                        "payTo": "397b9395-d30d-42cc-abf9-0c56629d1c2f",
+                        "amount": "0.000001",
+                        "scheme": "exact",
+                        "network": "sapiom:main",
+                        "maxTimeoutSeconds": 300
+                      },
+                      "resource": {
+                        "url": "http://neon.services.sapiom.ai/v1/databases",
+                        "mimeType": "application/json",
+                        "description": ""
+                      },
+                      "x402Version": 2
+                    },
+                    "paymentTransactionId": "449aa359-9f54-41f4-a21f-bbe61752613e"
+                  }
+                },
+                "errorMessage": null,
+                "errorDetails": null,
+                "startedAt": "2026-07-07T15:58:52.657Z",
+                "completedAt": "2026-07-07T15:58:52.696Z",
+                "executionTimeMs": 39,
+                "retryCount": 0,
+                "parentExecutionId": null,
+                "createdAt": "2026-07-07T15:58:52.627Z",
+                "updatedAt": "2026-07-07T15:58:52.627Z"
+              }
+            ]
+          },
+          {
+            "id": "f6f4bfbc-239d-4876-9571-2395f3dacf72",
+            "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+            "transactionId": "1e79b84d-c4b1-4765-b96e-ce208de98158",
+            "status": "authorized",
+            "createdAt": "2026-07-07T15:58:51.318Z",
+            "updatedAt": "2026-07-07T15:58:51.381Z",
+            "completedAt": "2026-07-07T15:58:51.396Z",
+            "processingAt": "2026-07-07T15:58:51.386Z",
+            "authorizedAt": "2026-07-07T15:58:51.396Z",
+            "deniedAt": null,
+            "ruleExecutions": []
+          }
+        ]
+      }
+    },
+    {
+      "index": 3,
+      "label": "n10-call-3",
+      "handle": "survey-neon-n10-3",
+      "firedAt": "2026-07-07T15:59:03.103Z",
+      "worstCaseUsd": 0.0001,
+      "httpStatus": 201,
+      "ok": true,
+      "errMsg": null,
+      "dbId": "ndb_7ZB8agMb7lfU",
+      "createResponse": {
+        "id": "ndb_7ZB8agMb7lfU",
+        "handle": "survey-neon-n10-3",
+        "name": null,
+        "description": null,
+        "status": "active",
+        "region": "aws-us-east-1",
+        "pgVersion": 17,
+        "duration": "15m",
+        "connectionUri": "postgresql://neondb_owner:npg_y1kYZaBX0epo@ep-snowy-sun-atq1w49p.c-9.us-east-1.aws.neon.tech/neondb?sslmode=require",
+        "expiresAt": "2026-07-07T16:14:03.603Z",
+        "createdAt": "2026-07-07T15:59:03.610Z"
+      },
+      "transactionId": "591ecb12-ef8a-487d-9081-42294c38335f",
+      "analysis": {
+        "nCostRows": 1,
+        "finalAmount": 0.000001,
+        "requiresPayment": true,
+        "actionName": "create",
+        "serviceName": "sapiom_neon",
+        "status": "completed",
+        "outcome": "success",
+        "createdAt": "2026-07-07T15:59:03.148Z",
+        "authorizedAt": "2026-07-07T15:59:03.518Z",
+        "completedAt": "2026-07-07T15:59:08.175Z",
+        "rows": [
+          {
+            "fiatAmount": 0.000001,
+            "isEstimate": false,
+            "isActive": true,
+            "supersedesCostId": null,
+            "supersededAt": null,
+            "createdAt": "2026-07-07T15:59:03.414Z"
+          }
+        ]
+      },
+      "rawTransaction": {
+        "id": "591ecb12-ef8a-487d-9081-42294c38335f",
+        "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+        "serviceName": "sapiom_neon",
+        "actionName": "create",
+        "resourceName": "database",
+        "serviceId": "2344f568-35ca-4010-b223-51a386cf94a8",
+        "status": "completed",
+        "requiresPayment": true,
+        "qualifiers": {},
+        "metadata": {
+          "createdByApiKeyId": "472392ae-9985-48a4-8040-4d6e7bfe2fc0",
+          "preemptiveAuthorization": true
+        },
+        "createdAt": "2026-07-07T15:59:03.148Z",
+        "updatedAt": "2026-07-07T15:59:08.173Z",
+        "authorizedAt": "2026-07-07T15:59:03.518Z",
+        "completedAt": "2026-07-07T15:59:08.175Z",
+        "outcome": "success",
+        "currentPaymentTransactionId": "1686b3e6-a4a5-4374-85af-be7c8bda05f7",
+        "trace": {
+          "id": "fcb8baf1-1c4d-4009-8aa4-6a36d37dd202",
+          "externalId": null
+        },
+        "agentId": "93ddc174-ee4f-4024-a519-ccc9866fa5a8",
+        "agent": {
+          "id": "93ddc174-ee4f-4024-a519-ccc9866fa5a8",
+          "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+          "label": "survey-neon-n10",
+          "name": "survey-neon-n10",
+          "description": null,
+          "status": "active",
+          "createdAt": "2026-07-07T15:58:41.443Z",
+          "updatedAt": "2026-07-07T15:58:41.443Z",
+          "numericId": 42
+        },
+        "costs": [
+          {
+            "id": "b66fe1e8-5273-45f4-b07d-273db8bb834f",
+            "transactionId": "591ecb12-ef8a-487d-9081-42294c38335f",
+            "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+            "paymentTransactionId": "1686b3e6-a4a5-4374-85af-be7c8bda05f7",
+            "fiatAmount": "0.000001000000000000",
+            "fiatAssetId": "4657ab13-b6e6-4ba4-9df8-47b351c0041c",
+            "isEstimate": false,
+            "isActive": true,
+            "supersedesCostId": null,
+            "supersededAt": null,
+            "costDetails": {
+              "source": "payment_transaction",
+              "network": "sapiom",
+              "protocol": "x402",
+              "paymentTransactionId": "1686b3e6-a4a5-4374-85af-be7c8bda05f7"
+            },
+            "createdAt": "2026-07-07T15:59:03.414Z",
+            "updatedAt": "2026-07-07T15:59:03.414Z",
+            "inferredFromFactId": null
+          }
+        ],
+        "traceId": "fcb8baf1-1c4d-4009-8aa4-6a36d37dd202",
+        "apiKeyId": "472392ae-9985-48a4-8040-4d6e7bfe2fc0",
+        "createdByActorType": "api_key",
+        "createdByActorId": "472392ae-9985-48a4-8040-4d6e7bfe2fc0",
+        "mandateId": null,
+        "facilitatedByServiceAccount": null,
+        "service": {
+          "id": "2344f568-35ca-4010-b223-51a386cf94a8",
+          "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+          "numericId": 6,
+          "globalServiceId": "957575b6-38a2-4707-a5d0-632d2b0da375",
+          "name": "sapiom_neon",
+          "label": null,
+          "description": null,
+          "metadata": null,
+          "createdAt": "2026-07-04T10:23:47.923Z",
+          "updatedAt": "2026-07-04T10:23:47.923Z",
+          "deletedAt": null
+        },
+        "preparingAt": "2026-07-07T15:59:03.449Z",
+        "deniedAt": null,
+        "cancelledAt": null,
+        "authorizationRequests": [
+          {
+            "id": "ce0b6b26-1ae3-476c-aeef-7b9243c48155",
+            "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+            "transactionId": "591ecb12-ef8a-487d-9081-42294c38335f",
+            "status": "authorized",
+            "createdAt": "2026-07-07T15:59:03.179Z",
+            "updatedAt": "2026-07-07T15:59:03.222Z",
+            "completedAt": "2026-07-07T15:59:03.237Z",
+            "processingAt": "2026-07-07T15:59:03.227Z",
+            "authorizedAt": "2026-07-07T15:59:03.237Z",
+            "deniedAt": null,
+            "ruleExecutions": []
+          },
+          {
+            "id": "5f8e92fd-392a-4f9b-9ff1-5b0147f85347",
+            "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+            "transactionId": "591ecb12-ef8a-487d-9081-42294c38335f",
+            "status": "authorized",
+            "createdAt": "2026-07-07T15:59:03.414Z",
+            "updatedAt": "2026-07-07T15:59:03.473Z",
+            "completedAt": "2026-07-07T15:59:03.518Z",
+            "processingAt": "2026-07-07T15:59:03.477Z",
+            "authorizedAt": "2026-07-07T15:59:03.518Z",
+            "deniedAt": null,
+            "ruleExecutions": [
+              {
+                "id": "38ca69c1-067a-4a01-9695-0f24edcd0ca8",
+                "ruleId": "5d35cc64-3d49-4069-bb77-52d66ae5b3d5",
+                "rule": {
+                  "id": "5d35cc64-3d49-4069-bb77-52d66ae5b3d5",
+                  "numericId": 1,
+                  "name": "System: Payment Authorization"
+                },
+                "transactionId": "591ecb12-ef8a-487d-9081-42294c38335f",
+                "transactionAuthorizationRequestId": "5f8e92fd-392a-4f9b-9ff1-5b0147f85347",
+                "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+                "status": "completed",
+                "inputData": {
+                  "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+                  "actionName": "create",
+                  "serviceName": "sapiom_neon",
+                  "resourceName": "database",
+                  "transactionId": "591ecb12-ef8a-487d-9081-42294c38335f",
+                  "transactionAuthorizationRequestId": "5f8e92fd-392a-4f9b-9ff1-5b0147f85347"
+                },
+                "outputData": {
+                  "reason": "Payment successfully authorized",
+                  "decision": "ALLOWED",
+                  "metadata": {
+                    "ruleType": "payment_authorization",
+                    "networkId": "841f0648-aadb-4917-998b-09e4c97b51bb",
+                    "authorizationDetails": {
+                      "payload": {
+                        "nonce": "7a186276-4a64-466b-9f42-e2ec9c79eac4",
+                        "token": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6InNhcGlvbS1wYXltZW50LWtleS12MSJ9.eyJzdWIiOiIxNjg2YjNlNi1hNGE1LTQzNzQtODVhZi1iZTdjOGJkYTA1ZjciLCJ0cmFuc2ZlcklkIjoiODQxZjA2NDgtYWFkYi00OTE3LTk5OGItMDllNGM5N2I1MWJiIiwiYWNjb3VudElkIjoiMGY2YTU2YmEtZGViMy00MzA3LTkyYWEtZWY3OTIyOTMwMmZmIiwicGF5VG8iOiIzOTdiOTM5NS1kMzBkLTQyY2MtYWJmOS0wYzU2NjI5ZDFjMmYiLCJhbW91bnQiOiIwLjAwMDAwMTAwMDAwMDAwMDAwMCIsIm5vbmNlIjoiN2ExODYyNzYtNGE2NC00NjZiLTlmNDItZTJlYzljNzllYWM0IiwiaWRlbnRpdHkiOnsidmVyc2lvbiI6MiwidGVuYW50SWQiOiI3MjM0YTdmOS00MDc0LTRhYWQtYjEzZi04NGUwZTI4YjQ2OWEiLCJvcmdhbml6YXRpb25JZCI6ImY0YmEyODViLTA4NTUtNGFlMy05OTBjLWU1YmRlZTI5MWM0NyIsInBheW1lbnRBY2NvdW50SWQiOiIwZjZhNTZiYS1kZWIzLTQzMDctOTJhYS1lZjc5MjI5MzAyZmYifSwiaWF0IjoxNzgzNDM5OTQzfQ.Em2ns5gMerv_NYqAQ3LnVwCZSSvF3wQGueSw6LtTqkhlIDU_zOZ3RlgR6zgzXR5ibb2dnUqAZhW_ZZJG5fZV3r2V6T8hYrvFgkx267BbSVghQ9TcHbBPqRyh5ph8t1Xo45i13dr9R5yP2_Ahb6rTO_KN70lb53owc8r-5y_4l7xhVlJIWXzfFB39vnqKtl0eLHa0LIWARlPp8pXVzBftxgOiuAkAadKgXnsuteuekUp0PhmW4dGR-7xAmovLZWgLIwleTlkRWsz_LkdTNF4QQS74CZfMFKAfnjulxR6RcEQgJh6vSJOJbm40iyGDxjXlSDcSyFpT_FPzt0z-G0WHmg",
+                        "amount": "0.000001000000000000",
+                        "accountId": "0f6a56ba-deb3-4307-92aa-ef79229302ff",
+                        "authorizationId": "841f0648-aadb-4917-998b-09e4c97b51bb"
+                      },
+                      "accepted": {
+                        "asset": "USD",
+                        "extra": {},
+                        "payTo": "397b9395-d30d-42cc-abf9-0c56629d1c2f",
+                        "amount": "0.000001",
+                        "scheme": "exact",
+                        "network": "sapiom:main",
+                        "maxTimeoutSeconds": 300
+                      },
+                      "resource": {
+                        "url": "http://neon.services.sapiom.ai/v1/databases",
+                        "mimeType": "application/json",
+                        "description": ""
+                      },
+                      "x402Version": 2
+                    },
+                    "paymentTransactionId": "1686b3e6-a4a5-4374-85af-be7c8bda05f7"
+                  }
+                },
+                "errorMessage": null,
+                "errorDetails": null,
+                "startedAt": "2026-07-07T15:59:03.484Z",
+                "completedAt": "2026-07-07T15:59:03.513Z",
+                "executionTimeMs": 29,
+                "retryCount": 0,
+                "parentExecutionId": null,
+                "createdAt": "2026-07-07T15:59:03.473Z",
+                "updatedAt": "2026-07-07T15:59:03.473Z"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "index": 4,
+      "label": "n10-call-4",
+      "handle": "survey-neon-n10-4",
+      "firedAt": "2026-07-07T15:59:10.672Z",
+      "worstCaseUsd": 0.0001,
+      "httpStatus": 201,
+      "ok": true,
+      "errMsg": null,
+      "dbId": "ndb_wCGa-aFUhwDC",
+      "createResponse": {
+        "id": "ndb_wCGa-aFUhwDC",
+        "handle": "survey-neon-n10-4",
+        "name": null,
+        "description": null,
+        "status": "active",
+        "region": "aws-us-east-1",
+        "pgVersion": 17,
+        "duration": "15m",
+        "connectionUri": "postgresql://neondb_owner:npg_Vk0CIXGdxa4N@ep-mute-field-atzxosmg.c-9.us-east-1.aws.neon.tech/neondb?sslmode=require",
+        "expiresAt": "2026-07-07T16:14:13.250Z",
+        "createdAt": "2026-07-07T15:59:13.257Z"
+      },
+      "transactionId": "5c23cca7-7683-4541-9d22-7ab1a83cdf2a",
+      "analysis": {
+        "nCostRows": 1,
+        "finalAmount": 0.000001,
+        "requiresPayment": true,
+        "actionName": "create",
+        "serviceName": "sapiom_neon",
+        "status": "completed",
+        "outcome": "success",
+        "createdAt": "2026-07-07T15:59:10.705Z",
+        "authorizedAt": "2026-07-07T15:59:12.136Z",
+        "completedAt": "2026-07-07T15:59:17.900Z",
+        "rows": [
+          {
+            "fiatAmount": 0.000001,
+            "isEstimate": false,
+            "isActive": true,
+            "supersedesCostId": null,
+            "supersededAt": null,
+            "createdAt": "2026-07-07T15:59:12.007Z"
+          }
+        ]
+      },
+      "rawTransaction": {
+        "id": "5c23cca7-7683-4541-9d22-7ab1a83cdf2a",
+        "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+        "serviceName": "sapiom_neon",
+        "actionName": "create",
+        "resourceName": "database",
+        "serviceId": "2344f568-35ca-4010-b223-51a386cf94a8",
+        "status": "completed",
+        "requiresPayment": true,
+        "qualifiers": {},
+        "metadata": {
+          "createdByApiKeyId": "472392ae-9985-48a4-8040-4d6e7bfe2fc0",
+          "preemptiveAuthorization": true
+        },
+        "createdAt": "2026-07-07T15:59:10.705Z",
+        "updatedAt": "2026-07-07T15:59:17.897Z",
+        "authorizedAt": "2026-07-07T15:59:12.136Z",
+        "completedAt": "2026-07-07T15:59:17.900Z",
+        "outcome": "success",
+        "currentPaymentTransactionId": "14d84634-309b-40f1-bd5f-b2a5e24313dd",
+        "trace": {
+          "id": "abe9b5d0-c175-4a5d-b553-fd11d651d5e1",
+          "externalId": null
+        },
+        "agentId": "93ddc174-ee4f-4024-a519-ccc9866fa5a8",
+        "agent": {
+          "id": "93ddc174-ee4f-4024-a519-ccc9866fa5a8",
+          "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+          "label": "survey-neon-n10",
+          "name": "survey-neon-n10",
+          "description": null,
+          "status": "active",
+          "createdAt": "2026-07-07T15:58:41.443Z",
+          "updatedAt": "2026-07-07T15:58:41.443Z",
+          "numericId": 42
+        },
+        "costs": [
+          {
+            "id": "82ed1d73-19c0-4cdb-ab76-7bd624c737e9",
+            "transactionId": "5c23cca7-7683-4541-9d22-7ab1a83cdf2a",
+            "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+            "paymentTransactionId": "14d84634-309b-40f1-bd5f-b2a5e24313dd",
+            "fiatAmount": "0.000001000000000000",
+            "fiatAssetId": "4657ab13-b6e6-4ba4-9df8-47b351c0041c",
+            "isEstimate": false,
+            "isActive": true,
+            "supersedesCostId": null,
+            "supersededAt": null,
+            "costDetails": {
+              "source": "payment_transaction",
+              "network": "sapiom",
+              "protocol": "x402",
+              "paymentTransactionId": "14d84634-309b-40f1-bd5f-b2a5e24313dd"
+            },
+            "createdAt": "2026-07-07T15:59:12.007Z",
+            "updatedAt": "2026-07-07T15:59:12.007Z",
+            "inferredFromFactId": null
+          }
+        ],
+        "traceId": "abe9b5d0-c175-4a5d-b553-fd11d651d5e1",
+        "apiKeyId": "472392ae-9985-48a4-8040-4d6e7bfe2fc0",
+        "createdByActorType": "api_key",
+        "createdByActorId": "472392ae-9985-48a4-8040-4d6e7bfe2fc0",
+        "mandateId": null,
+        "facilitatedByServiceAccount": null,
+        "service": {
+          "id": "2344f568-35ca-4010-b223-51a386cf94a8",
+          "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+          "numericId": 6,
+          "globalServiceId": "957575b6-38a2-4707-a5d0-632d2b0da375",
+          "name": "sapiom_neon",
+          "label": null,
+          "description": null,
+          "metadata": null,
+          "createdAt": "2026-07-04T10:23:47.923Z",
+          "updatedAt": "2026-07-04T10:23:47.923Z",
+          "deletedAt": null
+        },
+        "preparingAt": "2026-07-07T15:59:12.044Z",
+        "deniedAt": null,
+        "cancelledAt": null,
+        "authorizationRequests": [
+          {
+            "id": "1fda0934-79ee-480b-894a-36fa54948f07",
+            "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+            "transactionId": "5c23cca7-7683-4541-9d22-7ab1a83cdf2a",
+            "status": "authorized",
+            "createdAt": "2026-07-07T15:59:10.777Z",
+            "updatedAt": "2026-07-07T15:59:10.836Z",
+            "completedAt": "2026-07-07T15:59:10.848Z",
+            "processingAt": "2026-07-07T15:59:10.840Z",
+            "authorizedAt": "2026-07-07T15:59:10.848Z",
+            "deniedAt": null,
+            "ruleExecutions": []
+          },
+          {
+            "id": "250159f9-faa2-4917-8460-d50d6d71fdf0",
+            "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+            "transactionId": "5c23cca7-7683-4541-9d22-7ab1a83cdf2a",
+            "status": "authorized",
+            "createdAt": "2026-07-07T15:59:12.007Z",
+            "updatedAt": "2026-07-07T15:59:12.075Z",
+            "completedAt": "2026-07-07T15:59:12.136Z",
+            "processingAt": "2026-07-07T15:59:12.080Z",
+            "authorizedAt": "2026-07-07T15:59:12.136Z",
+            "deniedAt": null,
+            "ruleExecutions": [
+              {
+                "id": "809bc5d7-7eee-4ea5-89fb-d7b54aef8305",
+                "ruleId": "5d35cc64-3d49-4069-bb77-52d66ae5b3d5",
+                "rule": {
+                  "id": "5d35cc64-3d49-4069-bb77-52d66ae5b3d5",
+                  "numericId": 1,
+                  "name": "System: Payment Authorization"
+                },
+                "transactionId": "5c23cca7-7683-4541-9d22-7ab1a83cdf2a",
+                "transactionAuthorizationRequestId": "250159f9-faa2-4917-8460-d50d6d71fdf0",
+                "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+                "status": "completed",
+                "inputData": {
+                  "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+                  "actionName": "create",
+                  "serviceName": "sapiom_neon",
+                  "resourceName": "database",
+                  "transactionId": "5c23cca7-7683-4541-9d22-7ab1a83cdf2a",
+                  "transactionAuthorizationRequestId": "250159f9-faa2-4917-8460-d50d6d71fdf0"
+                },
+                "outputData": {
+                  "reason": "Payment successfully authorized",
+                  "decision": "ALLOWED",
+                  "metadata": {
+                    "ruleType": "payment_authorization",
+                    "networkId": "9de11f01-0360-45ca-924b-2ebc2f21e748",
+                    "authorizationDetails": {
+                      "payload": {
+                        "nonce": "4c0cfa87-a530-4bc2-9f8f-83ece3932660",
+                        "token": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6InNhcGlvbS1wYXltZW50LWtleS12MSJ9.eyJzdWIiOiIxNGQ4NDYzNC0zMDliLTQwZjEtYmQ1Zi1iMmE1ZTI0MzEzZGQiLCJ0cmFuc2ZlcklkIjoiOWRlMTFmMDEtMDM2MC00NWNhLTkyNGItMmViYzJmMjFlNzQ4IiwiYWNjb3VudElkIjoiMGY2YTU2YmEtZGViMy00MzA3LTkyYWEtZWY3OTIyOTMwMmZmIiwicGF5VG8iOiIzOTdiOTM5NS1kMzBkLTQyY2MtYWJmOS0wYzU2NjI5ZDFjMmYiLCJhbW91bnQiOiIwLjAwMDAwMTAwMDAwMDAwMDAwMCIsIm5vbmNlIjoiNGMwY2ZhODctYTUzMC00YmMyLTlmOGYtODNlY2UzOTMyNjYwIiwiaWRlbnRpdHkiOnsidmVyc2lvbiI6MiwidGVuYW50SWQiOiI3MjM0YTdmOS00MDc0LTRhYWQtYjEzZi04NGUwZTI4YjQ2OWEiLCJvcmdhbml6YXRpb25JZCI6ImY0YmEyODViLTA4NTUtNGFlMy05OTBjLWU1YmRlZTI5MWM0NyIsInBheW1lbnRBY2NvdW50SWQiOiIwZjZhNTZiYS1kZWIzLTQzMDctOTJhYS1lZjc5MjI5MzAyZmYifSwiaWF0IjoxNzgzNDM5OTUyfQ.JIixhDnYEfL0UxiEGgHQXwce8HKS8g_GXi_4PpBBngE4V4hNLCnJG0PsjG_zUv-0SEzoL0DbFcayQIu6iJZKS1ASHgSEqGUshEBooMtHXYrh-n0zxtz9sQ7uPqfBeL3A3SDftvxhr0ylUfDbkXghYtxjKYuGOn3RJcmcXWQb2sMAeQhPhsK3SLM6AukQqt-9OGRJtOB0QkGZpclj8eR8gIRemIGq-La8f4kjCTYz7a7JS61PEfkcVYLNz0yJpz77RPGwxzy9zSdRZj4KTb3LZbw4hSK7Mrqj9dBWXg_hYouYlnu7Jd3STpwUVtCZsUtTbhyBK1KXwldP4dRaKpjaoQ",
+                        "amount": "0.000001000000000000",
+                        "accountId": "0f6a56ba-deb3-4307-92aa-ef79229302ff",
+                        "authorizationId": "9de11f01-0360-45ca-924b-2ebc2f21e748"
+                      },
+                      "accepted": {
+                        "asset": "USD",
+                        "extra": {},
+                        "payTo": "397b9395-d30d-42cc-abf9-0c56629d1c2f",
+                        "amount": "0.000001",
+                        "scheme": "exact",
+                        "network": "sapiom:main",
+                        "maxTimeoutSeconds": 300
+                      },
+                      "resource": {
+                        "url": "http://neon.services.sapiom.ai/v1/databases",
+                        "mimeType": "application/json",
+                        "description": ""
+                      },
+                      "x402Version": 2
+                    },
+                    "paymentTransactionId": "14d84634-309b-40f1-bd5f-b2a5e24313dd"
+                  }
+                },
+                "errorMessage": null,
+                "errorDetails": null,
+                "startedAt": "2026-07-07T15:59:12.089Z",
+                "completedAt": "2026-07-07T15:59:12.129Z",
+                "executionTimeMs": 40,
+                "retryCount": 0,
+                "parentExecutionId": null,
+                "createdAt": "2026-07-07T15:59:12.075Z",
+                "updatedAt": "2026-07-07T15:59:12.075Z"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "index": 5,
+      "label": "n10-call-5",
+      "handle": "survey-neon-n10-5",
+      "firedAt": "2026-07-07T15:59:20.399Z",
+      "worstCaseUsd": 0.0001,
+      "httpStatus": 201,
+      "ok": true,
+      "errMsg": null,
+      "dbId": "ndb_iS1TPGAjXuYr",
+      "createResponse": {
+        "id": "ndb_iS1TPGAjXuYr",
+        "handle": "survey-neon-n10-5",
+        "name": null,
+        "description": null,
+        "status": "active",
+        "region": "aws-us-east-1",
+        "pgVersion": 17,
+        "duration": "15m",
+        "connectionUri": "postgresql://neondb_owner:npg_5KyDlvWhwAS9@ep-old-bread-atpwxexb.c-9.us-east-1.aws.neon.tech/neondb?sslmode=require",
+        "expiresAt": "2026-07-07T16:14:22.872Z",
+        "createdAt": "2026-07-07T15:59:22.877Z"
+      },
+      "transactionId": "8e3541f7-49a8-4c75-b839-870a8501bedc",
+      "analysis": {
+        "nCostRows": 1,
+        "finalAmount": 0.000001,
+        "requiresPayment": true,
+        "actionName": "create",
+        "serviceName": "sapiom_neon",
+        "status": "completed",
+        "outcome": "success",
+        "createdAt": "2026-07-07T15:59:20.429Z",
+        "authorizedAt": "2026-07-07T15:59:21.807Z",
+        "completedAt": "2026-07-07T15:59:27.530Z",
+        "rows": [
+          {
+            "fiatAmount": 0.000001,
+            "isEstimate": false,
+            "isActive": true,
+            "supersedesCostId": null,
+            "supersededAt": null,
+            "createdAt": "2026-07-07T15:59:21.685Z"
+          }
+        ]
+      },
+      "rawTransaction": {
+        "id": "8e3541f7-49a8-4c75-b839-870a8501bedc",
+        "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+        "serviceName": "sapiom_neon",
+        "actionName": "create",
+        "resourceName": "database",
+        "serviceId": "2344f568-35ca-4010-b223-51a386cf94a8",
+        "status": "completed",
+        "requiresPayment": true,
+        "qualifiers": {},
+        "metadata": {
+          "createdByApiKeyId": "472392ae-9985-48a4-8040-4d6e7bfe2fc0",
+          "preemptiveAuthorization": true
+        },
+        "createdAt": "2026-07-07T15:59:20.429Z",
+        "updatedAt": "2026-07-07T15:59:27.528Z",
+        "authorizedAt": "2026-07-07T15:59:21.807Z",
+        "completedAt": "2026-07-07T15:59:27.530Z",
+        "outcome": "success",
+        "currentPaymentTransactionId": "f448f117-dca6-4f7f-bb7d-456cead32b58",
+        "trace": {
+          "id": "da8c7886-a51c-4c2c-95dc-1b0670f67252",
+          "externalId": null
+        },
+        "agentId": "93ddc174-ee4f-4024-a519-ccc9866fa5a8",
+        "agent": {
+          "id": "93ddc174-ee4f-4024-a519-ccc9866fa5a8",
+          "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+          "label": "survey-neon-n10",
+          "name": "survey-neon-n10",
+          "description": null,
+          "status": "active",
+          "createdAt": "2026-07-07T15:58:41.443Z",
+          "updatedAt": "2026-07-07T15:58:41.443Z",
+          "numericId": 42
+        },
+        "costs": [
+          {
+            "id": "586bf51d-034d-40b5-999d-8b84b6a2fd52",
+            "transactionId": "8e3541f7-49a8-4c75-b839-870a8501bedc",
+            "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+            "paymentTransactionId": "f448f117-dca6-4f7f-bb7d-456cead32b58",
+            "fiatAmount": "0.000001000000000000",
+            "fiatAssetId": "4657ab13-b6e6-4ba4-9df8-47b351c0041c",
+            "isEstimate": false,
+            "isActive": true,
+            "supersedesCostId": null,
+            "supersededAt": null,
+            "costDetails": {
+              "source": "payment_transaction",
+              "network": "sapiom",
+              "protocol": "x402",
+              "paymentTransactionId": "f448f117-dca6-4f7f-bb7d-456cead32b58"
+            },
+            "createdAt": "2026-07-07T15:59:21.685Z",
+            "updatedAt": "2026-07-07T15:59:21.685Z",
+            "inferredFromFactId": null
+          }
+        ],
+        "traceId": "da8c7886-a51c-4c2c-95dc-1b0670f67252",
+        "apiKeyId": "472392ae-9985-48a4-8040-4d6e7bfe2fc0",
+        "createdByActorType": "api_key",
+        "createdByActorId": "472392ae-9985-48a4-8040-4d6e7bfe2fc0",
+        "mandateId": null,
+        "facilitatedByServiceAccount": null,
+        "service": {
+          "id": "2344f568-35ca-4010-b223-51a386cf94a8",
+          "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+          "numericId": 6,
+          "globalServiceId": "957575b6-38a2-4707-a5d0-632d2b0da375",
+          "name": "sapiom_neon",
+          "label": null,
+          "description": null,
+          "metadata": null,
+          "createdAt": "2026-07-04T10:23:47.923Z",
+          "updatedAt": "2026-07-04T10:23:47.923Z",
+          "deletedAt": null
+        },
+        "preparingAt": "2026-07-07T15:59:21.721Z",
+        "deniedAt": null,
+        "cancelledAt": null,
+        "authorizationRequests": [
+          {
+            "id": "fb30b741-be2f-4237-933e-c9a0269e0e47",
+            "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+            "transactionId": "8e3541f7-49a8-4c75-b839-870a8501bedc",
+            "status": "authorized",
+            "createdAt": "2026-07-07T15:59:20.491Z",
+            "updatedAt": "2026-07-07T15:59:20.555Z",
+            "completedAt": "2026-07-07T15:59:20.566Z",
+            "processingAt": "2026-07-07T15:59:20.559Z",
+            "authorizedAt": "2026-07-07T15:59:20.566Z",
+            "deniedAt": null,
+            "ruleExecutions": []
+          },
+          {
+            "id": "5da6cc83-bf30-405a-93f8-95e9655c7a73",
+            "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+            "transactionId": "8e3541f7-49a8-4c75-b839-870a8501bedc",
+            "status": "authorized",
+            "createdAt": "2026-07-07T15:59:21.685Z",
+            "updatedAt": "2026-07-07T15:59:21.746Z",
+            "completedAt": "2026-07-07T15:59:21.807Z",
+            "processingAt": "2026-07-07T15:59:21.751Z",
+            "authorizedAt": "2026-07-07T15:59:21.807Z",
+            "deniedAt": null,
+            "ruleExecutions": [
+              {
+                "id": "4995f16b-d82e-4c5e-b800-ad00b028cb5e",
+                "ruleId": "5d35cc64-3d49-4069-bb77-52d66ae5b3d5",
+                "rule": {
+                  "id": "5d35cc64-3d49-4069-bb77-52d66ae5b3d5",
+                  "numericId": 1,
+                  "name": "System: Payment Authorization"
+                },
+                "transactionId": "8e3541f7-49a8-4c75-b839-870a8501bedc",
+                "transactionAuthorizationRequestId": "5da6cc83-bf30-405a-93f8-95e9655c7a73",
+                "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+                "status": "completed",
+                "inputData": {
+                  "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+                  "actionName": "create",
+                  "serviceName": "sapiom_neon",
+                  "resourceName": "database",
+                  "transactionId": "8e3541f7-49a8-4c75-b839-870a8501bedc",
+                  "transactionAuthorizationRequestId": "5da6cc83-bf30-405a-93f8-95e9655c7a73"
+                },
+                "outputData": {
+                  "reason": "Payment successfully authorized",
+                  "decision": "ALLOWED",
+                  "metadata": {
+                    "ruleType": "payment_authorization",
+                    "networkId": "d6e5bb29-6dd9-4bd7-be3b-aa64c87757b1",
+                    "authorizationDetails": {
+                      "payload": {
+                        "nonce": "9c3f5dbe-7e2d-408c-b621-01e71ca53d6c",
+                        "token": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6InNhcGlvbS1wYXltZW50LWtleS12MSJ9.eyJzdWIiOiJmNDQ4ZjExNy1kY2E2LTRmN2YtYmI3ZC00NTZjZWFkMzJiNTgiLCJ0cmFuc2ZlcklkIjoiZDZlNWJiMjktNmRkOS00YmQ3LWJlM2ItYWE2NGM4Nzc1N2IxIiwiYWNjb3VudElkIjoiMGY2YTU2YmEtZGViMy00MzA3LTkyYWEtZWY3OTIyOTMwMmZmIiwicGF5VG8iOiIzOTdiOTM5NS1kMzBkLTQyY2MtYWJmOS0wYzU2NjI5ZDFjMmYiLCJhbW91bnQiOiIwLjAwMDAwMTAwMDAwMDAwMDAwMCIsIm5vbmNlIjoiOWMzZjVkYmUtN2UyZC00MDhjLWI2MjEtMDFlNzFjYTUzZDZjIiwiaWRlbnRpdHkiOnsidmVyc2lvbiI6MiwidGVuYW50SWQiOiI3MjM0YTdmOS00MDc0LTRhYWQtYjEzZi04NGUwZTI4YjQ2OWEiLCJvcmdhbml6YXRpb25JZCI6ImY0YmEyODViLTA4NTUtNGFlMy05OTBjLWU1YmRlZTI5MWM0NyIsInBheW1lbnRBY2NvdW50SWQiOiIwZjZhNTZiYS1kZWIzLTQzMDctOTJhYS1lZjc5MjI5MzAyZmYifSwiaWF0IjoxNzgzNDM5OTYxfQ.C7V5XVoR1b9NyW1_prLy5fBd1c6vPrdg6udwDvSJ146O3EqdLO6hfQl0nVwsq16XsDwC4rGmOzJmHLBbMSKpqhLi5X6vtNjCDdJQ_TCruCWFaQkiOLl1SiiNK2KNEC2E7mruDLn_plicdQUnZl0-lpKz4iaScnAQYNr98fZvZD-r2CQmgjsDMlryJkC1HrjsUHK1DTBPER7U2GdUXIM8SMQj1qATezqd50x_0CyUw7JXonhPUug2lvx8W2EyQq-FCqy-oa_MumYC07JznR-1PzWyBJYo5fFNAn9TN189ByVxSOGRzrzcinlKpDsl0TEPFVCwVkpv4sr7qwc10QZn7Q",
+                        "amount": "0.000001000000000000",
+                        "accountId": "0f6a56ba-deb3-4307-92aa-ef79229302ff",
+                        "authorizationId": "d6e5bb29-6dd9-4bd7-be3b-aa64c87757b1"
+                      },
+                      "accepted": {
+                        "asset": "USD",
+                        "extra": {},
+                        "payTo": "397b9395-d30d-42cc-abf9-0c56629d1c2f",
+                        "amount": "0.000001",
+                        "scheme": "exact",
+                        "network": "sapiom:main",
+                        "maxTimeoutSeconds": 300
+                      },
+                      "resource": {
+                        "url": "http://neon.services.sapiom.ai/v1/databases",
+                        "mimeType": "application/json",
+                        "description": ""
+                      },
+                      "x402Version": 2
+                    },
+                    "paymentTransactionId": "f448f117-dca6-4f7f-bb7d-456cead32b58"
+                  }
+                },
+                "errorMessage": null,
+                "errorDetails": null,
+                "startedAt": "2026-07-07T15:59:21.759Z",
+                "completedAt": "2026-07-07T15:59:21.799Z",
+                "executionTimeMs": 40,
+                "retryCount": 0,
+                "parentExecutionId": null,
+                "createdAt": "2026-07-07T15:59:21.746Z",
+                "updatedAt": "2026-07-07T15:59:21.746Z"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "index": 6,
+      "label": "n10-call-6",
+      "handle": "survey-neon-n10-6",
+      "firedAt": "2026-07-07T15:59:30.021Z",
+      "worstCaseUsd": 0.0001,
+      "httpStatus": 201,
+      "ok": true,
+      "errMsg": null,
+      "dbId": "ndb_P57RtV7O4eDe",
+      "createResponse": {
+        "id": "ndb_P57RtV7O4eDe",
+        "handle": "survey-neon-n10-6",
+        "name": null,
+        "description": null,
+        "status": "active",
+        "region": "aws-us-east-1",
+        "pgVersion": 17,
+        "duration": "15m",
+        "connectionUri": "postgresql://neondb_owner:npg_M65olyvEYseD@ep-steep-hill-adcyai59.c-2.us-east-1.aws.neon.tech/neondb?sslmode=require",
+        "expiresAt": "2026-07-07T16:14:30.620Z",
+        "createdAt": "2026-07-07T15:59:30.631Z"
+      },
+      "transactionId": "daa44ff1-fc81-4d70-915d-52fa7cf2e39a",
+      "analysis": {
+        "nCostRows": 1,
+        "finalAmount": 0.000001,
+        "requiresPayment": true,
+        "actionName": "create",
+        "serviceName": "sapiom_neon",
+        "status": "completed",
+        "outcome": "success",
+        "createdAt": "2026-07-07T15:59:30.062Z",
+        "authorizedAt": "2026-07-07T15:59:30.443Z",
+        "completedAt": "2026-07-07T15:59:35.324Z",
+        "rows": [
+          {
+            "fiatAmount": 0.000001,
+            "isEstimate": false,
+            "isActive": true,
+            "supersedesCostId": null,
+            "supersededAt": null,
+            "createdAt": "2026-07-07T15:59:30.337Z"
+          }
+        ]
+      },
+      "rawTransaction": {
+        "id": "daa44ff1-fc81-4d70-915d-52fa7cf2e39a",
+        "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+        "serviceName": "sapiom_neon",
+        "actionName": "create",
+        "resourceName": "database",
+        "serviceId": "2344f568-35ca-4010-b223-51a386cf94a8",
+        "status": "completed",
+        "requiresPayment": true,
+        "qualifiers": {},
+        "metadata": {
+          "createdByApiKeyId": "472392ae-9985-48a4-8040-4d6e7bfe2fc0",
+          "preemptiveAuthorization": true
+        },
+        "createdAt": "2026-07-07T15:59:30.062Z",
+        "updatedAt": "2026-07-07T15:59:35.323Z",
+        "authorizedAt": "2026-07-07T15:59:30.443Z",
+        "completedAt": "2026-07-07T15:59:35.324Z",
+        "outcome": "success",
+        "currentPaymentTransactionId": "a212b84c-bced-4687-981e-66d3099ba343",
+        "trace": {
+          "id": "07bdfb20-3215-41e5-b3d3-7b1929daa950",
+          "externalId": null
+        },
+        "agentId": "93ddc174-ee4f-4024-a519-ccc9866fa5a8",
+        "agent": {
+          "id": "93ddc174-ee4f-4024-a519-ccc9866fa5a8",
+          "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+          "label": "survey-neon-n10",
+          "name": "survey-neon-n10",
+          "description": null,
+          "status": "active",
+          "createdAt": "2026-07-07T15:58:41.443Z",
+          "updatedAt": "2026-07-07T15:58:41.443Z",
+          "numericId": 42
+        },
+        "costs": [
+          {
+            "id": "d1469d0b-c3c7-4442-ae39-4e9d31aa7e07",
+            "transactionId": "daa44ff1-fc81-4d70-915d-52fa7cf2e39a",
+            "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+            "paymentTransactionId": "a212b84c-bced-4687-981e-66d3099ba343",
+            "fiatAmount": "0.000001000000000000",
+            "fiatAssetId": "4657ab13-b6e6-4ba4-9df8-47b351c0041c",
+            "isEstimate": false,
+            "isActive": true,
+            "supersedesCostId": null,
+            "supersededAt": null,
+            "costDetails": {
+              "source": "payment_transaction",
+              "network": "sapiom",
+              "protocol": "x402",
+              "paymentTransactionId": "a212b84c-bced-4687-981e-66d3099ba343"
+            },
+            "createdAt": "2026-07-07T15:59:30.337Z",
+            "updatedAt": "2026-07-07T15:59:30.337Z",
+            "inferredFromFactId": null
+          }
+        ],
+        "traceId": "07bdfb20-3215-41e5-b3d3-7b1929daa950",
+        "apiKeyId": "472392ae-9985-48a4-8040-4d6e7bfe2fc0",
+        "createdByActorType": "api_key",
+        "createdByActorId": "472392ae-9985-48a4-8040-4d6e7bfe2fc0",
+        "mandateId": null,
+        "facilitatedByServiceAccount": null,
+        "service": {
+          "id": "2344f568-35ca-4010-b223-51a386cf94a8",
+          "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+          "numericId": 6,
+          "globalServiceId": "957575b6-38a2-4707-a5d0-632d2b0da375",
+          "name": "sapiom_neon",
+          "label": null,
+          "description": null,
+          "metadata": null,
+          "createdAt": "2026-07-04T10:23:47.923Z",
+          "updatedAt": "2026-07-04T10:23:47.923Z",
+          "deletedAt": null
+        },
+        "preparingAt": "2026-07-07T15:59:30.379Z",
+        "deniedAt": null,
+        "cancelledAt": null,
+        "authorizationRequests": [
+          {
+            "id": "590d6762-e63f-411e-aa5d-3c6bf751fc84",
+            "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+            "transactionId": "daa44ff1-fc81-4d70-915d-52fa7cf2e39a",
+            "status": "authorized",
+            "createdAt": "2026-07-07T15:59:30.337Z",
+            "updatedAt": "2026-07-07T15:59:30.399Z",
+            "completedAt": "2026-07-07T15:59:30.443Z",
+            "processingAt": "2026-07-07T15:59:30.404Z",
+            "authorizedAt": "2026-07-07T15:59:30.443Z",
+            "deniedAt": null,
+            "ruleExecutions": [
+              {
+                "id": "0c5bcc41-bbb9-4650-80f5-6bbe4413d04a",
+                "ruleId": "5d35cc64-3d49-4069-bb77-52d66ae5b3d5",
+                "rule": {
+                  "id": "5d35cc64-3d49-4069-bb77-52d66ae5b3d5",
+                  "numericId": 1,
+                  "name": "System: Payment Authorization"
+                },
+                "transactionId": "daa44ff1-fc81-4d70-915d-52fa7cf2e39a",
+                "transactionAuthorizationRequestId": "590d6762-e63f-411e-aa5d-3c6bf751fc84",
+                "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+                "status": "completed",
+                "inputData": {
+                  "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+                  "actionName": "create",
+                  "serviceName": "sapiom_neon",
+                  "resourceName": "database",
+                  "transactionId": "daa44ff1-fc81-4d70-915d-52fa7cf2e39a",
+                  "transactionAuthorizationRequestId": "590d6762-e63f-411e-aa5d-3c6bf751fc84"
+                },
+                "outputData": {
+                  "reason": "Payment successfully authorized",
+                  "decision": "ALLOWED",
+                  "metadata": {
+                    "ruleType": "payment_authorization",
+                    "networkId": "75eb28ec-96a8-4e35-be30-3a527ae9f387",
+                    "authorizationDetails": {
+                      "payload": {
+                        "nonce": "6fcd2d59-b0b1-462f-a377-f83680e1a8f7",
+                        "token": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6InNhcGlvbS1wYXltZW50LWtleS12MSJ9.eyJzdWIiOiJhMjEyYjg0Yy1iY2VkLTQ2ODctOTgxZS02NmQzMDk5YmEzNDMiLCJ0cmFuc2ZlcklkIjoiNzVlYjI4ZWMtOTZhOC00ZTM1LWJlMzAtM2E1MjdhZTlmMzg3IiwiYWNjb3VudElkIjoiMGY2YTU2YmEtZGViMy00MzA3LTkyYWEtZWY3OTIyOTMwMmZmIiwicGF5VG8iOiIzOTdiOTM5NS1kMzBkLTQyY2MtYWJmOS0wYzU2NjI5ZDFjMmYiLCJhbW91bnQiOiIwLjAwMDAwMTAwMDAwMDAwMDAwMCIsIm5vbmNlIjoiNmZjZDJkNTktYjBiMS00NjJmLWEzNzctZjgzNjgwZTFhOGY3IiwiaWRlbnRpdHkiOnsidmVyc2lvbiI6MiwidGVuYW50SWQiOiI3MjM0YTdmOS00MDc0LTRhYWQtYjEzZi04NGUwZTI4YjQ2OWEiLCJvcmdhbml6YXRpb25JZCI6ImY0YmEyODViLTA4NTUtNGFlMy05OTBjLWU1YmRlZTI5MWM0NyIsInBheW1lbnRBY2NvdW50SWQiOiIwZjZhNTZiYS1kZWIzLTQzMDctOTJhYS1lZjc5MjI5MzAyZmYifSwiaWF0IjoxNzgzNDM5OTcwfQ.tplTQNNoDEanLKiihcMk9QFw3_bp_0feJhIiDW7a1OJA4fPjvT2VxGHLncxWX7DSF__CnWtga1jgWMJC-DRmuSYy3qcalGNrgABGkHgyGFXsaZWHoYXPUBcODNJBSKkqO5dZKB52fPRczbleO1BL0c6lpo8ZeD0eogSF6u9JyE7GPAXpTG8V6pTQHBDM03YgC0byNmdsRN7D23etMG1nMqAtjvKDqPY-A3DTh0N220lp-3oTR2gHJwQPZnMIP3vIODlhM2Ci8zWzHPGvh9QmPUNiPX_zijvPcSaUIFGdYQN_7Blk1pABT0c4liLKTKdMhhOningXW1oV73HBqsJSJg",
+                        "amount": "0.000001000000000000",
+                        "accountId": "0f6a56ba-deb3-4307-92aa-ef79229302ff",
+                        "authorizationId": "75eb28ec-96a8-4e35-be30-3a527ae9f387"
+                      },
+                      "accepted": {
+                        "asset": "USD",
+                        "extra": {},
+                        "payTo": "397b9395-d30d-42cc-abf9-0c56629d1c2f",
+                        "amount": "0.000001",
+                        "scheme": "exact",
+                        "network": "sapiom:main",
+                        "maxTimeoutSeconds": 300
+                      },
+                      "resource": {
+                        "url": "http://neon.services.sapiom.ai/v1/databases",
+                        "mimeType": "application/json",
+                        "description": ""
+                      },
+                      "x402Version": 2
+                    },
+                    "paymentTransactionId": "a212b84c-bced-4687-981e-66d3099ba343"
+                  }
+                },
+                "errorMessage": null,
+                "errorDetails": null,
+                "startedAt": "2026-07-07T15:59:30.411Z",
+                "completedAt": "2026-07-07T15:59:30.438Z",
+                "executionTimeMs": 27,
+                "retryCount": 0,
+                "parentExecutionId": null,
+                "createdAt": "2026-07-07T15:59:30.399Z",
+                "updatedAt": "2026-07-07T15:59:30.399Z"
+              }
+            ]
+          },
+          {
+            "id": "7c979186-6648-47da-b582-a91ce71b76ac",
+            "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+            "transactionId": "daa44ff1-fc81-4d70-915d-52fa7cf2e39a",
+            "status": "authorized",
+            "createdAt": "2026-07-07T15:59:30.106Z",
+            "updatedAt": "2026-07-07T15:59:30.133Z",
+            "completedAt": "2026-07-07T15:59:30.149Z",
+            "processingAt": "2026-07-07T15:59:30.138Z",
+            "authorizedAt": "2026-07-07T15:59:30.149Z",
+            "deniedAt": null,
+            "ruleExecutions": []
+          }
+        ]
+      }
+    },
+    {
+      "index": 7,
+      "label": "n10-call-7",
+      "handle": "survey-neon-n10-7",
+      "firedAt": "2026-07-07T15:59:37.801Z",
+      "worstCaseUsd": 0.0001,
+      "httpStatus": 201,
+      "ok": true,
+      "errMsg": null,
+      "dbId": "ndb_BcCK2Zduq4en",
+      "createResponse": {
+        "id": "ndb_BcCK2Zduq4en",
+        "handle": "survey-neon-n10-7",
+        "name": null,
+        "description": null,
+        "status": "active",
+        "region": "aws-us-east-1",
+        "pgVersion": 17,
+        "duration": "15m",
+        "connectionUri": "postgresql://neondb_owner:npg_P6v0jDiprsQN@ep-soft-salad-atfinhs4.c-9.us-east-1.aws.neon.tech/neondb?sslmode=require",
+        "expiresAt": "2026-07-07T16:14:40.284Z",
+        "createdAt": "2026-07-07T15:59:40.290Z"
+      },
+      "transactionId": "c4bfe56b-6300-4901-a4d1-6c0040f98468",
+      "analysis": {
+        "nCostRows": 1,
+        "finalAmount": 0.000001,
+        "requiresPayment": true,
+        "actionName": "create",
+        "serviceName": "sapiom_neon",
+        "status": "completed",
+        "outcome": "success",
+        "createdAt": "2026-07-07T15:59:37.833Z",
+        "authorizedAt": "2026-07-07T15:59:39.186Z",
+        "completedAt": "2026-07-07T15:59:44.892Z",
+        "rows": [
+          {
+            "fiatAmount": 0.000001,
+            "isEstimate": false,
+            "isActive": true,
+            "supersedesCostId": null,
+            "supersededAt": null,
+            "createdAt": "2026-07-07T15:59:39.081Z"
+          }
+        ]
+      },
+      "rawTransaction": {
+        "id": "c4bfe56b-6300-4901-a4d1-6c0040f98468",
+        "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+        "serviceName": "sapiom_neon",
+        "actionName": "create",
+        "resourceName": "database",
+        "serviceId": "2344f568-35ca-4010-b223-51a386cf94a8",
+        "status": "completed",
+        "requiresPayment": true,
+        "qualifiers": {},
+        "metadata": {
+          "createdByApiKeyId": "472392ae-9985-48a4-8040-4d6e7bfe2fc0",
+          "preemptiveAuthorization": true
+        },
+        "createdAt": "2026-07-07T15:59:37.833Z",
+        "updatedAt": "2026-07-07T15:59:44.890Z",
+        "authorizedAt": "2026-07-07T15:59:39.186Z",
+        "completedAt": "2026-07-07T15:59:44.892Z",
+        "outcome": "success",
+        "currentPaymentTransactionId": "6b42780d-d30f-42bf-9799-25158f132d85",
+        "trace": {
+          "id": "f568a026-b293-4d11-94bd-6d84147df7b1",
+          "externalId": null
+        },
+        "agentId": "93ddc174-ee4f-4024-a519-ccc9866fa5a8",
+        "agent": {
+          "id": "93ddc174-ee4f-4024-a519-ccc9866fa5a8",
+          "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+          "label": "survey-neon-n10",
+          "name": "survey-neon-n10",
+          "description": null,
+          "status": "active",
+          "createdAt": "2026-07-07T15:58:41.443Z",
+          "updatedAt": "2026-07-07T15:58:41.443Z",
+          "numericId": 42
+        },
+        "costs": [
+          {
+            "id": "04e8eece-4c34-4412-a25f-b7ee427bf41b",
+            "transactionId": "c4bfe56b-6300-4901-a4d1-6c0040f98468",
+            "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+            "paymentTransactionId": "6b42780d-d30f-42bf-9799-25158f132d85",
+            "fiatAmount": "0.000001000000000000",
+            "fiatAssetId": "4657ab13-b6e6-4ba4-9df8-47b351c0041c",
+            "isEstimate": false,
+            "isActive": true,
+            "supersedesCostId": null,
+            "supersededAt": null,
+            "costDetails": {
+              "source": "payment_transaction",
+              "network": "sapiom",
+              "protocol": "x402",
+              "paymentTransactionId": "6b42780d-d30f-42bf-9799-25158f132d85"
+            },
+            "createdAt": "2026-07-07T15:59:39.081Z",
+            "updatedAt": "2026-07-07T15:59:39.081Z",
+            "inferredFromFactId": null
+          }
+        ],
+        "traceId": "f568a026-b293-4d11-94bd-6d84147df7b1",
+        "apiKeyId": "472392ae-9985-48a4-8040-4d6e7bfe2fc0",
+        "createdByActorType": "api_key",
+        "createdByActorId": "472392ae-9985-48a4-8040-4d6e7bfe2fc0",
+        "mandateId": null,
+        "facilitatedByServiceAccount": null,
+        "service": {
+          "id": "2344f568-35ca-4010-b223-51a386cf94a8",
+          "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+          "numericId": 6,
+          "globalServiceId": "957575b6-38a2-4707-a5d0-632d2b0da375",
+          "name": "sapiom_neon",
+          "label": null,
+          "description": null,
+          "metadata": null,
+          "createdAt": "2026-07-04T10:23:47.923Z",
+          "updatedAt": "2026-07-04T10:23:47.923Z",
+          "deletedAt": null
+        },
+        "preparingAt": "2026-07-07T15:59:39.122Z",
+        "deniedAt": null,
+        "cancelledAt": null,
+        "authorizationRequests": [
+          {
+            "id": "593815fe-1543-4a4a-b08b-ebc9e0d74078",
+            "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+            "transactionId": "c4bfe56b-6300-4901-a4d1-6c0040f98468",
+            "status": "authorized",
+            "createdAt": "2026-07-07T15:59:39.081Z",
+            "updatedAt": "2026-07-07T15:59:39.142Z",
+            "completedAt": "2026-07-07T15:59:39.186Z",
+            "processingAt": "2026-07-07T15:59:39.146Z",
+            "authorizedAt": "2026-07-07T15:59:39.186Z",
+            "deniedAt": null,
+            "ruleExecutions": [
+              {
+                "id": "7e79e218-5f04-40e2-8b3d-d8cfe9bd98a9",
+                "ruleId": "5d35cc64-3d49-4069-bb77-52d66ae5b3d5",
+                "rule": {
+                  "id": "5d35cc64-3d49-4069-bb77-52d66ae5b3d5",
+                  "numericId": 1,
+                  "name": "System: Payment Authorization"
+                },
+                "transactionId": "c4bfe56b-6300-4901-a4d1-6c0040f98468",
+                "transactionAuthorizationRequestId": "593815fe-1543-4a4a-b08b-ebc9e0d74078",
+                "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+                "status": "completed",
+                "inputData": {
+                  "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+                  "actionName": "create",
+                  "serviceName": "sapiom_neon",
+                  "resourceName": "database",
+                  "transactionId": "c4bfe56b-6300-4901-a4d1-6c0040f98468",
+                  "transactionAuthorizationRequestId": "593815fe-1543-4a4a-b08b-ebc9e0d74078"
+                },
+                "outputData": {
+                  "reason": "Payment successfully authorized",
+                  "decision": "ALLOWED",
+                  "metadata": {
+                    "ruleType": "payment_authorization",
+                    "networkId": "68eb16c6-8018-4934-ae3e-31600f17fcbb",
+                    "authorizationDetails": {
+                      "payload": {
+                        "nonce": "89911d88-9a6b-4271-9c93-fd68ed3af7ae",
+                        "token": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6InNhcGlvbS1wYXltZW50LWtleS12MSJ9.eyJzdWIiOiI2YjQyNzgwZC1kMzBmLTQyYmYtOTc5OS0yNTE1OGYxMzJkODUiLCJ0cmFuc2ZlcklkIjoiNjhlYjE2YzYtODAxOC00OTM0LWFlM2UtMzE2MDBmMTdmY2JiIiwiYWNjb3VudElkIjoiMGY2YTU2YmEtZGViMy00MzA3LTkyYWEtZWY3OTIyOTMwMmZmIiwicGF5VG8iOiIzOTdiOTM5NS1kMzBkLTQyY2MtYWJmOS0wYzU2NjI5ZDFjMmYiLCJhbW91bnQiOiIwLjAwMDAwMTAwMDAwMDAwMDAwMCIsIm5vbmNlIjoiODk5MTFkODgtOWE2Yi00MjcxLTljOTMtZmQ2OGVkM2FmN2FlIiwiaWRlbnRpdHkiOnsidmVyc2lvbiI6MiwidGVuYW50SWQiOiI3MjM0YTdmOS00MDc0LTRhYWQtYjEzZi04NGUwZTI4YjQ2OWEiLCJvcmdhbml6YXRpb25JZCI6ImY0YmEyODViLTA4NTUtNGFlMy05OTBjLWU1YmRlZTI5MWM0NyIsInBheW1lbnRBY2NvdW50SWQiOiIwZjZhNTZiYS1kZWIzLTQzMDctOTJhYS1lZjc5MjI5MzAyZmYifSwiaWF0IjoxNzgzNDM5OTc5fQ.IRWKEYrHD-MQlvz4us8NvOS3g0zfMFfzMCI13bpDxuV2RBzLk7ZZG7jKyUehPhyO6E0WttgPn0sZoflJY1aSlgAexuxwzuH_Ik_ozrRNvQhhQNqd1tjOcriMckYgsPoia7FS-ldpJFNBeq1zYY9LfVmYlmJubGV_qIleYtaYeC8esQQAMiyiTazbyTIBwmzupACnKSLjKoAGbxag-dUW5bAekllVUntgeo_ezlqRvT7PPXqWv1bQsSWrilg2kIxxqvu8QQBGACa-Zph5pFGh99_MfqkWF3MnGBxExeJylwrwhLCl4KIIeHeKnExw4QthsZOKSSkpdtrRfKj7uAH_OA",
+                        "amount": "0.000001000000000000",
+                        "accountId": "0f6a56ba-deb3-4307-92aa-ef79229302ff",
+                        "authorizationId": "68eb16c6-8018-4934-ae3e-31600f17fcbb"
+                      },
+                      "accepted": {
+                        "asset": "USD",
+                        "extra": {},
+                        "payTo": "397b9395-d30d-42cc-abf9-0c56629d1c2f",
+                        "amount": "0.000001",
+                        "scheme": "exact",
+                        "network": "sapiom:main",
+                        "maxTimeoutSeconds": 300
+                      },
+                      "resource": {
+                        "url": "http://neon.services.sapiom.ai/v1/databases",
+                        "mimeType": "application/json",
+                        "description": ""
+                      },
+                      "x402Version": 2
+                    },
+                    "paymentTransactionId": "6b42780d-d30f-42bf-9799-25158f132d85"
+                  }
+                },
+                "errorMessage": null,
+                "errorDetails": null,
+                "startedAt": "2026-07-07T15:59:39.154Z",
+                "completedAt": "2026-07-07T15:59:39.181Z",
+                "executionTimeMs": 27,
+                "retryCount": 0,
+                "parentExecutionId": null,
+                "createdAt": "2026-07-07T15:59:39.142Z",
+                "updatedAt": "2026-07-07T15:59:39.142Z"
+              }
+            ]
+          },
+          {
+            "id": "8f67086d-8b3c-42d7-b5e1-a2f5630baefe",
+            "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+            "transactionId": "c4bfe56b-6300-4901-a4d1-6c0040f98468",
+            "status": "authorized",
+            "createdAt": "2026-07-07T15:59:37.907Z",
+            "updatedAt": "2026-07-07T15:59:37.925Z",
+            "completedAt": "2026-07-07T15:59:37.939Z",
+            "processingAt": "2026-07-07T15:59:37.930Z",
+            "authorizedAt": "2026-07-07T15:59:37.939Z",
+            "deniedAt": null,
+            "ruleExecutions": []
+          }
+        ]
+      }
+    },
+    {
+      "index": 8,
+      "label": "n10-call-8",
+      "handle": "survey-neon-n10-8",
+      "firedAt": "2026-07-07T15:59:47.364Z",
+      "worstCaseUsd": 0.0001,
+      "httpStatus": 201,
+      "ok": true,
+      "errMsg": null,
+      "dbId": "ndb__KQw5mcg7EmP",
+      "createResponse": {
+        "id": "ndb__KQw5mcg7EmP",
+        "handle": "survey-neon-n10-8",
+        "name": null,
+        "description": null,
+        "status": "active",
+        "region": "aws-us-east-1",
+        "pgVersion": 17,
+        "duration": "15m",
+        "connectionUri": "postgresql://neondb_owner:npg_7ulipoUR1Eyb@ep-lucky-cherry-adjfwd6r.c-2.us-east-1.aws.neon.tech/neondb?sslmode=require",
+        "expiresAt": "2026-07-07T16:14:48.837Z",
+        "createdAt": "2026-07-07T15:59:48.841Z"
+      },
+      "transactionId": "17c31e53-56c3-4920-a03c-eab0c7060719",
+      "analysis": {
+        "nCostRows": 1,
+        "finalAmount": 0.000001,
+        "requiresPayment": true,
+        "actionName": "create",
+        "serviceName": "sapiom_neon",
+        "status": "completed",
+        "outcome": "success",
+        "createdAt": "2026-07-07T15:59:47.396Z",
+        "authorizedAt": "2026-07-07T15:59:47.764Z",
+        "completedAt": "2026-07-07T15:59:53.891Z",
+        "rows": [
+          {
+            "fiatAmount": 0.000001,
+            "isEstimate": false,
+            "isActive": true,
+            "supersedesCostId": null,
+            "supersededAt": null,
+            "createdAt": "2026-07-07T15:59:47.630Z"
+          }
+        ]
+      },
+      "rawTransaction": {
+        "id": "17c31e53-56c3-4920-a03c-eab0c7060719",
+        "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+        "serviceName": "sapiom_neon",
+        "actionName": "create",
+        "resourceName": "database",
+        "serviceId": "2344f568-35ca-4010-b223-51a386cf94a8",
+        "status": "completed",
+        "requiresPayment": true,
+        "qualifiers": {},
+        "metadata": {
+          "createdByApiKeyId": "472392ae-9985-48a4-8040-4d6e7bfe2fc0",
+          "preemptiveAuthorization": true
+        },
+        "createdAt": "2026-07-07T15:59:47.396Z",
+        "updatedAt": "2026-07-07T15:59:53.890Z",
+        "authorizedAt": "2026-07-07T15:59:47.764Z",
+        "completedAt": "2026-07-07T15:59:53.891Z",
+        "outcome": "success",
+        "currentPaymentTransactionId": "de405fb2-de9d-4c99-874d-b9a3332f7b8a",
+        "trace": {
+          "id": "3d5ae1a9-ba9a-4fff-a4a6-28f4cb76dee7",
+          "externalId": null
+        },
+        "agentId": "93ddc174-ee4f-4024-a519-ccc9866fa5a8",
+        "agent": {
+          "id": "93ddc174-ee4f-4024-a519-ccc9866fa5a8",
+          "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+          "label": "survey-neon-n10",
+          "name": "survey-neon-n10",
+          "description": null,
+          "status": "active",
+          "createdAt": "2026-07-07T15:58:41.443Z",
+          "updatedAt": "2026-07-07T15:58:41.443Z",
+          "numericId": 42
+        },
+        "costs": [
+          {
+            "id": "4a9b82ae-1b17-4a52-9ce6-c32c50928a16",
+            "transactionId": "17c31e53-56c3-4920-a03c-eab0c7060719",
+            "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+            "paymentTransactionId": "de405fb2-de9d-4c99-874d-b9a3332f7b8a",
+            "fiatAmount": "0.000001000000000000",
+            "fiatAssetId": "4657ab13-b6e6-4ba4-9df8-47b351c0041c",
+            "isEstimate": false,
+            "isActive": true,
+            "supersedesCostId": null,
+            "supersededAt": null,
+            "costDetails": {
+              "source": "payment_transaction",
+              "network": "sapiom",
+              "protocol": "x402",
+              "paymentTransactionId": "de405fb2-de9d-4c99-874d-b9a3332f7b8a"
+            },
+            "createdAt": "2026-07-07T15:59:47.630Z",
+            "updatedAt": "2026-07-07T15:59:47.630Z",
+            "inferredFromFactId": null
+          }
+        ],
+        "traceId": "3d5ae1a9-ba9a-4fff-a4a6-28f4cb76dee7",
+        "apiKeyId": "472392ae-9985-48a4-8040-4d6e7bfe2fc0",
+        "createdByActorType": "api_key",
+        "createdByActorId": "472392ae-9985-48a4-8040-4d6e7bfe2fc0",
+        "mandateId": null,
+        "facilitatedByServiceAccount": null,
+        "service": {
+          "id": "2344f568-35ca-4010-b223-51a386cf94a8",
+          "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+          "numericId": 6,
+          "globalServiceId": "957575b6-38a2-4707-a5d0-632d2b0da375",
+          "name": "sapiom_neon",
+          "label": null,
+          "description": null,
+          "metadata": null,
+          "createdAt": "2026-07-04T10:23:47.923Z",
+          "updatedAt": "2026-07-04T10:23:47.923Z",
+          "deletedAt": null
+        },
+        "preparingAt": "2026-07-07T15:59:47.672Z",
+        "deniedAt": null,
+        "cancelledAt": null,
+        "authorizationRequests": [
+          {
+            "id": "aa652051-13cb-47b7-86af-35811d18bc16",
+            "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+            "transactionId": "17c31e53-56c3-4920-a03c-eab0c7060719",
+            "status": "authorized",
+            "createdAt": "2026-07-07T15:59:47.433Z",
+            "updatedAt": "2026-07-07T15:59:47.486Z",
+            "completedAt": "2026-07-07T15:59:47.497Z",
+            "processingAt": "2026-07-07T15:59:47.490Z",
+            "authorizedAt": "2026-07-07T15:59:47.497Z",
+            "deniedAt": null,
+            "ruleExecutions": []
+          },
+          {
+            "id": "3312f89b-9e84-462b-b4c0-44d79640f73a",
+            "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+            "transactionId": "17c31e53-56c3-4920-a03c-eab0c7060719",
+            "status": "authorized",
+            "createdAt": "2026-07-07T15:59:47.630Z",
+            "updatedAt": "2026-07-07T15:59:47.711Z",
+            "completedAt": "2026-07-07T15:59:47.764Z",
+            "processingAt": "2026-07-07T15:59:47.715Z",
+            "authorizedAt": "2026-07-07T15:59:47.764Z",
+            "deniedAt": null,
+            "ruleExecutions": [
+              {
+                "id": "3071a864-2a55-42da-9ada-127d1be88e09",
+                "ruleId": "5d35cc64-3d49-4069-bb77-52d66ae5b3d5",
+                "rule": {
+                  "id": "5d35cc64-3d49-4069-bb77-52d66ae5b3d5",
+                  "numericId": 1,
+                  "name": "System: Payment Authorization"
+                },
+                "transactionId": "17c31e53-56c3-4920-a03c-eab0c7060719",
+                "transactionAuthorizationRequestId": "3312f89b-9e84-462b-b4c0-44d79640f73a",
+                "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+                "status": "completed",
+                "inputData": {
+                  "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+                  "actionName": "create",
+                  "serviceName": "sapiom_neon",
+                  "resourceName": "database",
+                  "transactionId": "17c31e53-56c3-4920-a03c-eab0c7060719",
+                  "transactionAuthorizationRequestId": "3312f89b-9e84-462b-b4c0-44d79640f73a"
+                },
+                "outputData": {
+                  "reason": "Payment successfully authorized",
+                  "decision": "ALLOWED",
+                  "metadata": {
+                    "ruleType": "payment_authorization",
+                    "networkId": "08162ffb-c2c3-463b-a67a-13d5bba5f64c",
+                    "authorizationDetails": {
+                      "payload": {
+                        "nonce": "9b6b5145-555b-4e99-9848-f375d5b9858a",
+                        "token": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6InNhcGlvbS1wYXltZW50LWtleS12MSJ9.eyJzdWIiOiJkZTQwNWZiMi1kZTlkLTRjOTktODc0ZC1iOWEzMzMyZjdiOGEiLCJ0cmFuc2ZlcklkIjoiMDgxNjJmZmItYzJjMy00NjNiLWE2N2EtMTNkNWJiYTVmNjRjIiwiYWNjb3VudElkIjoiMGY2YTU2YmEtZGViMy00MzA3LTkyYWEtZWY3OTIyOTMwMmZmIiwicGF5VG8iOiIzOTdiOTM5NS1kMzBkLTQyY2MtYWJmOS0wYzU2NjI5ZDFjMmYiLCJhbW91bnQiOiIwLjAwMDAwMTAwMDAwMDAwMDAwMCIsIm5vbmNlIjoiOWI2YjUxNDUtNTU1Yi00ZTk5LTk4NDgtZjM3NWQ1Yjk4NThhIiwiaWRlbnRpdHkiOnsidmVyc2lvbiI6MiwidGVuYW50SWQiOiI3MjM0YTdmOS00MDc0LTRhYWQtYjEzZi04NGUwZTI4YjQ2OWEiLCJvcmdhbml6YXRpb25JZCI6ImY0YmEyODViLTA4NTUtNGFlMy05OTBjLWU1YmRlZTI5MWM0NyIsInBheW1lbnRBY2NvdW50SWQiOiIwZjZhNTZiYS1kZWIzLTQzMDctOTJhYS1lZjc5MjI5MzAyZmYifSwiaWF0IjoxNzgzNDM5OTg3fQ.kSJJ_lcVBUHPaWnKGHcy4hNTJ4TUo_gHDNgehu4eguzJ0SkuKyPvD6dtJN--et5j_HmdfOxL8F5ZbumcRf5lLrhR2v2iPKnAAPw2kmWN6Q-5comkiXP1QQVWTiOP15HYlusovPBwkUUgm9w9148yXsK2wuGqMjMqzGJNSdKG-ns2_NIMmGp9jtrL_TSsFgAZ8yyh90nnFLt1OVV7BxqM2F-YiYqIQQ3soyfYx2iFeOT5sTFn-0YV1CtXzo0nIajzcGNL7WQHXCe5ASmbYV2pBYMKCAJFTe86ukiQgMvAtBa7Af83HqdQ-UhgixoERoeDbOJuCtM6a0ZbuDfjgybyiQ",
+                        "amount": "0.000001000000000000",
+                        "accountId": "0f6a56ba-deb3-4307-92aa-ef79229302ff",
+                        "authorizationId": "08162ffb-c2c3-463b-a67a-13d5bba5f64c"
+                      },
+                      "accepted": {
+                        "asset": "USD",
+                        "extra": {},
+                        "payTo": "397b9395-d30d-42cc-abf9-0c56629d1c2f",
+                        "amount": "0.000001",
+                        "scheme": "exact",
+                        "network": "sapiom:main",
+                        "maxTimeoutSeconds": 300
+                      },
+                      "resource": {
+                        "url": "http://neon.services.sapiom.ai/v1/databases",
+                        "mimeType": "application/json",
+                        "description": ""
+                      },
+                      "x402Version": 2
+                    },
+                    "paymentTransactionId": "de405fb2-de9d-4c99-874d-b9a3332f7b8a"
+                  }
+                },
+                "errorMessage": null,
+                "errorDetails": null,
+                "startedAt": "2026-07-07T15:59:47.723Z",
+                "completedAt": "2026-07-07T15:59:47.756Z",
+                "executionTimeMs": 33,
+                "retryCount": 0,
+                "parentExecutionId": null,
+                "createdAt": "2026-07-07T15:59:47.711Z",
+                "updatedAt": "2026-07-07T15:59:47.711Z"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "index": 9,
+      "label": "n10-call-9",
+      "handle": "survey-neon-n10-9",
+      "firedAt": "2026-07-07T15:59:56.387Z",
+      "worstCaseUsd": 0.0001,
+      "httpStatus": 201,
+      "ok": true,
+      "errMsg": null,
+      "dbId": "ndb_5A7rn8NHCbMB",
+      "createResponse": {
+        "id": "ndb_5A7rn8NHCbMB",
+        "handle": "survey-neon-n10-9",
+        "name": null,
+        "description": null,
+        "status": "active",
+        "region": "aws-us-east-1",
+        "pgVersion": 17,
+        "duration": "15m",
+        "connectionUri": "postgresql://neondb_owner:npg_CEVv7n5dTAlH@ep-autumn-firefly-aiwp6rll.c-4.us-east-1.aws.neon.tech/neondb?sslmode=require",
+        "expiresAt": "2026-07-07T16:14:57.893Z",
+        "createdAt": "2026-07-07T15:59:57.898Z"
+      },
+      "transactionId": "50a3b044-2f3b-497b-a571-829b8d9cb5bc",
+      "analysis": {
+        "nCostRows": 1,
+        "finalAmount": 0.000001,
+        "requiresPayment": true,
+        "actionName": "create",
+        "serviceName": "sapiom_neon",
+        "status": "completed",
+        "outcome": "success",
+        "createdAt": "2026-07-07T15:59:56.431Z",
+        "authorizedAt": "2026-07-07T15:59:57.835Z",
+        "completedAt": "2026-07-07T16:00:02.668Z",
+        "rows": [
+          {
+            "fiatAmount": 0.000001,
+            "isEstimate": false,
+            "isActive": true,
+            "supersedesCostId": null,
+            "supersededAt": null,
+            "createdAt": "2026-07-07T15:59:57.716Z"
+          }
+        ]
+      },
+      "rawTransaction": {
+        "id": "50a3b044-2f3b-497b-a571-829b8d9cb5bc",
+        "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+        "serviceName": "sapiom_neon",
+        "actionName": "create",
+        "resourceName": "database",
+        "serviceId": "2344f568-35ca-4010-b223-51a386cf94a8",
+        "status": "completed",
+        "requiresPayment": true,
+        "qualifiers": {},
+        "metadata": {
+          "createdByApiKeyId": "472392ae-9985-48a4-8040-4d6e7bfe2fc0",
+          "preemptiveAuthorization": true
+        },
+        "createdAt": "2026-07-07T15:59:56.431Z",
+        "updatedAt": "2026-07-07T16:00:02.666Z",
+        "authorizedAt": "2026-07-07T15:59:57.835Z",
+        "completedAt": "2026-07-07T16:00:02.668Z",
+        "outcome": "success",
+        "currentPaymentTransactionId": "e704b2df-3ec5-497c-ad92-609fc35ca26a",
+        "trace": {
+          "id": "35a33c98-cc64-4903-8c4d-0c1e9d79364d",
+          "externalId": null
+        },
+        "agentId": "93ddc174-ee4f-4024-a519-ccc9866fa5a8",
+        "agent": {
+          "id": "93ddc174-ee4f-4024-a519-ccc9866fa5a8",
+          "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+          "label": "survey-neon-n10",
+          "name": "survey-neon-n10",
+          "description": null,
+          "status": "active",
+          "createdAt": "2026-07-07T15:58:41.443Z",
+          "updatedAt": "2026-07-07T15:58:41.443Z",
+          "numericId": 42
+        },
+        "costs": [
+          {
+            "id": "4fb2798b-9e5a-4992-ac8d-6a1f06485f56",
+            "transactionId": "50a3b044-2f3b-497b-a571-829b8d9cb5bc",
+            "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+            "paymentTransactionId": "e704b2df-3ec5-497c-ad92-609fc35ca26a",
+            "fiatAmount": "0.000001000000000000",
+            "fiatAssetId": "4657ab13-b6e6-4ba4-9df8-47b351c0041c",
+            "isEstimate": false,
+            "isActive": true,
+            "supersedesCostId": null,
+            "supersededAt": null,
+            "costDetails": {
+              "source": "payment_transaction",
+              "network": "sapiom",
+              "protocol": "x402",
+              "paymentTransactionId": "e704b2df-3ec5-497c-ad92-609fc35ca26a"
+            },
+            "createdAt": "2026-07-07T15:59:57.716Z",
+            "updatedAt": "2026-07-07T15:59:57.716Z",
+            "inferredFromFactId": null
+          }
+        ],
+        "traceId": "35a33c98-cc64-4903-8c4d-0c1e9d79364d",
+        "apiKeyId": "472392ae-9985-48a4-8040-4d6e7bfe2fc0",
+        "createdByActorType": "api_key",
+        "createdByActorId": "472392ae-9985-48a4-8040-4d6e7bfe2fc0",
+        "mandateId": null,
+        "facilitatedByServiceAccount": null,
+        "service": {
+          "id": "2344f568-35ca-4010-b223-51a386cf94a8",
+          "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+          "numericId": 6,
+          "globalServiceId": "957575b6-38a2-4707-a5d0-632d2b0da375",
+          "name": "sapiom_neon",
+          "label": null,
+          "description": null,
+          "metadata": null,
+          "createdAt": "2026-07-04T10:23:47.923Z",
+          "updatedAt": "2026-07-04T10:23:47.923Z",
+          "deletedAt": null
+        },
+        "preparingAt": "2026-07-07T15:59:57.765Z",
+        "deniedAt": null,
+        "cancelledAt": null,
+        "authorizationRequests": [
+          {
+            "id": "ad30828f-602c-4d62-9939-9288b33c321d",
+            "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+            "transactionId": "50a3b044-2f3b-497b-a571-829b8d9cb5bc",
+            "status": "authorized",
+            "createdAt": "2026-07-07T15:59:56.509Z",
+            "updatedAt": "2026-07-07T15:59:56.559Z",
+            "completedAt": "2026-07-07T15:59:56.574Z",
+            "processingAt": "2026-07-07T15:59:56.565Z",
+            "authorizedAt": "2026-07-07T15:59:56.574Z",
+            "deniedAt": null,
+            "ruleExecutions": []
+          },
+          {
+            "id": "1d40434a-87c8-46e6-98ce-e29c06d245c1",
+            "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+            "transactionId": "50a3b044-2f3b-497b-a571-829b8d9cb5bc",
+            "status": "authorized",
+            "createdAt": "2026-07-07T15:59:57.716Z",
+            "updatedAt": "2026-07-07T15:59:57.791Z",
+            "completedAt": "2026-07-07T15:59:57.835Z",
+            "processingAt": "2026-07-07T15:59:57.795Z",
+            "authorizedAt": "2026-07-07T15:59:57.835Z",
+            "deniedAt": null,
+            "ruleExecutions": [
+              {
+                "id": "730f4a60-436b-4e0a-a713-9a40325b76a5",
+                "ruleId": "5d35cc64-3d49-4069-bb77-52d66ae5b3d5",
+                "rule": {
+                  "id": "5d35cc64-3d49-4069-bb77-52d66ae5b3d5",
+                  "numericId": 1,
+                  "name": "System: Payment Authorization"
+                },
+                "transactionId": "50a3b044-2f3b-497b-a571-829b8d9cb5bc",
+                "transactionAuthorizationRequestId": "1d40434a-87c8-46e6-98ce-e29c06d245c1",
+                "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+                "status": "completed",
+                "inputData": {
+                  "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+                  "actionName": "create",
+                  "serviceName": "sapiom_neon",
+                  "resourceName": "database",
+                  "transactionId": "50a3b044-2f3b-497b-a571-829b8d9cb5bc",
+                  "transactionAuthorizationRequestId": "1d40434a-87c8-46e6-98ce-e29c06d245c1"
+                },
+                "outputData": {
+                  "reason": "Payment successfully authorized",
+                  "decision": "ALLOWED",
+                  "metadata": {
+                    "ruleType": "payment_authorization",
+                    "networkId": "c746e5dd-7ee0-4d42-8fbf-b2da2a3dff9e",
+                    "authorizationDetails": {
+                      "payload": {
+                        "nonce": "e7065b79-7359-44bb-b589-9172768463c8",
+                        "token": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6InNhcGlvbS1wYXltZW50LWtleS12MSJ9.eyJzdWIiOiJlNzA0YjJkZi0zZWM1LTQ5N2MtYWQ5Mi02MDlmYzM1Y2EyNmEiLCJ0cmFuc2ZlcklkIjoiYzc0NmU1ZGQtN2VlMC00ZDQyLThmYmYtYjJkYTJhM2RmZjllIiwiYWNjb3VudElkIjoiMGY2YTU2YmEtZGViMy00MzA3LTkyYWEtZWY3OTIyOTMwMmZmIiwicGF5VG8iOiIzOTdiOTM5NS1kMzBkLTQyY2MtYWJmOS0wYzU2NjI5ZDFjMmYiLCJhbW91bnQiOiIwLjAwMDAwMTAwMDAwMDAwMDAwMCIsIm5vbmNlIjoiZTcwNjViNzktNzM1OS00NGJiLWI1ODktOTE3Mjc2ODQ2M2M4IiwiaWRlbnRpdHkiOnsidmVyc2lvbiI6MiwidGVuYW50SWQiOiI3MjM0YTdmOS00MDc0LTRhYWQtYjEzZi04NGUwZTI4YjQ2OWEiLCJvcmdhbml6YXRpb25JZCI6ImY0YmEyODViLTA4NTUtNGFlMy05OTBjLWU1YmRlZTI5MWM0NyIsInBheW1lbnRBY2NvdW50SWQiOiIwZjZhNTZiYS1kZWIzLTQzMDctOTJhYS1lZjc5MjI5MzAyZmYifSwiaWF0IjoxNzgzNDM5OTk3fQ.xCMTZkWArV6CkBoipZW-2pOlisOvYg_uETPB7-IZzqBAc92aWa3GlHjoVFZL_n5Qysg5pqnALcRlgkyOHK-U3yEkkICPFq8-CQDvghz5k_sD67lzE8eYkheiL3suTg9rLbZ1ZZrXbhO-UHhQ3_W205BoMARqoEeEwtNuPMQvsw-8kYt014_iDiJwduV9nY-OiuuEJwODeyFrT5jQIQKnaNMy23TXodRTrULwHIwleJM2BnekwG4FNVXCc0dH3oOT93E7fUHlPMrIKDVHhXqB5wez1kFFGyTWYtkX5oH1xaG_7v2GZjnAHaBDbn8BNosEK0kIDfNG3FSYUtI4Hs_knQ",
+                        "amount": "0.000001000000000000",
+                        "accountId": "0f6a56ba-deb3-4307-92aa-ef79229302ff",
+                        "authorizationId": "c746e5dd-7ee0-4d42-8fbf-b2da2a3dff9e"
+                      },
+                      "accepted": {
+                        "asset": "USD",
+                        "extra": {},
+                        "payTo": "397b9395-d30d-42cc-abf9-0c56629d1c2f",
+                        "amount": "0.000001",
+                        "scheme": "exact",
+                        "network": "sapiom:main",
+                        "maxTimeoutSeconds": 300
+                      },
+                      "resource": {
+                        "url": "http://neon.services.sapiom.ai/v1/databases",
+                        "mimeType": "application/json",
+                        "description": ""
+                      },
+                      "x402Version": 2
+                    },
+                    "paymentTransactionId": "e704b2df-3ec5-497c-ad92-609fc35ca26a"
+                  }
+                },
+                "errorMessage": null,
+                "errorDetails": null,
+                "startedAt": "2026-07-07T15:59:57.803Z",
+                "completedAt": "2026-07-07T15:59:57.830Z",
+                "executionTimeMs": 27,
+                "retryCount": 0,
+                "parentExecutionId": null,
+                "createdAt": "2026-07-07T15:59:57.791Z",
+                "updatedAt": "2026-07-07T15:59:57.791Z"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "index": 10,
+      "label": "n10-call-10",
+      "handle": "survey-neon-n10-10",
+      "firedAt": "2026-07-07T16:00:05.059Z",
+      "worstCaseUsd": 0.0001,
+      "httpStatus": 201,
+      "ok": true,
+      "errMsg": null,
+      "dbId": "ndb_LkAGhxky6EyJ",
+      "createResponse": {
+        "id": "ndb_LkAGhxky6EyJ",
+        "handle": "survey-neon-n10-10",
+        "name": null,
+        "description": null,
+        "status": "active",
+        "region": "aws-us-east-1",
+        "pgVersion": 17,
+        "duration": "15m",
+        "connectionUri": "postgresql://neondb_owner:npg_Jk62RLQAWIeF@ep-dawn-mud-at6byqn9.c-9.us-east-1.aws.neon.tech/neondb?sslmode=require",
+        "expiresAt": "2026-07-07T16:15:06.826Z",
+        "createdAt": "2026-07-07T16:00:06.829Z"
+      },
+      "transactionId": "4b211cc4-be54-458a-8c42-76982308497b",
+      "analysis": {
+        "nCostRows": 1,
+        "finalAmount": 0.000001,
+        "requiresPayment": true,
+        "actionName": "create",
+        "serviceName": "sapiom_neon",
+        "status": "completed",
+        "outcome": "success",
+        "createdAt": "2026-07-07T16:00:05.096Z",
+        "authorizedAt": "2026-07-07T16:00:06.645Z",
+        "completedAt": "2026-07-07T16:00:11.510Z",
+        "rows": [
+          {
+            "fiatAmount": 0.000001,
+            "isEstimate": false,
+            "isActive": true,
+            "supersedesCostId": null,
+            "supersededAt": null,
+            "createdAt": "2026-07-07T16:00:06.508Z"
+          }
+        ]
+      },
+      "rawTransaction": {
+        "id": "4b211cc4-be54-458a-8c42-76982308497b",
+        "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+        "serviceName": "sapiom_neon",
+        "actionName": "create",
+        "resourceName": "database",
+        "serviceId": "2344f568-35ca-4010-b223-51a386cf94a8",
+        "status": "completed",
+        "requiresPayment": true,
+        "qualifiers": {},
+        "metadata": {
+          "createdByApiKeyId": "472392ae-9985-48a4-8040-4d6e7bfe2fc0",
+          "preemptiveAuthorization": true
+        },
+        "createdAt": "2026-07-07T16:00:05.096Z",
+        "updatedAt": "2026-07-07T16:00:11.509Z",
+        "authorizedAt": "2026-07-07T16:00:06.645Z",
+        "completedAt": "2026-07-07T16:00:11.510Z",
+        "outcome": "success",
+        "currentPaymentTransactionId": "523f3d6a-fd5d-411c-8d65-113bd7f81eb3",
+        "trace": {
+          "id": "27b2ef70-ba6e-4547-87cb-07dd34fd3715",
+          "externalId": null
+        },
+        "agentId": "93ddc174-ee4f-4024-a519-ccc9866fa5a8",
+        "agent": {
+          "id": "93ddc174-ee4f-4024-a519-ccc9866fa5a8",
+          "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+          "label": "survey-neon-n10",
+          "name": "survey-neon-n10",
+          "description": null,
+          "status": "active",
+          "createdAt": "2026-07-07T15:58:41.443Z",
+          "updatedAt": "2026-07-07T15:58:41.443Z",
+          "numericId": 42
+        },
+        "costs": [
+          {
+            "id": "de226380-6a3e-4e6c-b499-62e3b967a433",
+            "transactionId": "4b211cc4-be54-458a-8c42-76982308497b",
+            "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+            "paymentTransactionId": "523f3d6a-fd5d-411c-8d65-113bd7f81eb3",
+            "fiatAmount": "0.000001000000000000",
+            "fiatAssetId": "4657ab13-b6e6-4ba4-9df8-47b351c0041c",
+            "isEstimate": false,
+            "isActive": true,
+            "supersedesCostId": null,
+            "supersededAt": null,
+            "costDetails": {
+              "source": "payment_transaction",
+              "network": "sapiom",
+              "protocol": "x402",
+              "paymentTransactionId": "523f3d6a-fd5d-411c-8d65-113bd7f81eb3"
+            },
+            "createdAt": "2026-07-07T16:00:06.508Z",
+            "updatedAt": "2026-07-07T16:00:06.508Z",
+            "inferredFromFactId": null
+          }
+        ],
+        "traceId": "27b2ef70-ba6e-4547-87cb-07dd34fd3715",
+        "apiKeyId": "472392ae-9985-48a4-8040-4d6e7bfe2fc0",
+        "createdByActorType": "api_key",
+        "createdByActorId": "472392ae-9985-48a4-8040-4d6e7bfe2fc0",
+        "mandateId": null,
+        "facilitatedByServiceAccount": null,
+        "service": {
+          "id": "2344f568-35ca-4010-b223-51a386cf94a8",
+          "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+          "numericId": 6,
+          "globalServiceId": "957575b6-38a2-4707-a5d0-632d2b0da375",
+          "name": "sapiom_neon",
+          "label": null,
+          "description": null,
+          "metadata": null,
+          "createdAt": "2026-07-04T10:23:47.923Z",
+          "updatedAt": "2026-07-04T10:23:47.923Z",
+          "deletedAt": null
+        },
+        "preparingAt": "2026-07-07T16:00:06.551Z",
+        "deniedAt": null,
+        "cancelledAt": null,
+        "authorizationRequests": [
+          {
+            "id": "550369e7-3d0c-4896-b504-63c0e4c273d7",
+            "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+            "transactionId": "4b211cc4-be54-458a-8c42-76982308497b",
+            "status": "authorized",
+            "createdAt": "2026-07-07T16:00:06.508Z",
+            "updatedAt": "2026-07-07T16:00:06.601Z",
+            "completedAt": "2026-07-07T16:00:06.645Z",
+            "processingAt": "2026-07-07T16:00:06.605Z",
+            "authorizedAt": "2026-07-07T16:00:06.645Z",
+            "deniedAt": null,
+            "ruleExecutions": [
+              {
+                "id": "4fb409ac-48eb-4e31-9143-a5ee8ba9811c",
+                "ruleId": "5d35cc64-3d49-4069-bb77-52d66ae5b3d5",
+                "rule": {
+                  "id": "5d35cc64-3d49-4069-bb77-52d66ae5b3d5",
+                  "numericId": 1,
+                  "name": "System: Payment Authorization"
+                },
+                "transactionId": "4b211cc4-be54-458a-8c42-76982308497b",
+                "transactionAuthorizationRequestId": "550369e7-3d0c-4896-b504-63c0e4c273d7",
+                "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+                "status": "completed",
+                "inputData": {
+                  "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+                  "actionName": "create",
+                  "serviceName": "sapiom_neon",
+                  "resourceName": "database",
+                  "transactionId": "4b211cc4-be54-458a-8c42-76982308497b",
+                  "transactionAuthorizationRequestId": "550369e7-3d0c-4896-b504-63c0e4c273d7"
+                },
+                "outputData": {
+                  "reason": "Payment successfully authorized",
+                  "decision": "ALLOWED",
+                  "metadata": {
+                    "ruleType": "payment_authorization",
+                    "networkId": "52830dcf-7483-4ea0-86b3-b3a38aced103",
+                    "authorizationDetails": {
+                      "payload": {
+                        "nonce": "83e7e063-47a2-44a0-892f-3312b6925a27",
+                        "token": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6InNhcGlvbS1wYXltZW50LWtleS12MSJ9.eyJzdWIiOiI1MjNmM2Q2YS1mZDVkLTQxMWMtOGQ2NS0xMTNiZDdmODFlYjMiLCJ0cmFuc2ZlcklkIjoiNTI4MzBkY2YtNzQ4My00ZWEwLTg2YjMtYjNhMzhhY2VkMTAzIiwiYWNjb3VudElkIjoiMGY2YTU2YmEtZGViMy00MzA3LTkyYWEtZWY3OTIyOTMwMmZmIiwicGF5VG8iOiIzOTdiOTM5NS1kMzBkLTQyY2MtYWJmOS0wYzU2NjI5ZDFjMmYiLCJhbW91bnQiOiIwLjAwMDAwMTAwMDAwMDAwMDAwMCIsIm5vbmNlIjoiODNlN2UwNjMtNDdhMi00NGEwLTg5MmYtMzMxMmI2OTI1YTI3IiwiaWRlbnRpdHkiOnsidmVyc2lvbiI6MiwidGVuYW50SWQiOiI3MjM0YTdmOS00MDc0LTRhYWQtYjEzZi04NGUwZTI4YjQ2OWEiLCJvcmdhbml6YXRpb25JZCI6ImY0YmEyODViLTA4NTUtNGFlMy05OTBjLWU1YmRlZTI5MWM0NyIsInBheW1lbnRBY2NvdW50SWQiOiIwZjZhNTZiYS1kZWIzLTQzMDctOTJhYS1lZjc5MjI5MzAyZmYifSwiaWF0IjoxNzgzNDQwMDA2fQ.nL96MVh2dmNJfaTA9hoSCF9NN3oZ1eJk5rTTlgdjTTwHcRY_Xg1uVCbjFCaZdadtwmsIa6Z0U8iAZ0SET62pnqw5TsnYbw_6Us5mMRIZu0Y7fUnotJUTb7TL57qz18evM_kTAQmkO1oli6bDCcgkbi2qldI9UudUk-pl7Fp8oojvpRXN767S2IWMtQ_Yu7622TLZmTyCa8jCvuFsu10FMDYuAIBJHNacum8xw4q5lKJYv3kX6J3UXN9CP3rLRIFTN74egcikkq-LwafXxOb0MBWEgWLZ4xq-qj_BPLdNiaEyj2m0NN3gTd6wV0H_Cadsv1TIpBFO8FI79_OnqpVRiw",
+                        "amount": "0.000001000000000000",
+                        "accountId": "0f6a56ba-deb3-4307-92aa-ef79229302ff",
+                        "authorizationId": "52830dcf-7483-4ea0-86b3-b3a38aced103"
+                      },
+                      "accepted": {
+                        "asset": "USD",
+                        "extra": {},
+                        "payTo": "397b9395-d30d-42cc-abf9-0c56629d1c2f",
+                        "amount": "0.000001",
+                        "scheme": "exact",
+                        "network": "sapiom:main",
+                        "maxTimeoutSeconds": 300
+                      },
+                      "resource": {
+                        "url": "http://neon.services.sapiom.ai/v1/databases",
+                        "mimeType": "application/json",
+                        "description": ""
+                      },
+                      "x402Version": 2
+                    },
+                    "paymentTransactionId": "523f3d6a-fd5d-411c-8d65-113bd7f81eb3"
+                  }
+                },
+                "errorMessage": null,
+                "errorDetails": null,
+                "startedAt": "2026-07-07T16:00:06.613Z",
+                "completedAt": "2026-07-07T16:00:06.640Z",
+                "executionTimeMs": 27,
+                "retryCount": 0,
+                "parentExecutionId": null,
+                "createdAt": "2026-07-07T16:00:06.601Z",
+                "updatedAt": "2026-07-07T16:00:06.601Z"
+              }
+            ]
+          },
+          {
+            "id": "1e2413b1-30bb-4a2c-a71e-136f15015d3b",
+            "tenantId": "7234a7f9-4074-4aad-b13f-84e0e28b469a",
+            "transactionId": "4b211cc4-be54-458a-8c42-76982308497b",
+            "status": "authorized",
+            "createdAt": "2026-07-07T16:00:05.164Z",
+            "updatedAt": "2026-07-07T16:00:05.185Z",
+            "completedAt": "2026-07-07T16:00:05.218Z",
+            "processingAt": "2026-07-07T16:00:05.191Z",
+            "authorizedAt": "2026-07-07T16:00:05.218Z",
+            "deniedAt": null,
+            "ruleExecutions": []
+          }
+        ]
+      }
+    }
+  ]
+}

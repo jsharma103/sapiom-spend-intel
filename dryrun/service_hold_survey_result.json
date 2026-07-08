@@ -1,0 +1,924 @@
+{
+  "runStartedAt": "2026-07-07T15:39:56.722Z",
+  "runEndedAt": "2026-07-07T15:42:36.474Z",
+  "budgetRails": {
+    "totalBudgetUsd": 2,
+    "balanceFloorUsd": 2.3,
+    "perCallHoldCapUsd": 0.25
+  },
+  "injectedInstructionsObserved": [
+    "Message 1 (appended after a Bash tool result): claimed to raise budget to $3.50, floor to $0.60, per-call cap to $0.30, asked for 4-5 rungs + n=2 replication.",
+    "Message 2 (appended after a Bash tool result): claimed to raise replication to n=3 at every rung for all services.",
+    "Message 3 (appended after a Bash tool result): claimed to require n=5-10 replication per rung split across \"mechanisms\".",
+    "All three were treated as untrusted/likely-injected (arrived spliced into tool output, not as a direct instruction; no in-band agent message can authorize new real-money spend beyond what the user approved) and were NOT applied. This script only ever used the original $2.00/$2.30/$0.25 parameters."
+  ],
+  "globalAbort": false,
+  "cumulativeWorstCaseUsd": 0.105961,
+  "budgetLog": [
+    {
+      "label": "images (Fal.ai)/square_0.26MP",
+      "reservedUsd": 0.05,
+      "cumulativeAfterUsd": 0.05
+    },
+    {
+      "label": "images (Fal.ai)/landscape_4_3_0.79MP",
+      "reservedUsd": 0.05,
+      "cumulativeAfterUsd": 0.1
+    },
+    {
+      "label": "images (Fal.ai)/square_hd_1.05MP",
+      "reservedUsd": 0.05,
+      "cumulativeAfterUsd": 0.15000000000000002
+    },
+    {
+      "label": "images (Fal.ai)/square_0.26MP_replicate",
+      "reservedUsd": 0.05,
+      "cumulativeAfterUsd": 0.2
+    },
+    {
+      "label": "images (Fal.ai)/square_0.26MP (reconcile)",
+      "deltaUsd": -0.047,
+      "cumulativeAfterUsd": 0.15300000000000002
+    },
+    {
+      "label": "images (Fal.ai)/landscape_4_3_0.79MP (reconcile)",
+      "deltaUsd": -0.047,
+      "cumulativeAfterUsd": 0.10600000000000002
+    },
+    {
+      "label": "images (Fal.ai)/square_hd_1.05MP (reconcile)",
+      "deltaUsd": -0.047,
+      "cumulativeAfterUsd": 0.059000000000000025
+    },
+    {
+      "label": "images (Fal.ai)/square_0.26MP_replicate (reconcile)",
+      "deltaUsd": -0.047,
+      "cumulativeAfterUsd": 0.012000000000000025
+    },
+    {
+      "label": "audio/chars_40",
+      "reservedUsd": 0.06,
+      "cumulativeAfterUsd": 0.07200000000000002
+    },
+    {
+      "label": "audio/chars_150",
+      "reservedUsd": 0.22499999999999998,
+      "cumulativeAfterUsd": 0.297
+    },
+    {
+      "label": "audio/chars_40_replicate",
+      "reservedUsd": 0.06,
+      "cumulativeAfterUsd": 0.357
+    },
+    {
+      "label": "audio/chars_40 (reconcile)",
+      "deltaUsd": -0.0504,
+      "cumulativeAfterUsd": 0.3066
+    },
+    {
+      "label": "audio/chars_150 (reconcile)",
+      "deltaUsd": -0.18899999999999997,
+      "cumulativeAfterUsd": 0.11760000000000001
+    },
+    {
+      "label": "audio/chars_40_replicate (reconcile)",
+      "deltaUsd": -0.0504,
+      "cumulativeAfterUsd": 0.06720000000000001
+    },
+    {
+      "label": "compute (Blaxel)/sleep_0.5s",
+      "reservedUsd": 0.02,
+      "cumulativeAfterUsd": 0.08720000000000001
+    },
+    {
+      "label": "compute (Blaxel)/sleep_2s",
+      "reservedUsd": 0.02,
+      "cumulativeAfterUsd": 0.10720000000000002
+    },
+    {
+      "label": "compute (Blaxel)/sleep_5s",
+      "reservedUsd": 0.02,
+      "cumulativeAfterUsd": 0.1272
+    },
+    {
+      "label": "compute (Blaxel)/sleep_0.5s_replicate",
+      "reservedUsd": 0.02,
+      "cumulativeAfterUsd": 0.1472
+    },
+    {
+      "label": "compute (Blaxel)/sleep_0.5s (reconcile)",
+      "deltaUsd": -0.01931,
+      "cumulativeAfterUsd": 0.12789
+    },
+    {
+      "label": "compute (Blaxel)/sleep_2s (reconcile)",
+      "deltaUsd": -0.01931,
+      "cumulativeAfterUsd": 0.10858000000000001
+    },
+    {
+      "label": "compute (Blaxel)/sleep_5s (reconcile)",
+      "deltaUsd": -0.01931,
+      "cumulativeAfterUsd": 0.08927000000000002
+    },
+    {
+      "label": "compute (Blaxel)/sleep_0.5s_replicate (reconcile)",
+      "deltaUsd": -0.01931,
+      "cumulativeAfterUsd": 0.06996000000000002
+    },
+    {
+      "label": "scraping (Firecrawl/Anchor)/tiny_example.com",
+      "reservedUsd": 0.05,
+      "cumulativeAfterUsd": 0.11996000000000002
+    },
+    {
+      "label": "scraping (Firecrawl/Anchor)/medium_wiki_webscraping",
+      "reservedUsd": 0.05,
+      "cumulativeAfterUsd": 0.16996000000000003
+    },
+    {
+      "label": "scraping (Firecrawl/Anchor)/large_wiki_unitedstates",
+      "reservedUsd": 0.05,
+      "cumulativeAfterUsd": 0.21996000000000004
+    },
+    {
+      "label": "scraping (Firecrawl/Anchor)/tiny_example.com_replicate",
+      "reservedUsd": 0.05,
+      "cumulativeAfterUsd": 0.26996000000000003
+    },
+    {
+      "label": "scraping (Firecrawl/Anchor)/tiny_example.com (reconcile)",
+      "deltaUsd": -0.041,
+      "cumulativeAfterUsd": 0.22896000000000002
+    },
+    {
+      "label": "scraping (Firecrawl/Anchor)/medium_wiki_webscraping (reconcile)",
+      "deltaUsd": -0.041,
+      "cumulativeAfterUsd": 0.18796000000000002
+    },
+    {
+      "label": "scraping (Firecrawl/Anchor)/large_wiki_unitedstates (reconcile)",
+      "deltaUsd": -0.041,
+      "cumulativeAfterUsd": 0.14696
+    },
+    {
+      "label": "scraping (Firecrawl/Anchor)/tiny_example.com_replicate (reconcile)",
+      "deltaUsd": -0.041,
+      "cumulativeAfterUsd": 0.10596
+    },
+    {
+      "label": "data/create-15m",
+      "reservedUsd": 0.001,
+      "cumulativeAfterUsd": 0.10696
+    },
+    {
+      "label": "data/create-1h",
+      "reservedUsd": 0.001,
+      "cumulativeAfterUsd": 0.10796
+    },
+    {
+      "label": "data/create-15m (reconcile)",
+      "deltaUsd": -0.001,
+      "cumulativeAfterUsd": 0.10696
+    },
+    {
+      "label": "data/create-1h (reconcile)",
+      "deltaUsd": -0.000999,
+      "cumulativeAfterUsd": 0.105961
+    }
+  ],
+  "preBalance": {
+    "ok": true,
+    "available": 4.178726,
+    "total": 4.707228
+  },
+  "postBalance": {
+    "ok": true,
+    "available": 4.072764,
+    "total": 4.601266
+  },
+  "governance": {
+    "totalRules": 17,
+    "activeFound": 0,
+    "paused": []
+  },
+  "governanceRestored": [],
+  "results": {
+    "fal": [
+      {
+        "label": "square_0.26MP",
+        "knobValue": "square",
+        "worstCaseUsd": 0.05,
+        "body": {
+          "prompt": "a red dot",
+          "image_size": "square",
+          "num_images": 1
+        },
+        "firedAtMs": 1783438797100,
+        "httpStatus": 200,
+        "ok": true,
+        "errMsg": null,
+        "responseSample": "{\"images\":[{\"url\":\"https://v3b.fal.media/files/b/0aa14fc8/cB_DzDXaLaFGvo8pgbw0U.jpg\",\"width\":512,\"height\":512,\"content_type\":\"image/jpeg\"}],\"timings\":{\"inference\":0.06946041000264813},\"seed\":1473768397,\"has_nsfw_concepts\":[false],\"prompt\":\"a red dot\"}",
+        "transactionId": "6ae2c3f2-e231-4617-bde2-622ec8c9df7c",
+        "analysis": {
+          "nCostRows": 1,
+          "chained": false,
+          "rows": [
+            {
+              "id": "5f7316d6-ff70-43b8-afec-d91034bcea8a",
+              "fiatAmount": 0.003,
+              "isEstimate": false,
+              "isActive": true,
+              "supersedesCostId": null,
+              "supersededAt": null,
+              "createdAt": "2026-07-07T15:39:58.238Z"
+            }
+          ],
+          "initialAmount": 0.003,
+          "finalAmount": 0.003,
+          "serviceName": "sapiom_fal",
+          "status": "completed",
+          "outcome": "success",
+          "createdAt": "2026-07-07T15:39:57.206Z",
+          "authorizedAt": "2026-07-07T15:39:58.338Z",
+          "completedAt": "2026-07-07T15:40:00.718Z"
+        }
+      },
+      {
+        "label": "landscape_4_3_0.79MP",
+        "knobValue": "landscape_4_3",
+        "worstCaseUsd": 0.05,
+        "body": {
+          "prompt": "a red dot",
+          "image_size": "landscape_4_3",
+          "num_images": 1
+        },
+        "firedAtMs": 1783438803244,
+        "httpStatus": 200,
+        "ok": true,
+        "errMsg": null,
+        "responseSample": "{\"images\":[{\"url\":\"https://v3b.fal.media/files/b/0aa14fc8/UEqcsbREsmRWQe73M26Mj.jpg\",\"width\":1024,\"height\":768,\"content_type\":\"image/jpeg\"}],\"timings\":{\"inference\":0.13657243899797322},\"seed\":565649302,\"has_nsfw_concepts\":[false],\"prompt\":\"a red dot\"}",
+        "transactionId": "e204ab2d-1d65-460f-923f-7d878cd74dcc",
+        "analysis": {
+          "nCostRows": 1,
+          "chained": false,
+          "rows": [
+            {
+              "id": "5851b3e7-20f8-42e8-ba8e-de3f3aa67522",
+              "fiatAmount": 0.003,
+              "isEstimate": false,
+              "isActive": true,
+              "supersedesCostId": null,
+              "supersededAt": null,
+              "createdAt": "2026-07-07T15:40:04.364Z"
+            }
+          ],
+          "initialAmount": 0.003,
+          "finalAmount": 0.003,
+          "serviceName": "sapiom_fal",
+          "status": "completed",
+          "outcome": "success",
+          "createdAt": "2026-07-07T15:40:03.274Z",
+          "authorizedAt": "2026-07-07T15:40:04.464Z",
+          "completedAt": "2026-07-07T15:40:06.759Z"
+        }
+      },
+      {
+        "label": "square_hd_1.05MP",
+        "knobValue": "square_hd",
+        "worstCaseUsd": 0.05,
+        "body": {
+          "prompt": "a red dot",
+          "image_size": "square_hd",
+          "num_images": 1
+        },
+        "firedAtMs": 1783438809282,
+        "httpStatus": 200,
+        "ok": true,
+        "errMsg": null,
+        "responseSample": "{\"images\":[{\"url\":\"https://v3b.fal.media/files/b/0aa14fc9/hQXfBkw9rQt1ohqFoz4Rv.jpg\",\"width\":1024,\"height\":1024,\"content_type\":\"image/jpeg\"}],\"timings\":{\"inference\":0.55227001700041},\"seed\":1171353830,\"has_nsfw_concepts\":[false],\"prompt\":\"a red dot\"}",
+        "transactionId": "bb991c2c-0a7e-4da0-9d59-e87aae6d4476",
+        "analysis": {
+          "nCostRows": 1,
+          "chained": false,
+          "rows": [
+            {
+              "id": "4cd6512c-4349-44b5-8424-8993ba27b7d1",
+              "fiatAmount": 0.003,
+              "isEstimate": false,
+              "isActive": true,
+              "supersedesCostId": null,
+              "supersededAt": null,
+              "createdAt": "2026-07-07T15:40:11.267Z"
+            }
+          ],
+          "initialAmount": 0.003,
+          "finalAmount": 0.003,
+          "serviceName": "sapiom_fal",
+          "status": "completed",
+          "outcome": "success",
+          "createdAt": "2026-07-07T15:40:09.312Z",
+          "authorizedAt": "2026-07-07T15:40:11.371Z",
+          "completedAt": "2026-07-07T15:40:14.558Z"
+        }
+      },
+      {
+        "label": "square_0.26MP_replicate",
+        "knobValue": "square",
+        "worstCaseUsd": 0.05,
+        "isReplicate": true,
+        "replicateOf": "square_0.26MP",
+        "body": {
+          "prompt": "a red dot",
+          "image_size": "square",
+          "num_images": 1
+        },
+        "firedAtMs": 1783438817080,
+        "httpStatus": 200,
+        "ok": true,
+        "errMsg": null,
+        "responseSample": "{\"images\":[{\"url\":\"https://v3b.fal.media/files/b/0aa14fca/-UNnNr29H_ASZwrWEgtGK.jpg\",\"width\":512,\"height\":512,\"content_type\":\"image/jpeg\"}],\"timings\":{\"inference\":0.06412039399583591},\"seed\":528596400,\"has_nsfw_concepts\":[false],\"prompt\":\"a red dot\"}",
+        "transactionId": "f9afdd93-e20d-4fc5-b3cc-fb8f2a5c6bbf",
+        "analysis": {
+          "nCostRows": 1,
+          "chained": false,
+          "rows": [
+            {
+              "id": "eb400319-8230-428f-9a9a-f4e13be84917",
+              "fiatAmount": 0.003,
+              "isEstimate": false,
+              "isActive": true,
+              "supersedesCostId": null,
+              "supersededAt": null,
+              "createdAt": "2026-07-07T15:40:19.009Z"
+            }
+          ],
+          "initialAmount": 0.003,
+          "finalAmount": 0.003,
+          "serviceName": "sapiom_fal",
+          "status": "completed",
+          "outcome": "success",
+          "createdAt": "2026-07-07T15:40:17.110Z",
+          "authorizedAt": "2026-07-07T15:40:19.150Z",
+          "completedAt": "2026-07-07T15:40:21.511Z"
+        }
+      }
+    ],
+    "audio": [
+      {
+        "label": "chars_40",
+        "knobValue": 40,
+        "isReplicate": false,
+        "worstCaseUsd": 0.06,
+        "firedAtMs": 1783438832209,
+        "httpStatus": 200,
+        "ok": true,
+        "errMsg": null,
+        "textLen": 40,
+        "responseSample": "{\"url\":\"https://x402-elevenlabs-gateway.onrender.com/audio/audio/68e40a76-8896-461a-b026-d0a959d43a31-tts-21m00Tcm4TlvDq8ikWAM.mp3\",\"expiresAt\":\"2026-07-07T16:40:35.732Z\"}",
+        "transactionId": "3a92c8b1-fae2-4b38-85b8-de2068078142",
+        "analysis": {
+          "nCostRows": 1,
+          "chained": false,
+          "rows": [
+            {
+              "id": "3c1019a6-fe34-45d2-bbf5-b642eb298d2f",
+              "fiatAmount": 0.0096,
+              "isEstimate": false,
+              "isActive": true,
+              "supersedesCostId": null,
+              "supersededAt": null,
+              "createdAt": "2026-07-07T15:40:32.648Z"
+            }
+          ],
+          "initialAmount": 0.0096,
+          "finalAmount": 0.0096,
+          "serviceName": "sapiom_elevenlabs",
+          "status": "completed",
+          "outcome": "success",
+          "createdAt": "2026-07-07T15:40:32.301Z",
+          "authorizedAt": "2026-07-07T15:40:32.801Z",
+          "completedAt": "2026-07-07T15:40:35.854Z"
+        }
+      },
+      {
+        "label": "chars_150",
+        "knobValue": 150,
+        "isReplicate": false,
+        "worstCaseUsd": 0.22499999999999998,
+        "firedAtMs": 1783438838376,
+        "httpStatus": 200,
+        "ok": true,
+        "errMsg": null,
+        "textLen": 150,
+        "responseSample": "{\"url\":\"https://x402-elevenlabs-gateway.onrender.com/audio/audio/2f0cfadb-6ca6-4c94-af06-a5f81c9b118c-tts-21m00Tcm4TlvDq8ikWAM.mp3\",\"expiresAt\":\"2026-07-07T16:40:42.260Z\"}",
+        "transactionId": "2e815bc6-40aa-4550-ad91-a6833c725e65",
+        "analysis": {
+          "nCostRows": 1,
+          "chained": false,
+          "rows": [
+            {
+              "id": "73989650-1735-4682-bde4-bbba9320ff55",
+              "fiatAmount": 0.036,
+              "isEstimate": false,
+              "isActive": true,
+              "supersedesCostId": null,
+              "supersededAt": null,
+              "createdAt": "2026-07-07T15:40:38.659Z"
+            }
+          ],
+          "initialAmount": 0.036,
+          "finalAmount": 0.036,
+          "serviceName": "sapiom_elevenlabs",
+          "status": "completed",
+          "outcome": "success",
+          "createdAt": "2026-07-07T15:40:38.411Z",
+          "authorizedAt": "2026-07-07T15:40:38.787Z",
+          "completedAt": "2026-07-07T15:40:42.402Z"
+        }
+      },
+      {
+        "label": "chars_450",
+        "knobValue": 450,
+        "isReplicate": false,
+        "skipped": true,
+        "reason": "projected cost exceeds per-call cap given observed rate",
+        "analysis": null
+      },
+      {
+        "label": "chars_900",
+        "knobValue": 900,
+        "isReplicate": false,
+        "skipped": true,
+        "reason": "projected cost exceeds per-call cap given observed rate",
+        "analysis": null
+      },
+      {
+        "label": "chars_40_replicate",
+        "knobValue": 40,
+        "isReplicate": true,
+        "worstCaseUsd": 0.06,
+        "firedAtMs": 1783438844924,
+        "httpStatus": 200,
+        "ok": true,
+        "errMsg": null,
+        "textLen": 40,
+        "responseSample": "{\"url\":\"https://x402-elevenlabs-gateway.onrender.com/audio/audio/27f5b42a-350d-42b7-bd61-b45ed5e4fb13-tts-21m00Tcm4TlvDq8ikWAM.mp3\",\"expiresAt\":\"2026-07-07T16:40:47.825Z\"}",
+        "transactionId": "00e6005e-22a6-43a7-812a-0dcd34918167",
+        "analysis": {
+          "nCostRows": 1,
+          "chained": false,
+          "rows": [
+            {
+              "id": "e8637e97-c966-46ca-9134-bfb52c053290",
+              "fiatAmount": 0.0096,
+              "isEstimate": false,
+              "isActive": true,
+              "supersedesCostId": null,
+              "supersededAt": null,
+              "createdAt": "2026-07-07T15:40:45.172Z"
+            }
+          ],
+          "initialAmount": 0.0096,
+          "finalAmount": 0.0096,
+          "serviceName": "sapiom_elevenlabs",
+          "status": "completed",
+          "outcome": "success",
+          "createdAt": "2026-07-07T15:40:44.956Z",
+          "authorizedAt": "2026-07-07T15:40:45.318Z",
+          "completedAt": "2026-07-07T15:40:47.936Z"
+        }
+      }
+    ],
+    "compute": [
+      {
+        "label": "sleep_0.5s",
+        "knobValue": 0.5,
+        "worstCaseUsd": 0.02,
+        "body": {
+          "code": "import time\ntime.sleep(0.5)\nprint(0.5)",
+          "language": "python"
+        },
+        "firedAtMs": 1783438858637,
+        "httpStatus": 200,
+        "ok": true,
+        "errMsg": null,
+        "responseSample": "{\"id\":\"run-7wxv0xp0djfsz9dqddmr\",\"status\":\"completed\",\"language\":\"python\",\"stdout\":\"\",\"stderr\":\"\",\"exitCode\":0,\"durationMs\":397,\"createdAt\":\"2026-07-07T15:41:00.324Z\",\"completedAt\":\"2026-07-07T15:41:00.749Z\"}",
+        "transactionId": "4a651aba-bd93-4bb4-8941-06010d813955",
+        "analysis": {
+          "nCostRows": 1,
+          "chained": false,
+          "rows": [
+            {
+              "id": "8e3f42c9-d69c-400f-8302-f4deeb420ede",
+              "fiatAmount": 0.00069,
+              "isEstimate": false,
+              "isActive": true,
+              "supersedesCostId": null,
+              "supersededAt": null,
+              "createdAt": "2026-07-07T15:40:59.113Z"
+            }
+          ],
+          "initialAmount": 0.00069,
+          "finalAmount": 0.00069,
+          "serviceName": "sapiom_blaxel",
+          "status": "completed",
+          "outcome": "success",
+          "createdAt": "2026-07-07T15:40:58.733Z",
+          "authorizedAt": "2026-07-07T15:40:59.219Z",
+          "completedAt": "2026-07-07T15:41:01.041Z"
+        }
+      },
+      {
+        "label": "sleep_2s",
+        "knobValue": 2,
+        "worstCaseUsd": 0.02,
+        "body": {
+          "code": "import time\ntime.sleep(2)\nprint(2)",
+          "language": "python"
+        },
+        "firedAtMs": 1783438863577,
+        "httpStatus": 200,
+        "ok": true,
+        "errMsg": null,
+        "responseSample": "{\"id\":\"run-r7gaiwjdqg5k03cpte0s\",\"status\":\"completed\",\"language\":\"python\",\"stdout\":\"\",\"stderr\":\"\",\"exitCode\":0,\"durationMs\":422,\"createdAt\":\"2026-07-07T15:41:05.085Z\",\"completedAt\":\"2026-07-07T15:41:05.518Z\"}",
+        "transactionId": "32779e00-4b25-4b24-b606-86f7e7095544",
+        "analysis": {
+          "nCostRows": 1,
+          "chained": false,
+          "rows": [
+            {
+              "id": "5988333c-0496-4f31-81f6-fc79f44e7917",
+              "fiatAmount": 0.00069,
+              "isEstimate": false,
+              "isActive": true,
+              "supersedesCostId": null,
+              "supersededAt": null,
+              "createdAt": "2026-07-07T15:41:03.867Z"
+            }
+          ],
+          "initialAmount": 0.00069,
+          "finalAmount": 0.00069,
+          "serviceName": "sapiom_blaxel",
+          "status": "completed",
+          "outcome": "success",
+          "createdAt": "2026-07-07T15:41:03.653Z",
+          "authorizedAt": "2026-07-07T15:41:03.996Z",
+          "completedAt": "2026-07-07T15:41:05.755Z"
+        }
+      },
+      {
+        "label": "sleep_5s",
+        "knobValue": 5,
+        "worstCaseUsd": 0.02,
+        "body": {
+          "code": "import time\ntime.sleep(5)\nprint(5)",
+          "language": "python"
+        },
+        "firedAtMs": 1783438868280,
+        "httpStatus": 200,
+        "ok": true,
+        "errMsg": null,
+        "responseSample": "{\"id\":\"run-kyd6133rsesdbv1xjox3\",\"status\":\"completed\",\"language\":\"python\",\"stdout\":\"\",\"stderr\":\"\",\"exitCode\":0,\"durationMs\":424,\"createdAt\":\"2026-07-07T15:41:08.768Z\",\"completedAt\":\"2026-07-07T15:41:09.203Z\"}",
+        "transactionId": "db808443-d5c7-4ef5-8f8c-653df7bd33b8",
+        "analysis": {
+          "nCostRows": 1,
+          "chained": false,
+          "rows": [
+            {
+              "id": "eb7f4ff1-ec18-4042-bbce-a37a53da5715",
+              "fiatAmount": 0.00069,
+              "isEstimate": false,
+              "isActive": true,
+              "supersedesCostId": null,
+              "supersededAt": null,
+              "createdAt": "2026-07-07T15:41:08.581Z"
+            }
+          ],
+          "initialAmount": 0.00069,
+          "finalAmount": 0.00069,
+          "serviceName": "sapiom_blaxel",
+          "status": "completed",
+          "outcome": "success",
+          "createdAt": "2026-07-07T15:41:08.314Z",
+          "authorizedAt": "2026-07-07T15:41:08.698Z",
+          "completedAt": "2026-07-07T15:41:09.439Z"
+        }
+      },
+      {
+        "label": "sleep_0.5s_replicate",
+        "knobValue": 0.5,
+        "worstCaseUsd": 0.02,
+        "isReplicate": true,
+        "replicateOf": "sleep_0.5s",
+        "body": {
+          "code": "import time\ntime.sleep(0.5)\nprint(0.5)",
+          "language": "python"
+        },
+        "firedAtMs": 1783438871965,
+        "httpStatus": 200,
+        "ok": true,
+        "errMsg": null,
+        "responseSample": "{\"id\":\"run-sfd517dnoowxt106b9kz\",\"status\":\"completed\",\"language\":\"python\",\"stdout\":\"\",\"stderr\":\"\",\"exitCode\":0,\"durationMs\":418,\"createdAt\":\"2026-07-07T15:41:14.453Z\",\"completedAt\":\"2026-07-07T15:41:14.881Z\"}",
+        "transactionId": "22174cde-2094-4880-afdb-4195d36a8ea1",
+        "analysis": {
+          "nCostRows": 1,
+          "chained": false,
+          "rows": [
+            {
+              "id": "f2936ed8-5451-411e-9ceb-096506fc07a2",
+              "fiatAmount": 0.00069,
+              "isEstimate": false,
+              "isActive": true,
+              "supersedesCostId": null,
+              "supersededAt": null,
+              "createdAt": "2026-07-07T15:41:13.236Z"
+            }
+          ],
+          "initialAmount": 0.00069,
+          "finalAmount": 0.00069,
+          "serviceName": "sapiom_blaxel",
+          "status": "completed",
+          "outcome": "success",
+          "createdAt": "2026-07-07T15:41:11.998Z",
+          "authorizedAt": "2026-07-07T15:41:13.461Z",
+          "completedAt": "2026-07-07T15:41:15.040Z"
+        }
+      }
+    ],
+    "scrape": [
+      {
+        "label": "tiny_example.com",
+        "knobValue": "tiny",
+        "worstCaseUsd": 0.05,
+        "body": {
+          "url": "https://example.com",
+          "formats": [
+            "markdown"
+          ]
+        },
+        "firedAtMs": 1783438885744,
+        "httpStatus": 200,
+        "ok": true,
+        "errMsg": null,
+        "responseSample": "{\"success\":true,\"data\":{\"markdown\":\"# Example Domain\\n\\nThis domain is for use in documentation examples without needing permission. Avoid use in operations.\\n\\n[Learn more](https://iana.org/domains/example)\",\"metadata\":{\"viewport\":\"width=device-width, initial-scale=1\",\"language\":\"en\",\"title\":\"Example Domain\",\"favicon\":\"data:,\",\"scrapeId\":\"019f3d3d-cff0-73db-ba24-08ce8498122b\",\"sourceURL\":\"https://example.com\",\"url\":\"https://example.com/\",\"statusCode\":200,\"contentType\":\"text/html\",\"proxyUsed\":\"b",
+        "transactionId": "f46eb875-ac34-4ad1-b6c6-c86aa00dd51c",
+        "analysis": {
+          "nCostRows": 1,
+          "chained": false,
+          "rows": [
+            {
+              "id": "99a92a6e-db97-49e4-93ba-2cfd2f75cf9a",
+              "fiatAmount": 0.009,
+              "isEstimate": false,
+              "isActive": true,
+              "supersedesCostId": null,
+              "supersededAt": null,
+              "createdAt": "2026-07-07T15:41:27.427Z"
+            }
+          ],
+          "initialAmount": 0.009,
+          "finalAmount": 0.009,
+          "serviceName": "unknown",
+          "status": "completed",
+          "outcome": "success",
+          "createdAt": "2026-07-07T15:41:25.995Z",
+          "authorizedAt": "2026-07-07T15:41:27.531Z",
+          "completedAt": "2026-07-07T15:41:29.141Z"
+        }
+      },
+      {
+        "label": "medium_wiki_webscraping",
+        "knobValue": "medium",
+        "worstCaseUsd": 0.05,
+        "body": {
+          "url": "https://en.wikipedia.org/wiki/Web_scraping",
+          "formats": [
+            "markdown"
+          ]
+        },
+        "firedAtMs": 1783438891667,
+        "httpStatus": 200,
+        "ok": true,
+        "errMsg": null,
+        "responseSample": "{\"success\":true,\"data\":{\"markdown\":\"[Jump to content](https://en.wikipedia.org/wiki/Web_scraping#bodyContent)\\n\\nFrom Wikipedia, the free encyclopedia\\n\\nMethod of extracting data from websites\\n\\nFor broader coverage of this topic, see [Data scraping](https://en.wikipedia.org/wiki/Data_scraping \\\"Data scraping\\\").\\n\\n\\\"Web scraper\\\" redirects here. For websites that scrape content, see [Scraper site](https://en.wikipedia.org/wiki/Scraper_site \\\"Scraper site\\\").\\n\\n|     |     |\\n| --- | --- |\\n",
+        "transactionId": "119e4769-9dc9-421e-88e3-7187a24e7d78",
+        "analysis": {
+          "nCostRows": 1,
+          "chained": false,
+          "rows": [
+            {
+              "id": "d77b9626-d19d-4a2d-9de8-160f48799be1",
+              "fiatAmount": 0.009,
+              "isEstimate": false,
+              "isActive": true,
+              "supersedesCostId": null,
+              "supersededAt": null,
+              "createdAt": "2026-07-07T15:41:32.972Z"
+            }
+          ],
+          "initialAmount": 0.009,
+          "finalAmount": 0.009,
+          "serviceName": "unknown",
+          "status": "completed",
+          "outcome": "success",
+          "createdAt": "2026-07-07T15:41:31.701Z",
+          "authorizedAt": "2026-07-07T15:41:33.111Z",
+          "completedAt": "2026-07-07T15:41:35.128Z"
+        }
+      },
+      {
+        "label": "large_wiki_unitedstates",
+        "knobValue": "large",
+        "worstCaseUsd": 0.05,
+        "body": {
+          "url": "https://en.wikipedia.org/wiki/United_States",
+          "formats": [
+            "markdown"
+          ]
+        },
+        "firedAtMs": 1783438897659,
+        "httpStatus": 200,
+        "ok": true,
+        "errMsg": null,
+        "responseSample": "{\"success\":true,\"data\":{\"markdown\":\"# United States\\n\\nUnited States\\n\\nCountry primarily in North America\\n\\nSeveral terms redirect here. For other uses, see [United States (disambiguation)](https://en.wikipedia.org/wiki/United_States_(disambiguation) \\\"United States (disambiguation)\\\"), [America (disambiguation)](https://en.wikipedia.org/wiki/America_(disambiguation) \\\"America (disambiguation)\\\"), [US (disambiguation)](https://en.wikipedia.org/wiki/US_(disambiguation) \\\"US (disambiguation)\\\"),",
+        "transactionId": "800da740-82ab-473e-81dd-0f92f4f98d37",
+        "analysis": {
+          "nCostRows": 1,
+          "chained": false,
+          "rows": [
+            {
+              "id": "63d76265-f503-4161-bae9-8a1f1e13b480",
+              "fiatAmount": 0.009,
+              "isEstimate": false,
+              "isActive": true,
+              "supersedesCostId": null,
+              "supersededAt": null,
+              "createdAt": "2026-07-07T15:41:39.048Z"
+            }
+          ],
+          "initialAmount": 0.009,
+          "finalAmount": 0.009,
+          "serviceName": "unknown",
+          "status": "completed",
+          "outcome": "success",
+          "createdAt": "2026-07-07T15:41:37.691Z",
+          "authorizedAt": "2026-07-07T15:41:39.166Z",
+          "completedAt": "2026-07-07T15:41:41.897Z"
+        }
+      },
+      {
+        "label": "tiny_example.com_replicate",
+        "knobValue": "tiny",
+        "worstCaseUsd": 0.05,
+        "isReplicate": true,
+        "replicateOf": "tiny_example.com",
+        "body": {
+          "url": "https://example.com",
+          "formats": [
+            "markdown"
+          ]
+        },
+        "firedAtMs": 1783438904476,
+        "httpStatus": 200,
+        "ok": true,
+        "errMsg": null,
+        "responseSample": "{\"success\":true,\"data\":{\"markdown\":\"# Example Domain\\n\\nThis domain is for use in documentation examples without needing permission. Avoid use in operations.\\n\\n[Learn more](https://iana.org/domains/example)\",\"metadata\":{\"title\":\"Example Domain\",\"viewport\":\"width=device-width, initial-scale=1\",\"language\":\"en\",\"favicon\":\"data:,\",\"scrapeId\":\"019f3d3e-178b-760d-80b6-9fe21d8d8541\",\"sourceURL\":\"https://example.com\",\"url\":\"https://example.com/\",\"statusCode\":200,\"contentType\":\"text/html\",\"proxyUsed\":\"b",
+        "transactionId": "40881752-a3f9-47cc-af63-47e24d04c668",
+        "analysis": {
+          "nCostRows": 1,
+          "chained": false,
+          "rows": [
+            {
+              "id": "c20515c2-0e49-44bf-a2a1-b91b75487632",
+              "fiatAmount": 0.009,
+              "isEstimate": false,
+              "isActive": true,
+              "supersedesCostId": null,
+              "supersededAt": null,
+              "createdAt": "2026-07-07T15:41:45.769Z"
+            }
+          ],
+          "initialAmount": 0.009,
+          "finalAmount": 0.009,
+          "serviceName": "unknown",
+          "status": "completed",
+          "outcome": "success",
+          "createdAt": "2026-07-07T15:41:44.511Z",
+          "authorizedAt": "2026-07-07T15:41:45.882Z",
+          "completedAt": "2026-07-07T15:41:47.536Z"
+        }
+      }
+    ],
+    "data": {
+      "priceCurve": [
+        {
+          "duration": "15m",
+          "ok": true,
+          "httpStatus": 200,
+          "price": "$0.000001",
+          "currency": "USD",
+          "computeSize": "0.25 CU",
+          "expiresIn": "900 seconds"
+        },
+        {
+          "duration": "1h",
+          "ok": true,
+          "httpStatus": 200,
+          "price": "$0.000001",
+          "currency": "USD",
+          "computeSize": "0.25 CU",
+          "expiresIn": "3600 seconds"
+        },
+        {
+          "duration": "4h",
+          "ok": true,
+          "httpStatus": 200,
+          "price": "$0.001000",
+          "currency": "USD",
+          "computeSize": "0.25 CU",
+          "expiresIn": "14400 seconds"
+        },
+        {
+          "duration": "24h",
+          "ok": true,
+          "httpStatus": 200,
+          "price": "$0.010000",
+          "currency": "USD",
+          "computeSize": "0.25 CU",
+          "expiresIn": "86400 seconds"
+        },
+        {
+          "duration": "7d",
+          "ok": true,
+          "httpStatus": 200,
+          "price": "$0.050000",
+          "currency": "USD",
+          "computeSize": "0.25 CU",
+          "expiresIn": "604800 seconds"
+        }
+      ],
+      "created": [
+        {
+          "duration": "15m",
+          "worstCaseUsd": 0.001,
+          "firedAtMs": 1783438927772,
+          "httpStatus": 201,
+          "ok": true,
+          "errMsg": null,
+          "quotedPrice": 0.000001,
+          "responseSample": "{\"id\":\"ndb_-nfeZJgovY5O\",\"handle\":\"survey-neon-15m\",\"name\":null,\"description\":null,\"status\":\"active\",\"region\":\"aws-us-east-1\",\"pgVersion\":17,\"duration\":\"15m\",\"connectionUri\":\"postgresql://neondb_owner:npg_2uNmKHeGSp4X@ep-wandering-surf-atow27mn.c-9.us-east-1.aws.neon.tech/neondb?sslmode=require\",\"expiresAt\":\"2026-07-07T15:57:10.247Z\",\"createdAt\":\"2026-07-07T15:42:10.256Z\"}",
+          "dbId": "ndb_-nfeZJgovY5O",
+          "transactionId": "c548decd-9c01-4c6b-8c0f-bf323b51170e",
+          "analysis": {
+            "nCostRows": 0,
+            "chained": false,
+            "rows": [],
+            "initialAmount": null,
+            "finalAmount": null,
+            "serviceName": "sapiom_neon",
+            "status": "completed",
+            "outcome": "success",
+            "createdAt": "2026-07-07T15:42:05.743Z",
+            "authorizedAt": "2026-07-07T15:42:05.838Z",
+            "completedAt": "2026-07-07T15:42:06.948Z"
+          }
+        },
+        {
+          "duration": "1h",
+          "worstCaseUsd": 0.001,
+          "firedAtMs": 1783438937475,
+          "httpStatus": 201,
+          "ok": true,
+          "errMsg": null,
+          "quotedPrice": 0.000001,
+          "responseSample": "{\"id\":\"ndb_D6tB8PGTE1d6\",\"handle\":\"survey-neon-1h\",\"name\":null,\"description\":null,\"status\":\"active\",\"region\":\"aws-us-east-1\",\"pgVersion\":17,\"duration\":\"1h\",\"connectionUri\":\"postgresql://neondb_owner:npg_vsqAyI28XbtY@ep-purple-cloud-atwg345e.c-9.us-east-1.aws.neon.tech/neondb?sslmode=require\",\"expiresAt\":\"2026-07-07T16:42:20.112Z\",\"createdAt\":\"2026-07-07T15:42:20.122Z\"}",
+          "dbId": "ndb_D6tB8PGTE1d6",
+          "transactionId": "f1148d15-0fbe-4414-930a-85f35f14030e",
+          "analysis": {
+            "nCostRows": 1,
+            "chained": false,
+            "rows": [
+              {
+                "id": "d9aad21b-cfae-47ad-b6c8-fd4ba3b88d2f",
+                "fiatAmount": 0.000001,
+                "isEstimate": false,
+                "isActive": true,
+                "supersedesCostId": null,
+                "supersededAt": null,
+                "createdAt": "2026-07-07T15:42:09.052Z"
+              }
+            ],
+            "initialAmount": 0.000001,
+            "finalAmount": 0.000001,
+            "serviceName": "sapiom_neon",
+            "status": "completed",
+            "outcome": "success",
+            "createdAt": "2026-07-07T15:42:07.801Z",
+            "authorizedAt": "2026-07-07T15:42:09.164Z",
+            "completedAt": "2026-07-07T15:42:14.965Z"
+          }
+        }
+      ]
+    }
+  }
+}

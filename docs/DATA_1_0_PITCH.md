@@ -88,7 +88,9 @@ Every capability above is already demonstrated in miniature on my own ledger:
 | Capture ratio | **18%** — authorize $1.00, capture $0.18 | Float analytics; cap right-sizing |
 | Hold pricing | Linear at **$0.0006/1k tokens** through 64k — past the model's real output ceiling | Hold-size lever is real and modelable |
 | Right-sizing remedy | **~79%** fleet hold reduction (p95-based caps) | Auto-cap optimizer (Data 2.0) |
-| Float at scale (Little's Law) | ≈**$61–$138** frozen instantaneously at $1M/day TPV, holds clearing in 5.3–12.0s | Honest scale math: levers are hold *lifetime* and hold *size* |
+| Float at scale (Little's Law) | ≈**$341–$771** frozen instantaneously at $1M/day settled TPV (5.6× overhang, holds clearing in 5.3–12.0s; model validated live within 9% — `dryrun/ll_validation.md`) | Honest scale math: levers are hold *lifetime* and hold *size* |
+| Frozen capital (live snapshot) | **11.2% of wallet** unavailable — 4 failure holds + 85 denied-call holds, **0 released in 3 days** | Failure-reaper watcher; hold-lifecycle analytics |
+| Governance double-count | Agents denied at **54–80%** of true budget while engine reports ~100% | One semantic layer — the engine itself needs the canonical spend definition |
 | Authorization race | **2–3× rule-limit leak** under concurrency, mechanism identified | Standing reconciliation + serialized checks |
 | Rules fire on holds | Denial's `currentValue` matched the hold to the micro-dollar | Governance analytics must model phantom vs real spend |
 | Post-hold failure | Full hold frozen, **4/4** (forced tests; live frequency unmeasured) | Failure-reaper watcher |

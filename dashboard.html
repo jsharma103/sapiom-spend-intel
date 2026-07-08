@@ -125,9 +125,16 @@
   td { color: var(--ink-primary); border-bottom: 1px solid var(--gridline); }
   th.num, td.num { text-align: right; font-variant-numeric: tabular-nums; }
 
+  /* KYA scorecard only (~35+ rows): vertical scroll capped to roughly the
+     first 20 rows, with a sticky header so column labels stay visible.
+     Scoped here rather than on the shared .table-scroll — every other table
+     on the page still renders in full. */
+  .kya-scroll { max-height: 840px; overflow-y: auto; }
+  .kya-scroll th { position: sticky; top: 0; background: var(--surface); }
+
   /* status-chip — the icon+label mechanism. Reserved to: Reconciliation
-     ties/mismatch, Velocity Checks clean/flagged, Refund-on-Failure, and the
-     KYA velocity grade + Flag column. Text is always ink, never the status
+     ties/break, Velocity Checks clean/flagged, and the KYA velocity grade +
+     Flag column. Text is always ink, never the status
      hue — only the 7px dot carries the color. */
   .status-chip {
     display: inline-flex; align-items: center; gap: 6px;
@@ -158,7 +165,7 @@
 <div class="subtitle" id="subtitle">Loading...</div>
 
 <div class="section-title first">Section 1 — Payments KPIs — measured on Sapiom</div>
-<div class="section-subtitle">Metrics a payments executive already knows how to read, measured live on Sapiom's own ledger.</div>
+<div class="section-subtitle">Metrics a payments executive already knows how to read, measured live on Sapiom's own ledger — small real spend: read mechanisms, not scale.</div>
 
 <div class="row-label">Hero KPIs</div>
 <div class="hero-grid" id="hero-grid"></div>
@@ -201,6 +208,7 @@
   const usd2 = (n) => usd(n, 2);
   const pct = (n, d = 1) => (n === null || n === undefined) ? 'n/a' : `${Number(n) >= 0 ? '+' : ''}${Number(n).toFixed(d)}%`;
   const fmtMs = (ms) => (ms === null || ms === undefined) ? 'n/a' : (Math.abs(ms) < 1000 ? `${ms.toFixed(0)}ms` : `${(ms / 1000).toFixed(2)}s`);
+  const fmtS = (ms) => (ms === null || ms === undefined) ? 'n/a' : `${(ms / 1000).toFixed(1)}s`;
   // status-chip markup helper — icon+label, never bare color (§2.5).
   const chip = (status, label) => `<span class="status-chip ${status}"><span class="dot"></span>${label}</span>`;
   // Wrap a <table> in an overflow-x scroller so a 7-column table never breaks
@@ -236,15 +244,21 @@
   subtitle.title = `Period: ${h.period_start} -> ${h.period_end}`;
 
   // ---- Hero 1: TPV --------------------------------------------------------
+  // Glanceable grammar (BUILD: hero glanceability pass, 2026-07-07): big
+  // number, one computed context line, one italic definition line — the full
+  // honesty text (settled derivation, exclusion rationale, $1M/day pace)
+  // lives in the method_note tooltip, on both the h2 and the definition line.
   (function heroTpv() {
     const t = data.hero_tpv || {};
     const tile = el('div', 'tile hero');
-    tile.appendChild(el('h2', null, 'TPV — Total Payment Volume'));
+    const header = el('h2', null, 'TPV — Settled Payment Volume');
+    header.title = t.method_note || '';
+    tile.appendChild(header);
     tile.appendChild(el('div', 'big-number', usd(t.value_usd, 6)));
     tile.appendChild(el('div', 'subline', t.subline || ''));
-    const note = el('div', 'scale-note', t.scale_note || '');
-    note.title = t.method_note || '';
-    tile.appendChild(note);
+    const def = el('div', 'definition', t.definition || '');
+    def.title = t.method_note || '';
+    tile.appendChild(def);
     heroGrid.appendChild(tile);
   })();
 
@@ -252,13 +266,14 @@
   (function heroFrozenCapital() {
     const t = data.hero_frozen_capital || {};
     const tile = el('div', 'tile hero');
-    tile.appendChild(el('h2', null, 'Frozen Capital — Unrecovered Holds'));
-    tile.appendChild(el('div', 'big-number', `${usd(t.frozen_total_usd)} ${chip('critical', '0 RELEASED / 3 DAYS')}`));
+    const header = el('h2', null, 'Frozen Capital — Uncaptured, Never-Voided Auths');
+    header.title = t.method_note || '';
+    tile.appendChild(header);
+    tile.appendChild(el('div', 'big-number', `${usd(t.frozen_total_usd)} ${chip('critical', `${t.n_released} RELEASED / ${t.days_observed} DAYS`)}`));
     tile.appendChild(el('div', 'subline', t.subline || ''));
-    const note = el('div', 'scale-note', t.definition || '');
-    note.title = t.method_note || '';
-    tile.appendChild(note);
-    tile.appendChild(el('div', 'caption', t.scale_note || ''));
+    const def = el('div', 'definition', t.definition || '');
+    def.title = t.method_note || '';
+    tile.appendChild(def);
     heroGrid.appendChild(tile);
   })();
 
@@ -266,24 +281,58 @@
   (function heroReconciliation() {
     const t = data.hero_reconciliation || {};
     const tile = el('div', 'tile hero');
-    tile.appendChild(el('h2', null, 'Reconciliation'));
-    // The $ number is always neutral ink; only the chip carries good/critical
-    // state, and only when the ledger actually ties (t.green), never hardcoded.
-    const badge = t.green ? chip('good', 'TIES OUT') : chip('critical', 'MISMATCH');
-    tile.appendChild(el('div', 'big-number', `${usd(t.diff_usd)} ${badge}`));
+    const header = el('h2', null, 'Reconciliation — Ledger vs Account Balance');
+    header.title = t.method_note || '';
+    tile.appendChild(header);
+    // This tile's message is a binary state, not a magnitude — the chip is
+    // computed from t.green, never hardcoded, and sits inline with the ±
+    // diff magnitude in the big-number slot.
+    const badge = t.green ? chip('good', 'TIES OUT ✓') : chip('critical', 'BREAK');
+    tile.appendChild(el('div', 'big-number', `±${usd(t.diff_usd, 6)} ${badge}`));
     tile.appendChild(el('div', 'subline', t.subline || ''));
-    const note = el('div', 'scale-note', t.scale_note || '');
-    note.title = t.method_note || '';
-    tile.appendChild(note);
-    tile.appendChild(el('div', 'caption', t.ingest_note || ''));
+    const def = el('div', 'definition', t.definition || '');
+    def.title = t.method_note || '';
+    tile.appendChild(def);
     heroGrid.appendChild(tile);
   })();
 
-  // ---- Detail 1: Capture Ratio (demoted from hero row 2026-07-07 — LLM-only scope + workload-shaped magnitude)
+  // ---- Tile 7: Auth rate (BUILD 11 — promoted to its own tile in BUILD 12) --
+  (function tileAuthRate() {
+    const t = data.tile_auth_rate || {};
+    const tile = el('div', 'tile');
+    const header = el('h2', null, 'Authorization Rate');
+    header.title = t.note || '';
+    tile.appendChild(header);
+    const v = t.auth_rate_pct;
+    // Magnitude, not a status: tile's own note says 100% is an artifact of no
+    // spending rules active, not proof governance works.
+    tile.appendChild(el('div', 'big-number', v === null || v === undefined ? 'n/a' : `${Number(v).toFixed(0)}%`));
+    const sub = el('div', 'subline', `${t.approved ?? 0}/${(t.approved ?? 0) + (t.denied ?? 0)} approved — no spending rules active in this sample`);
+    sub.title = t.note || '';
+    tile.appendChild(sub);
+    grid.appendChild(tile);
+  })();
+
+  // ---- Tile 8: ATV — Average Transaction Value ------------------------------
+  (function tileAtv() {
+    const t = data.tile_atv || {};
+    const tile = el('div', 'tile');
+    const header = el('h2', null, 'ATV — Average Transaction Value');
+    header.title = t.method_note || '';
+    tile.appendChild(header);
+    // Magnitude only, neutral ink — positive/gift framing, no status chip.
+    tile.appendChild(el('div', 'big-number', usd(t.atv_usd, 6)));
+    tile.appendChild(el('div', 'subline', t.subline || ''));
+    tile.appendChild(el('div', 'caption', t.caption || ''));
+    tile.appendChild(el('div', 'caption', t.scope_note || ''));
+    grid.appendChild(tile);
+  })();
+
+  // ---- Detail 1: Capture Rate ($-weighted) (demoted from hero row 2026-07-07 — LLM-only scope + workload-shaped magnitude)
   (function heroCapture() {
     const t = data.hero_capture_ratio || {};
     const tile = el('div', 'tile');
-    tile.appendChild(el('h2', null, 'Capture Ratio'));
+    tile.appendChild(el('h2', null, 'Capture Rate ($-weighted)'));
     const v = t.ratio_pct;
     // Valence fix: this is a float-inefficiency signal, not a capture-failure /
     // revenue-leakage signal (settling below the hold is the system working as
@@ -297,215 +346,119 @@
     grid.appendChild(tile);
   })();
 
-  // ---- Tile 4: Auth -> Capture time -----------------------------------------
-  (function tileAuthCapture() {
-    const t = data.tile_auth_to_capture || {};
-    const tile = el('div', 'tile');
-    const header = el('h2', null, 'Auth → Capture Time');
-    header.title = t.footnote || '';
-    tile.appendChild(header);
-    tile.appendChild(el('div', 'big-number', `${fmtMs(t.headline_p50_ms)} / ${fmtMs(t.headline_p95_ms)}`));
-    const sub = el('div', 'subline', `${t.headline_service || 'n/a'} — p50 / p95`);
-    sub.title = t.footnote || '';
-    tile.appendChild(sub);
-    const table = el('table');
-    table.innerHTML = '<tr><th>Service</th><th class="num">N</th><th class="num">p50</th><th class="num">p95</th></tr>';
-    const rows = t.rows || [];
-    const chained = rows.find(r => r.service_name === t.headline_service);
-    if (chained) {
-      const row = document.createElement('tr');
-      row.innerHTML = `<td>${chained.service_name}</td><td class="num">${chained.n}</td><td class="num">${fmtMs(chained.p50_ms)}</td><td class="num">${fmtMs(chained.p95_ms)}</td>`;
-      table.appendChild(row);
-    }
-    if (t.flat_n) {
-      const row = document.createElement('tr');
-      row.title = t.flat_services_label || '';
-      // Real computed min/max range, not a hardcoded "~0ms" (one flat service is
-      // actually -832ms) — see tile.footnote for why these are negative.
-      const flatRange = (t.flat_min_ms == null || t.flat_max_ms == null)
-        ? 'sub-second (write-before-authorize; see note)'
-        : `${fmtMs(t.flat_min_ms)} to ${fmtMs(t.flat_max_ms)}`;
-      row.innerHTML = `<td>5 flat services</td><td class="num">${t.flat_n}</td><td class="num" colspan="2">${flatRange}</td>`;
-      table.appendChild(row);
-    }
-    tile.appendChild(scrollWrap(table));
-    grid.appendChild(tile);
-  })();
-
-  // ---- Tile 5: Velocity checks ----------------------------------------------
-  (function tileVelocity() {
-    const t = data.tile_velocity_checks || {};
-    const tile = el('div', 'tile');
-    tile.appendChild(el('h2', null, 'Velocity Checks'));
-    const flagged = t.flagged || [];
-    // True state, but warning (not critical) — same signal as the KYA Flag
-    // column, rendered as an icon+label chip rather than bare color.
-    const statusChip = flagged.length
-      ? chip('warning', `${flagged.length} FLAGGED`)
-      : chip('good', 'CLEAN');
-    tile.appendChild(el('div', 'big-number', statusChip));
-    const sub = el('div', 'subline', flagged.length ? `${flagged.join(', ')} — anomalously fast` : 'No agent anomalously fast vs peers');
-    sub.title = 'Agent runaway = card-testing analog: peer-relative flag when median inter-call gap < 20% of the peer-agent median gap.';
-    tile.appendChild(sub);
-    const table = el('table');
-    table.innerHTML = '<tr><th>Agent</th><th class="num">Calls</th><th class="num">Median gap</th><th class="num">Peak/60s</th></tr>';
-    (t.per_agent || []).slice(0, 3).forEach((a) => {
-      const row = document.createElement('tr');
-      const flag = a.runaway ? ` ${chip('warning', 'RUNAWAY')}` : '';
-      row.innerHTML = `<td>${a.agent_name}${flag}</td><td class="num">${a.n}</td><td class="num">${a.median_gap_s === null || a.median_gap_s === undefined ? 'n/a' : a.median_gap_s.toFixed(2) + 's'}</td><td class="num">${a.peak_calls_per_min ?? 'n/a'}</td>`;
-      table.appendChild(row);
-    });
-    tile.appendChild(scrollWrap(table));
-    grid.appendChild(tile);
-  })();
-
-  // ---- Tile 6: Loss rate (BUILD 10 — promoted to its own tile in BUILD 12) --
-  (function tileLossRate() {
-    const t = data.tile_loss_rate || {};
-    const tile = el('div', 'tile');
-    const header = el('h2', null, 'Loss Rate');
-    header.title = t.note || '';
-    tile.appendChild(header);
-    // Magnitude, not a status: caveat warns against reading 0bps as proven-safe.
-    tile.appendChild(el('div', 'big-number', `${(t.loss_rate_bps ?? 0).toFixed(0)} bps`));
-    const sub = el('div', 'subline', `${t.n_failed ?? 0}/${t.n_txns ?? 0} txns failed (${pct(t.failed_pct)}), ${t.n_failed_with_cost_row ?? 0}/${t.n_failed ?? 0} charged`);
-    sub.title = t.note || '';
-    tile.appendChild(sub);
-    tile.appendChild(el('div', 'caption', t.cross_reference || ''));
-    grid.appendChild(tile);
-  })();
-
-  // ---- Tile 7: Auth rate (BUILD 11 — promoted to its own tile in BUILD 12) --
-  (function tileAuthRate() {
-    const t = data.tile_auth_rate || {};
-    const tile = el('div', 'tile');
-    const header = el('h2', null, 'Auth Rate');
-    header.title = t.note || '';
-    tile.appendChild(header);
-    const v = t.auth_rate_pct;
-    // Magnitude, not a status: tile's own note says 100% is an artifact of no
-    // spending rules active, not proof governance works.
-    tile.appendChild(el('div', 'big-number', v === null || v === undefined ? 'n/a' : `${Number(v).toFixed(0)}%`));
-    const sub = el('div', 'subline', `${t.approved ?? 0}/${(t.approved ?? 0) + (t.denied ?? 0)} approved — no spending rules active in this sample`);
-    sub.title = t.note || '';
-    tile.appendChild(sub);
-    grid.appendChild(tile);
-  })();
-
   // =====================================================================
   // Section 2 — Agent-native KPIs — proposed definitions
   // =====================================================================
 
-  // ---- BOUNDED: Capital Overhang Ratio (real number) -------------------------
-  (function tileCapitalOverhang() {
-    const t = data.tile_capital_overhang || {};
+  // ---- BOUNDED: Effective Budget (Blast Radius $ + Cap Utilization, merged) --
+  // Capital Overhang Ratio, Blast Radius $, Cap Utilization: cut/merged from
+  // render 2026-07-07 — data still emitted (tile_capital_overhang /
+  // tile_blast_radius / tile_cap_utilization), unrendered, for easy restore.
+  (function tileEffectiveBudget() {
+    const t = data.tile_effective_budget || {};
     const tile = el('div', 'tile');
-    const header = el('h2', null, 'Capital Overhang Ratio');
+    tile.appendChild(el('h2', null, 'Effective Budget'));
+    tile.appendChild(el('div', 'big-number', t.headline_pct_range || 'n/a'));
+    tile.appendChild(el('div', 'subline', t.message || ''));
+    const def = el('div', 'definition', t.finding || '');
+    def.title = t.method_note || '';
+    tile.appendChild(def);
+    const table = el('table');
+    table.innerHTML = '<tr><th>Agent</th><th class="num">Cap</th><th class="num">True util</th><th class="num">Engine util</th></tr>';
+    (t.rows || []).forEach((r) => {
+      const row = document.createElement('tr');
+      row.innerHTML = `<td>${r.agent}</td><td class="num">${usd(r.cap_usd, 3)}</td><td class="num">${r.true_util_pct}%</td><td class="num">${r.engine_util_pct}%</td>`;
+      table.appendChild(row);
+    });
+    tile.appendChild(scrollWrap(table));
+    tile.appendChild(el('div', 'caption', t.caveat || ''));
+    gridBounded.appendChild(tile);
+  })();
+
+  // ---- BOUNDED: Concurrency Leak Factor (TOCTOU race, the bound BREAKS) -----
+  (function tileConcurrencyLeakFactor() {
+    const t = data.tile_concurrency_leak_factor || {};
+    const tile = el('div', 'tile');
+    const header = el('h2', null, 'Concurrency Leak Factor');
     header.title = t.method_note || '';
     tile.appendChild(header);
-    const r = t.overhang_ratio;
-    tile.appendChild(el('div', 'big-number', r === null || r === undefined ? 'n/a' : `${r.toFixed(2)}x`));
+    tile.appendChild(el('div', 'big-number', t.headline || 'n/a'));
+    tile.appendChild(el('div', 'subline', t.subline || ''));
     tile.appendChild(el('div', 'definition', t.definition || ''));
-    tile.appendChild(el('div', 'caption', t.clears_note || ''));
-    tile.appendChild(el('div', 'caption', t.scope_note || ''));
+    const table = el('table');
+    table.innerHTML = '<tr><th>Round</th><th class="num">N</th><th class="num">max_tokens</th><th class="num">Allowed</th><th class="num">Leak factor</th></tr>';
+    (t.rows || []).forEach((r) => {
+      const row = document.createElement('tr');
+      const leakLabel = r.leak_factor === 1 ? '1x (no leak)' : `${r.leak_factor}x`;
+      row.innerHTML = `<td>${r.round}</td><td class="num">${r.n}</td><td class="num">${r.max_tokens}</td><td class="num">${r.allowed}</td><td class="num">${leakLabel}</td>`;
+      table.appendChild(row);
+    });
+    tile.appendChild(scrollWrap(table));
+    tile.appendChild(el('div', 'caption', t.caveat || ''));
     gridBounded.appendChild(tile);
   })();
 
-  // ---- BOUNDED: Blast Radius $ (greyed placeholder, no fake number) ---------
-  (function tileBlastRadius() {
-    const t = data.tile_blast_radius || {};
-    const tile = el('div', 'tile placeholder');
-    tile.appendChild(el('h2', null, 'Blast Radius $'));
-    tile.appendChild(el('div', 'big-number', '—'));
-    const lock = el('div', 'lock-tag', 'Needs governance rules active');
-    lock.title = t.note || '';
-    tile.appendChild(lock);
-    tile.appendChild(el('div', 'definition', t.definition || ''));
-    gridBounded.appendChild(tile);
-  })();
-
-  // ---- BOUNDED: Cap Utilization (greyed placeholder, no fake number) --------
-  (function tileCapUtilization() {
-    const t = data.tile_cap_utilization || {};
-    const tile = el('div', 'tile placeholder');
-    tile.appendChild(el('h2', null, 'Cap Utilization'));
-    tile.appendChild(el('div', 'big-number', '—'));
-    const lock = el('div', 'lock-tag', 'Needs governance rules active');
-    lock.title = t.note || '';
-    tile.appendChild(lock);
-    tile.appendChild(el('div', 'definition', t.definition || ''));
-    gridBounded.appendChild(tile);
-  })();
-
-  // ---- VISIBLE: Attribution Completeness -------------------------------------
-  (function tileAttributionCompleteness() {
-    const t = data.tile_attribution_completeness || {};
+  // ---- VISIBLE: Ledger Blind Spots (reframed from Attribution Completeness) -
+  (function tileLedgerBlindSpots() {
+    const t = data.tile_ledger_blind_spots || {};
     const tile = el('div', 'tile');
-    const header = el('h2', null, 'Attribution Completeness');
-    header.title = t.note || '';
+    const header = el('h2', null, 'Ledger Blind Spots');
+    header.title = t.method_note || '';
     tile.appendChild(header);
     const p = t.pct;
-    // Magnitude, not a status: caveat says non-null isn't always meaningfully
-    // attributed (2/81 carry service_name='unknown').
     tile.appendChild(el('div', 'big-number', p === null || p === undefined ? 'n/a' : `${p.toFixed(0)}%`));
+    tile.appendChild(el('div', 'subline', t.subline || ''));
     const def = el('div', 'definition', t.definition || '');
-    def.title = t.note || '';
+    def.title = t.method_note || '';
     tile.appendChild(def);
-    tile.appendChild(el('div', 'caption', t.visible_caveat || ''));
     gridVisible.appendChild(tile);
   })();
 
-  // ---- VISIBLE: Phantom Spend Rate --------------------------------------------
-  (function tilePhantomSpendRate() {
-    const t = data.tile_phantom_spend_rate || {};
+  // ---- VISIBLE: Cost-per-Task Traceability -----------------------------------
+  // Phantom Spend Rate: cut from render 2026-07-07 — data still emitted
+  // (tile_phantom_spend_rate), unrendered, for easy restore.
+  (function tileCostPerTaskTraceability() {
+    const t = data.tile_cost_per_task_traceability || {};
     const tile = el('div', 'tile');
-    const header = el('h2', null, 'Phantom Spend Rate');
+    const header = el('h2', null, 'Cost-per-Task Traceability');
     header.title = t.method_note || '';
     tile.appendChild(header);
-    const v = t.overstatement_pct;
-    tile.appendChild(el('div', 'big-number', v === null || v === undefined ? 'n/a' : `+${v.toFixed(1)}%`));
+    tile.appendChild(el('div', 'big-number', t.headline || 'n/a'));
+    tile.appendChild(el('div', 'subline', t.subline || ''));
     tile.appendChild(el('div', 'definition', t.definition || ''));
+    tile.appendChild(el('div', 'caption', t.caption || ''));
     gridVisible.appendChild(tile);
   })();
 
-  // ---- RECOVERABLE: Hold-Release Latency --------------------------------------
-  (function tileHoldReleaseLatency() {
-    const t = data.tile_hold_release_latency || {};
+  // ---- RECOVERABLE: Hold Recovery (merges Hold Release (Void) Latency + Auth
+  // Reversal on Failure — same frozen holds, two angles, one tile) -----------
+  (function tileHoldRecovery() {
+    const t = data.tile_hold_recovery || {};
     const tile = el('div', 'tile');
-    tile.appendChild(el('h2', null, 'Hold-Release Latency'));
-    tile.appendChild(el('div', 'big-number', `${fmtMs(t.p50_ms)} / ${fmtMs(t.p95_ms)}`));
-    const sub = el('div', 'subline', `${t.service || 'n/a'} — p50 / p95`);
-    tile.appendChild(sub);
+    const header = el('h2', null, 'Hold Recovery');
+    header.title = t.method_note || '';
+    tile.appendChild(header);
+    // Success-path latency (organic headline) vs. failure/denial path = never
+    // reversed. "never" is plain, neutral-ink text — a magnitude + fact, not a
+    // true/false state — so it carries no chip/color.
+    tile.appendChild(el('div', 'big-number', `${fmtS(t.p50_ms)}–${fmtS(t.p95_ms)} / never`));
+    tile.appendChild(el('div', 'subline', t.subline || ''));
     tile.appendChild(el('div', 'definition', t.definition || ''));
+    tile.appendChild(el('div', 'caption', t.caption || ''));
     tile.appendChild(el('div', 'caption', t.scope_note || ''));
     gridRecoverable.appendChild(tile);
   })();
 
-  // ---- RECOVERABLE: Refund-on-Failure ------------------------------------------
-  // Rewritten per adversarial audit: this used to wrongly say the mid-flight-
-  // failure case was "not yet run". It was run and is confirmed (findings.md §9)
-  // — a direct test, not the n=81 in-sample data, answers the real question.
-  (function tileRefundOnFailure() {
-    const t = data.tile_refund_on_failure || {};
-    const tile = el('div', 'tile');
-    const header = el('h2', null, 'Refund-on-Failure');
-    header.title = t.note || '';
-    tile.appendChild(header);
-    const rate = t.direct_test_retention_rate_pct;
-    // True state — money frozen on failure, the one tile that should read as
-    // unambiguously serious.
-    const rateContent = (rate === null || rate === undefined) ? 'n/a' : chip('critical', `${rate.toFixed(0)}% RETAINED`);
-    tile.appendChild(el('div', 'big-number', rateContent));
-    tile.appendChild(el('div', 'subline', t.subline || ''));
+  // ---- RECOVERABLE: Refunds & Disputes (locked placeholder — no mechanism
+  // exists to measure post-settlement recovery) ------------------------------
+  (function tileRefundsDisputes() {
+    const t = data.tile_refunds_disputes || {};
+    const tile = el('div', 'tile placeholder');
+    tile.appendChild(el('h2', null, 'Refunds & Disputes'));
+    tile.appendChild(el('div', 'big-number', '—'));
+    tile.appendChild(el('div', 'lock-tag', t.lock_tag || 'NO MECHANISM EXISTS'));
     tile.appendChild(el('div', 'definition', t.definition || ''));
-    const caveat = el('div', 'caption',
-      `In-sample: ${t.n_failed_with_hold ?? 0}/${t.n_failed ?? 0} natural failures ever held a cost (both died pre-hold — nothing to release). ` +
-      `Direct test: when a hold DOES exist and the call errors, ${t.direct_test_retained ?? 0}/${t.direct_test_n ?? 0} forced trials show the hold ` +
-      `RETAINED/FROZEN (mean ${usd(t.direct_test_mean_retained_usd, 6)}, zero variance) — availableBalance dropped but totalBalance never moved, ` +
-      `so it's not a completed charge and not released either. Caveat: this per-failure rate is measured and deterministic; how OFTEN calls fail ` +
-      `post-hold in live traffic is NOT measured — do not read this as a $/day loss rate.`);
-    caveat.title = t.note || '';
-    tile.appendChild(caveat);
+    tile.appendChild(el('div', 'caption', t.caption || ''));
     gridRecoverable.appendChild(tile);
   })();
 
@@ -518,9 +471,10 @@
     header.title = k.formula_note || '';
     kyaTile.appendChild(header);
     const def = el('div', 'definition',
-      'One row per agent — spend, calls, velocity, peak burst, anomaly flag → illustrative A-F velocity grade (formula in tooltip).');
+      'One row per agent — spend, calls, velocity, peak burst, anomaly flag → illustrative A-F velocity grade.');
     def.title = k.formula_note || '';
     kyaTile.appendChild(def);
+    kyaTile.appendChild(el('div', 'caption', k.formula_compact || ''));
     kyaTile.appendChild(el('div', 'caption', k.visible_caveat || ''));
     const table = el('table');
     table.innerHTML = '<tr><th>Agent</th><th class="num">Spend</th><th class="num">Calls</th><th class="num">Median gap</th><th class="num">Peak/60s</th><th>Flag</th><th>Velocity Grade</th></tr>';
@@ -540,10 +494,15 @@
         `<td>${flagChip}</td><td>${chip(statusClass, grade)}</td>`;
       table.appendChild(row);
     });
-    kyaTile.appendChild(scrollWrap(table));
+    // Combined scroll: .table-scroll (horizontal, shared) + .kya-scroll
+    // (vertical + sticky header, scoped to this tile only — ~35+ rows would
+    // otherwise blow out the page).
+    const wrap = el('div', 'table-scroll kya-scroll');
+    wrap.appendChild(table);
+    kyaTile.appendChild(wrap);
   })();
 
-  footer.innerHTML = 'Static, offline viewer. No network, no backend — reads dashboard_data.js only. Regenerate with: python export_dashboard.py.';
+  footer.innerHTML = 'Static, offline viewer. No network, no backend — reads dashboard_data.js only. Regenerate with: python export_dashboard.py. · Hover any tile title for methodology.';
 })();
 </script>
 

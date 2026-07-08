@@ -28,6 +28,22 @@ As of 2026-07-07, live: **`unavailableBalance` = $0.528502, and it ties to the p
 
 **The unifying mechanism:** any hold whose transaction does not reach clean settlement is **orphaned** — left `isActive` forever. Crash and denial are two triggers of the one orphan-hold bug.
 
+### 2.1 Independent confirmation — the frozen total falls straight out of balance reconciliation
+
+The $0.528502 above is the sum of 89 individually-traced holds. It also arrives from a completely different direction — a whole-ledger balance reconciliation over the live account (326 transactions ingested 2026-07-07):
+
+```
+initial balance                      $5.000000
+− Σ active (non-superseded) cost rows $0.821274
+= expected                           $4.178726  ==  availableBalance  (ties to $0.000000)
+
+totalBalance   $4.707228
+− availableBalance $4.178726
+= gap          $0.528502            ==  unavailableBalance  ==  the frozen total above
+```
+
+Every active cost row — settlement *or* still-frozen hold — reduces `availableBalance`, so `initial − Σ active costs` equals `availableBalance` to the micro-dollar: the ledger is internally consistent. `totalBalance` sits exactly $0.528502 higher because the frozen holds have not settled against it. **Reconciliation doesn't just pass — it surfaces the frozen capital as its own line**, and that line matches the hold-by-hold sum ($0.528502) independently. Two methods, one number: strong evidence the frozen total is real and not a summing artifact. (The dashboard's Reconciliation hero is built on the clean 81-txn fleet snapshot, so it shows a near-zero frozen gap for that period; this whole-ledger reconciliation is the live-account view.)
+
 ## 3. Path A — crash-after-hold (the involuntary case)
 
 Four `max_tokens=128000` calls (experiment 01 §4) each authorized a $0.076803 hold, then hit a `502 Bad Gateway` from OpenRouter *after* the hold was placed. Outcome `error`, but the hold never superseded to a settlement or a release. `availableBalance` dropped by exactly $0.076803 each time; `totalBalance` never moved. 4/4, zero variance.

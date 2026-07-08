@@ -1,0 +1,460 @@
+{
+  "generated_at": "2026-07-07T07:09:36.218884+00:00",
+  "header": {
+    "n_txns": 81,
+    "n_agents": 16,
+    "live_spend_usd": 0.277472,
+    "period_start": "2026-07-04 04:51:39.614000",
+    "period_end": "2026-07-04 11:06:35.634000"
+  },
+  "hero_tpv": {
+    "value_usd": 0.277472,
+    "n_txns": 81,
+    "n_agents": 16,
+    "period_hours": 6.248894444444445,
+    "daily_rate_usd": 1.0656809871257225,
+    "scale_multiple_to_1m_day": 938367.1211936768,
+    "subline": "81 txns \u00b7 16 agents \u00b7 live spend",
+    "scale_note": "at $1M/day TPV \u2192 ~938,367x tonight's pace (a ratio, not a load test \u2014 this pipeline has not been run at that volume)",
+    "method_note": "Tonight's fleet ran at a ~$1.07/day pace over 81 txns / 16 agents; scale multiple = $1M/day / that rate."
+  },
+  "hero_capture_ratio": {
+    "ratio_pct": 17.953875996838853,
+    "sum_held_usd": 0.027838,
+    "sum_settled_usd": 0.004998,
+    "n_chains": 27,
+    "overhang_ratio": 5.569827931172469,
+    "subline": "holds are ~5.6x oversized vs settlement \u2014 a float inefficiency, not lost revenue (authorize $1.00 \u2192 capture $0.18) \u00b7 capture % is workload-shaped (cap hygiene): right-sized ~100% \u00b7 this fleet 18% \u00b7 lazy 16k caps ~1%",
+    "scale_note": "to sustain $1M/day of settled spend, customer wallets carry \u2248 $341\u2013$771 frozen at any instant (Little's Law, validated live within 9% \u2014 dryrun/ll_validation.md; holds clear in 5.3\u201312.0s; held volume = 5.6x settled) \u2014 levers: hold-lifetime & max_tokens right-sizing. Assumes steady-state arrivals \u2014 float_model.md \u00a75.",
+    "scope_note": "Scope: n=27 LLM chains (sapiom_openrouter only), one session, gpt-4o-mini \u2014 LLM-specific, not platform-wide.",
+    "instantaneous_frozen_p50_usd": 341.3453575874794,
+    "instantaneous_frozen_p95_usd": 771.0730542216886,
+    "hold_lifetime_p50_s": 5.295,
+    "hold_lifetime_p95_s": 11.961,
+    "naive_flow_at_scale_usd": 4569827.931172469,
+    "method_note": "Sigma settled (0.004998) / Sigma held (0.027838) dollar-weighted across all 27 supersession chains (hold \u2192 final capture). Little's Law: frozen$ = settled$/day \u00d7 overhang \u00d7 (hold_lifetime_sec/86400) \u2014 at $1M/day TPV, p50 (5.29s) \u2192 $341.35, p95 (11.96s) \u2192 $771.07. Full derivation + sensitivity: dryrun/float_model.md. (Superseded framing: naively scaling the capture ratio gives $4,569,828 \u2014 a per-day FLOW, not an instantaneous stock; it implicitly assumes a ~4.57-day hold lifetime vs. the measured 5.3-12.0s, ~33,000x off. See float_model.md \u00a74d.)"
+  },
+  "hero_frozen_capital": {
+    "frozen_total_usd": 0.528259,
+    "wallet_total_usd": 4.710528,
+    "frozen_pct_of_wallet": 11.2,
+    "n_holds": 89,
+    "n_failure_holds": 4,
+    "failure_holds_usd": 0.307212,
+    "n_denied_holds": 85,
+    "denied_holds_usd": 0.221047,
+    "days_observed": 3,
+    "n_released": 0,
+    "snapshot_at": "2026-07-07",
+    "subline": "11.2% of wallet unavailable \u2014 4 failed-call holds ($0.307) + 85 denied-call holds ($0.221), zero released in 3 days",
+    "definition": "Money in a third state: not charged (totalBalance untouched), not returned (availableBalance reduced). No release/void API exists; no backend sweep observed.",
+    "scale_note": "failure mechanic is deterministic \u2014 4/4 forced post-hold failures froze the full max_tokens-priced hold; denial-after-hold froze 85/85. Frequency of post-hold failures in organic traffic is NOT measured \u2014 do not read this as a $/day loss rate.",
+    "method_note": "Live account snapshot 2026-07-07: unavailableBalance $0.528259 = 4 x $0.076803 failure holds (failure_capture_n3.md, hold_linearity_extension.md) + $0.221047 live holds on 85 denied transactions (denial_analytics.md) \u2014 ties to the micro-dollar. Cross-checked live: sampled failure holds still isActive:true, supersededAt:null, 3 days after placement (refund_watch.log)."
+  },
+  "hero_reconciliation": {
+    "diff_usd": 0.0,
+    "green": true,
+    "naive_sum_usd": 0.30531,
+    "live_sum_usd": 0.277472,
+    "overstatement_pct": 10.032724022604082,
+    "subline": "naive sum overstates +10% \u2014 must filter, not sum, chains",
+    "scale_note": "at $1M/day TPV \u2192 ~$100K/day phantom spend if uncorrected (assumes tonight's traffic mix/restatement rate holds at scale)",
+    "ingest_note": "Ties out as of this ledger snapshot (ingested through 2026-07-04 11:06:35.634000). The live account has since spent more in dry-run experiments not captured in this snapshot (see RUN_LOG.md) \u2014 re-ingest before claiming this ties out today.",
+    "phantom_at_scale_usd": 100327.24022604081,
+    "method_note": "Latest balance snapshot vs (initial balance \u2212 live spend): diff $0.000000. Naive = every cost row including superseded holds ($0.305310); live = superseded_at IS NULL only ($0.277472)."
+  },
+  "tile_auth_to_capture": {
+    "rows": [
+      {
+        "service_name": "sapiom_blaxel",
+        "n": 1,
+        "p50_ms": -832,
+        "p95_ms": -832
+      },
+      {
+        "service_name": "sapiom_elevenlabs",
+        "n": 1,
+        "p50_ms": -142,
+        "p95_ms": -142
+      },
+      {
+        "service_name": "sapiom_fal",
+        "n": 1,
+        "p50_ms": -520,
+        "p95_ms": -520
+      },
+      {
+        "service_name": "sapiom_linkup",
+        "n": 43,
+        "p50_ms": -141,
+        "p95_ms": -95
+      },
+      {
+        "service_name": "sapiom_openrouter",
+        "n": 31,
+        "p50_ms": 5295,
+        "p95_ms": 11961
+      },
+      {
+        "service_name": "unknown",
+        "n": 1,
+        "p50_ms": -128,
+        "p95_ms": -128
+      }
+    ],
+    "headline_service": "sapiom_openrouter",
+    "headline_n": 31,
+    "headline_p50_ms": 5295,
+    "headline_p95_ms": 11961,
+    "flat_n": 47,
+    "flat_services_label": "sapiom_blaxel, sapiom_elevenlabs, sapiom_fal, sapiom_linkup, unknown",
+    "flat_min_ms": -832,
+    "flat_max_ms": -95,
+    "footnote": "Flat single-row services show a small negative latency \u2014 the cost row is written as part of authorization itself, before authorizedAt is stamped, not a bug. Only chained/restated services (LLM calls) show genuine positive wait for final capture."
+  },
+  "tile_velocity_checks": {
+    "flagged": [
+      "fleet-test"
+    ],
+    "per_agent": [
+      {
+        "agent_name": "fleet-test",
+        "n": 10,
+        "median_gap_s": 0.076,
+        "peak_calls_per_min": 10,
+        "peer_median_gap_s": 8.3995,
+        "runaway": true
+      },
+      {
+        "agent_name": "spend-runaway",
+        "n": 25,
+        "median_gap_s": 7.983499999999999,
+        "peak_calls_per_min": 9,
+        "peer_median_gap_s": 8.38525,
+        "runaway": false
+      },
+      {
+        "agent_name": "spend-researcher",
+        "n": 12,
+        "median_gap_s": 18.789,
+        "peak_calls_per_min": 4,
+        "peer_median_gap_s": 7.96925,
+        "runaway": false
+      },
+      {
+        "agent_name": "spend-writer",
+        "n": 10,
+        "median_gap_s": 23.046,
+        "peak_calls_per_min": 3,
+        "peer_median_gap_s": 7.96925,
+        "runaway": false
+      },
+      {
+        "agent_name": "chain-task",
+        "n": 6,
+        "median_gap_s": 7.955,
+        "peak_calls_per_min": 3,
+        "peer_median_gap_s": 8.3995,
+        "runaway": false
+      }
+    ]
+  },
+  "tile_loss_rate": {
+    "n_txns": 81,
+    "n_failed": 2,
+    "failed_pct": 2.4691358024691357,
+    "total_tpv_usd": 0.277472,
+    "failed_tpv_usd": 0.0,
+    "loss_rate_pct": 0.0,
+    "loss_rate_bps": 0.0,
+    "n_failed_with_cost_row": 0,
+    "note": "2/81 txns failed (2.5%) but 0/2 produced a cost row \u2014 Sapiom did not charge for either failure in this sample (both were pre-settlement client/gateway errors, not mid-flight failures after a hold). Loss rate = 0 bps of TPV. Full queries + caveats: loss_rate.md.",
+    "cross_reference": "0 bps applies only to this n=81 sample's pre-hold failures. Post-hold failures are NOT free: see Refund-on-Failure \u2014 in a direct test, 4/4 forced post-hold failures had their hold retained/frozen (not released), not this 0 bps rate."
+  },
+  "tile_auth_rate": {
+    "approved": 81,
+    "denied": 0,
+    "auth_rate_pct": 100.0,
+    "note": "No spending rules were active in this sample \u2014 100% reflects an unconfigured account (nothing to deny), not proof governance works. Full distribution + caveat: findings.md \u00a77."
+  },
+  "tile_capital_overhang": {
+    "overhang_ratio": 5.56982793117247,
+    "sum_held_usd": 0.027838,
+    "sum_settled_usd": 0.004998,
+    "definition": "held$ \u00f7 settled$ across all supersession chains \u2014 same chains as Capture Ratio, inverse framing.",
+    "clears_note": "Clears in 5.3\u201312.0s \u2014 not permanently parked capital.",
+    "scope_note": "Scope: n=27 LLM chains (sapiom_openrouter only), one session, gpt-4o-mini \u2014 LLM-specific, not platform-wide.",
+    "method_note": "$0.027838 held / $0.004998 settled across 27 chains = 5.57x."
+  },
+  "tile_blast_radius": {
+    "available": true,
+    "headline_pct_range": "0\u201345% of cap",
+    "definition": "Real spend an agent reaches before its cap denies it.",
+    "finding": "Always less than the configured cap \u2014 the double-count (experiments/03) halves the effective budget, and one max_tokens hold \u2265 cap bricks the agent at $0.",
+    "rows": [
+      {
+        "agent": "blast-test-500",
+        "cap_usd": 0.002,
+        "max_tokens": 500,
+        "calls_before_stop": 9,
+        "spend_before_stop_usd": 0.0009,
+        "pct_of_cap": 45
+      },
+      {
+        "agent": "blast-test-2000",
+        "cap_usd": 0.002,
+        "max_tokens": 2000,
+        "calls_before_stop": 4,
+        "spend_before_stop_usd": 0.0004,
+        "pct_of_cap": 20
+      },
+      {
+        "agent": "blast-test-8000",
+        "cap_usd": 0.002,
+        "max_tokens": 8000,
+        "calls_before_stop": 0,
+        "spend_before_stop_usd": 0.0,
+        "pct_of_cap": 0
+      }
+    ],
+    "caveat": "n=3 test agents, one $0.002 cap, LLM-only. blast-test agents read from the ledger (parallel session), corroborated by our own r5/doublecount runs."
+  },
+  "tile_cap_utilization": {
+    "available": true,
+    "headline_pct_range": "54\u201380%",
+    "definition": "Spend \u00f7 budget at the moment the cap denies a call.",
+    "finding": "Agents are cut off at 54\u201380% of their real budget while the engine reports ~100% \u2014 the gap is the double-count (experiments/03).",
+    "rows": [
+      {
+        "agent": "doublecount-confirm",
+        "cap_usd": 0.004,
+        "true_spend_usd": 0.002143,
+        "true_util_pct": 54,
+        "engine_util_pct": 100
+      },
+      {
+        "agent": "blast-test-500",
+        "cap_usd": 0.002,
+        "true_spend_usd": 0.001202,
+        "true_util_pct": 60,
+        "engine_util_pct": 100
+      },
+      {
+        "agent": "r5-boundary",
+        "cap_usd": 0.005,
+        "true_spend_usd": 0.003703,
+        "true_util_pct": 74,
+        "engine_util_pct": 100
+      },
+      {
+        "agent": "blast-test-2000",
+        "cap_usd": 0.002,
+        "true_spend_usd": 0.001602,
+        "true_util_pct": 80,
+        "engine_util_pct": 100
+      }
+    ],
+    "caveat": "n=4 test agents/rules, LLM-only. Engine-reported util is ~100% at denial (double-counted); true util is the real settled footprint \u00f7 cap."
+  },
+  "tile_attribution_completeness": {
+    "complete": 81,
+    "total": 81,
+    "pct": 100.0,
+    "n_unknown_service": 2,
+    "definition": "% of txns with agent, traceId, service, outcome all populated.",
+    "visible_caveat": "2/81 txns carry service_name='unknown' \u2014 present, but unresolved.",
+    "note": "81/81 txns have all 4 fields non-null (100%), but 2/81 carry service_name='unknown' \u2014 present, but an unresolved value, so non-null isn't always meaningfully attributed. Noted, not hidden."
+  },
+  "tile_phantom_spend_rate": {
+    "overstatement_pct": 10.032724022604082,
+    "naive_sum_usd": 0.30531,
+    "live_sum_usd": 0.277472,
+    "definition": "Naive sum of every cost row vs. live (non-superseded) spend.",
+    "method_note": "Latest balance snapshot vs (initial balance \u2212 live spend): diff $0.000000. Naive = every cost row including superseded holds ($0.305310); live = superseded_at IS NULL only ($0.277472)."
+  },
+  "tile_hold_release_latency": {
+    "p50_ms": 5295,
+    "p95_ms": 11961,
+    "service": "sapiom_openrouter",
+    "n": 31,
+    "definition": "p50/p95 time from hold to final capture (chained services only).",
+    "scope_note": "Scope: sapiom_openrouter only (n=31), one session, gpt-4o-mini \u2014 LLM-specific, not platform-wide."
+  },
+  "tile_refund_on_failure": {
+    "n_failed": 2,
+    "n_failed_with_hold": 0,
+    "direct_test_n": 4,
+    "direct_test_retained": 4,
+    "direct_test_retention_rate_pct": 100.0,
+    "direct_test_mean_retained_usd": 0.076803,
+    "definition": "% of a hold released back vs. retained/frozen, when a call fails after the hold is placed.",
+    "subline": "100% of hold retained/frozen on post-hold failure (4/4 forced trials)",
+    "note": "In-sample: 0/2 of the n=81 sample's natural failures ever held a cost \u2014 both died pre-hold, so there was nothing to release (loss_rate.md). Direct test: when a hold DOES exist and the call then errors, 4/4 forced trials show the hold RETAINED/FROZEN \u2014 availableBalance dropped by exactly $0.076803 each time (zero variance) while totalBalance never moved, so this is not a completed charge, and it is not released either (findings.md \u00a79; dryrun/failure_capture_n3.md; dryrun/hold_linearity_extension.md; dryrun/refund_watch.log \u2014 still being watched for a delayed release). Over-requested max_tokens makes the frozen amount larger. Honest caveat: the per-failure retention mechanic is deterministic and measured (4/4) \u2014 the FLEET FREQUENCY of post-hold failures in live traffic is NOT measured; do not read this as a $/day loss rate."
+  },
+  "kya_scorecard": {
+    "rows": [
+      {
+        "agent_name": "fleet-test",
+        "spend_usd": 0.001,
+        "n_calls": 10,
+        "median_gap_s": 0.076,
+        "peak_calls_per_min": 10,
+        "runaway": true,
+        "velocity_score": 90,
+        "velocity_grade": "F"
+      },
+      {
+        "agent_name": "spend-runaway",
+        "spend_usd": 0.15,
+        "n_calls": 25,
+        "median_gap_s": 7.983499999999999,
+        "peak_calls_per_min": 9,
+        "runaway": false,
+        "velocity_score": 27,
+        "velocity_grade": "C"
+      },
+      {
+        "agent_name": "spend-researcher",
+        "spend_usd": 0.072,
+        "n_calls": 12,
+        "median_gap_s": 18.789,
+        "peak_calls_per_min": 4,
+        "runaway": false,
+        "velocity_score": 12,
+        "velocity_grade": "B"
+      },
+      {
+        "agent_name": "cap-test",
+        "spend_usd": 0.0003,
+        "n_calls": 3,
+        "median_gap_s": 8.8155,
+        "peak_calls_per_min": 3,
+        "runaway": false,
+        "velocity_score": 9,
+        "velocity_grade": "A"
+      },
+      {
+        "agent_name": "chain-task",
+        "spend_usd": 0.0242,
+        "n_calls": 6,
+        "median_gap_s": 7.955,
+        "peak_calls_per_min": 3,
+        "runaway": false,
+        "velocity_score": 9,
+        "velocity_grade": "A"
+      },
+      {
+        "agent_name": "scale-test",
+        "spend_usd": 0.0003,
+        "n_calls": 3,
+        "median_gap_s": 6.9755,
+        "peak_calls_per_min": 3,
+        "runaway": false,
+        "velocity_score": 9,
+        "velocity_grade": "A"
+      },
+      {
+        "agent_name": "spend-writer",
+        "spend_usd": 0.00291,
+        "n_calls": 10,
+        "median_gap_s": 23.046,
+        "peak_calls_per_min": 3,
+        "runaway": false,
+        "velocity_score": 9,
+        "velocity_grade": "A"
+      },
+      {
+        "agent_name": "dryrun-researcher",
+        "spend_usd": 0.006,
+        "n_calls": 1,
+        "median_gap_s": null,
+        "peak_calls_per_min": null,
+        "runaway": false,
+        "velocity_score": null,
+        "velocity_grade": "N/A"
+      },
+      {
+        "agent_name": "estimate-test",
+        "spend_usd": 0.000972,
+        "n_calls": 2,
+        "median_gap_s": null,
+        "peak_calls_per_min": null,
+        "runaway": false,
+        "velocity_score": null,
+        "velocity_grade": "N/A"
+      },
+      {
+        "agent_name": "sweep-audio",
+        "spend_usd": 0.001,
+        "n_calls": 1,
+        "median_gap_s": null,
+        "peak_calls_per_min": null,
+        "runaway": false,
+        "velocity_score": null,
+        "velocity_grade": "N/A"
+      },
+      {
+        "agent_name": "sweep-compute",
+        "spend_usd": 0.00069,
+        "n_calls": 2,
+        "median_gap_s": null,
+        "peak_calls_per_min": null,
+        "runaway": false,
+        "velocity_score": null,
+        "velocity_grade": "N/A"
+      },
+      {
+        "agent_name": "sweep-data",
+        "spend_usd": 0.0,
+        "n_calls": 1,
+        "median_gap_s": null,
+        "peak_calls_per_min": null,
+        "runaway": false,
+        "velocity_score": null,
+        "velocity_grade": "N/A"
+      },
+      {
+        "agent_name": "sweep-images",
+        "spend_usd": 0.003,
+        "n_calls": 2,
+        "median_gap_s": null,
+        "peak_calls_per_min": null,
+        "runaway": false,
+        "velocity_score": null,
+        "velocity_grade": "N/A"
+      },
+      {
+        "agent_name": "sweep-llm",
+        "spend_usd": 0.0001,
+        "n_calls": 1,
+        "median_gap_s": null,
+        "peak_calls_per_min": null,
+        "runaway": false,
+        "velocity_score": null,
+        "velocity_grade": "N/A"
+      },
+      {
+        "agent_name": "sweep-scraping",
+        "spend_usd": 0.009,
+        "n_calls": 1,
+        "median_gap_s": null,
+        "peak_calls_per_min": null,
+        "runaway": false,
+        "velocity_score": null,
+        "velocity_grade": "N/A"
+      },
+      {
+        "agent_name": "sweep-search",
+        "spend_usd": 0.006,
+        "n_calls": 1,
+        "median_gap_s": null,
+        "peak_calls_per_min": null,
+        "runaway": false,
+        "velocity_score": null,
+        "velocity_grade": "N/A"
+      }
+    ],
+    "visible_caveat": "Illustrative \u2014 velocity-only, one session; spend is shown but not a factor in this grade.",
+    "formula_note": "Velocity score = 60 pts if peer-relative velocity anomaly flagged (findings.md \u00a75) + up to 30 pts scaled from peak calls in any 60s window (peak x 3, capped). Grade: A 0-9 / B 10-24 / C 25-49 / D 50-74 / F 75-100. Agents with <3 calls show N/A \u2014 not enough data for a median gap. Spend is NOT part of this score (spend-runaway is ~54% of all TPV and grades C; fleet-test is ~0.4% of TPV and grades F) \u2014 velocity-only, illustrative, one session."
+  }
+}
