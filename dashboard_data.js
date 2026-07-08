@@ -1,5 +1,5 @@
 window.DASHBOARD_DATA = {
-  "generated_at": "2026-07-08T04:55:35.230281+00:00",
+  "generated_at": "2026-07-08T05:21:13.910253+00:00",
   "header": {
     "n_txns": 375,
     "n_agents": 41,
@@ -17,7 +17,7 @@ window.DASHBOARD_DATA = {
     "subline": "375 txns \u00b7 41 agents",
     "definition": "Money that actually moved \u2014 settled charges only, holds excluded.",
     "scale_note": "at $1M/day TPV \u2192 ~6,102,244x the observed 83h pace (a ratio, not a load test \u2014 this pipeline has not been run at that volume)",
-    "method_note": "TPV = settled volume only: live spend $1.096247 (every active cost row) minus $0.528502 frozen holds (see Frozen Capital) = $0.567745 settled. Frozen holds are excluded because they never became real spend: 85 denied-call holds were placed on calls that never executed, and 4 failure holds never settled after a post-hold error. Observed over 83h (375 txns / 41 agents) \u2014 a ~$0.16/day settled pace; at $1M/day TPV that's ~6,102,244x the observed pace (a ratio, not a load test \u2014 this pipeline has not been run at that volume)."
+    "method_note": "Settled = live spend $1.096247 \u2212 frozen $0.528502 = $0.567745\nExcludes 85 denied + 4 failed holds (never became real spend)\nWindow 83h \u2248 $0.16/day \u00b7 $1M/day \u2248 6,102,244x this pace \u2014 ratio, not a load test\nFull derivation: analysis/report.md"
   },
   "hero_capture_ratio": {
     "ratio_pct": 17.953875996838853,
@@ -30,7 +30,8 @@ window.DASHBOARD_DATA = {
     "n_chains_all": 177,
     "overhang_ratio": 5.569827931172469,
     "overhang_ratio_all": 26.126462646264628,
-    "subline": "holds are ~5.6x oversized vs settlement \u2014 a float inefficiency, not lost revenue (authorize $1.00 \u2192 capture $0.18) \u00b7 organic fleet 18% \u00b7 incl. adversarial experiments 3.8% \u00b7 capture % is workload-shaped (cap hygiene): right-sized ~100% \u00b7 lazy 16k caps ~1%",
+    "subline": "LLM service only \u00b7 authorize $1.00 \u2192 capture $0.18 \u00b7 holds ~5.6\u00d7 oversized",
+    "definition": "The only service that holds \u2014 all 5 others surveyed price flat, no capture gap.",
     "scale_note": "to sustain $1M/day of settled spend at the organic fleet's shape, customer wallets carry \u2248 $341\u2013$771 frozen at any instant (Little's Law, validated live within 9% \u2014 dryrun/ll_validation.md; organic holds clear in 5.3\u201312.0s; held volume = 5.6x settled) \u2014 levers: hold-lifetime & max_tokens right-sizing. Assumes steady-state arrivals \u2014 float_model.md \u00a75.",
     "scope_note": "Scope: n=27 organic LLM chains (n=177 incl. adversarial experiments; sapiom_openrouter only, gpt-4o-mini) \u2014 LLM-specific, not platform-wide.",
     "instantaneous_frozen_p50_usd": 341.3453575874794,
@@ -41,7 +42,7 @@ window.DASHBOARD_DATA = {
     "hold_lifetime_p95_s_all": 8.53,
     "naive_flow_at_scale_usd": 4569827.931172469,
     "naive_implied_lifetime_days": 4.569827931172469,
-    "method_note": "Organic fleet (experiment agents excluded): Sigma settled (0.004998) / Sigma held (0.027838) dollar-weighted across 27 supersession chains (hold \u2192 final capture) = 18.0%. All traffic incl. adversarial experiments: 0.019998 / 0.522477 across 177 chains = 3.8% \u2014 experiments force oversized holds by design, dragging the blended ratio down. Little's Law: frozen$ = settled$/day \u00d7 overhang \u00d7 (hold_lifetime_sec/86400) \u2014 at $1M/day TPV, organic p50 (5.29s) \u2192 $341.35, p95 (11.96s) \u2192 $771.07. Full derivation + sensitivity: dryrun/float_model.md. (Superseded framing: naively scaling the organic capture ratio gives $4,569,828 \u2014 a per-day FLOW, not an instantaneous stock; it implicitly assumes a ~4.57-day hold lifetime vs. the measured 5.3\u201312.0s, \u226533,010x off. See float_model.md \u00a74d.)"
+    "method_note": "Organic 18% vs 3.8% incl. adversarial experiments\nWorkload-shaped: right-sized \u2248100% \u00b7 lazy 16k caps \u22481%\n$1M/day \u2248 $341\u2013$771 frozen (Little's Law, live-validated \u00b19%)\nLevers: hold lifetime + max_tokens right-sizing\nScope: n=27 organic (177 all-traffic) chains \u00b7 5-svc survey n=4 each \u2014 service_hold_survey.md, float_model.md"
   },
   "hero_frozen_capital": {
     "frozen_total_usd": 0.528502,
@@ -58,7 +59,7 @@ window.DASHBOARD_DATA = {
     "subline": "11.2% of wallet \u00b7 4 failed + 85 denied holds",
     "definition": "Money stuck in a third state \u2014 not charged, not returned, no void mechanism.",
     "scale_note": "failure mechanic is deterministic \u2014 4/4 forced post-hold failures froze the full max_tokens-priced hold; denial-after-hold froze 85/85. Frequency of post-hold failures in organic traffic is NOT measured \u2014 do not read this as a $/day loss rate.",
-    "method_note": "Live account snapshot 2026-07-07: unavailableBalance $0.528502 = 4 x $0.076803 failure holds (failure_capture_n3.md, hold_linearity_extension.md) = $0.307212 + $0.221290 live holds on 85 denied transactions (denial_analytics.md) \u2014 ties to the micro-dollar, and equals the Reconciliation hero's total-vs-available gap. Cross-checked live: sampled failure holds still isActive:true, supersededAt:null, 3 days after placement (refund_watch.log). Money sits in a third state: not charged (totalBalance untouched by the hold), not returned (availableBalance stays reduced) \u2014 no release/void API exists, and no backend sweep has been observed reclaiming it. The failure mechanic is deterministic: 4/4 forced post-hold failures froze the full max_tokens-priced hold, and 85/85 denials froze theirs too \u2014 but the frequency of post-hold failures in organic (non-adversarial) traffic is NOT measured; do not read this as a $/day loss rate."
+    "method_note": "availableBalance drops, totalBalance never moves \u2014 frozen, not charged\n4 failed holds ($0.307212) + 85 denied ($0.221290) \u2014 4/4 and 85/85 deterministic\nPost-hold failure rate in organic traffic: not measured\nStill watching: dryrun/refund_watch.log"
   },
   "hero_reconciliation": {
     "diff_usd": 0.0,
@@ -77,7 +78,7 @@ window.DASHBOARD_DATA = {
     "frozen_match_note": "gap to totalBalance = $0.528502 \u2014 matches Frozen Capital exactly",
     "scale_note": "naive sum overstates +48% \u2014 must filter, not sum, chains; full derivation in the tooltip",
     "phantom_at_scale_usd": 476605.1811316245,
-    "method_note": "Reconciled against the live snapshot ingested through 2026-07-07 16:00:34.005000. initial $5.000000 \u2212 Sum active cost rows $1.096247 = $3.903753 = availableBalance (diff $0.000000). totalBalance $4.432255 is higher by $0.528502 = frozen holds (gap to totalBalance = $0.528502 \u2014 matches Frozen Capital exactly). Wallet partition (full precision): settled $0.567745 + frozen $0.528502 + available $3.903753 = $5.000000 of the initial $5.000000. Naive sum (every cost row incl. superseded) $1.618724 vs live (superseded_at IS NULL) $1.096247 \u2014 naive sum overstates +48% \u2014 must filter, not sum, chains."
+    "method_note": "Reconciled against live snapshot ingested through 2026-07-07 16:00:34.005000\n$5.000000 initial \u2212 active costs $1.096247 = availableBalance \u00b7 diff $0.000000\nGap to totalBalance $0.528502 = Frozen Capital \u2014 matches, to the micro-dollar\nNaive sum overstates +48% \u2014 filter, don't sum, superseded chains"
   },
   "tile_auth_to_capture": {
     "rows": [
@@ -203,16 +204,16 @@ window.DASHBOARD_DATA = {
     "approved": 289,
     "denied": 86,
     "auth_rate_pct": 77.06666666666668,
-    "note": "100% only when no spending rules are active \u2014 this live snapshot includes 86 denials from governance experiments (see dryrun/denial_analytics.md / experiments/03_governance_cumulative_double_count.md). Real auth rate under those experiment rules \u2248 77%."
+    "definition": "Share of calls governance approved \u2014 the payments approval-rate analog.",
+    "note": "100% only holds when no spending rules are active\nThis snapshot includes 86 denials from governance experiments \u2014 auth rate \u2248 77%\nSource: denial_analytics.md, 03_governance_cumulative_double_count.md"
   },
   "tile_atv": {
     "atv_usd": 0.002175268199233716,
     "settled_volume_usd": 0.5677449999999999,
     "n_settled_txns": 261,
-    "subline": "settled $0.567745 \u00f7 261 settled txns",
-    "caption": "Card rails carry a fixed per-transaction fee component (on the order of $0.30 on typical US card pricing) \u2014 2\u20133 orders of magnitude above this ATV. Sub-cent transactions are the economic case for x402-style rails: agent spend is too small for card economics to process profitably.",
-    "scope_note": "ATV is workload-shaped \u2014 this fleet's mix (LLM-dominated, incl. adversarial experiments) over one 83h window; not a market measurement.",
-    "method_note": "ATV = settled volume \u00f7 settled txn count = $0.567745 / 261 = $0.002175. Settled volume reused from the TPV hero (live spend minus frozen holds). Settled txn = distinct transaction with a live cost row, excluding the 4 frozen-failure-hold txns (outcome='error', live, not part of a supersession chain) and the 85 denied-hold txns (status='denied')."
+    "subline": "settled $0.57 \u00f7 261 settled txns",
+    "definition": "Average sale size \u2014 orders of magnitude below what card rails can process profitably.",
+    "method_note": "ATV = settled $0.567745 \u00f7 261 txns = $0.002175\nSettled excludes frozen-failure-hold + denied-hold txns\nCard fee ~$0.30/txn vs this ATV \u2014 economic case for x402 rails\nWorkload-shaped, one 83h window \u2014 not a market measurement"
   },
   "tile_capital_overhang": {
     "overhang_ratio": 5.56982793117247,
@@ -298,8 +299,8 @@ window.DASHBOARD_DATA = {
   },
   "tile_effective_budget": {
     "headline_pct_range": "0\u201380% of cap",
-    "message": "You set a cap; agents actually get 0\u201380% of it before denial.",
-    "finding": "Agents cut off at 54\u201380% of true budget while the engine reports ~100% (the hold double-count); worst case one oversized max_tokens hold \u2265 cap bricks the agent at $0 before any spend.",
+    "message": "you set a cap \u2014 agents get 0\u201380% of it \u00b7 worst case bricked at $0",
+    "finding": "Engine double-counts holds: reports 100% spent when agents used 54\u201380%.",
     "rows": [
       {
         "agent": "doublecount-confirm",
@@ -333,12 +334,12 @@ window.DASHBOARD_DATA = {
       }
     ],
     "caveat": "Cap utilization: n=4 test agents/rules, LLM-only. Engine-reported util is ~100% at denial (double-counted); true util is the real settled footprint \u00f7 cap. Blast radius: n=3 test agents, one $0.002 cap, LLM-only. blast-test agents read from the ledger (parallel session), corroborated by our own r5/doublecount runs.",
-    "method_note": "True/engine util rows reused verbatim from Cap Utilization (54\u201380%, n=4). Bricked row reused from Blast Radius (blast-test-8000: cap $0.002, spend at denial $0.0000 = 0% true util; engine util = hold $0.004802 \u00f7 cap $0.002 = 240%, per experiments/03_governance_cumulative_double_count.md). Range 0\u201380% = min/max true_util_pct across all 5 rows."
+    "method_note": "True/engine util reused from Cap Utilization (54\u201380%, n=4)\nBricked: blast-test-8000, hold $0.004802 \u2265 cap $0.002 \u2192 240% engine / 0% true util\nRange 0\u201380% = min/max true_util_pct across 5 rows\nn=4 cap-utilization rules + n=3 blast-radius agents, LLM-only; blast agents read from the ledger (parallel session), corroborated by our own r5/doublecount runs\nSource: experiments/03_governance_cumulative_double_count.md"
   },
   "tile_concurrency_leak_factor": {
     "headline": "up to 3x",
-    "definition": "Where Effective Budget shows the cap firing too early (agents cut off before they reach it), this is the opposite failure: under concurrent fire, the same kind of cap lets MORE calls through than it was sized for \u2014 the bound breaks instead of over-triggering.",
-    "subline": "A cap sized for ONE call allowed 2 of 20 and 3 of 50 under concurrent fire \u2014 authorization checks race a stale cumulative ledger.",
+    "definition": "The opposite failure \u2014 under concurrency the bound breaks instead of over-firing.",
+    "subline": "a cap sized for ONE call let 3 through under 50-way concurrent fire",
     "rows": [
       {
         "round": "FAST",
@@ -366,7 +367,7 @@ window.DASHBOARD_DATA = {
       }
     ],
     "caveat": "One trial per round \u2014 TOCTOU races are probabilistic, not a measured rate at a given N/max_tokens. Leak confirmed two ways per round: the rule engine's own per-transaction decision AND client-side HTTP 200s (exact match in both SLOW rounds \u2014 real money authorized through, not a counting artifact). Mechanism identified (completedAt spread across the concurrent batch, tracking N at least as tightly as max_tokens); magnitude is small (2\u20133x) and scales with concurrency, not a large blowout.",
-    "method_note": "FAST: N=10, max_tokens=500 (dryrun/toctou_scale_experiment.md), 1 allowed / 9 denied, leak 1x (dryrun/toctou_scale_result.json corrected_allowed_count/corrected_denied_count/corrected_leak_factor). SLOW-A: N=20, max_tokens=8000, 2 allowed / 18 denied, leak 2x (dryrun/toctou_latency_slowA20_result.json). SLOW-B: N=50, max_tokens=4000, 3 allowed / 47 denied, leak 3x (dryrun/toctou_latency_slowB50_result.json). Mechanism + verdict: dryrun/toctou_latency_experiment.md; summarized analysis/findings.md \u00a78."
+    "method_note": "FAST: N=10, max_tokens=500 \u2192 1 allowed / 9 denied, leak 1x\nSLOW-A: N=20, max_tokens=8000 \u2192 2 allowed / 18 denied, leak 2x\nSLOW-B: N=50, max_tokens=4000 \u2192 3 allowed / 47 denied, leak 3x\nMechanism: checks race a stale cumulative ledger; completedAt spread across the batch\nOne trial per round \u2014 probabilistic, not a measured rate at a given N/max_tokens\nConfirmed two ways: rule-engine decisions + client HTTP 200s (exact match, SLOW rounds)\nMechanism + verdict: dryrun/toctou_latency_experiment.md; findings.md \u00a78"
   },
   "tile_ledger_blind_spots": {
     "total": 375,
@@ -379,16 +380,16 @@ window.DASHBOARD_DATA = {
     "n_scraping_unknown": 5,
     "n_unknown_other": 1,
     "pct_scraping_rev_unknown": 100.0,
-    "definition": "% of ALL transactions the ledger cannot fully explain \u2014 outcome never written, or service resolved to 'unknown'. Denials are also counted by Authorization Rate (Section 1) \u2014 that tile measures approval; this one measures record quality.",
-    "subline": "86 denied \u2014 no outcome ever written \u00b7 6 service='unknown' (100% of the scraping service's revenue, 5/5 calls + 1 pre-gateway failure) \u00b7 2 zombies (authorized, never completed)",
-    "method_note": "blind = COUNT(DISTINCT txns WHERE outcome IS NULL OR service_name='unknown') \u00f7 COUNT(*) txns = (86 denied-no-outcome + 2 zombie-no-outcome + 6 service='unknown', no overlap between the two groups in this data) = 94/375 = 25.1%. Supersedes the old 'Attribution Completeness' check (agent+traceId+service+outcome all non-null), which counted service_name='unknown' as a populated value \u2014 it certified 6 unresolved rows as 'complete'. Metric renamed/redefined 2026-07-07 to close that gap."
+    "definition": "Calls the ledger can't fully explain \u2014 who, what, or how it ended.",
+    "subline": "86 denied, no outcome written \u00b7 6 unknown service \u00b7 2 zombies",
+    "method_note": "blind = (outcome IS NULL OR service='unknown') txns \u00f7 all txns = 94/375 = 25.1%\n86 denied-no-outcome + 2 zombie-no-outcome + 6 service='unknown', no overlap\nUnknowns: 100% of scrape revenue (5/5 calls) + 1 pre-gateway failure\nDenials also counted by Authorization Rate \u2014 this tile measures record quality\nSupersedes 'Attribution Completeness' \u2014 certified 6 unresolved rows as 'complete'\nRedefined 2026-07-07 to close that gap"
   },
   "tile_phantom_spend_rate": {
     "overstatement_pct": 47.66051811316245,
     "naive_sum_usd": 1.618724,
     "live_sum_usd": 1.096247,
     "definition": "Naive sum of every cost row vs. live (non-superseded) spend.",
-    "method_note": "Reconciled against the live snapshot ingested through 2026-07-07 16:00:34.005000. initial $5.000000 \u2212 Sum active cost rows $1.096247 = $3.903753 = availableBalance (diff $0.000000). totalBalance $4.432255 is higher by $0.528502 = frozen holds (gap to totalBalance = $0.528502 \u2014 matches Frozen Capital exactly). Wallet partition (full precision): settled $0.567745 + frozen $0.528502 + available $3.903753 = $5.000000 of the initial $5.000000. Naive sum (every cost row incl. superseded) $1.618724 vs live (superseded_at IS NULL) $1.096247 \u2014 naive sum overstates +48% \u2014 must filter, not sum, chains."
+    "method_note": "Reconciled against live snapshot ingested through 2026-07-07 16:00:34.005000\n$5.000000 initial \u2212 active costs $1.096247 = availableBalance \u00b7 diff $0.000000\nGap to totalBalance $0.528502 = Frozen Capital \u2014 matches, to the micro-dollar\nNaive sum overstates +48% \u2014 filter, don't sum, superseded chains"
   },
   "tile_cost_per_task_traceability": {
     "total_txns": 375,
@@ -398,10 +399,9 @@ window.DASHBOARD_DATA = {
     "traced_live_usd": 0.0242,
     "pct_dollars": 2.207531696780014,
     "headline": "2% of spend traceable to a task",
-    "definition": "The ledger sees calls, not jobs.",
-    "subline": "Only 6 of 375 txns carry a task id \u2014 \"what did this task cost end-to-end?\" is unanswerable for the rest.",
-    "caption": "Traces are flat grouping IDs today, no parent/child hierarchy \u2014 task-level cost attribution needs span hierarchy in x402 metadata.",
-    "method_note": "txn share: COUNT(trace_external_id IS NOT NULL) \u00f7 COUNT(*) = 6/375 = 1.6%. $ share: SUM(fiat_amount WHERE superseded_at IS NULL AND trace_external_id IS NOT NULL) \u00f7 SUM(fiat_amount WHERE superseded_at IS NULL) = $0.024200/$1.096247 = 2.2%."
+    "definition": "The ledger sees calls, not jobs \u2014 \"what did this task cost?\" has no answer.",
+    "subline": "6 of 375 calls carry a task id",
+    "method_note": "Txn share: 6/375 carry trace_external_id = 1.6%\n$ share: $0.024200 traced / $1.096247 total live spend = 2.2%\nTraces are flat grouping IDs, no parent/child hierarchy\nx402 span hierarchy would unlock task-level cost attribution"
   },
   "tile_hold_release_latency": {
     "p50_ms": 5295,
@@ -439,16 +439,15 @@ window.DASHBOARD_DATA = {
     "n_holds": 89,
     "days_observed": 3,
     "reversal_pct": 0.0,
-    "definition": "In card payments an uncaptured authorization is released via authorization reversal (void). No such mechanism observed here.",
-    "subline": "released in seconds when calls settle \u00b7 0% ever reversed on failure or denial \u2014 89 holds frozen, 3 days and counting",
-    "caption": "4/4 forced trials retained (mean $0.076803, zero variance) \u2014 availableBalance dropped, totalBalance never moved (frozen, not charged). Per-failure mechanic measured; fleet frequency of post-hold failures in live traffic NOT measured.",
-    "scope_note": "Scope: sapiom_openrouter only \u2014 organic n=31 headline (5.3s/12.0s); all-traffic n=188 (2.0s/8.5s) \u2014 LLM-specific (gpt-4o-mini), not platform-wide.",
-    "method_note": "Hold-release latency (organic n=31, p50 5295ms / p95 11961ms; all-traffic n=188, p50 2028ms / p95 8530ms): 89 holds on failed/denied calls, 0 released in 3 days and counting (refund_watch.log) Auth reversal on failure: In-sample: 4/6 failed txns hold a cost row \u2014 the 4 with holds are the FORCED failure-capture experiments (failure-capture-n3-*, hold-ext-test; their $0.076803 frozen holds are the direct test below), while the 2 natural failures died pre-hold, so nothing was ever held or charged (loss_rate.md). Direct test: when a hold DOES exist and the call then errors, 4/4 forced trials show the hold RETAINED/FROZEN \u2014 availableBalance dropped by exactly $0.076803 each time (zero variance) while totalBalance never moved, so this is not a completed charge, and it is never reversed either \u2014 an auth-reversal rate of 0% (findings.md \u00a79; dryrun/failure_capture_n3.md; dryrun/hold_linearity_extension.md; dryrun/refund_watch.log \u2014 still being watched for a delayed release). Over-requested max_tokens makes the frozen amount larger. Honest caveat: the per-failure retention mechanic is deterministic and measured (4/4) \u2014 the FLEET FREQUENCY of post-hold failures in live traffic is NOT measured; do not read this as a $/day loss rate."
+    "definition": "Recovery works on the happy path only \u2014 no void, no reversal, ever observed.",
+    "subline": "released in seconds on success \u00b7 0% reversed on failure \u2014 89 frozen, 3 days",
+    "method_note": "Hold-release latency: organic n=31 p50 5295ms / p95 11961ms\nAll-traffic n=188 p50 2028ms / p95 8530ms\nCard rails: an uncaptured authorization is released via authorization reversal (void)\nFailure path: 4/4 forced trials retained (mean $0.076803, zero variance) \u2014 frozen, not charged; 0% ever reversed\nPer-failure mechanic measured; fleet frequency of post-hold failures NOT measured\nScope: sapiom_openrouter only \u2014 organic n=31 headline (5.3s/12.0s); all-traffic n=188 (2.0s/8.5s), gpt-4o-mini \u2014 LLM-specific, not platform-wide\nSource: failure_capture_n3.md, hold_linearity_extension.md, refund_watch.log"
   },
   "tile_refunds_disputes": {
     "lock_tag": "NO MECHANISM EXISTS",
-    "definition": "Post-settlement recovery. Card rails: refund APIs + chargeback/dispute processes (Visa monitors dispute rates network-wide). Agent rails: when an agent pays for a bad result, no refund API, no dispute flow, no adjudication path exists \u2014 the money is unrecoverable by design, not by failure.",
-    "caption": "Completes the lifecycle with Hold Recovery: pre-settlement money never comes back on failure; post-settlement money can't come back even in principle."
+    "subline": "no refund API \u00b7 no dispute path \u00b7 no adjudication",
+    "definition": "When an agent pays for a bad result, the money is unrecoverable \u2014 by design, not by failure.",
+    "method_note": "Card rails: refund APIs + chargeback/dispute processes\nVisa monitors dispute rates network-wide\nCompletes the lifecycle with Hold Recovery: pre-settlement never comes back on failure; post-settlement can't come back even in principle"
   },
   "kya_scorecard": {
     "rows": [
@@ -865,6 +864,6 @@ window.DASHBOARD_DATA = {
     ],
     "visible_caveat": "Illustrative \u2014 velocity-only, one session; spend is shown but not a factor in this grade.",
     "formula_compact": "score = 60 if peer-flagged + peak-burst\u00d73 (max 30) \u2192 A \u22649 \u00b7 B \u226424 \u00b7 C \u226449 \u00b7 D \u226474 \u00b7 F \u226575 \u00b7 <3 calls = N/A",
-    "formula_note": "Velocity score = 60 pts if peer-relative velocity anomaly flagged (findings.md \u00a75) + up to 30 pts scaled from peak calls in any 60s window (peak x 3, capped). Grade: A 0-9 / B 10-24 / C 25-49 / D 50-74 / F 75-100. Agents with <3 calls show N/A \u2014 not enough data for a median gap. Spend is NOT part of this score (spend-runaway is ~54% of all TPV and grades C; fleet-test is ~0.4% of TPV and grades F) \u2014 velocity-only, illustrative, one session."
+    "formula_note": "Score = 60 pts if peer-flagged + peak\u00d73 pts (max 30)\nGrade: A 0-9 \u00b7 B 10-24 \u00b7 C 25-49 \u00b7 D 50-74 \u00b7 F 75-100 \u00b7 <3 calls = N/A\nSpend not scored \u2014 spend-runaway ~54% of TPV grades C, fleet-test ~0.4% grades F\nSource: findings.md \u00a75"
   }
 };

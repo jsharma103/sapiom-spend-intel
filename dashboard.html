@@ -126,10 +126,10 @@
   th.num, td.num { text-align: right; font-variant-numeric: tabular-nums; }
 
   /* KYA scorecard only (~35+ rows): vertical scroll capped to roughly the
-     first 20 rows, with a sticky header so column labels stay visible.
+     first 10 rows, with a sticky header so column labels stay visible.
      Scoped here rather than on the shared .table-scroll — every other table
      on the page still renders in full. */
-  .kya-scroll { max-height: 840px; overflow-y: auto; }
+  .kya-scroll { max-height: 440px; overflow-y: auto; }
   .kya-scroll th { position: sticky; top: 0; background: var(--surface); }
 
   /* status-chip — the icon+label mechanism. Reserved to: Reconciliation
@@ -174,7 +174,7 @@
 <div class="grid" id="grid"></div>
 
 <div class="section-title">Section 2 — Agent-native KPIs — proposed definitions</div>
-<div class="section-subtitle">Those are your world's metrics. Here's what I think agent payments actually needs to measure — failures that are bounded, visible, and recoverable, plus a per-agent "Know Your Agent" read. Vocabulary from Sapiom's own public framing (ComputerWeekly / Unite.AI). Definitions are the product here; every number still traces to an existing file.</div>
+<div class="section-subtitle">Those were your world's metrics. These are the ones agent payments needs: failures bounded, visible, recoverable — plus a per-agent Know Your Agent read.</div>
 
 <div class="kpi-subhead">Bounded</div>
 <div class="grid" id="grid-bounded"></div>
@@ -307,9 +307,11 @@
     // Magnitude, not a status: tile's own note says 100% is an artifact of no
     // spending rules active, not proof governance works.
     tile.appendChild(el('div', 'big-number', v === null || v === undefined ? 'n/a' : `${Number(v).toFixed(0)}%`));
-    const sub = el('div', 'subline', `${t.approved ?? 0}/${(t.approved ?? 0) + (t.denied ?? 0)} approved — no spending rules active in this sample`);
-    sub.title = t.note || '';
-    tile.appendChild(sub);
+    const total = (t.approved ?? 0) + (t.denied ?? 0);
+    tile.appendChild(el('div', 'subline', `${t.approved ?? 0}/${total} approved · ${t.denied ?? 0} denied by spending rules`));
+    const def = el('div', 'definition', t.definition || '');
+    def.title = t.note || '';
+    tile.appendChild(def);
     grid.appendChild(tile);
   })();
 
@@ -323,8 +325,9 @@
     // Magnitude only, neutral ink — positive/gift framing, no status chip.
     tile.appendChild(el('div', 'big-number', usd(t.atv_usd, 6)));
     tile.appendChild(el('div', 'subline', t.subline || ''));
-    tile.appendChild(el('div', 'caption', t.caption || ''));
-    tile.appendChild(el('div', 'caption', t.scope_note || ''));
+    const def = el('div', 'definition', t.definition || '');
+    def.title = t.method_note || '';
+    tile.appendChild(def);
     grid.appendChild(tile);
   })();
 
@@ -332,17 +335,18 @@
   (function heroCapture() {
     const t = data.hero_capture_ratio || {};
     const tile = el('div', 'tile');
-    tile.appendChild(el('h2', null, 'Capture Rate ($-weighted)'));
+    const header = el('h2', null, 'Capture Rate ($-weighted)');
+    header.title = t.method_note || '';
+    tile.appendChild(header);
     const v = t.ratio_pct;
     // Valence fix: this is a float-inefficiency signal, not a capture-failure /
     // revenue-leakage signal (settling below the hold is the system working as
     // designed) — magnitude only, neutral ink, never a status color.
     tile.appendChild(el('div', 'big-number', v === null || v === undefined ? 'n/a' : `${v.toFixed(1)}%`));
     tile.appendChild(el('div', 'subline', t.subline || ''));
-    const note = el('div', 'scale-note', t.scale_note || '');
-    note.title = t.method_note || '';
-    tile.appendChild(note);
-    tile.appendChild(el('div', 'caption', t.scope_note || ''));
+    const def = el('div', 'definition', t.definition || '');
+    def.title = t.method_note || '';
+    tile.appendChild(def);
     grid.appendChild(tile);
   })();
 
@@ -357,7 +361,9 @@
   (function tileEffectiveBudget() {
     const t = data.tile_effective_budget || {};
     const tile = el('div', 'tile');
-    tile.appendChild(el('h2', null, 'Effective Budget'));
+    const header = el('h2', null, 'Effective Budget');
+    header.title = t.method_note || '';
+    tile.appendChild(header);
     tile.appendChild(el('div', 'big-number', t.headline_pct_range || 'n/a'));
     tile.appendChild(el('div', 'subline', t.message || ''));
     const def = el('div', 'definition', t.finding || '');
@@ -371,7 +377,6 @@
       table.appendChild(row);
     });
     tile.appendChild(scrollWrap(table));
-    tile.appendChild(el('div', 'caption', t.caveat || ''));
     gridBounded.appendChild(tile);
   })();
 
@@ -384,7 +389,9 @@
     tile.appendChild(header);
     tile.appendChild(el('div', 'big-number', t.headline || 'n/a'));
     tile.appendChild(el('div', 'subline', t.subline || ''));
-    tile.appendChild(el('div', 'definition', t.definition || ''));
+    const def = el('div', 'definition', t.definition || '');
+    def.title = t.method_note || '';
+    tile.appendChild(def);
     const table = el('table');
     table.innerHTML = '<tr><th>Round</th><th class="num">N</th><th class="num">max_tokens</th><th class="num">Allowed</th><th class="num">Leak factor</th></tr>';
     (t.rows || []).forEach((r) => {
@@ -394,7 +401,6 @@
       table.appendChild(row);
     });
     tile.appendChild(scrollWrap(table));
-    tile.appendChild(el('div', 'caption', t.caveat || ''));
     gridBounded.appendChild(tile);
   })();
 
@@ -406,7 +412,7 @@
     header.title = t.method_note || '';
     tile.appendChild(header);
     const p = t.pct;
-    tile.appendChild(el('div', 'big-number', p === null || p === undefined ? 'n/a' : `${p.toFixed(0)}%`));
+    tile.appendChild(el('div', 'big-number', p === null || p === undefined ? 'n/a' : `${p.toFixed(0)}% of all calls`));
     tile.appendChild(el('div', 'subline', t.subline || ''));
     const def = el('div', 'definition', t.definition || '');
     def.title = t.method_note || '';
@@ -425,8 +431,9 @@
     tile.appendChild(header);
     tile.appendChild(el('div', 'big-number', t.headline || 'n/a'));
     tile.appendChild(el('div', 'subline', t.subline || ''));
-    tile.appendChild(el('div', 'definition', t.definition || ''));
-    tile.appendChild(el('div', 'caption', t.caption || ''));
+    const def = el('div', 'definition', t.definition || '');
+    def.title = t.method_note || '';
+    tile.appendChild(def);
     gridVisible.appendChild(tile);
   })();
 
@@ -443,9 +450,9 @@
     // true/false state — so it carries no chip/color.
     tile.appendChild(el('div', 'big-number', `${fmtS(t.p50_ms)}–${fmtS(t.p95_ms)} / never`));
     tile.appendChild(el('div', 'subline', t.subline || ''));
-    tile.appendChild(el('div', 'definition', t.definition || ''));
-    tile.appendChild(el('div', 'caption', t.caption || ''));
-    tile.appendChild(el('div', 'caption', t.scope_note || ''));
+    const def = el('div', 'definition', t.definition || '');
+    def.title = t.method_note || '';
+    tile.appendChild(def);
     gridRecoverable.appendChild(tile);
   })();
 
@@ -453,12 +460,16 @@
   // exists to measure post-settlement recovery) ------------------------------
   (function tileRefundsDisputes() {
     const t = data.tile_refunds_disputes || {};
-    const tile = el('div', 'tile placeholder');
-    tile.appendChild(el('h2', null, 'Refunds & Disputes'));
-    tile.appendChild(el('div', 'big-number', '—'));
+    const tile = el('div', 'tile');
+    const header = el('h2', null, 'Refunds & Disputes');
+    header.title = t.method_note || '';
+    tile.appendChild(header);
+    tile.appendChild(el('div', 'big-number', '🔒'));
+    tile.appendChild(el('div', 'subline', t.subline || ''));
+    const def = el('div', 'definition', t.definition || '');
+    def.title = t.method_note || '';
+    tile.appendChild(def);
     tile.appendChild(el('div', 'lock-tag', t.lock_tag || 'NO MECHANISM EXISTS'));
-    tile.appendChild(el('div', 'definition', t.definition || ''));
-    tile.appendChild(el('div', 'caption', t.caption || ''));
     gridRecoverable.appendChild(tile);
   })();
 
@@ -471,7 +482,7 @@
     header.title = k.formula_note || '';
     kyaTile.appendChild(header);
     const def = el('div', 'definition',
-      'One row per agent — spend, calls, velocity, peak burst, anomaly flag → illustrative A-F velocity grade.');
+      'One velocity-risk grade per agent — behavior, not spend.');
     def.title = k.formula_note || '';
     kyaTile.appendChild(def);
     kyaTile.appendChild(el('div', 'caption', k.formula_compact || ''));
@@ -502,7 +513,7 @@
     kyaTile.appendChild(wrap);
   })();
 
-  footer.innerHTML = 'Static, offline viewer. No network, no backend — reads dashboard_data.js only. Regenerate with: python export_dashboard.py. · Hover any tile title for methodology.';
+  footer.innerHTML = 'Static, offline viewer. No network, no backend — reads dashboard_data.js only. Regenerate with: python export_dashboard.py. · Hover any tile title for methodology. · Every number traces to a file in this repo.';
 })();
 </script>
 

@@ -165,15 +165,12 @@ def hero_tpv(header: dict, frozen_capital: dict) -> dict:
     # frozen derivation, why denied/failure holds are excluded, the observed
     # window, and the $1M/day pace ratio with its load-test caveat.
     method_note = (
-        f"TPV = settled volume only: live spend ${live_spend:.6f} (every active cost row) minus "
-        f"${frozen_total:.6f} frozen holds (see Frozen Capital) = ${settled_spend:.6f} settled. "
-        f"Frozen holds are excluded because they never became real spend: "
-        f"{frozen_capital['n_denied_holds']} denied-call holds were placed on calls that never "
-        f"executed, and {frozen_capital['n_failure_holds']} failure holds never settled after a "
-        f"post-hold error. Observed over {period_hours:.0f}h ({header['n_txns']} txns / "
-        f"{header['n_agents']} agents) — a ~${daily_rate_usd:,.2f}/day settled pace; at $1M/day TPV "
-        f"that's ~{scale_multiple:,.0f}x the observed pace (a ratio, not a load test — this pipeline "
-        "has not been run at that volume)."
+        f"Settled = live spend ${live_spend:.6f} − frozen ${frozen_total:.6f} = ${settled_spend:.6f}\n"
+        f"Excludes {frozen_capital['n_denied_holds']} denied + {frozen_capital['n_failure_holds']} "
+        "failed holds (never became real spend)\n"
+        f"Window {period_hours:.0f}h ≈ ${daily_rate_usd:,.2f}/day · $1M/day ≈ {scale_multiple:,.0f}x "
+        "this pace — ratio, not a load test\n"
+        "Full derivation: analysis/report.md"
         if daily_rate_usd else "No period data available to compute a daily rate."
     )
 
@@ -311,12 +308,11 @@ def hero_capture_ratio(con, hold_lifetime_p50_s=None, hold_lifetime_p95_s=None,
         # failure. Framed as "oversized holds", not "only N% captured". Both
         # traffic segments shown; experiments force oversized holds by design.
         "subline": (
-            f"holds are ~{overhang_ratio:.1f}x oversized vs settlement — a float "
-            f"inefficiency, not lost revenue (authorize $1.00 → capture ${capture_per_dollar:.2f})"
-            f" · organic fleet {ratio_pct:.0f}% · incl. adversarial experiments {ratio_pct_all:.1f}%"
-            " · capture % is workload-shaped (cap hygiene): right-sized ~100% · lazy 16k caps ~1%"
-            if capture_per_dollar is not None and ratio_pct_all is not None else "n/a"
+            f"LLM service only · authorize $1.00 → capture ${capture_per_dollar:.2f} · "
+            f"holds ~{overhang_ratio:.1f}× oversized"
+            if capture_per_dollar is not None and overhang_ratio is not None else "n/a"
         ),
+        "definition": "The only service that holds — all 5 others surveyed price flat, no capture gap.",
         "scale_note": scale_note,
         "scope_note": _llm_chain_scope_note(n_chains, n_chains_all),
         "instantaneous_frozen_p50_usd": instantaneous_frozen_p50_usd,
@@ -330,25 +326,22 @@ def hero_capture_ratio(con, hold_lifetime_p50_s=None, hold_lifetime_p95_s=None,
         "naive_flow_at_scale_usd": naive_flow_at_scale_usd,
         "naive_implied_lifetime_days": naive_implied_lifetime_days,
         "method_note": (
-            f"Organic fleet (experiment agents excluded): Sigma settled ({sum_settled:.6f}) / "
-            f"Sigma held ({sum_held:.6f}) dollar-weighted across {n_chains} supersession chains "
-            f"(hold → final capture) = {ratio_pct:.1f}%. All traffic incl. adversarial experiments: "
-            f"{sum_settled_all:.6f} / {sum_held_all:.6f} across {n_chains_all} chains = "
-            f"{ratio_pct_all:.1f}% — experiments force oversized holds by design, dragging the "
-            "blended ratio down. Little's Law: frozen$ = settled$/day × overhang × "
-            "(hold_lifetime_sec/86400) — at $1M/day TPV, organic p50 "
-            f"({hold_lifetime_p50_s:.2f}s) → ${instantaneous_frozen_p50_usd:,.2f}, p95 "
-            f"({hold_lifetime_p95_s:.2f}s) → ${instantaneous_frozen_p95_usd:,.2f}. Full "
-            "derivation + sensitivity: dryrun/float_model.md. (Superseded framing: naively "
-            f"scaling the organic capture ratio gives ${naive_flow_at_scale_usd:,.0f} — a per-day "
-            f"FLOW, not an instantaneous stock; it implicitly assumes a "
-            f"~{naive_implied_lifetime_days:.2f}-day hold lifetime vs. the measured "
-            f"{hold_lifetime_p50_s:.1f}–{hold_lifetime_p95_s:.1f}s, ≥{naive_off_multiple:,.0f}x off. "
-            "See float_model.md §4d.)"
-            if hold_lifetime_p50_s is not None and hold_lifetime_p95_s is not None else
-            f"Organic: Sigma settled ({sum_settled:.6f}) / Sigma held ({sum_held:.6f}) dollar-weighted "
-            f"across {n_chains} supersession chains (hold → final capture) = {ratio_pct:.1f}%; "
-            f"all traffic incl. adversarial experiments: {ratio_pct_all:.1f}% across {n_chains_all} chains."
+            "\n".join(filter(None, [
+                f"Organic {ratio_pct:.0f}% vs {ratio_pct_all:.1f}% incl. adversarial experiments",
+                "Workload-shaped: right-sized ≈100% · lazy 16k caps ≈1%",
+                (
+                    f"$1M/day ≈ ${instantaneous_frozen_p50_usd:,.0f}"
+                    f"–${instantaneous_frozen_p95_usd:,.0f} frozen (Little's Law, "
+                    "live-validated ±9%)"
+                    if instantaneous_frozen_p50_usd is not None
+                    and instantaneous_frozen_p95_usd is not None else
+                    "Little's Law unavailable — hold-lifetime not measured"
+                ),
+                "Levers: hold lifetime + max_tokens right-sizing",
+                f"Scope: n={n_chains} organic ({n_chains_all} all-traffic) chains · "
+                "5-svc survey n=4 each — service_hold_survey.md, float_model.md",
+            ]))
+            if ratio_pct is not None and ratio_pct_all is not None else "n/a"
         ),
     }
 
@@ -399,19 +392,12 @@ def hero_frozen_capital() -> dict:
         "definition": "Money stuck in a third state — not charged, not returned, no void mechanism.",
         "scale_note": "failure mechanic is deterministic — 4/4 forced post-hold failures froze the full max_tokens-priced hold; denial-after-hold froze 85/85. Frequency of post-hold failures in organic traffic is NOT measured — do not read this as a $/day loss rate.",
         "method_note": (
-            f"Live account snapshot {snapshot_at}: unavailableBalance ${frozen_total_usd:.6f} = "
-            f"{n_failure_holds} x $0.076803 failure holds (failure_capture_n3.md, "
-            f"hold_linearity_extension.md) = ${failure_holds_usd:.6f} + ${denied_holds_usd:.6f} live "
-            f"holds on {n_denied_holds} denied transactions (denial_analytics.md) — ties to the "
-            "micro-dollar, and equals the Reconciliation hero's total-vs-available gap. Cross-checked "
-            f"live: sampled failure holds still isActive:true, supersededAt:null, {days_observed} days "
-            "after placement (refund_watch.log). Money sits in a third state: not charged "
-            "(totalBalance untouched by the hold), not returned (availableBalance stays reduced) — no "
-            "release/void API exists, and no backend sweep has been observed reclaiming it. The "
-            f"failure mechanic is deterministic: {n_failure_holds}/{n_failure_holds} forced post-hold "
-            f"failures froze the full max_tokens-priced hold, and {n_denied_holds}/{n_denied_holds} "
-            "denials froze theirs too — but the frequency of post-hold failures in organic "
-            "(non-adversarial) traffic is NOT measured; do not read this as a $/day loss rate."
+            "availableBalance drops, totalBalance never moves — frozen, not charged\n"
+            f"{n_failure_holds} failed holds (${failure_holds_usd:.6f}) + {n_denied_holds} denied "
+            f"(${denied_holds_usd:.6f}) — {n_failure_holds}/{n_failure_holds} and "
+            f"{n_denied_holds}/{n_denied_holds} deterministic\n"
+            "Post-hold failure rate in organic traffic: not measured\n"
+            "Still watching: dryrun/refund_watch.log"
         ),
     }
 
@@ -495,7 +481,6 @@ def hero_reconciliation(con, initial_balance: Decimal, frozen_capital: dict, ing
         f"gap to totalBalance = ${float(frozen_gap):.6f} vs Frozen Capital ${frozen_total:.6f} — mismatch, investigate"
         if frozen_gap is not None else "n/a — no balance snapshot to compute the gap"
     )
-    ingest_prefix = f"Reconciled against the live snapshot ingested through {ingest_as_of}. " if ingest_as_of else ""
 
     # Wallet partition (settled + frozen + available) — the hero tile's
     # context line now shows this instead of the raw diff (BUILD: hero
@@ -539,17 +524,17 @@ def hero_reconciliation(con, initial_balance: Decimal, frozen_capital: dict, ing
         "scale_note": f"naive sum overstates +{overstatement_pct:.0f}% — must filter, not sum, chains; full derivation in the tooltip",
         "phantom_at_scale_usd": phantom_at_scale_usd,
         "method_note": (
-            ingest_prefix +
-            (f"initial ${float(initial_balance):.6f} − Sum active cost rows ${float(live):.6f} = "
-            f"${float(expected_available):.6f} = availableBalance (diff ${float(diff_vs_available):.6f}). "
-            f"totalBalance ${float(total):.6f} is higher by ${float(frozen_gap):.6f} = frozen holds "
-            f"({frozen_match_note}). Wallet partition (full precision): settled ${settled_usd:.6f} + "
-            f"frozen ${frozen_total:.6f} + available ${float(avail):.6f} = ${partition_sum:.6f} of the "
-            f"initial ${float(initial_balance):.6f}. Naive sum (every cost row incl. superseded) "
-            f"${c1['naive']:.6f} vs live (superseded_at IS NULL) ${c1['live']:.6f} — naive sum "
-            f"overstates +{overstatement_pct:.0f}% — must filter, not sum, chains."
+            ("\n".join(filter(None, [
+                f"Reconciled against live snapshot ingested through {ingest_as_of}" if ingest_as_of else None,
+                f"${float(initial_balance):.6f} initial − active costs ${float(live):.6f} = "
+                f"availableBalance · diff ${float(diff_vs_available):.6f}",
+                f"Gap to totalBalance ${float(frozen_gap):.6f} = Frozen Capital — "
+                f"{'matches, to the micro-dollar' if frozen_matches else 'mismatch, investigate'}",
+                f"Naive sum overstates +{overstatement_pct:.0f}% — filter, don't sum, superseded chains",
+            ])))
             if (avail is not None and total is not None and frozen_gap is not None) else
-            f"Naive ${c1['naive']:.6f} vs live ${c1['live']:.6f}.")
+            (f"Naive sum ${c1['naive']:.6f} vs live ${c1['live']:.6f} — naive counts superseded rows too\n"
+             "No balance snapshot available to compute diff vs availableBalance")
         ),
     }
 
@@ -747,22 +732,20 @@ def tile_auth_rate(con) -> dict:
     ).fetchone()[0]
     auth_rate_pct = (approved / (approved + denied) * 100) if (approved + denied) else None
     note = (
-        "No spending rules were active in this sample — 100% reflects an unconfigured "
-        "account (nothing to deny), not proof governance works. 100% only holds when no "
-        "spending rules are active: a prior live snapshot with governance experiments "
-        "active (see dryrun/denial_analytics.md / "
-        "experiments/03_governance_cumulative_double_count.md) saw 86 denials and a real "
-        "auth rate of ≈ 74%."
+        "100% reflects an unconfigured account — nothing to deny, not proof governance works\n"
+        "Prior snapshot with governance rules active: 86 denials, auth rate ≈ 74%\n"
+        "Source: denial_analytics.md, 03_governance_cumulative_double_count.md"
         if denied == 0 else
-        f"100% only when no spending rules are active — this live snapshot includes "
-        f"{denied} denials from governance experiments (see dryrun/denial_analytics.md / "
-        f"experiments/03_governance_cumulative_double_count.md). Real auth rate under "
-        f"those experiment rules ≈ {auth_rate_pct:.0f}%."
+        "100% only holds when no spending rules are active\n"
+        f"This snapshot includes {denied} denials from governance experiments — auth rate "
+        f"≈ {auth_rate_pct:.0f}%\n"
+        "Source: denial_analytics.md, 03_governance_cumulative_double_count.md"
     )
     return {
         "approved": approved,
         "denied": denied,
         "auth_rate_pct": auth_rate_pct,
+        "definition": "Share of calls governance approved — the payments approval-rate analog.",
         "note": note,
     }
 
@@ -797,29 +780,16 @@ def tile_atv(con, hero_tpv: dict) -> dict:
         "settled_volume_usd": settled_volume_usd,
         "n_settled_txns": n_settled_txns,
         "subline": (
-            f"settled ${settled_volume_usd:.6f} ÷ {n_settled_txns} settled txns"
+            f"settled ${settled_volume_usd:.2f} ÷ {n_settled_txns} settled txns"
             if atv_usd is not None else "n/a"
         ),
-        "caption": (
-            "Card rails carry a fixed per-transaction fee component (on the order of $0.30 on "
-            "typical US card pricing) — 2–3 orders of magnitude above this ATV. Sub-cent "
-            "transactions are the economic case for x402-style rails: agent spend is too small "
-            "for card economics to process profitably."
-        ),
-        "scope_note": (
-            f"ATV is workload-shaped — this fleet's mix (LLM-dominated, incl. adversarial "
-            f"experiments) over one {period_hours:.0f}h window; not a market measurement."
-            if period_hours else
-            "ATV is workload-shaped — this fleet's mix (LLM-dominated, incl. adversarial "
-            "experiments); not a market measurement."
-        ),
+        "definition": "Average sale size — orders of magnitude below what card rails can process profitably.",
         "method_note": (
-            f"ATV = settled volume ÷ settled txn count = ${settled_volume_usd:.6f} / "
-            f"{n_settled_txns} = ${atv_usd:.6f}. Settled volume reused from the TPV hero "
-            "(live spend minus frozen holds). Settled txn = distinct transaction with a live "
-            "cost row, excluding the 4 frozen-failure-hold txns (outcome='error', live, not "
-            "part of a supersession chain) and the 85 denied-hold txns (status='denied')."
-            if atv_usd is not None else "n/a — no settled transactions."
+            f"ATV = settled ${settled_volume_usd:.6f} ÷ {n_settled_txns} txns = ${atv_usd:.6f}\n"
+            "Settled excludes frozen-failure-hold + denied-hold txns\n"
+            "Card fee ~$0.30/txn vs this ATV — economic case for x402 rails\n"
+            f"Workload-shaped, one {period_hours:.0f}h window — not a market measurement"
+            if atv_usd is not None and period_hours else "n/a — no settled transactions."
         ),
     }
 
@@ -941,23 +911,26 @@ def tile_effective_budget(blast_radius: dict, cap_utilization: dict) -> dict:
     hi = max(r["true_util_pct"] for r in rows)
     return {
         "headline_pct_range": f"{lo}–{hi}% of cap",
-        "message": f"You set a cap; agents actually get {lo}–{hi}% of it before denial.",
+        # Context line (Section 2 simplification pass, 2026-07-07) — the old
+        # "message" paragraph moves to method_note; this is the one visible subline.
+        "message": f"you set a cap — agents get {lo}–{hi}% of it · worst case bricked at $0",
+        # Definition line — short, italic. The old multi-clause text moves to method_note.
         "finding": (
-            f"Agents cut off at {cap_utilization['headline_pct_range']} of true budget while the "
-            "engine reports ~100% (the hold double-count); worst case one oversized max_tokens hold "
-            "≥ cap bricks the agent at $0 before any spend."
+            f"Engine double-counts holds: reports 100% spent when agents used "
+            f"{cap_utilization['headline_pct_range']}."
         ),
         "rows": rows,
         "caveat": (
             f"Cap utilization: {cap_utilization['caveat']} Blast radius: {blast_radius['caveat']}"
         ),
         "method_note": (
-            f"True/engine util rows reused verbatim from Cap Utilization ({cap_utilization['headline_pct_range']}"
-            f", n=4). Bricked row reused from Blast Radius (blast-test-8000: cap ${bricked['cap_usd']:.3f}, "
-            f"spend at denial ${bricked['spend_before_stop_usd']:.4f} = {bricked['pct_of_cap']}% true util; "
-            f"engine util = hold ${bricked_hold_usd:.6f} ÷ cap ${bricked['cap_usd']:.3f} = "
-            f"{bricked_engine_util_pct}%, per experiments/03_governance_cumulative_double_count.md). "
-            f"Range {lo}–{hi}% = min/max true_util_pct across all {len(rows)} rows."
+            f"True/engine util reused from Cap Utilization ({cap_utilization['headline_pct_range']}, n=4)\n"
+            f"Bricked: blast-test-8000, hold ${bricked_hold_usd:.6f} ≥ cap ${bricked['cap_usd']:.3f} "
+            f"→ {bricked_engine_util_pct}% engine / 0% true util\n"
+            f"Range {lo}–{hi}% = min/max true_util_pct across {len(rows)} rows\n"
+            "n=4 cap-utilization rules + n=3 blast-radius agents, LLM-only; blast agents read "
+            "from the ledger (parallel session), corroborated by our own r5/doublecount runs\n"
+            "Source: experiments/03_governance_cumulative_double_count.md"
         ),
     }
 
@@ -1001,18 +974,20 @@ def tile_concurrency_leak_factor() -> dict:
             "allowed": 3, "denied": 47, "leak_factor": 3,
         },
     ]
-    max_leak = max(r["leak_factor"] for r in rows)
+    max_leak_row = max(rows, key=lambda r: r["leak_factor"])
+    max_leak = max_leak_row["leak_factor"]
     return {
         "headline": f"up to {max_leak}x",
+        # Definition line — short, italic; the contrast with Effective Budget is
+        # kept, method detail (mechanism, trial count, confirmation) moves to
+        # method_note.
         "definition": (
-            "Where Effective Budget shows the cap firing too early (agents cut off before they "
-            "reach it), this is the opposite failure: under concurrent fire, the same kind of cap "
-            "lets MORE calls through than it was sized for — the bound breaks instead of over-"
-            "triggering."
+            "The opposite failure — under concurrency the bound breaks instead of over-firing."
         ),
+        # Context line — one computed subline (was a two-sentence mechanism paragraph).
         "subline": (
-            "A cap sized for ONE call allowed 2 of 20 and 3 of 50 under concurrent fire — "
-            "authorization checks race a stale cumulative ledger."
+            f"a cap sized for ONE call let {max_leak_row['leak_factor']} through under "
+            f"{max_leak_row['n']}-way concurrent fire"
         ),
         "rows": rows,
         "caveat": (
@@ -1024,12 +999,15 @@ def tile_concurrency_leak_factor() -> dict:
             "is small (2–3x) and scales with concurrency, not a large blowout."
         ),
         "method_note": (
-            "FAST: N=10, max_tokens=500 (dryrun/toctou_scale_experiment.md), 1 allowed / 9 denied, "
-            "leak 1x (dryrun/toctou_scale_result.json corrected_allowed_count/corrected_denied_count/"
-            "corrected_leak_factor). SLOW-A: N=20, max_tokens=8000, 2 allowed / 18 denied, leak 2x "
-            "(dryrun/toctou_latency_slowA20_result.json). SLOW-B: N=50, max_tokens=4000, 3 allowed / "
-            "47 denied, leak 3x (dryrun/toctou_latency_slowB50_result.json). Mechanism + verdict: "
-            "dryrun/toctou_latency_experiment.md; summarized analysis/findings.md §8."
+            "\n".join(
+                f"{r['round']}: N={r['n']}, max_tokens={r['max_tokens']} → {r['allowed']} allowed / "
+                f"{r['denied']} denied, leak {r['leak_factor']}x"
+                for r in rows
+            ) + "\n"
+            "Mechanism: checks race a stale cumulative ledger; completedAt spread across the batch\n"
+            "One trial per round — probabilistic, not a measured rate at a given N/max_tokens\n"
+            "Confirmed two ways: rule-engine decisions + client HTTP 200s (exact match, SLOW rounds)\n"
+            "Mechanism + verdict: dryrun/toctou_latency_experiment.md; findings.md §8"
         ),
     }
 
@@ -1102,27 +1080,28 @@ def tile_ledger_blind_spots(con) -> dict:
         "n_scraping_unknown": n_scraping_unknown,
         "n_unknown_other": n_unknown_other,
         "pct_scraping_rev_unknown": pct_scraping_rev_unknown,
-        "definition": (
-            "% of ALL transactions the ledger cannot fully explain — outcome never written, or "
-            "service resolved to 'unknown'. Denials are also counted by Authorization Rate "
-            "(Section 1) — that tile measures approval; this one measures record quality."
-        ),
+        # Definition line — short, italic; the denials/Authorization Rate cross-
+        # ref moves to method_note.
+        "definition": "Calls the ledger can't fully explain — who, what, or how it ended.",
+        # Context line — one computed subline; the scrape-revenue decomposition
+        # moves to method_note.
         "subline": (
-            f"{n_denied_no_outcome} denied — no outcome ever written · {n_unknown_service} "
-            f"service='unknown' ({pct_scraping_rev_unknown:.0f}% of the scraping service's revenue, "
-            f"{n_scraping_unknown}/{n_scraping_total} calls + {n_unknown_other} pre-gateway "
-            f"{failure_word}) · {n_zombies} zombies (authorized, never completed)"
-            if pct_scraping_rev_unknown is not None else "n/a"
+            f"{n_denied_no_outcome} denied, no outcome written · {n_unknown_service} unknown "
+            f"service · {n_zombies} zombies"
         ),
         "method_note": (
-            f"blind = COUNT(DISTINCT txns WHERE outcome IS NULL OR service_name='unknown') ÷ "
-            f"COUNT(*) txns = ({n_denied_no_outcome} denied-no-outcome + {n_zombies} zombie-no-outcome "
-            f"+ {n_unknown_service} service='unknown', no overlap between the two groups in this data) "
-            f"= {blind_txns}/{total} = {pct:.1f}%. Supersedes the old 'Attribution Completeness' check "
-            f"(agent+traceId+service+outcome all non-null), which counted service_name='unknown' as a "
-            f"populated value — it certified {n_unknown_service} unresolved rows as 'complete'. Metric "
-            "renamed/redefined 2026-07-07 to close that gap."
-            if pct is not None else "n/a"
+            f"blind = (outcome IS NULL OR service='unknown') txns ÷ all txns = {blind_txns}/{total} "
+            f"= {pct:.1f}%\n"
+            f"{n_denied_no_outcome} denied-no-outcome + {n_zombies} zombie-no-outcome + "
+            f"{n_unknown_service} service='unknown', no overlap\n"
+            f"Unknowns: {pct_scraping_rev_unknown:.0f}% of scrape revenue "
+            f"({n_scraping_unknown}/{n_scraping_total} calls) + {n_unknown_other} pre-gateway "
+            f"{failure_word}\n"
+            "Denials also counted by Authorization Rate — this tile measures record quality\n"
+            f"Supersedes 'Attribution Completeness' — certified {n_unknown_service} unresolved "
+            "rows as 'complete'\n"
+            "Redefined 2026-07-07 to close that gap"
+            if pct is not None and pct_scraping_rev_unknown is not None else "n/a"
         ),
     }
 
@@ -1168,20 +1147,16 @@ def tile_cost_per_task_traceability(con) -> dict:
         "traced_live_usd": float(traced_live),
         "pct_dollars": pct_dollars,
         "headline": f"{pct_dollars:.0f}% of spend traceable to a task" if pct_dollars is not None else "n/a",
-        "definition": "The ledger sees calls, not jobs.",
-        "subline": (
-            f"Only {traced_txns} of {total_txns} txns carry a task id — \"what did this task cost "
-            "end-to-end?\" is unanswerable for the rest."
-        ),
-        "caption": (
-            "Traces are flat grouping IDs today, no parent/child hierarchy — task-level cost "
-            "attribution needs span hierarchy in x402 metadata."
-        ),
+        # Definition line — short, italic; the old flat-traces caption moves to method_note.
+        "definition": "The ledger sees calls, not jobs — \"what did this task cost?\" has no answer.",
+        # Context line — one computed subline.
+        "subline": f"{traced_txns} of {total_txns} calls carry a task id",
         "method_note": (
-            f"txn share: COUNT(trace_external_id IS NOT NULL) ÷ COUNT(*) = {traced_txns}/{total_txns} "
-            f"= {pct_txns:.1f}%. $ share: SUM(fiat_amount WHERE superseded_at IS NULL AND "
-            f"trace_external_id IS NOT NULL) ÷ SUM(fiat_amount WHERE superseded_at IS NULL) = "
-            f"${float(traced_live):.6f}/${float(total_live):.6f} = {pct_dollars:.1f}%."
+            f"Txn share: {traced_txns}/{total_txns} carry trace_external_id = {pct_txns:.1f}%\n"
+            f"$ share: ${float(traced_live):.6f} traced / ${float(total_live):.6f} total live spend "
+            f"= {pct_dollars:.1f}%\n"
+            "Traces are flat grouping IDs, no parent/child hierarchy\n"
+            "x402 span hierarchy would unlock task-level cost attribution"
             if pct_txns is not None and pct_dollars is not None else "n/a"
         ),
     }
@@ -1275,39 +1250,33 @@ def tile_hold_recovery(hold_release: dict, refund_on_failure: dict, frozen_capit
         "n_holds": n_holds,
         "days_observed": days_observed,
         "reversal_pct": reversal_pct,
-        "definition": (
-            "In card payments an uncaptured authorization is released via authorization "
-            "reversal (void). No such mechanism observed here."
-        ),
+        # Definition line — short, italic; the card-rails framing moves to method_note.
+        "definition": "Recovery works on the happy path only — no void, no reversal, ever observed.",
+        # Context line — one computed subline.
         "subline": (
-            f"released in seconds when calls settle · {reversal_pct:.0f}% ever reversed on "
-            f"failure or denial — {n_holds} holds frozen, {days_observed} days and counting"
+            f"released in seconds on success · {reversal_pct:.0f}% reversed on failure — "
+            f"{n_holds} frozen, {days_observed} days"
             if reversal_pct is not None else "n/a"
         ),
-        # Essentials only from the old Auth Reversal note — full derivation moved
-        # to method_note (hover tooltip).
-        "caption": (
-            f"{direct_test_retained}/{direct_test_n} forced trials retained (mean "
-            f"${mean_usd:.6f}, zero variance) — availableBalance dropped, totalBalance never "
-            "moved (frozen, not charged). Per-failure mechanic measured; fleet frequency of "
-            "post-hold failures in live traffic NOT measured."
-        ),
-        # Essentials from the old latency tile's scope note.
-        "scope_note": (
+        "method_note": (
+            f"Hold-release latency: organic n={n_org} p50 {p50:.0f}ms / p95 {p95:.0f}ms\n"
+            f"All-traffic n={n_all} p50 {p50_all:.0f}ms / p95 {p95_all:.0f}ms\n"
+            "Card rails: an uncaptured authorization is released via authorization reversal (void)\n"
+            f"Failure path: {direct_test_retained}/{direct_test_n} forced trials retained (mean "
+            f"${mean_usd:.6f}, zero variance) — frozen, not charged; {reversal_pct:.0f}% ever reversed\n"
+            "Per-failure mechanic measured; fleet frequency of post-hold failures NOT measured\n"
             f"Scope: {service} only — organic n={n_org} headline "
             f"({p50 / 1000:.1f}s/{p95 / 1000:.1f}s); all-traffic n={n_all} "
-            f"({p50_all / 1000:.1f}s/{p95_all / 1000:.1f}s) — LLM-specific (gpt-4o-mini), "
-            "not platform-wide."
-            if have_organic_lat and have_all_lat else "n/a"
-        ),
-        "method_note": (
-            f"Hold-release latency (organic n={n_org}, p50 {p50:.0f}ms / p95 {p95:.0f}ms; "
-            f"all-traffic n={n_all}, p50 {p50_all:.0f}ms / p95 {p95_all:.0f}ms): "
-            f"{hold_release.get('caption', '')} Auth reversal on failure: "
-            f"{refund_on_failure.get('note', '')}"
+            f"({p50_all / 1000:.1f}s/{p95_all / 1000:.1f}s), gpt-4o-mini — LLM-specific, "
+            "not platform-wide\n"
+            "Source: failure_capture_n3.md, hold_linearity_extension.md, refund_watch.log"
             if have_organic_lat and have_all_lat else
-            f"{hold_release.get('caption', '')} Auth reversal on failure: "
-            f"{refund_on_failure.get('note', '')}"
+            "Hold-release latency: not available for this scope\n"
+            "Card rails: an uncaptured authorization is released via authorization reversal (void)\n"
+            f"Failure path: {direct_test_retained}/{direct_test_n} forced trials retained (mean "
+            f"${mean_usd:.6f}, zero variance), {reversal_pct:.0f}% ever reversed\n"
+            "Per-failure mechanic measured; fleet frequency of post-hold failures NOT measured\n"
+            "Source: failure_capture_n3.md, hold_linearity_extension.md, refund_watch.log"
         ),
     }
 
@@ -1321,15 +1290,18 @@ def tile_refunds_disputes() -> dict:
     lock-tag; see .tile.placeholder / .lock-tag CSS + git history)."""
     return {
         "lock_tag": "NO MECHANISM EXISTS",
+        # Context line.
+        "subline": "no refund API · no dispute path · no adjudication",
+        # Definition line — short, italic; the card-rails framing moves to method_note.
         "definition": (
-            "Post-settlement recovery. Card rails: refund APIs + chargeback/dispute processes "
-            "(Visa monitors dispute rates network-wide). Agent rails: when an agent pays for a "
-            "bad result, no refund API, no dispute flow, no adjudication path exists — the "
-            "money is unrecoverable by design, not by failure."
+            "When an agent pays for a bad result, the money is unrecoverable — by design, "
+            "not by failure."
         ),
-        "caption": (
-            "Completes the lifecycle with Hold Recovery: pre-settlement money never comes back "
-            "on failure; post-settlement money can't come back even in principle."
+        "method_note": (
+            "Card rails: refund APIs + chargeback/dispute processes\n"
+            "Visa monitors dispute rates network-wide\n"
+            "Completes the lifecycle with Hold Recovery: pre-settlement never comes back on "
+            "failure; post-settlement can't come back even in principle"
         ),
     }
 
@@ -1502,12 +1474,11 @@ def kya_scorecard(con) -> dict:
             "A ≤9 · B ≤24 · C ≤49 · D ≤74 · F ≥75 · <3 calls = N/A"
         ),
         "formula_note": (
-            f"Velocity score = {VELOCITY_RUNAWAY_POINTS} pts if peer-relative velocity anomaly flagged "
-            f"(findings.md §5) + up to {VELOCITY_PEAK_POINTS_CAP} pts scaled from peak calls in any 60s "
-            f"window (peak x {VELOCITY_PEAK_POINTS_PER_CALL}, capped). Grade: A 0-9 / B 10-24 / C 25-49 / "
-            "D 50-74 / F 75-100. Agents with <3 calls show N/A — not enough data for a median gap. "
-            "Spend is NOT part of this score (spend-runaway is ~54% of all TPV and grades C; fleet-test "
-            "is ~0.4% of TPV and grades F) — velocity-only, illustrative, one session."
+            f"Score = {VELOCITY_RUNAWAY_POINTS} pts if peer-flagged + peak×{VELOCITY_PEAK_POINTS_PER_CALL} "
+            f"pts (max {VELOCITY_PEAK_POINTS_CAP})\n"
+            "Grade: A 0-9 · B 10-24 · C 25-49 · D 50-74 · F 75-100 · <3 calls = N/A\n"
+            "Spend not scored — spend-runaway ~54% of TPV grades C, fleet-test ~0.4% grades F\n"
+            "Source: findings.md §5"
         ),
     }
 
